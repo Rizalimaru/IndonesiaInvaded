@@ -1,38 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
-public class TriggerInteractionBase : MonoBehaviour, IInteractable
+public class TriggerInteractionBase : MonoBehaviour
 {
-    public GameObject player { get; set; }   
-    public bool canInteract { get; set; }
-
-    public void Start(){
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
-
-    private void Update(){
-        if(canInteract){
-            if(Input.GetKeyDown(KeyCode.E)){
-                Interact();
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            TeleportTrigger portalTrigger = GetComponent<TeleportTrigger>();
+            if (portalTrigger != null)
+            {
+                portalTrigger.Interact();
             }
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject == player){
-            canInteract = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.gameObject == player){
-            canInteract = false;
-        }
-    }
-
-    public virtual void Interact() {}
 }
