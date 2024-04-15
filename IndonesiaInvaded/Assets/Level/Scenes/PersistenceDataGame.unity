@@ -241,7 +241,13 @@ MonoBehaviour:
   fadeOutImage: {fileID: 266025551}
   fadeOutSpeed: 5
   fadeInSpeed: 5
-  fadeOutStartColor: {r: 0.16862746, g: 0.16862746, b: 0.16862746, a: 0}
+  fadeOutStartColor:
+    r: 0.16862746
+    g: 0.16862746
+    b: 0.16862746
+    a: 0
+  <isFadingOut>k__BackingField: 0
+  <isFadingIn>k__BackingField: 0
 --- !u!1 &252474915
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,18 +293,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4cbeb6641eee5b4abb44163126d3192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newGame:
-    sceneAsset: {fileID: 0}
-    sceneName: 
-  options:
-    sceneAsset: {fileID: 0}
-    sceneName: 
-  MainMenu:
-    sceneAsset: {fileID: 0}
-    sceneName: 
+  newGame: {sceneAsset: {fileID: 0}, sceneName: }
+  options: {sceneAsset: {fileID: 0}, sceneName: }
+  MainMenu: {sceneAsset: {fileID: 0}, sceneName: }
   completeLevelUI: {fileID: 0}
   deadGame: {fileID: 0}
   pauseMenu: {fileID: 0}
+  isPaused: 0
+  hasGameEnded: 0
 --- !u!114 &252474918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +313,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d4987485fcceb247a5869e04cf0891c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  portalCollider: {fileID: 0}
+  playerCollider: {fileID: 0}
+  playerSpawnPosition: {x: 0, y: 0, z: 0}
+  portalSpawnTo: 0
 --- !u!1 &262006133
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,6 +509,14 @@ MonoBehaviour:
   initializeDataIfNull: 1
   fileName: Player.Data
   useEncryption: 1
+  selectedProfileId: 
+  gameData:
+    lastUpdate: 0
+    deathCount: 0
+    playerPosition: {x: 0, y: 0, z: 0}
+    monsterKilled:
+      keys: []
+      values: []
 --- !u!1 &669387467
 GameObject:
   m_ObjectHideFlags: 0
