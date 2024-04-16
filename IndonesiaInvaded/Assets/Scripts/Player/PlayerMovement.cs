@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-   [Header("Movement")]
+    [Header("Movement")]
     private float moveSpeed;
     public float walkSpeed;
     public float sprintSpeed;
@@ -36,7 +36,6 @@ public class PlayerMovement : MonoBehaviour
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope;
-    
 
     public Transform orientation;
 
@@ -56,6 +55,9 @@ public class PlayerMovement : MonoBehaviour
         air
     }
 
+    [Header("Gravity")]
+    public float gravity = 9.81f; // Default gravity value
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -74,12 +76,6 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
-
-        // handle drag
-        if (grounded)
-            rb.drag = groundDrag;
-        else
-            rb.drag = 0;
     }
 
     private void FixedUpdate()
@@ -168,8 +164,8 @@ public class PlayerMovement : MonoBehaviour
         else if(!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
-        // turn gravity off while on slope
-        rb.useGravity = !OnSlope();
+        // Apply gravity
+        rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
     }
 
     private void SpeedControl()
