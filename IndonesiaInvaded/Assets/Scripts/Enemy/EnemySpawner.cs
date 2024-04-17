@@ -79,8 +79,8 @@ public class EnemySpawner : MonoBehaviour
             {
                 enemy.Agent.Warp(hit.position);
                 enemy.StateManager.target = player;
-                enemy.Agent.enabled = true;
                 enemy.StateManager.StartAgent();
+                enemy.Agent.enabled = true;
             }
             else
             {
