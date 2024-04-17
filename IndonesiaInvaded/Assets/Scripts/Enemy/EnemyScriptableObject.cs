@@ -10,6 +10,8 @@ public class EnemyScriptableObject : ScriptableObject
     public float attackSpeed = 1.0f;
     public float triggerDistance = 5;
     public float attackDistance = 1;
+    public float attackForce = 1000;
+    public float attackDecay = 0.1f; // Dictate the life of attack collider
 
     // NavMesh Config = Steering
     public float Speed = 3;

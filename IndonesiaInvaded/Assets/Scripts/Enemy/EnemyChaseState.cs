@@ -5,7 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyChaseState : EnemyBaseState
 {
-    public override void EnterState(EnemyManager enemy)
+    public override void EnterState(EnemyStateManager enemy)
     {
         enemy.GetComponent<NavMeshAgent>().isStopped = false;
         Debug.Log("Enemy is Moving");
@@ -13,7 +13,7 @@ public class EnemyChaseState : EnemyBaseState
         enemy.animator.SetBool("isAttacking", false);
     }
 
-    public override void UpdateState(EnemyManager enemy)
+    public override void UpdateState(EnemyStateManager enemy)
     {
         if (Vector3.Distance(enemy.agent.transform.position, enemy.target.transform.position) <= enemy.triggerDistance)
         {
@@ -29,7 +29,7 @@ public class EnemyChaseState : EnemyBaseState
         }
     }
 
-    public override void OnCollisionEnter(EnemyManager enemy, Collision collision)
+    public override void OnCollisionEnter(EnemyStateManager enemy, Collision collision)
     {
         /** GameObject other = collision.gameObject;
         if (other.CompareTag("Player"))
@@ -38,7 +38,7 @@ public class EnemyChaseState : EnemyBaseState
         } **/
     }
 
-    public override void OnCollisionExit(EnemyManager enemy, Collision collision)
+    public override void OnCollisionExit(EnemyStateManager enemy, Collision collision)
     {
         
     }
