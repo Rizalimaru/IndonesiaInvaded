@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 
-public class EnemyManager : MonoBehaviour
+public class EnemyStateManager : MonoBehaviour
 {
     // State Declaration
     EnemyBaseState currentState;
@@ -21,21 +21,29 @@ public class EnemyManager : MonoBehaviour
     public NavMeshAgent agent;
     public Transform target;
 
+    // Object Declaration
+    public GameObject attackType;
+    public Transform spawnPoint;
+
     // Attribute Declaration
-    private float health;
-    private float attackPower;
-    private float attackSpeed;
-    public float triggerDistance;
-    public float attackDistance;
+    [System.NonSerialized] public float attackPower;
+    [System.NonSerialized] public float attackSpeed;
+    [System.NonSerialized] public float triggerDistance;
+    [System.NonSerialized] public float attackDistance;
+    [System.NonSerialized] public float attackForce;
+    [System.NonSerialized] public float attackDecay;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        triggerDistance = 6.0f;
         SetupAgent();
 
-        currentState = idleState;
         currentState.EnterState(this);
+    }
+
+    public void StartAgent()
+    {
+        currentState = idleState;
     }
 
     void Update()
@@ -62,11 +70,12 @@ public class EnemyManager : MonoBehaviour
 
     public void SetupAgent()
     {
-        health = enemyType.Health;
         attackPower = enemyType.attackPower;
         attackSpeed = enemyType.attackSpeed;
         triggerDistance = enemyType.triggerDistance;
         attackDistance = enemyType.attackDistance;
+        attackForce = enemyType.attackForce;
+        attackDecay = enemyType.attackDecay;
 
         agent.speed = enemyType.Speed;
         agent.angularSpeed = enemyType.AngularSpeed;

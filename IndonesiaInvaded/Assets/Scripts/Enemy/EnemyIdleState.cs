@@ -5,16 +5,16 @@ public class EnemyIdleState : EnemyBaseState
 {
     float delay;
 
-    public override void EnterState(EnemyManager enemy)
+    public override void EnterState(EnemyStateManager enemy)
     {   
         Debug.Log("Enemy is Idle");
         enemy.animator.SetBool("isWalking", false);
         enemy.animator.SetBool("isAttacking", false);
-        delay = 2.0f;
+        delay = 1f;
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
     }
 
-    public override void UpdateState(EnemyManager enemy)
+    public override void UpdateState(EnemyStateManager enemy)
     {
         if(delay > 0)
         {
@@ -29,12 +29,12 @@ public class EnemyIdleState : EnemyBaseState
         }
     }
 
-    public override void OnCollisionEnter(EnemyManager enemy, Collision collision)
+    public override void OnCollisionEnter(EnemyStateManager enemy, Collision collision)
     {
         
     }
 
-    public override void OnCollisionExit(EnemyManager enemy, Collision collision)
+    public override void OnCollisionExit(EnemyStateManager enemy, Collision collision)
     {
 
     }

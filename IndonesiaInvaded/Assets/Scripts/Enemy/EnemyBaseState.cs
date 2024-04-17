@@ -2,13 +2,13 @@ using UnityEngine;
 
 public abstract class EnemyBaseState
 {
-    public abstract void EnterState(EnemyManager enemy);
+    public abstract void EnterState(EnemyStateManager enemy);
 
-    public abstract void UpdateState(EnemyManager enemy);
+    public abstract void UpdateState(EnemyStateManager enemy);
 
-    public abstract void OnCollisionEnter(EnemyManager enemy, Collision collision);
+    public abstract void OnCollisionEnter(EnemyStateManager enemy, Collision collision);
 
-    public abstract void OnCollisionExit(EnemyManager enemy, Collision collision);
+    public abstract void OnCollisionExit(EnemyStateManager enemy, Collision collision);
 }
 
 
