@@ -34,15 +34,22 @@ public class EnemyStateManager : MonoBehaviour
     [System.NonSerialized] public float attackDecay;
 
     void Start()
-    {
+    { 
+        // For single enemy testing uncomment StartAgent() and enable NavMeshAgent component in inspector
+
         animator = GetComponent<Animator>();
+        
         SetupAgent();
+        
+        StartAgent();
 
         currentState.EnterState(this);
     }
 
     public void StartAgent()
     {
+        // StartAgent is used for external script to enable each enemy statemanager
+
         currentState = idleState;
     }
 
