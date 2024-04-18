@@ -10875,7 +10875,6 @@ GameObject:
   m_Component:
   - component: {fileID: 363605158266909441}
   - component: {fileID: 2968997503251721593}
-  - component: {fileID: 7764214504796378678}
   m_Layer: 5
   m_Name: AudioDisplay
   m_TagString: Untagged
@@ -10932,25 +10931,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &7764214504796378678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6354341860259490458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cbfa8b976d3500408e92b2ceccc61f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sliderMasterVolume: {fileID: 3363995183258494220}
-  sliderBackgroundMusic: {fileID: 7482857880664131119}
-  sliderSoundEffect: {fileID: 966940009347711001}
-  spritemute:
-  - {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  buttonMute: {fileID: 6652591843798983527}
 --- !u!1 &6362694620875969379
 GameObject:
   m_ObjectHideFlags: 0
@@ -11554,7 +11534,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7764214504796378678}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AudioSetting, Assembly-CSharp
         m_MethodName: ButtonMute
         m_Mode: 1
