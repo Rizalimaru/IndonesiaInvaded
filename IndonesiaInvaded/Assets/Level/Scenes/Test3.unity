@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 236452985}
   - component: {fileID: 236452984}
   - component: {fileID: 236452983}
-  - component: {fileID: 236452982}
+  - component: {fileID: 236452988}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -144,24 +144,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &236452982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236452981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c1ddaeebc11ef9458147ce9355ae578, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portalSpawnTo: 1
-  sceneToLoad:
-    sceneAsset: {fileID: 102900000, guid: 8ccf99c18d06a5649b93fac79e1d84ea, type: 3}
-    sceneName: Test2
-  exitName: Tes3
-  currentPortalPosition: 1
 --- !u!65 &236452983
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -270,6 +252,22 @@ Transform:
   - {fileID: 1143165396}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &236452988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236452981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ec0d8f489982548a25d8f83da827da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneField:
+    sceneAsset: {fileID: 102900000, guid: 8ccf99c18d06a5649b93fac79e1d84ea, type: 3}
+    sceneName: Test2
+  exitName: Tes3
 --- !u!1 &605653276
 GameObject:
   m_ObjectHideFlags: 0
