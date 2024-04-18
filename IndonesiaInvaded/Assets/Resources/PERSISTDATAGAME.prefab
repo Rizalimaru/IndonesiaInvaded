@@ -392,8 +392,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 841827265404299174}
-  - component: {fileID: 5373875340819776853}
-  - component: {fileID: 703354387134663510}
+  - component: {fileID: 4442394530810163160}
+  - component: {fileID: 2812463853112836621}
+  - component: {fileID: 8184810414093801668}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -417,7 +418,19 @@ Transform:
   - {fileID: 6835019033454254983}
   m_Father: {fileID: 6665483147013829520}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &5373875340819776853
+--- !u!114 &4442394530810163160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4704534156822603485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10806afe054d327419a10e8eff7cbf4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!136 &2812463853112836621
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -440,7 +453,7 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &703354387134663510
+--- !u!54 &8184810414093801668
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
