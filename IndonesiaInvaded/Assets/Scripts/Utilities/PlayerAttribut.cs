@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class PlayerAttribut : MonoBehaviour
 {
@@ -43,6 +44,18 @@ public class PlayerAttribut : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy_Melee"))
+        {
+            TakeDamage(40);
+        }
+        else if (other.CompareTag("Enemy_Ranged"))
+        {
+            TakeDamage(20);
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -59,7 +72,7 @@ public class PlayerAttribut : MonoBehaviour
                 currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
                 healthBar.SetHealth(currentHealth);
             }
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(6f);
 
         }
     }
