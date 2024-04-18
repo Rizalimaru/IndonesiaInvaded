@@ -2,18 +2,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class Player : MonoBehaviour
+public class PlayerAttribut : MonoBehaviour
 {
     public int maxHealth = 500;
     public int currentHealth;
-    public float regenRate = 0.1f;
     public int maxSP = 100;
     public int currentSP = 0;
 
     public HealthBar healthBar;
     public SkillBar skillBar;
 
-    private int mouseClickCount = 0;
+    private Coroutine regenCoroutine;
 
     private void Start()
     {
@@ -23,12 +22,12 @@ public class Player : MonoBehaviour
         skillBar.SetMaxSkill(maxSP);
         skillBar.SetSkill(currentSP);
 
-        StartCoroutine(RegenerateHealth());
+        Combat.SuccessfulComboEvent += RegenerateSP;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             TakeDamage(20);
         }
@@ -42,16 +41,6 @@ public class Player : MonoBehaviour
         {
             UseSkill2();
         }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            mouseClickCount++;
-            if (mouseClickCount >= 3)
-            {
-                mouseClickCount = 0;
-                ComboSucceed();
-            }
-        }
     }
 
     void TakeDamage(int damage)
@@ -59,37 +48,48 @@ public class Player : MonoBehaviour
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
     }
-
     IEnumerator RegenerateHealth()
     {
+        float regenRate = 0.1f; // Laju regenerasi HP per detik
         while (true)
         {
-            if (!IsAttacked() && currentHealth < maxHealth)
+            if (currentHealth < maxHealth)
             {
                 currentHealth += Mathf.RoundToInt(regenRate * maxHealth);
-                if (currentHealth > maxHealth)
-                {
-                    currentHealth = maxHealth;
-                }
+                currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
                 healthBar.SetHealth(currentHealth);
             }
-
             yield return new WaitForSeconds(3f);
+
         }
     }
 
-    bool IsAttacked()
-    {
-        return false;
-    }
 
-    void ComboSucceed()
+    // Method untuk memulai serangan
+    public void StopRegenerateHealth()
     {
-        if (currentSP < maxSP)
+        if (regenCoroutine != null)
         {
-            currentSP += 10;
-            skillBar.SetSkill(currentSP);
+            StopCoroutine(regenCoroutine);
+            regenCoroutine = null;
         }
+    }
+
+    // Method untuk memulai kembali regenerasi HP saat pemain selesai menyerang
+    public void StartRegenerateHealth()
+    {
+        if (regenCoroutine == null)
+        {
+            regenCoroutine = StartCoroutine(RegenerateHealth());
+        }
+    }
+ 
+    void RegenerateSP()
+    {
+        // Regenerasi SP di sini
+        int regenAmount = 10; // Jumlah SP yang akan ditambahkan
+        currentSP = Mathf.Min(currentSP + regenAmount, maxSP); // Pastikan SP tidak melebihi maksimum
+        skillBar.SetSkill(currentSP); // Update tampilan bar skill
     }
 
     public void UseSkill1()
@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
         if (currentSP >= 30)
         {
             currentSP -= 30;
-            Debug.Log("Skill 1 activated!");
+            Debug.Log("Skill 1 activated!");    
             skillBar.SetSkill(currentSP);
             // Lakukan tindakan Skill 1 di sini
         }
@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public  void UseSkill2()
+    public void UseSkill2()
     {
         if (currentSP >= 50)
         {

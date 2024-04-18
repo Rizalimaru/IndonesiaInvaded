@@ -8,15 +8,19 @@ public class WeaponBattleEquip : MonoBehaviour
     [SerializeField] GameObject weapon;
     [SerializeField] GameObject weaponHolder;
 
-    bool isAttacking = false;
+    public bool isAttacking = false;
     float timeSinceLastHit = 0f;
     float hideDelay = 5f;
+
+    PlayerAttribut playerAttribute;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         // Hide weapon at the start of the game
         HideWeapon();
+
+        playerAttribute = GetComponent<PlayerAttribut>();
     }
 
     void Update()
@@ -28,8 +32,10 @@ public class WeaponBattleEquip : MonoBehaviour
                 ShowWeapon();
                 HideWeaponHolder();
                 timeSinceLastHit = 0f;
-              
-        }else
+                playerAttribute.StopRegenerateHealth();
+
+        }
+        else
             {
                 // Otherwise, update time since last hit
                 timeSinceLastHit += Time.deltaTime;
@@ -38,6 +44,7 @@ public class WeaponBattleEquip : MonoBehaviour
                 {
                     HideWeapon();
                     ShowWeaponHolder();
+                    playerAttribute.StartRegenerateHealth();    
                 }
             }
     }
@@ -72,14 +79,14 @@ public class WeaponBattleEquip : MonoBehaviour
     }
 
     // Function to hide the weapon holder
-    void HideWeaponHolder()
+    public void HideWeaponHolder()
     {
         if (weaponHolder != null)
             weaponHolder.SetActive(false);
     }
 
     // Function to show the weapon holder
-    void ShowWeaponHolder()
+    public void ShowWeaponHolder()
     {
         if (weaponHolder != null)
             weaponHolder.SetActive(true);
