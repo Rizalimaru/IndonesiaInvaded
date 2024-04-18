@@ -9,9 +9,9 @@ public class PortalInstant : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // if(other.CompareTag("Player") && other.TryGetComponent<PlayerController>(out var player)){
-        //     player.Teleport(destination.position, destination.rotation);
-        // }
+        if(other.CompareTag("Player") && other.TryGetComponent<PlayerMovement>(out var player)){
+            player.Teleport(destination.position, destination.rotation);
+        }
 
     }
     void OnDrawGizmos()
