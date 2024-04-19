@@ -18,10 +18,6 @@ public class UI_PauseGame : MonoBehaviour
     public GameObject playerCamera;
     public GameObject[] panelOptions;
 
-    [Header("------------------------- Animator -------------------------")]
-
-    public Animator optionsAnimatorGame;
-
     // Lock cursor when the game is not paused
     private bool isCursorLocked = true;
 
@@ -105,7 +101,6 @@ public class UI_PauseGame : MonoBehaviour
         isCursorLocked = true; // Lock cursor when unpaused
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        
 
         //GameResumed.Invoke(); // Invoke resume event
     }
@@ -113,6 +108,8 @@ public class UI_PauseGame : MonoBehaviour
     public void LoadMenu()
     {
         Time.timeScale = 1f;
+        gameObjectPause.SetActive(false);
+        playerCamera.SetActive(true);
         GameIsPaused = false;
         SceneManager.LoadScene("MainMenu");
     }
@@ -125,17 +122,7 @@ public class UI_PauseGame : MonoBehaviour
 
     public void HideOptions()
     {
-        StartCoroutine(HideOptionsDelay());
-    }
-
-    IEnumerator HideOptionsDelay()
-    {
-        optionsAnimatorGame.SetTrigger("FadeOut");
-        yield return new WaitForSecondsRealtime(1f); // Gunakan WaitForSecondsRealtime
-        
         gameObjectOptions.SetActive(false);
-        
-        
     }
 
     // Update cursor state based on pause status
