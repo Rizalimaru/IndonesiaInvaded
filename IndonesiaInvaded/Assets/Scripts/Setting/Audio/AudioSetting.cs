@@ -83,6 +83,13 @@ public class AudioSetting : MonoBehaviour
         audioManagerInstance.StopBackgroundMusic("Mainmenu");
     }
 
+    public void PlayBackgroundMusic()
+    {
+        audioManagerInstance.PlayBackgroundMusic("Mainmenu", 1);
+    }
+
+
+
     // Set master volume berdasarkan slider value
 
     public void SetMasterVolume(float sliderValue)
