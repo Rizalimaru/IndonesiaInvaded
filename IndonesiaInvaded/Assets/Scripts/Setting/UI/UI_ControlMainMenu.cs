@@ -24,7 +24,9 @@ public class UI_ControlMainMenu: MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
-    
+
+
+
     public void HideMenu()
     {
         // Mengdelay sebelum menyembunyikan menu

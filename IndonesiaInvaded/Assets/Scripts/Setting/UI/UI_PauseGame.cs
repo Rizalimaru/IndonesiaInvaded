@@ -7,13 +7,15 @@ using UnityEngine.Events;
 
 public class UI_PauseGame : MonoBehaviour
 {
-    public UnityEvent GamePaused;
-    public UnityEvent GameResumed;
+    //public UnityEvent GamePaused;
+    //public UnityEvent GameResumed;
 
     public static bool GameIsPaused = false;
 
     public GameObject gameObjectPause;
     public GameObject gameObjectOptions;
+
+    public GameObject playerCamera;
     public GameObject[] panelOptions;
 
     // Lock cursor when the game is not paused
@@ -78,13 +80,14 @@ public class UI_PauseGame : MonoBehaviour
     public void Pause()
     {
         gameObjectPause.SetActive(true);
+        playerCamera.SetActive(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
         isCursorLocked = false; // Unlock cursor when paused
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        GamePaused.Invoke(); // Invoke pause event
+        //GamePaused.Invoke(); // Invoke pause event
 
         Debug.Log("Game paused");
     }
@@ -92,18 +95,20 @@ public class UI_PauseGame : MonoBehaviour
     public void Resume()
     {
         gameObjectPause.SetActive(false);
+        playerCamera.SetActive(true);
         Time.timeScale = 1f;
         GameIsPaused = false;
         isCursorLocked = true; // Lock cursor when unpaused
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        GameResumed.Invoke(); // Invoke resume event
+        //GameResumed.Invoke(); // Invoke resume event
     }
 
     public void LoadMenu()
     {
         Time.timeScale = 1f;
+        GameIsPaused = false;
         SceneManager.LoadScene("MainMenu");
     }
 
