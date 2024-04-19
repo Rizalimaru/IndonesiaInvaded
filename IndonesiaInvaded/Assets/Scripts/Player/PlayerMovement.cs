@@ -42,7 +42,9 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
 
+    Vector2 look;
     Vector3 moveDirection;
+    internal Vector3 velocity;
 
     Rigidbody rb;
 
@@ -222,4 +224,14 @@ public class PlayerMovement : MonoBehaviour
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
+
+    public void Teleport(Vector3 position, Quaternion rotation)
+    {
+        transform.position = position;
+        Physics.SyncTransforms();
+        look.x = rotation.eulerAngles.y;
+        look.y = rotation.eulerAngles.z;
+        velocity = Vector3.zero;
+    }
+    
 }

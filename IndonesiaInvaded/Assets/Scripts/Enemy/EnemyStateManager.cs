@@ -44,6 +44,7 @@ public class EnemyStateManager : MonoBehaviour
         StartAgent();
 
         currentState.EnterState(this);
+        target = GameObject.FindWithTag("Player").transform;
     }
 
     public void StartAgent()
