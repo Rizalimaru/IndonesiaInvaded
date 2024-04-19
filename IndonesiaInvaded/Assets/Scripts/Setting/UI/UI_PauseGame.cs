@@ -108,6 +108,8 @@ public class UI_PauseGame : MonoBehaviour
     public void LoadMenu()
     {
         Time.timeScale = 1f;
+        gameObjectPause.SetActive(false);
+        playerCamera.SetActive(true);
         GameIsPaused = false;
         SceneManager.LoadScene("MainMenu");
     }
