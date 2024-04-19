@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 1501732846235728247}
   - component: {fileID: 5907773204926507305}
   - component: {fileID: 8078761931949095257}
-  - component: {fileID: 7206502605914470643}
   - component: {fileID: 4250335120195895467}
   - component: {fileID: 2631689077824012360}
   - component: {fileID: 4149217423386793282}
@@ -124,21 +123,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &7206502605914470643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093167237751254063}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 274a7b4c358707e4d9cfd2b6c66baaea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponHolder: {fileID: 0}
-  weapon: {fileID: 8176379340077860779, guid: 7c8ab9584016f1141b5426d35da5e79a, type: 3}
-  weaponSheath: {fileID: 0}
 --- !u!114 &4250335120195895467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +146,7 @@ MonoBehaviour:
   jumpKey: 32
   sprintKey: 304
   crouchKey: 0
+  LockOn: 326
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
@@ -220,6 +205,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownTime: 2
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  attackForce: 10
+  attackRange: 2
 --- !u!114 &7153151500934823563
 MonoBehaviour:
   m_ObjectHideFlags: 0

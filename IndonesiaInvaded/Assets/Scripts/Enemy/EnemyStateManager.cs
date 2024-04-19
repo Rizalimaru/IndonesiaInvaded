@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,7 +38,7 @@ public class EnemyStateManager : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         SetupAgent();
-
+        StartAgent();
         currentState.EnterState(this);
     }
 
