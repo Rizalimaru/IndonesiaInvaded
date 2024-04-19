@@ -39,12 +39,6 @@ public class UI_PauseGame : MonoBehaviour
                     HideOptions();
                     
                 }
-                else
-                {
-                    Resume();
-                    Cursor.lockState = CursorLockMode.Locked;
-                    Cursor.visible = false;
-                }
             }
             else
             {
