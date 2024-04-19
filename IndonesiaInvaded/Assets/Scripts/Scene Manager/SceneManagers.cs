@@ -10,7 +10,6 @@ public class SceneManagers : MonoBehaviour
 
     [Header("Scenes To Load")]
     public SceneField newGame;
-    public  SceneField options;
     public SceneField MainMenu;
 
     [Space(10)]
@@ -31,7 +30,10 @@ public class SceneManagers : MonoBehaviour
             instance = this;
         }
     }
-   
+
+    public void NewGame(){
+        SceneManager.LoadScene(newGame);
+    }
     public void CompleteLevel()
     {
         if (hasGameEnded == false)

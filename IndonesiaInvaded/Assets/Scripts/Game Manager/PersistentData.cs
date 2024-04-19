@@ -8,10 +8,12 @@ public class PersistentData : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        if (instance != null)
         {
+            Debug.Log("Instance already exists");
+        }
             instance = this;
             DontDestroyOnLoad(gameObject);
-        }
+        
     }
 }

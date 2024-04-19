@@ -6,11 +6,14 @@ using UnityEngine.SceneManagement;
 public class PortalExit : MonoBehaviour
 {
    public SceneField sceneField;
+   public static bool loadPortal;
    public string exitName;
 
    public void OnTriggerEnter(Collider other)
    {
-    PlayerPrefs.SetString("LastExitName", exitName);
-    SceneManager.LoadSceneAsync(sceneField);
+      loadPortal = true;
+      PlayerPrefs.SetString("LastExitName", exitName);
+      
+      SceneManager.LoadSceneAsync(sceneField);
    }
 }
