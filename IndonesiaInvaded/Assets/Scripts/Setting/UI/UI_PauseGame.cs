@@ -7,8 +7,8 @@ using UnityEngine.Events;
 
 public class UI_PauseGame : MonoBehaviour
 {
-    //public UnityEvent GamePaused;
-    //public UnityEvent GameResumed;
+    public UnityEvent GamePaused;
+    public UnityEvent GameResumed;
 
     public static bool GameIsPaused = false;
 
@@ -17,6 +17,11 @@ public class UI_PauseGame : MonoBehaviour
 
     public GameObject playerCamera;
     public GameObject[] panelOptions;
+
+    [Header("-----------------------Animation-----------------------")]
+
+    public Animator pauseAnimator;
+    public Animator optionsAnimatorGame;
 
     // Lock cursor when the game is not paused
     private bool isCursorLocked = true;
@@ -39,7 +44,6 @@ public class UI_PauseGame : MonoBehaviour
                 if (gameObjectOptions.activeSelf)
                 {
                     HideOptions();
-                    
                 }
             }
             else
@@ -79,6 +83,7 @@ public class UI_PauseGame : MonoBehaviour
 
     public void Pause()
     {
+        pauseAnimator.SetTrigger("pausein");
         gameObjectPause.SetActive(true);
         playerCamera.SetActive(false);
         Time.timeScale = 0f;
@@ -87,13 +92,14 @@ public class UI_PauseGame : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        //GamePaused.Invoke(); // Invoke pause event
+        GamePaused.Invoke(); // Invoke pause event
 
         Debug.Log("Game paused");
     }
 
     public void Resume()
     {
+        pauseAnimator.SetTrigger("pauseout");
         gameObjectPause.SetActive(false);
         playerCamera.SetActive(true);
         Time.timeScale = 1f;
@@ -102,12 +108,14 @@ public class UI_PauseGame : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        //GameResumed.Invoke(); // Invoke resume event
+        GameResumed.Invoke(); // Invoke resume event
     }
 
     public void LoadMenu()
     {
         Time.timeScale = 1f;
+        gameObjectPause.SetActive(false);
+        playerCamera.SetActive(true);
         GameIsPaused = false;
         SceneManager.LoadScene("MainMenu");
     }
@@ -115,14 +123,22 @@ public class UI_PauseGame : MonoBehaviour
     public void ShowOptions()
     {
         gameObjectOptions.SetActive(true);
-        
+        optionsAnimatorGame.SetTrigger("FadeInOptions");
     }
 
     public void HideOptions()
     {
+        optionsAnimatorGame.SetTrigger("FadeOutOptions");
+        StartCoroutine(HideOptionsCoroutine());
+    }
+
+    private IEnumerator HideOptionsCoroutine()
+    {   
+        yield return new WaitForSecondsRealtime(0.5f);
         gameObjectOptions.SetActive(false);
     }
 
+   
     // Update cursor state based on pause status
     private void LateUpdate()
     {
