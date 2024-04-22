@@ -43,6 +43,8 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     IEnumerator HideMenuDelay()
     {
+
+        optionsAnimator.SetTrigger("FadeInOptions");
         
         yield return new WaitForSeconds(0.5f);
         
@@ -68,7 +70,7 @@ public class UI_ControlMainMenu: MonoBehaviour
     IEnumerator ShowMenuDelay()
     {
 
-        optionsAnimator.SetTrigger("FadeOut");
+        optionsAnimator.SetTrigger("FadeOutOptions");
         
         yield return new WaitForSeconds(0.5f);
         
