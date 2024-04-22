@@ -33,4 +33,7 @@ public class GameEventManager : MonoBehaviour
             onCoinCollected();
         }
     }
+
+
+    
 }
