@@ -13,6 +13,7 @@ public class UI_PauseGame : MonoBehaviour
     public static bool GameIsPaused = false;
 
     public GameObject gameObjectPause;
+    public GameObject gameObjectUI;
     public GameObject gameObjectOptions;
 
     public GameObject playerCamera;
@@ -85,6 +86,7 @@ public class UI_PauseGame : MonoBehaviour
     {
         pauseAnimator.SetTrigger("pausein");
         gameObjectPause.SetActive(true);
+        gameObjectUI.SetActive(false);
         playerCamera.SetActive(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
@@ -101,6 +103,7 @@ public class UI_PauseGame : MonoBehaviour
     {
         pauseAnimator.SetTrigger("pauseout");
         gameObjectPause.SetActive(false);
+        gameObjectUI.SetActive(true);
         playerCamera.SetActive(true);
         Time.timeScale = 1f;
         GameIsPaused = false;
@@ -115,6 +118,7 @@ public class UI_PauseGame : MonoBehaviour
     {
         Time.timeScale = 1f;
         gameObjectPause.SetActive(false);
+        gameObjectUI.SetActive(false);
         playerCamera.SetActive(true);
         GameIsPaused = false;
         SceneManager.LoadScene("MainMenu");
