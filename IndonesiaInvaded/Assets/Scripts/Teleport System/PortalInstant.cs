@@ -7,11 +7,12 @@ public class PortalInstant : MonoBehaviour
    [SerializeField] Transform destination;
    [SerializeField] Animator animator;
    [SerializeField] PlayerMovement player;
+   [SerializeField] GameObject playerCamera;
     
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") && other.TryGetComponent<PlayerMovement>(out var player)){
+        if(other.CompareTag("Player")){
             StartCoroutine(LoadLevel());
         }
 
@@ -19,12 +20,13 @@ public class PortalInstant : MonoBehaviour
 
     IEnumerator LoadLevel()
     {
-        
         animator.SetTrigger("End");
-        yield return new WaitForSeconds(1);
         player.gameObject.SetActive(false);
+        playerCamera.SetActive(false);
+        yield return new WaitForSeconds(1);
         player.Teleport(destination.position, destination.rotation);
         player.gameObject.SetActive(true);
+        playerCamera.SetActive(true);
         animator.SetTrigger("Start");
     }
 }

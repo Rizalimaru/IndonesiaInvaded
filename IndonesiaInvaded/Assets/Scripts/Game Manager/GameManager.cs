@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.Log("There is more than one GameManager instance");
+            Debug.Log("There is more than one Game Manager instance");
             Destroy(this.gameObject);
             return;
         }
