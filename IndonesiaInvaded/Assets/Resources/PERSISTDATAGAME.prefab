@@ -657,6 +657,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3598198453032157837}
   m_CullTransparentMesh: 1
+--- !u!1 &3976816280101094005
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 150994120910713388}
+  - component: {fileID: 7557090984408739957}
+  m_Layer: 0
+  m_Name: GameObject Destroy Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &150994120910713388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3976816280101094005}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6665483147013829520}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7557090984408739957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3976816280101094005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84e647dcc8c345b4a9305b308c05fd04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectToDestroy: {fileID: 1050897488877544598}
+  sceneToDestroy:
+    sceneAsset: {fileID: 102900000, guid: 1baf5a9e6cb8f394e86a995ad09b426b, type: 3}
+    sceneName: Mainmenu
 --- !u!1 &4885763080695463312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,6 +1268,7 @@ Transform:
   - {fileID: 9218629343305726025}
   - {fileID: 1196978525771801799}
   - {fileID: 1505055948187998787}
+  - {fileID: 150994120910713388}
   - {fileID: 8342407877256793998}
   - {fileID: 749606579762576771}
   - {fileID: 8673782709484381265}
