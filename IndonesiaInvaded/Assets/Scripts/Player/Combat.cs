@@ -1,14 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
-using System.Collections;
 
 public class Combat : MonoBehaviour
 {
     public static event Action SuccessfulComboEvent; // Event untuk mengirim sinyal bahwa combo berhasil
 
-
-    private AudioManager audioManagerInstance;
     private Animator anim;
     public float cooldownTime = 2f;
     private float nextFireTime = 0f;
@@ -19,9 +16,6 @@ public class Combat : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-        audioManagerInstance = AudioManager.Instance;
-
-        
     }
 
     void Update()
@@ -61,8 +55,6 @@ public class Combat : MonoBehaviour
         if (noOfClicks == 1)
         {
             anim.SetBool("hit1", true);
-            StartCoroutine(PlaySoundWithDelay(0.1f, "AttackPlayer", 0));
-            Debug.Log("Hit 1");
         }
         noOfClicks = Mathf.Clamp(noOfClicks, 0, 3);
 
@@ -70,15 +62,11 @@ public class Combat : MonoBehaviour
         {
             anim.SetBool("hit1", false);
             anim.SetBool("hit2", true);
-            StartCoroutine(PlaySoundWithDelay(0.2f, "AttackPlayer", 0));
-            Debug.Log("Hit 2");
         }
         if (noOfClicks >= 3 && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(0).IsName("hit2"))
         {
             anim.SetBool("hit2", false);
             anim.SetBool("hit3", true);
-            StartCoroutine(PlaySoundWithDelay(1f, "AttackPlayer", 1));
-            Debug.Log("Hit 3");
             SuccessfulCombo(); // Panggil method baru untuk menangani combo sukses
         }
     }
@@ -88,13 +76,8 @@ public class Combat : MonoBehaviour
         // Method ini akan dipanggil setelah combo hit ke-3 berhasil
         Debug.Log("Successful Combo!");
         SuccessfulComboEvent?.Invoke(); // Panggil event untuk mengirim sinyal combo berhasil
-    }  
+    }
+
 
     
-    // Method untuk memainkan suara dengan delay
-    IEnumerator PlaySoundWithDelay(float delay, string soundName, int soundIndex)
-    {
-        yield return new WaitForSeconds(delay);
-        audioManagerInstance.PlaySFX(soundName, soundIndex);
-    }
 }
