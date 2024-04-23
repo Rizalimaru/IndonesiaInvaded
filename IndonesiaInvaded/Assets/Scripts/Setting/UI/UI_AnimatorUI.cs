@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class UI_AnimatorUI : MonoBehaviour
 {
-    public static UI_AnimatorUI instance;
+    public static UI_AnimatorUI instance { get; set;}
 
-    private Animator animator;
+    public Animator animator;
+
 
     private void Awake()
     {
@@ -25,9 +26,7 @@ public class UI_AnimatorUI : MonoBehaviour
     
     public void LoadGameAnimation()
     {
-        if (animator != null)
-        {
-            animator.SetTrigger("FadeOut");
-        }
+        animator.SetTrigger("FadeOut");
     }
+    
 }
