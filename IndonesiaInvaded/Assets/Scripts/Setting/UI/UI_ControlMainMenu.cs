@@ -70,24 +70,23 @@ public class UI_ControlMainMenu: MonoBehaviour
     }
 
     //Pindah scene ke scene yang diinginkan
-    public void ChangeScene(string sceneName)
+    public void ChangeSceneLoadGame()
     {
-        StartCoroutine(DelayChangeScene(sceneName));
+        StartCoroutine(DelayChangeScene());
     }
 
-    IEnumerator DelayChangeScene(string sceneName)
+    IEnumerator DelayChangeScene()
     {
         HideUI();
-        yield return new WaitForSeconds(1f);
-        // Stop semua animasi button
 
-        SceneManager.LoadScene(sceneName);
+        yield return new WaitForSeconds(1f);
+        UI_AnimatorUI.instance.LoadGameAnimation();
         
+        SceneController.instance.LoadGame();       
 
     }
 
     
-
     public void ShowUI()
     {
         fadeIn = true;

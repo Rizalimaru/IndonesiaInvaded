@@ -124,13 +124,15 @@ public class UI_PauseGame : MonoBehaviour
 
     public void LoadMenu()
     {
+
+
         Time.timeScale = 1f;
         gameObjectPause.SetActive(false);
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(true);
         GameIsPaused = false;
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
-        SceneManager.LoadScene("MainMenu");
+        SceneController.instance.LoadMainmenu();
     }
 
     public void ShowOptions()

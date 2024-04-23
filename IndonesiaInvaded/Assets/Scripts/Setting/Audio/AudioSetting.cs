@@ -51,7 +51,7 @@ public class AudioSetting : MonoBehaviour
             Debug.LogWarning("AudioManager instance not found.");
         }   
 
-    // Singleton pattern untuk instance
+        // Singleton pattern untuk instance
         if (Instance == null)
         {
             Instance = this;
@@ -60,7 +60,7 @@ public class AudioSetting : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        }
+    }
 
     public void Sceneloader(int SceneIndex)
     {

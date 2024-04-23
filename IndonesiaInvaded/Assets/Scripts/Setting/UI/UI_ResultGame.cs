@@ -34,27 +34,27 @@ public class UI_ResultGame : MonoBehaviour
         if (totalScore >= maxScore * 0.9f)      // S
         {
             scoreImage.sprite = spriteS;
-            Debug.Log("S");
+            
         }
         else if (totalScore >= maxScore * 0.8f) // A
         {
             scoreImage.sprite = spriteA;
-            Debug.Log("A");
+            
         }
         else if (totalScore >= maxScore * 0.7f) // B
         {
             scoreImage.sprite = spriteB;
-            Debug.Log("B");
+            
         }
         else if (totalScore >= maxScore * 0.6f) // C
         {
             scoreImage.sprite = spriteC;
-            Debug.Log("C");
+            
         }
         else                                    // D
         {
             scoreImage.sprite = spriteD;
-            Debug.Log("D");
+           
         }
     }
 
