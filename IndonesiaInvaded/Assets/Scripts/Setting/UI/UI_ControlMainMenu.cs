@@ -72,8 +72,21 @@ public class UI_ControlMainMenu: MonoBehaviour
     //Pindah scene ke scene yang diinginkan
     public void ChangeScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        StartCoroutine(DelayChangeScene(sceneName));
     }
+
+    IEnumerator DelayChangeScene(string sceneName)
+    {
+        HideUI();
+        yield return new WaitForSeconds(1f);
+        // Stop semua animasi button
+
+        SceneManager.LoadScene(sceneName);
+        
+
+    }
+
+    
 
     public void ShowUI()
     {
