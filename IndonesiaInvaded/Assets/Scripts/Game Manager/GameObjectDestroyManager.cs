@@ -27,9 +27,8 @@ public class GameObjectDestroyManager : MonoBehaviour
         {
             Destroy(gameObjectToDestroy);
         }
-        if(SceneManager.GetActiveScene().name != sceneToDestroy)
-        {
-            Instantiate(gameObjectToDestroy);
+        else{
+            return;
         }
     }
 }
