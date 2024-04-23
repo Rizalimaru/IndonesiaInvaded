@@ -56,9 +56,13 @@ public class SceneController : MonoBehaviour
 
     IEnumerator Game()
     {
+        animator.SetTrigger("End");
         yield return new WaitForSeconds(1);
         SceneManager.LoadSceneAsync(1);
+        yield return new WaitForSeconds(1);
         animator.SetTrigger("Start");
+
+        
     }
     
     

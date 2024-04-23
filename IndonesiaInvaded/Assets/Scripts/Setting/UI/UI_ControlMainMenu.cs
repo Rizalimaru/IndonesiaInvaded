@@ -35,7 +35,7 @@ public class UI_ControlMainMenu: MonoBehaviour
         {
             if(UIGroup.alpha < 1)
             {
-                UIGroup.alpha += Time.deltaTime;
+                UIGroup.alpha += Time.deltaTime * 2;
                 if(UIGroup.alpha >= 1)
                 {
                     fadeIn = false;
@@ -81,6 +81,7 @@ public class UI_ControlMainMenu: MonoBehaviour
         
 
         yield return new WaitForSeconds(1f);
+
         UI_AnimatorUI.instance.LoadGameAnimation();
 
         yield return new WaitForSeconds(1f);
