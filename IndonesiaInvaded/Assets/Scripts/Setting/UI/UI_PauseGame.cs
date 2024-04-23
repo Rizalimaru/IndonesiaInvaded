@@ -132,6 +132,7 @@ public class UI_PauseGame : MonoBehaviour
         playerCamera.SetActive(true);
         GameIsPaused = false;
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+        GameObjectDestroyManager.instance.DestroyGameObject();
         SceneController.instance.LoadMainmenu();
     }
 

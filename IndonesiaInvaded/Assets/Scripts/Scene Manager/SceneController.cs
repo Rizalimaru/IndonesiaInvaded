@@ -17,7 +17,7 @@ public class SceneController : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            // Destroy(gameObject);
         }
     }
 
@@ -46,6 +46,7 @@ public class SceneController : MonoBehaviour
         animator.SetTrigger("End");
         yield return new WaitForSeconds(1);
         SceneManager.LoadSceneAsync(0);
+        GameObjectDestroyManager.instance.SpawnGameObject();
         animator.SetTrigger("Start");
     }
 
