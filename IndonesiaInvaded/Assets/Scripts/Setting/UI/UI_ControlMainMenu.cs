@@ -3,27 +3,117 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
 public class UI_ControlMainMenu: MonoBehaviour
 {
     public GameObject gameObjectMenu;
     public GameObject gameObjectOptions;
+
+    // Objek page press any key
+    public GameObject gameObjectPressAnyKey;
     public Animator buttonAnimator;
     public Animator optionsAnimator;
-    
-    
+
+    public Animator pressAnyKeyAnimator;
+
 
     public static UI_ControlMainMenu Instance { get; private set; }
+
+    [SerializeField] private CanvasGroup UIGroup;
+
+    [SerializeField] private bool fadeIn = false;
+    [SerializeField] private bool fadeOut = false;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    //Pindah scene ke scene yang diinginkan
-    public void ChangeScene(string sceneName)
+    private void Update()
     {
-        SceneManager.LoadScene(sceneName);
+        if(fadeIn)
+        {
+            if(UIGroup.alpha < 1)
+            {
+                UIGroup.alpha += Time.deltaTime;
+                if(UIGroup.alpha >= 1)
+                {
+                    fadeIn = false;
+                }
+            }
+            
+        }
+        if(fadeOut)
+        {
+            if(UIGroup.alpha > 0)
+            {
+                UIGroup.alpha -= Time.deltaTime;
+                if(UIGroup.alpha <= 0)
+                {
+                    fadeOut = false;
+                }
+            }
+        }
+        // Jika menekan tombol apapun, sembunyikan objek press any key
+        if (Input.anyKeyDown)
+        {
+            if (gameObjectPressAnyKey.activeSelf)
+            {
+                ShowPressAnyKey();
+                
+
+            }
+            
+        }
+
+
     }
+
+    //Pindah scene ke scene yang diinginkan
+    public void ChangeSceneLoadGame()
+    {
+        StartCoroutine(DelayChangeScene());
+    }
+
+    IEnumerator DelayChangeScene()
+    {
+        HideUI();
+
+        yield return new WaitForSeconds(1f);
+        UI_AnimatorUI.instance.LoadGameAnimation();
+        
+        SceneController.instance.LoadGame();       
+
+    }
+
+    
+    public void ShowUI()
+    {
+        fadeIn = true;
+    }
+
+    public void HideUI()
+    {
+        fadeOut = true;
+    }
+
+    // Menampilkan objek press any key
+
+    public void ShowPressAnyKey()
+    {
+        StartCoroutine(DelayPressAnyKey());
+    }
+    
+    IEnumerator DelayPressAnyKey()
+    {
+        pressAnyKeyAnimator.SetTrigger("FadeIn");
+        yield return new WaitForSeconds(1.4f);
+        gameObjectPressAnyKey.SetActive(false);
+        gameObjectMenu.SetActive(true);
+        ShowUI();
+        
+    }
+
 
 
 

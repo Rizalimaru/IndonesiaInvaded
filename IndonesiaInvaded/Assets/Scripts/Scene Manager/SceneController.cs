@@ -26,6 +26,8 @@ public class SceneController : MonoBehaviour
         StartCoroutine(LoadLevel());
     }
 
+    
+
     IEnumerator LoadLevel()
     {
         animator.SetTrigger("End");
@@ -33,5 +35,31 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
         animator.SetTrigger("Start");
     }
+
+    public void LoadMainmenu()
+    {
+        StartCoroutine(Mainmenu());
+    }
+
+    IEnumerator Mainmenu()
+    {
+        animator.SetTrigger("End");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadSceneAsync(0);
+        animator.SetTrigger("Start");
+    }
+
+    public void LoadGame()
+    {
+        StartCoroutine(Game());
+    }
+
+    IEnumerator Game()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadSceneAsync(1);
+        animator.SetTrigger("Start");
+    }
+    
     
 }

@@ -10,6 +10,8 @@ public class UI_PauseGame : MonoBehaviour
     public UnityEvent GamePaused;
     public UnityEvent GameResumed;
 
+    private AudioManager audioManagerInstance;
+
     public static bool GameIsPaused = false;
 
     public GameObject gameObjectPause;
@@ -33,6 +35,8 @@ public class UI_PauseGame : MonoBehaviour
         // Lock cursor initially
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        audioManagerInstance = AudioManager.Instance;
     }
 
     // Update is called once per frame
@@ -96,6 +100,8 @@ public class UI_PauseGame : MonoBehaviour
 
         GamePaused.Invoke(); // Invoke pause event
 
+        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
+
         Debug.Log("Game paused");
     }
 
@@ -111,17 +117,22 @@ public class UI_PauseGame : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+
         GameResumed.Invoke(); // Invoke resume event
     }
 
     public void LoadMenu()
     {
+
+
         Time.timeScale = 1f;
         gameObjectPause.SetActive(false);
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(true);
         GameIsPaused = false;
-        SceneManager.LoadScene("MainMenu");
+        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+        SceneController.instance.LoadMainmenu();
     }
 
     public void ShowOptions()
