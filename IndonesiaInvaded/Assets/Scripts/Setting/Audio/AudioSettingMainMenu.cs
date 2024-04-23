@@ -16,10 +16,7 @@ public class AudioSettingMainMenu : MonoBehaviour
 
     public static AudioSettingMainMenu Instance { get; set;}
 
-    private void Start()
-    { 
-        audioManagerInstance.PlayBackgroundMusic("Mainmenu", 0);
-    }
+    
 
     private void Awake()
     {
@@ -60,7 +57,12 @@ public class AudioSettingMainMenu : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        }
+    }
+
+    private void Start()
+    { 
+        audioManagerInstance.PlayBackgroundMusic("Mainmenu", 0);
+    }
 
     public void Sceneloader(int SceneIndex)
     {
