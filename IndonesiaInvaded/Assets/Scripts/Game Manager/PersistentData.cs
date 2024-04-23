@@ -8,13 +8,13 @@ public class PersistentData : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        if (instance != null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
         }
         else{
-            Destroy(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
     }
 }
