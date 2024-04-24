@@ -14,6 +14,8 @@ public class UI_PauseGame : MonoBehaviour
 
     public static bool GameIsPaused = false;
 
+    private bool isGameOver = false;
+
     // Lock cursor when the game is not paused
     private bool isCursorLocked = true;
 
@@ -40,7 +42,6 @@ public class UI_PauseGame : MonoBehaviour
     public Animator pauseAnimator;
     public Animator optionsAnimatorGame;
 
-
     private void Awake()
     {
         if(instance != null)
@@ -65,24 +66,28 @@ public class UI_PauseGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (!isGameOver) // tambahkan kondisi !isGameOver
         {
-            if (GameIsPaused)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (gameObjectOptions.activeSelf)
+                if (GameIsPaused)
                 {
-                    HideOptions();
+                    if (gameObjectOptions.activeSelf)
+                    {
+                        HideOptions();
+                    }
+                }
+                else
+                {
+                    Pause();
                 }
             }
-            else
-            {
-                Pause();
-            }
-        }
 
-        if (PlayerAttribut.instance.currentHealth <= 0 && Time.timeScale != 0f)
-        {
-            GameOver();
+            if (PlayerAttribut.instance.currentHealth <= 0)
+            {
+                GameOver();
+                isGameOver = true; // setelah memanggil GameOver(), set isGameOver menjadi true
+            }
         }
     }
 
@@ -117,12 +122,15 @@ public class UI_PauseGame : MonoBehaviour
     public void Pause()
     {
         pauseAnimator.SetTrigger("pausein");
+
         gameObjectPause.SetActive(true);
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(false);
         gameResult.SetActive(false);
+
         Time.timeScale = 0f;
         GameIsPaused = true;
+
         isCursorLocked = false; // Unlock cursor when paused
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -136,15 +144,19 @@ public class UI_PauseGame : MonoBehaviour
 
     public void GameOver()
     {
+
         gameOver.SetActive(true);
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(false);
         gameResult.SetActive(false);
+
         Time.timeScale = 0f;
         GameIsPaused = true;
         isCursorLocked = false; // Unlock cursor when paused
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        GamePaused.Invoke();
 
         audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
 
@@ -195,6 +207,7 @@ public class UI_PauseGame : MonoBehaviour
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(true);
         gameResult.SetActive(false);
+        gameOver.SetActive(false);
         GameIsPaused = false;
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
         SceneMainMenuManager.instance.LoadMainMenu();

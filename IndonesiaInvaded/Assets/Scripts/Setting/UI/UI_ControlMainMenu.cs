@@ -6,24 +6,39 @@ using UnityEngine.SceneManagement;
 
 public class UI_ControlMainMenu: MonoBehaviour
 {
+
+    [Header("-------------GameObjects-------------")]
     public GameObject gameObjectMenu;
     public GameObject gameObjectOptions;
 
     // Objek page press any key
     public GameObject gameObjectPressAnyKey;
+
+    public GameObject gameObjectMissionSelected;
+
+    [Header("-------------Animation-------------")]
     public Animator buttonAnimator;
     public Animator optionsAnimator;
 
     public Animator pressAnyKeyAnimator;
 
+    public Animator missionSelectedAnimator;
+
 
     public static UI_ControlMainMenu Instance { get; private set; }
 
+    [Header("-------------Canvas Group-------------")]
     [SerializeField] private CanvasGroup UIGroup;
 
     [SerializeField] private bool fadeIn = false;
     [SerializeField] private bool fadeOut = false;
 
+    [Header("-------------Canvas Group Selected Mission-------------")]
+    [SerializeField] private CanvasGroup UIGroupMissionSelected;
+
+    [SerializeField] private bool fadeInMissionSelected = false;
+
+    [SerializeField] private bool fadeOutMissionSelected = false;
     private void Awake()
     {
         Instance = this;
@@ -54,19 +69,39 @@ public class UI_ControlMainMenu: MonoBehaviour
                 }
             }
         }
+
+        if(fadeInMissionSelected)
+        {
+            if(UIGroupMissionSelected.alpha < 1)
+            {
+                UIGroupMissionSelected.alpha += Time.deltaTime * 2;
+                if(UIGroupMissionSelected.alpha >= 1)
+                {
+                    fadeInMissionSelected = false;
+                }
+            }
+            
+        }
+
+        if(fadeOutMissionSelected)
+        {
+            if(UIGroupMissionSelected.alpha > 0)
+            {
+                UIGroupMissionSelected.alpha -= Time.deltaTime;
+                if(UIGroupMissionSelected.alpha <= 0)
+                {
+                    fadeOutMissionSelected = false;
+                }
+            }
+        }
         // Jika menekan tombol apapun, sembunyikan objek press any key
         if (Input.anyKeyDown)
         {
             if (gameObjectPressAnyKey.activeSelf)
             {
                 ShowPressAnyKey();
-                
-
             }
-            
         }
-
-
     }
 
     //Pindah scene ke scene yang diinginkan
@@ -74,7 +109,6 @@ public class UI_ControlMainMenu: MonoBehaviour
     {
         StartCoroutine(DelayChangeScene());
     }
-
     IEnumerator DelayChangeScene()
     {
         HideUI();
@@ -82,10 +116,7 @@ public class UI_ControlMainMenu: MonoBehaviour
         UI_AnimatorUI.instance.LoadGameAnimation();
         yield return new WaitForSeconds(1f);
         SceneMainMenuManager.instance.LoadGame();       
-
     }
-
-    
     public void ShowUI()
     {
         fadeIn = true;
@@ -112,10 +143,6 @@ public class UI_ControlMainMenu: MonoBehaviour
         ShowUI();
         
     }
-
-
-
-
     public void HideMenu()
     {
         // Mengdelay sebelum menyembunyikan menu
@@ -166,6 +193,41 @@ public class UI_ControlMainMenu: MonoBehaviour
         gameObjectMenu.SetActive(true);
         gameObjectOptions.SetActive(false);
     }
+
+
+    // Show mission selected
+    public void ShowMissionSelected()
+    {
+        StartCoroutine(DelayMissionSelected());
+    }
+
+    public void HideMissionSelected()
+    {
+        StartCoroutine(HideMissionSelectedDelay());
+    }
+
+    IEnumerator DelayMissionSelected()
+    {
+        gameObjectMissionSelected.SetActive(true);
+        fadeInMissionSelected = true;
+
+        yield return new WaitForSeconds(1.4f);
+        
+        yield return new WaitForSeconds(1.4f);
+        
+        
+        
+        
+    }
+    IEnumerator HideMissionSelectedDelay()
+    {
+        fadeOutMissionSelected = true;
+        yield return new WaitForSeconds(1.4f);
+        gameObjectMissionSelected.SetActive(false);
+    }
+
+
+    
 
     // Exit game
     public void ExitGame()
