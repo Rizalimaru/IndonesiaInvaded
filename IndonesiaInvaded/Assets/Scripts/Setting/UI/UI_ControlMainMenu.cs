@@ -78,16 +78,10 @@ public class UI_ControlMainMenu: MonoBehaviour
     IEnumerator DelayChangeScene()
     {
         HideUI();
-        
-
         yield return new WaitForSeconds(1f);
-
         UI_AnimatorUI.instance.LoadGameAnimation();
-
         yield return new WaitForSeconds(1f);
-        
-        
-        SceneController.instance.LoadGame();       
+        SceneMainMenuManager.instance.LoadGame();       
 
     }
 

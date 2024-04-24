@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,19 +12,22 @@ public class GameObjectDestroyManager : MonoBehaviour
     {
         if (instance != null)
         {
-            instance = this;
-            // Destroy(gameObject);
+            Debug.LogWarning("More than one instance of GameObjectDestroyManager found!");
         }
         else
         {
-            DontDestroyOnLoad(gameObject);
+            instance = this;
         }
     }
     public void DestroyGameObject()
     {
-        for (int i = 0; i < gameObjectToDestroy.Length; i++)
+        if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            Destroy(gameObjectToDestroy[i]);
+            for (int i = 0; i < gameObjectToDestroy.Length; i++)
+            {
+                gameObjectToDestroy[i].SetActive(false);
+            }
+
         }
     }
 
@@ -33,7 +35,9 @@ public class GameObjectDestroyManager : MonoBehaviour
     {
         for (int i = 0; i < gameObjectToDestroy.Length; i++)
         {
-            Instantiate(gameObjectToDestroy[i]);
+            gameObjectToDestroy[i].SetActive(true);
         }
+
+
     }
 }

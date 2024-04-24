@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneController : MonoBehaviour
+public class SceneMainMenuManager : MonoBehaviour
 {
-    public static SceneController instance;
+    public static SceneMainMenuManager instance;
     [SerializeField] Animator animator;
 
     private void Awake()
@@ -65,5 +64,5 @@ public class SceneController : MonoBehaviour
         
     }
     
-    
+        
 }

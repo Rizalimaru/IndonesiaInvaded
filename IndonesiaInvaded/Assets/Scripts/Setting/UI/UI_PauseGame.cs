@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,6 +6,7 @@ using UnityEngine.Events;
 
 public class UI_PauseGame : MonoBehaviour
 {
+    public static UI_PauseGame instance;
     public UnityEvent GamePaused;
     public UnityEvent GameResumed;
 
@@ -17,6 +17,7 @@ public class UI_PauseGame : MonoBehaviour
     public GameObject gameObjectPause;
     public GameObject gameObjectUI;
     public GameObject gameObjectOptions;
+    public GameObject gameResult;
 
     public GameObject playerCamera;
     public GameObject[] panelOptions;
@@ -29,6 +30,17 @@ public class UI_PauseGame : MonoBehaviour
     // Lock cursor when the game is not paused
     private bool isCursorLocked = true;
 
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            Debug.LogWarning("More than one instance of UI_PauseGame found!");
+        }
+        else
+        {
+            instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -92,6 +104,7 @@ public class UI_PauseGame : MonoBehaviour
         gameObjectPause.SetActive(true);
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(false);
+        gameResult.SetActive(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
         isCursorLocked = false; // Unlock cursor when paused
@@ -111,6 +124,7 @@ public class UI_PauseGame : MonoBehaviour
         gameObjectPause.SetActive(false);
         gameObjectUI.SetActive(true);
         playerCamera.SetActive(true);
+        gameResult.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
         isCursorLocked = true; // Lock cursor when unpaused
@@ -124,16 +138,14 @@ public class UI_PauseGame : MonoBehaviour
 
     public void LoadMenu()
     {
-
-
         Time.timeScale = 1f;
         gameObjectPause.SetActive(false);
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(true);
+        gameResult.SetActive(false);
         GameIsPaused = false;
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
-        GameObjectDestroyManager.instance.DestroyGameObject();
-        SceneController.instance.LoadMainmenu();
+        SceneMainMenuManager.instance.LoadMainMenu();
     }
 
     public void ShowOptions()
