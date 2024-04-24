@@ -20,21 +20,6 @@ public class SceneMainMenuManager : MonoBehaviour
         }
     }
 
-    public void NextLevel()
-    {
-        StartCoroutine(LoadLevel());
-    }
-
-    
-
-    IEnumerator LoadLevel()
-    {
-        animator.SetTrigger("End");
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
-        animator.SetTrigger("Start");
-    }
-
     public void LoadMainMenu()
     {
         StartCoroutine(Mainmenu());
