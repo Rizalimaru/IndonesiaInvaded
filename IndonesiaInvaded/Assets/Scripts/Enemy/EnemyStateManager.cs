@@ -11,7 +11,9 @@ public class EnemyStateManager : MonoBehaviour
     EnemyBaseState currentState;
     public EnemyIdleState idleState = new EnemyIdleState();
     public EnemyChaseState movingState = new EnemyChaseState();
+    public EnemyRestState restState = new EnemyRestState();
     public EnemyAttackState attackState = new EnemyAttackState();
+    public EnemyRepositionState repositionState = new EnemyRepositionState();
 
     // Config Loader
     public EnemyScriptableObject enemyType;
@@ -32,6 +34,9 @@ public class EnemyStateManager : MonoBehaviour
     [System.NonSerialized] public float attackDistance;
     [System.NonSerialized] public float attackForce;
     [System.NonSerialized] public float attackDecay;
+
+    // Private Stuff Declaration
+    [System.NonSerialized] public float baseAgentSpeed;
 
     void Start()
     { 
@@ -97,5 +102,6 @@ public class EnemyStateManager : MonoBehaviour
         agent.avoidancePriority = enemyType.AvoidancePriority;
 
         agent.areaMask = enemyType.AreaMask;
+        baseAgentSpeed = agent.speed;
     }
 }
