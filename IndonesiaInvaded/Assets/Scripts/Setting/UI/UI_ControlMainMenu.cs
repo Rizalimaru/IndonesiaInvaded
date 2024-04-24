@@ -208,22 +208,21 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     IEnumerator DelayMissionSelected()
     {
+        HideUI();
+        yield return new WaitForSeconds(0.7f);
         gameObjectMissionSelected.SetActive(true);
         fadeInMissionSelected = true;
+        HideUI();
 
-        yield return new WaitForSeconds(1.4f);
         
-        yield return new WaitForSeconds(1.4f);
-        
-        
-        
-        
+    
     }
     IEnumerator HideMissionSelectedDelay()
     {
         fadeOutMissionSelected = true;
-        yield return new WaitForSeconds(1.4f);
+        yield return new WaitForSeconds(0.7f);
         gameObjectMissionSelected.SetActive(false);
+        ShowUI();
     }
 
 
