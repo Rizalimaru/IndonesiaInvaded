@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 
 public class PlayerAttribut : MonoBehaviour
 {
+    // Singleton instance
+    public static PlayerAttribut instance;
     public int maxHealth = 500;
     public int currentHealth;
     public int maxSP = 100;
@@ -24,6 +26,11 @@ public class PlayerAttribut : MonoBehaviour
         skillBar.SetSkill(currentSP);
 
         Combat.SuccessfulComboEvent += RegenerateSP;
+
+        if(instance == null)
+        {
+            instance = this;
+        }
     }
 
     private void Update()
@@ -42,6 +49,14 @@ public class PlayerAttribut : MonoBehaviour
         {
             UseSkill2();
         }
+
+        if(instance == null)
+        {
+            instance = this;
+        }
+
+        
+        
     }
 
     private void OnTriggerEnter(Collider other)

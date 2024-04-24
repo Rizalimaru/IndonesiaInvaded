@@ -16,21 +16,5 @@ public class GameEventManager : MonoBehaviour
         instance = this;
     }
 
-    public event Action onPlayerDeath;
-    public void PlayerDeath() 
-    {
-        if (onPlayerDeath != null) 
-        {
-            onPlayerDeath();
-        }
-    }
-
-    public event Action onCoinCollected;
-    public void CoinCollected() 
-    {
-        if (onCoinCollected != null) 
-        {
-            onCoinCollected();
-        }
-    }
+    
 }
