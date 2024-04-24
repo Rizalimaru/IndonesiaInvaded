@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,15 +6,35 @@ using UnityEngine.Events;
 
 public class UI_PauseGame : MonoBehaviour
 {
-    public UnityEvent GamePaused;
-    public UnityEvent GameResumed;
+
+    // Singleton instance
+    public static UI_PauseGame instance;
+    
+    private AudioManager audioManagerInstance;
 
     public static bool GameIsPaused = false;
 
-    public GameObject gameObjectPause;
-    public GameObject gameObjectOptions;
+    private bool isGameOver = false;
 
+    // Lock cursor when the game is not paused
+    private bool isCursorLocked = true;
+
+    [Header("-----------------------Events-----------------------")]
+    public UnityEvent GamePaused;
+    public UnityEvent GameResumed;
+
+    [Header("-----------------------GameObjects-----------------------")]
+
+    public GameObject gameObjectPause;
+    public GameObject gameObjectUI;
+    public GameObject gameObjectOptions;
+    public GameObject gameResult;
+    public GameObject gameOver;
+
+    [Header("-----------------------Player-----------------------")]
     public GameObject playerCamera;
+
+    [Header("-----------------------Panels-----------------------")]
     public GameObject[] panelOptions;
 
     [Header("-----------------------Animation-----------------------")]
@@ -23,32 +42,51 @@ public class UI_PauseGame : MonoBehaviour
     public Animator pauseAnimator;
     public Animator optionsAnimatorGame;
 
-    // Lock cursor when the game is not paused
-    private bool isCursorLocked = true;
-
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            Debug.LogWarning("More than one instance of UI_PauseGame found!");
+        }
+        else
+        {
+            instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
         // Lock cursor initially
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        audioManagerInstance = AudioManager.Instance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (!isGameOver) // tambahkan kondisi !isGameOver
         {
-            if (GameIsPaused)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (gameObjectOptions.activeSelf)
+                if (GameIsPaused)
                 {
-                    HideOptions();
+                    if (gameObjectOptions.activeSelf)
+                    {
+                        HideOptions();
+                    }
+                }
+                else
+                {
+                    Pause();
                 }
             }
-            else
+
+            if (PlayerAttribut.instance.currentHealth <= 0)
             {
-                Pause();
+                GameOver();
+                isGameOver = true; // setelah memanggil GameOver(), set isGameOver menjadi true
             }
         }
     }
@@ -84,29 +122,80 @@ public class UI_PauseGame : MonoBehaviour
     public void Pause()
     {
         pauseAnimator.SetTrigger("pausein");
+
         gameObjectPause.SetActive(true);
+        gameObjectUI.SetActive(false);
         playerCamera.SetActive(false);
+        gameResult.SetActive(false);
+
         Time.timeScale = 0f;
         GameIsPaused = true;
+
         isCursorLocked = false; // Unlock cursor when paused
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
         GamePaused.Invoke(); // Invoke pause event
 
+        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
+
         Debug.Log("Game paused");
+    }
+
+    public void GameOver()
+    {
+
+        gameOver.SetActive(true);
+        gameObjectUI.SetActive(false);
+        playerCamera.SetActive(false);
+        gameResult.SetActive(false);
+
+        Time.timeScale = 0f;
+        GameIsPaused = true;
+        isCursorLocked = false; // Unlock cursor when paused
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        GamePaused.Invoke();
+
+        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
+
+
+
+    }
+
+    public void ShowResult()
+    {
+
+        gameOver.SetActive(false);
+        gameObjectUI.SetActive(false);
+        playerCamera.SetActive(false);
+        gameResult.SetActive(true);
+        Time.timeScale = 0f;
+        GameIsPaused = true;
+        isCursorLocked = false; // Unlock cursor when paused
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
+
+
     }
 
     public void Resume()
     {
         pauseAnimator.SetTrigger("pauseout");
         gameObjectPause.SetActive(false);
+        gameObjectUI.SetActive(true);
         playerCamera.SetActive(true);
+        gameResult.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
         isCursorLocked = true; // Lock cursor when unpaused
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
 
         GameResumed.Invoke(); // Invoke resume event
     }
@@ -115,10 +204,15 @@ public class UI_PauseGame : MonoBehaviour
     {
         Time.timeScale = 1f;
         gameObjectPause.SetActive(false);
+        gameObjectUI.SetActive(false);
         playerCamera.SetActive(true);
+        gameResult.SetActive(false);
+        gameOver.SetActive(false);
         GameIsPaused = false;
-        SceneManager.LoadScene("MainMenu");
+        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+        SceneMainMenuManager.instance.LoadMainMenu();
     }
+
 
     public void ShowOptions()
     {
@@ -138,19 +232,18 @@ public class UI_PauseGame : MonoBehaviour
         gameObjectOptions.SetActive(false);
     }
 
-   
     // Update cursor state based on pause status
-    private void LateUpdate()
-    {
-        if (GameIsPaused && !isCursorLocked)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true; // Show cursor during pause
-        }
-        else if (!GameIsPaused && isCursorLocked)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-    }
+    // private void LateUpdate()
+    // {
+    //     if (GameIsPaused && !isCursorLocked)
+    //     {
+    //         Cursor.lockState = CursorLockMode.None;
+    //         Cursor.visible = true; // Show cursor during pause
+    //     }
+    //     else if (!GameIsPaused && isCursorLocked)
+    //     {
+    //         Cursor.lockState = CursorLockMode.Locked;
+    //         Cursor.visible = false;
+    //     }
+    // }
 }

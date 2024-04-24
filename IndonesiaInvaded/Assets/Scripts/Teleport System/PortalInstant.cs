@@ -5,20 +5,28 @@ using UnityEngine;
 public class PortalInstant : MonoBehaviour
 {
    [SerializeField] Transform destination;
+   [SerializeField] Animator animator;
+   [SerializeField] PlayerMovement player;
+   [SerializeField] GameObject playerCamera;
     
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") && other.TryGetComponent<PlayerMovement>(out var player)){
-            player.Teleport(destination.position, destination.rotation);
+        if(other.CompareTag("Player")){
+            StartCoroutine(LoadLevel());
         }
 
     }
-    void OnDrawGizmos()
+
+    IEnumerator LoadLevel()
     {
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(destination.position, 4f);
-        var direction = destination.TransformDirection(Vector3.forward);
-        Gizmos.DrawRay(destination.position, direction);
+        animator.SetTrigger("End");
+        player.gameObject.SetActive(false);
+        playerCamera.SetActive(false);
+        yield return new WaitForSeconds(1);
+        player.Teleport(destination.position, destination.rotation);
+        player.gameObject.SetActive(true);
+        playerCamera.SetActive(true);
+        animator.SetTrigger("Start");
     }
 }

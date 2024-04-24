@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance { get; set; }
+    private static AudioManager _instance;
+    public static AudioManager Instance { get { return _instance; } }
+
+    private Dictionary<AudioSource, bool> soundEffectStatus = new Dictionary<AudioSource, bool>();
 
     // Membuat kelas untuk menyimpan grup sound effect
 
@@ -39,16 +43,18 @@ public class AudioManager : MonoBehaviour
     private const string BackgroundMusicKey = "BackgroundMusic";
     private const string SoundEffectKey = "SoundEffect";
 
+    private bool isSoundEffectsPaused = false;
+
     private void Awake()
     {
-        if (Instance == null)
+        if (_instance != null && _instance != this)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(this.gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            _instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
     }
 
@@ -151,6 +157,48 @@ public class AudioManager : MonoBehaviour
         audioMixer.GetFloat("MasterVolume", out currentVolume);
         return currentVolume <= -80f;
     }
+
+
+
+    public void PauseSoundEffectGroup(string groupName)
+    {
+        SoundEffectGroup group = System.Array.Find(audioSFXGroups, g => g.groupName == groupName);
+        if (group != null)
+        {
+            foreach (AudioSource sfx in group.soundEffects)
+            {
+                if (sfx.isPlaying)
+                {
+                    soundEffectStatus[sfx] = true; // Menyimpan status play/pause sebelumnya
+                    sfx.Pause();
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Sound effect group not found.");
+        }
+    }
+
+    public void ResumeSoundEffectGroup(string groupName)
+    {
+        SoundEffectGroup group = System.Array.Find(audioSFXGroups, g => g.groupName == groupName);
+        if (group != null)
+        {
+            foreach (AudioSource sfx in group.soundEffects)
+            {
+                if (soundEffectStatus.ContainsKey(sfx) && soundEffectStatus[sfx])
+                {
+                    sfx.UnPause(); // Mengembalikan status play/pause sebelumnya
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Sound effect group not found.");
+        }
+    }
+
 
     
 }

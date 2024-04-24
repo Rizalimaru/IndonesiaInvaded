@@ -1,19 +1,17 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-// The attacking window is calculated with enemy.attackSpeed + 1 from idle state delay
-
 public class EnemyAttackState : EnemyBaseState
 {
-    float delay;
-
+    float animDelay;
     public override void EnterState(EnemyStateManager enemy)
     {
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
         Debug.Log("Enemy is Attacking");
         enemy.animator.SetBool("isWalking", false);
         enemy.animator.SetBool("isAttacking", true);
-        delay = enemy.attackSpeed;
+        enemy.animator.SetBool("isResting", false);
+        animDelay = 1.0f;
 
         GameObject attackObj = GameObject.Instantiate(enemy.attackType, enemy.spawnPoint.transform.position, enemy.spawnPoint.rotation) as GameObject;
         Rigidbody attackRigidBody = attackObj.GetComponent<Rigidbody>();
@@ -23,18 +21,18 @@ public class EnemyAttackState : EnemyBaseState
 
     public override void UpdateState(EnemyStateManager enemy)
     {
-        if(delay > 0)
+        if (animDelay > 0)
         {
-            delay -= Time.deltaTime;
+            animDelay -= Time.deltaTime;
         }
         else
         {
-            enemy.SwitchState(enemy.idleState);
-        }
-        
-        if (Vector3.Distance(enemy.agent.transform.position, enemy.target.transform.position) >= enemy.attackDistance + 1)
-        {
-            enemy.SwitchState(enemy.movingState);
+            if (Vector3.Distance(enemy.agent.transform.position, enemy.target.transform.position) >= enemy.attackDistance + 1)
+            {
+                enemy.SwitchState(enemy.movingState);
+            }
+
+            enemy.SwitchState(enemy.restState);
         }
     }
 
