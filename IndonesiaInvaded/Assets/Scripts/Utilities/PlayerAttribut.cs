@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 public class PlayerAttribut : MonoBehaviour
 {
     public int maxHealth = 500;
-    public int currentHealth;
+    public int currentHealth = 0;
     public int maxSP = 100;
     public int currentSP = 0;
 
@@ -17,8 +17,9 @@ public class PlayerAttribut : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
+       
         healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetHealth(currentHealth);
 
         skillBar.SetMaxSkill(maxSP);
         skillBar.SetSkill(currentSP);
@@ -49,10 +50,12 @@ public class PlayerAttribut : MonoBehaviour
         if (other.CompareTag("Enemy_Melee"))
         {
             TakeDamage(40);
+            StopRegenerateHealth();
         }
         else if (other.CompareTag("Enemy_Ranged"))
         {
             TakeDamage(20);
+            StopRegenerateHealth();
         }
     }
 
@@ -96,7 +99,22 @@ public class PlayerAttribut : MonoBehaviour
             regenCoroutine = StartCoroutine(RegenerateHealth());
         }
     }
- 
+    public void RegenHPOrb(int hpAmount)
+    {
+        currentHealth += hpAmount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        healthBar.SetHealth(currentHealth);
+        Debug.Log("Player restored " + hpAmount + " HP using HP orb!");
+    }
+
+    public void RegenSPOrb(int spAmount)
+    {
+        currentSP += spAmount;
+        currentSP = Mathf.Clamp(currentSP, 0, maxSP);
+        skillBar.SetSkill(currentSP);
+        Debug.Log("Player restored " + spAmount + " SP using SP orb!");
+    }
+
     void RegenerateSP()
     {
         // Regenerasi SP di sini
