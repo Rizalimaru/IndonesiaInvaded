@@ -13,10 +13,4 @@ public class TeleportLast : MonoBehaviour
             PersistentData.instance.transform.eulerAngles = transform.eulerAngles;
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

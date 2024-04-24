@@ -5,6 +5,9 @@ using Unity.VisualScripting;
 
 public class PlayerAttribut : MonoBehaviour
 {
+
+    // Singleton instance untuk PlayerAttribut jika diperlukan
+    public static PlayerAttribut instance;
     public int maxHealth = 500;
     public int currentHealth;
     public int maxSP = 100;
@@ -17,13 +20,25 @@ public class PlayerAttribut : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
+        // Menyoba  menginisialisasi currentHealth dengan nilai 50 untuk keperluan testing
+        currentHealth = 50;
         healthBar.SetMaxHealth(maxHealth);
 
         skillBar.SetMaxSkill(maxSP);
         skillBar.SetSkill(currentSP);
 
         Combat.SuccessfulComboEvent += RegenerateSP;
+
+        // Singleton instance untuk PlayerAttribut
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
