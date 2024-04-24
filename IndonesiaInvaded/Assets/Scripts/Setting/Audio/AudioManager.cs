@@ -58,10 +58,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-    }
-
     private void Start()
     {
         // Set nilai AudioMixer berdasarkan PlayerPrefs

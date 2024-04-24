@@ -6,20 +6,33 @@ using UnityEngine.Events;
 
 public class UI_PauseGame : MonoBehaviour
 {
-    public static UI_PauseGame instance;
-    public UnityEvent GamePaused;
-    public UnityEvent GameResumed;
 
+    // Singleton instance
+    public static UI_PauseGame instance;
+    
     private AudioManager audioManagerInstance;
 
     public static bool GameIsPaused = false;
+
+    // Lock cursor when the game is not paused
+    private bool isCursorLocked = true;
+
+    [Header("-----------------------Events-----------------------")]
+    public UnityEvent GamePaused;
+    public UnityEvent GameResumed;
+
+    [Header("-----------------------GameObjects-----------------------")]
 
     public GameObject gameObjectPause;
     public GameObject gameObjectUI;
     public GameObject gameObjectOptions;
     public GameObject gameResult;
+    public GameObject gameOver;
 
+    [Header("-----------------------Player-----------------------")]
     public GameObject playerCamera;
+
+    [Header("-----------------------Panels-----------------------")]
     public GameObject[] panelOptions;
 
     [Header("-----------------------Animation-----------------------")]
@@ -27,8 +40,6 @@ public class UI_PauseGame : MonoBehaviour
     public Animator pauseAnimator;
     public Animator optionsAnimatorGame;
 
-    // Lock cursor when the game is not paused
-    private bool isCursorLocked = true;
 
     private void Awake()
     {
@@ -67,6 +78,11 @@ public class UI_PauseGame : MonoBehaviour
             {
                 Pause();
             }
+        }
+
+        if (PlayerAttribut.instance.currentHealth <= 0 && Time.timeScale != 0f)
+        {
+            GameOver();
         }
     }
 
@@ -118,6 +134,42 @@ public class UI_PauseGame : MonoBehaviour
         Debug.Log("Game paused");
     }
 
+    public void GameOver()
+    {
+        gameOver.SetActive(true);
+        gameObjectUI.SetActive(false);
+        playerCamera.SetActive(false);
+        gameResult.SetActive(false);
+        Time.timeScale = 0f;
+        GameIsPaused = true;
+        isCursorLocked = false; // Unlock cursor when paused
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
+
+
+
+    }
+
+    public void ShowResult()
+    {
+
+        gameOver.SetActive(false);
+        gameObjectUI.SetActive(false);
+        playerCamera.SetActive(false);
+        gameResult.SetActive(true);
+        Time.timeScale = 0f;
+        GameIsPaused = true;
+        isCursorLocked = false; // Unlock cursor when paused
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
+
+
+    }
+
     public void Resume()
     {
         pauseAnimator.SetTrigger("pauseout");
@@ -148,6 +200,7 @@ public class UI_PauseGame : MonoBehaviour
         SceneMainMenuManager.instance.LoadMainMenu();
     }
 
+
     public void ShowOptions()
     {
         gameObjectOptions.SetActive(true);
@@ -166,7 +219,6 @@ public class UI_PauseGame : MonoBehaviour
         gameObjectOptions.SetActive(false);
     }
 
-   
     // Update cursor state based on pause status
     // private void LateUpdate()
     // {
@@ -180,5 +232,5 @@ public class UI_PauseGame : MonoBehaviour
     //         Cursor.lockState = CursorLockMode.Locked;
     //         Cursor.visible = false;
     //     }
+    // }
 }
-

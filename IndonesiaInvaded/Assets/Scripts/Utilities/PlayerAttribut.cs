@@ -5,8 +5,7 @@ using Unity.VisualScripting;
 
 public class PlayerAttribut : MonoBehaviour
 {
-
-    // Singleton instance untuk PlayerAttribut jika diperlukan
+    // Singleton instance
     public static PlayerAttribut instance;
     public int maxHealth = 500;
     public int currentHealth;
@@ -20,9 +19,7 @@ public class PlayerAttribut : MonoBehaviour
 
     private void Start()
     {
-        //currentHealth = maxHealth;
-        // Menyoba  menginisialisasi currentHealth dengan nilai 50 untuk keperluan testing
-        currentHealth = 50;
+        currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
 
         skillBar.SetMaxSkill(maxSP);
@@ -30,14 +27,9 @@ public class PlayerAttribut : MonoBehaviour
 
         Combat.SuccessfulComboEvent += RegenerateSP;
 
-        // Singleton instance untuk PlayerAttribut
-        if (instance == null)
+        if(instance == null)
         {
             instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
 
@@ -57,6 +49,14 @@ public class PlayerAttribut : MonoBehaviour
         {
             UseSkill2();
         }
+
+        if(instance == null)
+        {
+            instance = this;
+        }
+
+        
+        
     }
 
     private void OnTriggerEnter(Collider other)
