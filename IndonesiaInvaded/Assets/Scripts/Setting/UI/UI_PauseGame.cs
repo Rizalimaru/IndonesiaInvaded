@@ -47,12 +47,12 @@ public class UI_PauseGame : MonoBehaviour
         if(instance != null)
         {
             Debug.LogWarning("More than one instance of UI_PauseGame found!");
-            Destroy(gameObject);
+            // Destroy(gameObject);
         }
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
         }
     }
     // Start is called before the first frame update
