@@ -6,10 +6,13 @@ public class EnemyIdleState : EnemyBaseState
     float delay;
 
     public override void EnterState(EnemyStateManager enemy)
-    {   
-        Debug.Log("Enemy is Idle");
+    {
+        if (enemy.enemyTitle == EnemyScriptableObject.title.Boss) Debug.Log("Boss is Idle");
+        else Debug.Log("Enemy is Idle");
+
         enemy.animator.SetBool("isWalking", false);
         enemy.animator.SetBool("isAttacking", false);
+        enemy.animator.SetBool("isResting", false);
         delay = 1f;
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
     }

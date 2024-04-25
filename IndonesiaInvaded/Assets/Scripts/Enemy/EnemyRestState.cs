@@ -9,8 +9,11 @@ public class EnemyRestState : EnemyBaseState
 
     public override void EnterState(EnemyStateManager enemy)
     {
+
+        if (enemy.enemyTitle == EnemyScriptableObject.title.Boss) Debug.Log("Boss is Resting");
+        else Debug.Log("Enemy is Resting");
+
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
-        Debug.Log("Enemy is resting");
         enemy.animator.SetBool("isAttacking", false);
         enemy.animator.SetBool("isResting", true);
 

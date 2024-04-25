@@ -7,9 +7,11 @@ public class EnemyChaseState : EnemyBaseState
 {
     public override void EnterState(EnemyStateManager enemy)
     {
-        enemy.agent.speed = enemy.baseAgentSpeed;
+
+        if (enemy.enemyTitle == EnemyScriptableObject.title.Boss) Debug.Log("Boss is Moving");
+        else Debug.Log("Enemy is Moving");
+
         enemy.GetComponent<NavMeshAgent>().isStopped = false;
-        Debug.Log("Enemy is Moving");
         enemy.animator.SetBool("isWalking", true);
         enemy.animator.SetBool("isAttacking", false);
     }
