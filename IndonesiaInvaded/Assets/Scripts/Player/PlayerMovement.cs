@@ -61,14 +61,6 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     [Header("Gravity")]
     public float gravity = 9.81f; // Default gravity value
 
-    public void Awake(){
-        if(instance == null){
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }else{
-            Destroy(this.gameObject);
-        }
-    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
