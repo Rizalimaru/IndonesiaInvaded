@@ -16,7 +16,7 @@ public class SaveSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI percentageCompeleteText;
 
     private Button saveSlotButton;
-
+    public bool hasData {get; private set;} = false;
     private void Awake(){
         saveSlotButton = this.GetComponent<Button>();
     }
@@ -24,11 +24,14 @@ public class SaveSlot : MonoBehaviour
 
 
     public void SetData(GameData data){
-        if(data == null){
+        if(data == null)
+        {
+            hasData = false;
             noDataContent.SetActive(true);
             hasDataContent.SetActive(false);
         }
         else{
+            hasData = true;
             noDataContent.SetActive(false);
             hasDataContent.SetActive(true);
 

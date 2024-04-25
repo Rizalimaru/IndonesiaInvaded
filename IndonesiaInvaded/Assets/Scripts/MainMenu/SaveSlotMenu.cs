@@ -8,8 +8,13 @@ public class SaveSlotsMenu : MonoBehaviour
 {
     [Header("Menu Navigation")]
     [SerializeField] private MainMenu mainMenu;
+    
     [Header("Menu Button")]
     [SerializeField] private Button backButton;
+
+    [Header("Scene Load Data")]
+    [SerializeField] private SceneField sceneField;
+    
     private SaveSlot[] saveSlots;
 
     private bool isLoadingGame = false;
@@ -19,11 +24,7 @@ public class SaveSlotsMenu : MonoBehaviour
         saveSlots = this.GetComponentsInChildren<SaveSlot>();
     }
 
-    public void OnBackClicked()
-    {
-        mainMenu.ActivateMenu();
-        this.DeactivateMenu();
-    }
+   
 
     public void OnSaveClicked(SaveSlot saveSlot)
     {
@@ -33,8 +34,17 @@ public class SaveSlotsMenu : MonoBehaviour
         {
             GameManager.instance.NewGame();
         }
-        SceneManager.LoadSceneAsync("Level01");
+        SceneManager.LoadSceneAsync(sceneField);
     }
+
+    
+     public void OnBackClicked()
+    {
+        mainMenu.ActivateMenu();
+        // UI_ControlMainMenu.Instance.HideMissionSelected();
+        this.DeactivateMenu();
+    }
+
     public void ActivateMenu(bool isLoadingGame)
     {
 
@@ -59,6 +69,7 @@ public class SaveSlotsMenu : MonoBehaviour
             }
         }
     }
+
 
     public void DeactivateMenu()
     {

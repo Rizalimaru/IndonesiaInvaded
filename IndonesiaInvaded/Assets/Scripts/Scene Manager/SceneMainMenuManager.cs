@@ -16,7 +16,7 @@ public class SceneMainMenuManager : MonoBehaviour
         }
         else
         {
-            // Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 

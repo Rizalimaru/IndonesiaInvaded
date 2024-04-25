@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     public List<IDataPersistent> dataPersistenceObjects;
     private FileDataHandler fileDataHandler;
     private string selectedProfileId = "";
-
     private GameData gameData;
     private void Awake()
     {

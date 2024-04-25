@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IDataPersistent
 {
+    public static PlayerMovement instance;
     [Header("Movement")]
     private float moveSpeed;
     public float walkSpeed;
@@ -60,6 +61,14 @@ public class PlayerMovement : MonoBehaviour
     [Header("Gravity")]
     public float gravity = 9.81f; // Default gravity value
 
+    public void Awake(){
+        if(instance == null){
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }else{
+            Destroy(this.gameObject);
+        }
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -232,6 +241,15 @@ public class PlayerMovement : MonoBehaviour
         look.x = rotation.eulerAngles.y;
         look.y = rotation.eulerAngles.z;
         velocity = Vector3.zero;
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerPosition;
+    }
+    public void SaveData(ref GameData data)
+    {
+        data.playerPosition = this.transform.position;
     }
     
 }

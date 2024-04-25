@@ -10,7 +10,7 @@ public class UI_PauseGame : MonoBehaviour
     // Singleton instance
     public static UI_PauseGame instance;
     
-    private AudioManager audioManagerInstance;
+    public AudioManager audioManagerInstance;
 
     public static bool GameIsPaused = false;
 
@@ -47,10 +47,12 @@ public class UI_PauseGame : MonoBehaviour
         if(instance != null)
         {
             Debug.LogWarning("More than one instance of UI_PauseGame found!");
+            Destroy(gameObject);
         }
         else
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
     // Start is called before the first frame update
