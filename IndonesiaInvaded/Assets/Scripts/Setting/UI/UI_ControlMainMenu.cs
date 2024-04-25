@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class UI_ControlMainMenu: MonoBehaviour
 {
-
     [Header("-------------GameObjects-------------")]
     public GameObject gameObjectMenu;
     public GameObject gameObjectOptions;
@@ -41,7 +40,14 @@ public class UI_ControlMainMenu: MonoBehaviour
     [SerializeField] private bool fadeOutMissionSelected = false;
     private void Awake()
     {
-        Instance = this;
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            // Destroy(gameObject);
+        }
     }
 
     private void Update()
@@ -224,13 +230,19 @@ public class UI_ControlMainMenu: MonoBehaviour
         gameObjectMissionSelected.SetActive(false);
         ShowUI();
     }
-
-
-    
-
     // Exit game
-    public void ExitGame()
+    public void OnAplicationQuit()
     {
         Application.Quit();
+    }
+
+    public void OnNewGame(){
+        GameManager.instance.NewGame();
+    }
+    public void OnLoadGame(){
+        GameManager.instance.LoadGame();
+    }
+    public void OnSaveGame(){
+        GameManager.instance.SaveGame();
     }
 }
