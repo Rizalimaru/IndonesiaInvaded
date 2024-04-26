@@ -11,9 +11,8 @@ public class SaveSlotsMenu : MonoBehaviour
     
     [Header("Menu Button")]
     [SerializeField] private Button backButton;
-
-    [Header("Scene Load Data")]
-    [SerializeField] private SceneField sceneField;
+    
+    List<AsyncOperation> scenesToLoad = new List<AsyncOperation>();
     
     private SaveSlot[] saveSlots;
 
@@ -34,7 +33,8 @@ public class SaveSlotsMenu : MonoBehaviour
         {
             GameManager.instance.NewGame();
         }
-        SceneManager.LoadSceneAsync(sceneField);
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay"));
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("BlockoutJakarta", LoadSceneMode.Additive));
     }
 
     
