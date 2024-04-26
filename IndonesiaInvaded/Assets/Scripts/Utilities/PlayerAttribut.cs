@@ -8,7 +8,7 @@ public class PlayerAttribut : MonoBehaviour
     // Singleton instance
     public static PlayerAttribut instance;
     public int maxHealth = 500;
-    public int currentHealth = 0;
+    public int currentHealth;
     public int maxSP = 100;
     public int currentSP = 0;
 
@@ -19,7 +19,7 @@ public class PlayerAttribut : MonoBehaviour
 
     private void Start()
     {
-       
+        currentHealth = (maxHealth);
         healthBar.SetMaxHealth(maxHealth);
         healthBar.SetHealth(currentHealth);
 
