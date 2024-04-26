@@ -3,15 +3,17 @@ using UnityEngine.AI;
 
 public class EnemyAttackState : EnemyBaseState
 {
-    float animDelay;
+    float delay;
     public override void EnterState(EnemyStateManager enemy)
     {
+        if (enemy.enemyTitle == EnemyScriptableObject.title.Boss) Debug.Log("Boss is Attacking");
+        else Debug.Log("Enemy is Attacking");
+
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
-        Debug.Log("Enemy is Attacking");
         enemy.animator.SetBool("isWalking", false);
         enemy.animator.SetBool("isAttacking", true);
         enemy.animator.SetBool("isResting", false);
-        animDelay = 1.0f;
+        delay = enemy.animDelay;
 
         GameObject attackObj = GameObject.Instantiate(enemy.attackType, enemy.spawnPoint.transform.position, enemy.spawnPoint.rotation) as GameObject;
         Rigidbody attackRigidBody = attackObj.GetComponent<Rigidbody>();
@@ -21,17 +23,12 @@ public class EnemyAttackState : EnemyBaseState
 
     public override void UpdateState(EnemyStateManager enemy)
     {
-        if (animDelay > 0)
+        if (delay > 0)
         {
-            animDelay -= Time.deltaTime;
+            delay -= Time.deltaTime;
         }
         else
         {
-            if (Vector3.Distance(enemy.agent.transform.position, enemy.target.transform.position) >= enemy.attackDistance + 1)
-            {
-                enemy.SwitchState(enemy.movingState);
-            }
-
             enemy.SwitchState(enemy.restState);
         }
     }

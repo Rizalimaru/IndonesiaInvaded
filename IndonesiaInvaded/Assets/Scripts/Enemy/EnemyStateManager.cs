@@ -34,9 +34,11 @@ public class EnemyStateManager : MonoBehaviour
     [System.NonSerialized] public float attackDistance;
     [System.NonSerialized] public float attackForce;
     [System.NonSerialized] public float attackDecay;
+    [System.NonSerialized] public float viewAngle;
 
-    // Private Stuff Declaration
-    [System.NonSerialized] public float baseAgentSpeed;
+    // Extra Declaration Just Because
+    [System.NonSerialized] public EnemyScriptableObject.title enemyTitle;
+    [System.NonSerialized] public float animDelay;
 
     void Start()
     { 
@@ -89,6 +91,7 @@ public class EnemyStateManager : MonoBehaviour
         attackDistance = enemyType.attackDistance;
         attackForce = enemyType.attackForce;
         attackDecay = enemyType.attackDecay;
+        viewAngle = enemyType.viewingAngle;
 
         agent.speed = enemyType.Speed;
         agent.angularSpeed = enemyType.AngularSpeed;
@@ -102,6 +105,8 @@ public class EnemyStateManager : MonoBehaviour
         agent.avoidancePriority = enemyType.AvoidancePriority;
 
         agent.areaMask = enemyType.AreaMask;
-        baseAgentSpeed = agent.speed;
+
+        enemyTitle = enemyType.enemyTitle;
+        animDelay = enemyType.animationDelay;
     }
 }

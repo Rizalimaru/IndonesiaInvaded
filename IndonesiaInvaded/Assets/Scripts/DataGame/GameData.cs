@@ -6,13 +6,12 @@ using UnityEngine;
 public class GameData
 {
     public long lastUpdate;
-    public int deathCount;
     public Vector3 playerPosition;
     public SerializableDictionary<string, bool> monsterKilled;
+    
 
     public GameData()
     {
-        this.deathCount = 0;
         playerPosition = Vector3.zero;
         monsterKilled = new SerializableDictionary<string, bool>();
     }

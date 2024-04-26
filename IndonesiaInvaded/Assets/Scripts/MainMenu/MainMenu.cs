@@ -16,9 +16,14 @@ public class MainMenu : MonoBehaviour
     
 
     private void Start(){
-        if(GameManager.instance.HasGameData()){
-            loadButton.interactable = false;
+        DisableButtonsDependingOnData();
+    }
 
+    private void DisableButtonsDependingOnData() 
+    {
+        if (!GameManager.instance.HasGameData()) 
+        {
+            loadButton.interactable = false;
         }
     }
     public void OnNewGameClicked()
@@ -42,14 +47,10 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Exit Clicked");
     }
-    private void DisableMenuButton(){
-        newGameButton.interactable = false;
-        optionsButton.interactable = false;
-        exitButton.interactable = false;
-    }
 
     public void ActivateMenu(){
         this.gameObject.SetActive(true);
+        DisableButtonsDependingOnData();
     }
 
     public void DeactivateMenu(){

@@ -27,7 +27,7 @@ public class SceneManagers : MonoBehaviour
     }
 
     public void NewGame(){
-        SceneManager.LoadScene(blockOutJakarta);
+        
     }
 
     public void LoadMainMenu()
