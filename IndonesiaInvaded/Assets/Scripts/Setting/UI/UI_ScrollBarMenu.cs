@@ -3,31 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class UI_ScrollBarMenu : MonoBehaviour
 {
-
     public Scrollbar scrollBar;
     float[] pos;
     float scroll_pos;
+    float distance; // pindahkan deklarasi variabel distance ke sini
 
     void Start()
     {
-        
-    }
-
-    void Update()
-    {
-
         pos = new float[transform.childCount];
-        float distance = 1f / (pos.Length - 1f);
+        distance = 1f / (pos.Length - 1f);
         for (int i = 0; i < pos.Length; i++)
         {
             pos[i] = distance * i;
         }
-        
+
+        // Inisialisasi scroll_pos ke pos[0] agar scroll bar berada di indeks paling awal
+        scroll_pos = pos[0];
+    }
+
+    void Update()
+    {
         if (Input.GetMouseButton(0))
         {
-            scroll_pos = scrollBar.GetComponent<Scrollbar>().value;
+            scroll_pos = scrollBar.value;
         }
         else
         {
@@ -35,7 +36,7 @@ public class UI_ScrollBarMenu : MonoBehaviour
             {
                 if (scroll_pos < pos[i] + (distance / 2) && scroll_pos > pos[i] - (distance / 2))
                 {
-                    scrollBar.GetComponent<Scrollbar>().value = Mathf.Lerp(scrollBar.GetComponent<Scrollbar>().value, pos[i], 0.1f);
+                    scrollBar.value = Mathf.Lerp(scrollBar.value, pos[i], 0.1f);
                 }
             }
         }

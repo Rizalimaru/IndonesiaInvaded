@@ -14,6 +14,10 @@ public class SaveSlotsMenu : MonoBehaviour
 
     [Header("Scene Load Data")]
     [SerializeField] private SceneField sceneField;
+
+    [Header("Loading Screen")]
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private Slider loadingBarFill;
     
     private SaveSlot[] saveSlots;
 
@@ -33,8 +37,11 @@ public class SaveSlotsMenu : MonoBehaviour
     IEnumerator DelaySave(SaveSlot saveSlot)
     {
         DisableMenuButton();
+
+        // Menyembunyikan UI Mission Selected dan memulai animasi load game
         UI_ControlMainMenu.Instance.HideSelectedMissionInGame();
         UI_AnimatorUI.instance.LoadGameAnimation();
+        
         yield return new WaitForSeconds(1f);
         
         GameManager.instance.ChangeSelectedProfile(saveSlot.GetProfileId());
@@ -42,15 +49,23 @@ public class SaveSlotsMenu : MonoBehaviour
         {
             GameManager.instance.NewGame();
         }
-        SceneManager.LoadSceneAsync(sceneField);
+
+
+        // Menambahkan Progress Loading Screen dan Scene Load
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneField);
+        loadingScreen.SetActive(true);
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            loadingBarFill.value = progress;
+
+            yield return null;
+        }
     }
 
-    
     public void OnBackClicked()
     {
         StartCoroutine(DelayBack());
-        
-
     }
 
     IEnumerator DelayBack()
@@ -58,8 +73,11 @@ public class SaveSlotsMenu : MonoBehaviour
         UI_ControlMainMenu.Instance.HideMissionSelected();
 
         yield return new WaitForSeconds(0.9f);
+
+        // Mengaktifkan Main Menu dan Interactable Button
         mainMenu.ActivateMenu();
         mainMenu.EnableMenuandAnimationButton();
+
         this.DeactivateMenu();
         
         
