@@ -2,10 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 
 public class UI_ControlMainMenu: MonoBehaviour
 {
+
     [Header("-------------GameObjects-------------")]
     public GameObject gameObjectMenu;
     public GameObject gameObjectOptions;
@@ -23,7 +25,6 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     public Animator missionSelectedAnimator;
 
-
     public static UI_ControlMainMenu Instance { get; private set; }
 
     [Header("-------------Canvas Group-------------")]
@@ -38,6 +39,12 @@ public class UI_ControlMainMenu: MonoBehaviour
     [SerializeField] private bool fadeInMissionSelected = false;
 
     [SerializeField] private bool fadeOutMissionSelected = false;
+
+    [SerializeField] private MainMenu mainMenu;
+
+    private bool anyKeyDownHandled = false;
+
+
     private void Awake()
     {
         if(Instance == null)
@@ -48,6 +55,10 @@ public class UI_ControlMainMenu: MonoBehaviour
         {
             // Destroy(gameObject);
         }
+
+        mainMenu.EnableMenuandAnimationButton();
+
+        
     }
 
     private void Update()
@@ -80,7 +91,7 @@ public class UI_ControlMainMenu: MonoBehaviour
         {
             if(UIGroupMissionSelected.alpha < 1)
             {
-                UIGroupMissionSelected.alpha += Time.deltaTime * 2;
+                UIGroupMissionSelected.alpha += Time.deltaTime * 3;
                 if(UIGroupMissionSelected.alpha >= 1)
                 {
                     fadeInMissionSelected = false;
@@ -93,7 +104,7 @@ public class UI_ControlMainMenu: MonoBehaviour
         {
             if(UIGroupMissionSelected.alpha > 0)
             {
-                UIGroupMissionSelected.alpha -= Time.deltaTime;
+                UIGroupMissionSelected.alpha -= Time.deltaTime * 3;
                 if(UIGroupMissionSelected.alpha <= 0)
                 {
                     fadeOutMissionSelected = false;
@@ -120,8 +131,7 @@ public class UI_ControlMainMenu: MonoBehaviour
         HideUI();
         yield return new WaitForSeconds(1f);
         UI_AnimatorUI.instance.LoadGameAnimation();
-        yield return new WaitForSeconds(1f);
-        SceneMainMenuManager.instance.LoadGame();       
+        yield return new WaitForSeconds(1f);      
     }
     public void ShowUI()
     {
@@ -137,7 +147,11 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     public void ShowPressAnyKey()
     {
-        StartCoroutine(DelayPressAnyKey());
+        if (!anyKeyDownHandled)
+        {
+            anyKeyDownHandled = true;
+            StartCoroutine(DelayPressAnyKey());
+        }
     }
     
     IEnumerator DelayPressAnyKey()
@@ -167,6 +181,8 @@ public class UI_ControlMainMenu: MonoBehaviour
     {
 
         optionsAnimator.SetTrigger("FadeInOptions");
+
+        mainMenu.DisableMenuandAnimationButton();
         
         yield return new WaitForSeconds(0.5f);
         
@@ -193,6 +209,8 @@ public class UI_ControlMainMenu: MonoBehaviour
     {
 
         optionsAnimator.SetTrigger("FadeOutOptions");
+
+        mainMenu.EnableMenuandAnimationButton();
         
         yield return new WaitForSeconds(0.5f);
         
@@ -215,10 +233,8 @@ public class UI_ControlMainMenu: MonoBehaviour
     IEnumerator DelayMissionSelected()
     {
         HideUI();
-        yield return new WaitForSeconds(0.7f);
-        gameObjectMissionSelected.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
         fadeInMissionSelected = true;
-        HideUI();
 
         
     
@@ -226,13 +242,25 @@ public class UI_ControlMainMenu: MonoBehaviour
     IEnumerator HideMissionSelectedDelay()
     {
         fadeOutMissionSelected = true;
-        yield return new WaitForSeconds(0.7f);
-        gameObjectMissionSelected.SetActive(false);
+        yield return new WaitForSeconds(0.9f);
         ShowUI();
+    }
+
+    public void HideSelectedMissionInGame()
+    {
+        fadeOutMissionSelected = true;
     }
     // Exit game
     public void OnAplicationQuit()
     {
+        StartCoroutine(DelayExitGame());
+        
+    }
+
+    IEnumerator DelayExitGame()
+    {
+        mainMenu.DisableMenuandAnimationButton();
+        yield return new WaitForSeconds(0.8f);
         Application.Quit();
     }
 
