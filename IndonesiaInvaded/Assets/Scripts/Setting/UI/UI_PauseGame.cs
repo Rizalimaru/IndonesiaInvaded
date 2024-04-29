@@ -78,10 +78,19 @@ public class UI_PauseGame : MonoBehaviour
                     {
                         HideOptions();
                     }
+                    else
+                    {
+
+                        Resume(); // Resume the game if options are not active
+                        Cursor.lockState = CursorLockMode.Locked;
+                        Cursor.visible = false;
+                        Debug.Log("Game resumed");
+                    }
                 }
                 else
                 {
-                    Pause();
+                    Pause(); // Pause the game if not paused
+                    
                 }
             }
 
@@ -93,9 +102,6 @@ public class UI_PauseGame : MonoBehaviour
         }
     }
 
-    public void PauseGame(){
-        
-    }
 
     private void ShowPanel(int index)
     {
