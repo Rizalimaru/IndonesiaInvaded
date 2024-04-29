@@ -37,12 +37,16 @@ public class DestructibleObject : MonoBehaviour
         else if (dropType <= emptyChance + hpOrbChance)
         {
             // Drop HP Orb
-            Instantiate(hpOrbPrefab, transform.position, Quaternion.identity);
+            Debug.Log("Dropping HP Orb!");
+            GameObject hpOrb = Instantiate(hpOrbPrefab, transform.position, Quaternion.identity);
+            Debug.Log("HP Orb position: " + hpOrb.transform.position);
         }
         else
         {
             // Drop SP Orb
-            Instantiate(spOrbPrefab, transform.position, Quaternion.identity);
+            Debug.Log("Dropping SP Orb!");
+            GameObject spOrb = Instantiate(spOrbPrefab, transform.position, Quaternion.identity);
+            Debug.Log("SP Orb position: " + spOrb.transform.position);
         }
 
         // Apply explosion force
