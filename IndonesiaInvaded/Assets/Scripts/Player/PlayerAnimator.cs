@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
-    Animator anim;
+
+    public static PlayerAnimator instance;
+    public Animator anim;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -26,6 +28,15 @@ public class PlayerAnimator : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            // Destroy(gameObject);
+        }
     }
 
     private void FixedUpdate()
