@@ -47,6 +47,8 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     Vector3 moveDirection;
     internal Vector3 velocity;
 
+    private Animator animator;
+
     Rigidbody rb;
 
     public MovementState state;
@@ -62,7 +64,8 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     public float gravity = 9.81f; // Default gravity value
 
     private void Start()
-    {
+    {   
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
@@ -72,13 +75,22 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     }
 
     private void Update()
-    {
+    {   
+        bool hit1 = animator.GetBool("hit1");
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
         MyInput();
         SpeedControl();
         StateHandler();
+
+        // if(hit1)
+        // {
+        //     rb.freezeRotation = false;
+        // }else
+        // {
+        //     rb.freezeRotation = true;
+        // }
     }
 
     private void FixedUpdate()

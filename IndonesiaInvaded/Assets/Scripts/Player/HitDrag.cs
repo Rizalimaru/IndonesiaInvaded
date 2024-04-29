@@ -3,12 +3,13 @@ using UnityEngine;
 public class HitDrag : MonoBehaviour
 {
     public Transform player; // Referensi ke objek player
-    public Transform enemy; // Referensi ke objek enemy
     private Animator animator; // Referensi ke animator controller player
 
     public float movementSpeed = 5f; // Kecepatan gerak player
+    public float detectionRadius = 5f; // Jarak deteksi musuh terdekat
 
     private bool isMoving = false; // Status gerakan player
+    private Transform nearestEnemy; // Referensi ke musuh terdekat
 
     void Start()
     {
@@ -18,14 +19,41 @@ public class HitDrag : MonoBehaviour
 
     void Update()
     {
-        if (animator.GetBool("hit1")) // Memeriksa apakah parameter hit1 true
+        // Mendeteksi musuh terdekat
+        DetectNearestEnemy();
+
+        // Memeriksa apakah parameter hit1 true dan musuh berada dalam jarak deteksi
+        if (animator.GetBool("hit1") && nearestEnemy != null && Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(nearestEnemy.position.x, 0, nearestEnemy.position.z)) <= detectionRadius)
         {
             MoveToEnemy(); // Memanggil fungsi untuk bergerak ke enemy
         }
         else
         {
-            StopMoving(); // Memanggil fungsi untuk menghentikan gerakan jika hit1 false
+            StopMoving(); // Memanggil fungsi untuk menghentikan gerakan jika hit1 false atau musuh di luar jarak deteksi
         }
+    }
+
+    void DetectNearestEnemy()
+    {
+        Collider[] colliders = Physics.OverlapSphere(player.position, detectionRadius); // Mendeteksi semua collider dalam radius
+
+        float shortestDistance = Mathf.Infinity;
+        Transform nearest = null;
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Enemy"))
+            {
+                float distance = Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(collider.transform.position.x, 0, collider.transform.position.z));
+                if (distance < shortestDistance)
+                {
+                    shortestDistance = distance;
+                    nearest = collider.transform;
+                }
+            }
+        }
+
+        nearestEnemy = nearest; // Menetapkan musuh terdekat sebagai referensi
     }
 
     void MoveToEnemy()
@@ -34,8 +62,8 @@ public class HitDrag : MonoBehaviour
         {
             isMoving = true; // Menandai player sedang dalam proses gerakan
 
-            Vector3 direction = (enemy.position - player.position).normalized; // Menghitung arah menuju enemy
-            Vector3 targetPosition = enemy.position - direction * 1.5f; // Menentukan posisi target player
+            Vector3 direction = (nearestEnemy.position - player.position).normalized; // Menghitung arah menuju enemy
+            Vector3 targetPosition = nearestEnemy.position - new Vector3(direction.x, 0, direction.z) * 1.5f; // Menentukan posisi target player
 
             StartCoroutine(MovePlayer(targetPosition)); // Memulai proses gerakan player ke posisi target
         }
@@ -52,10 +80,10 @@ public class HitDrag : MonoBehaviour
 
     System.Collections.IEnumerator MovePlayer(Vector3 targetPosition)
     {
-        while (Vector3.Distance(player.position, targetPosition) > 0.1f) // Selama player belum mencapai posisi target
+        while (Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(targetPosition.x, 0, targetPosition.z)) > 0.1f) // Selama player belum mencapai posisi target
         {
             // Menggerakkan player ke arah target
-            player.position = Vector3.MoveTowards(player.position, targetPosition, movementSpeed * Time.deltaTime);
+            player.position = Vector3.MoveTowards(new Vector3(player.position.x, 0, player.position.z), new Vector3(targetPosition.x, 0, targetPosition.z), movementSpeed * Time.deltaTime);
 
             yield return null;
         }
