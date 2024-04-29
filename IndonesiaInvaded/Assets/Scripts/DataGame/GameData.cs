@@ -10,12 +10,14 @@ public class GameData
     public List<string> passedScenes;
     public Vector3 playerPosition;
     public SerializableDictionary<string, bool> monsterKilled;
+    public AttributeData playerAttributeData;
     
 
     public GameData()
     {
         playerPosition = Vector3.zero;
         monsterKilled = new SerializableDictionary<string, bool>();
+        playerAttributeData = new AttributeData();
     }
     public int GetPercentageCompelete(){
         int totalCollected = 0;

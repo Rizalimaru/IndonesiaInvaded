@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour, IDataPersistent
 {
@@ -62,6 +63,14 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     [Header("Gravity")]
     public float gravity = 9.81f; // Default gravity value
 
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerPosition;
+    }
+    public void SaveData(GameData data)
+    {
+        data.playerPosition = this.transform.position;
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -80,6 +89,12 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
         MyInput();
         SpeedControl();
         StateHandler();
+
+        if(InputManager.instance.GetExitPressed())
+        {
+            GameManager.instance.SaveGame();
+            SceneManager.LoadSceneAsync("MainMenu");
+        }
     }
 
     private void FixedUpdate()
@@ -236,13 +251,5 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
         velocity = Vector3.zero;
     }
 
-    public void LoadData(GameData data)
-    {
-        this.transform.position = data.playerPosition;
-    }
-    public void SaveData(GameData data)
-    {
-        data.playerPosition = this.transform.position;
-    }
     
 }

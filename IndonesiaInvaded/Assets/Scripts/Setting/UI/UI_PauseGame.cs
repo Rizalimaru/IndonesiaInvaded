@@ -93,6 +93,10 @@ public class UI_PauseGame : MonoBehaviour
         }
     }
 
+    public void PauseGame(){
+        
+    }
+
     private void ShowPanel(int index)
     {
         for (int i = 0; i < panelOptions.Length; i++)

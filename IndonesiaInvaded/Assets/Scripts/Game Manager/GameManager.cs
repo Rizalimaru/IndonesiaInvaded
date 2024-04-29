@@ -9,22 +9,25 @@ using System.Linq;
 public class GameManager : MonoBehaviour
 {
 
-    public static GameManager instance;
-
     [Header("Debugging")]
+    [SerializeField] private bool disableDataPersistence = false;
     [SerializeField] private bool initializeDataIfNull = false;
-
-    [Space(10)]
+    [SerializeField] private bool overrideSelectedProfileId = false;
+    [SerializeField] private string testSelectedProfileId = "test";
 
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
     [SerializeField] private bool useEncryption;
 
+    [Header("Auto Saving Configuration")]
+    [SerializeField] private float autoSaveTime = 60f;
 
+    private GameData gameData;
     public List<IDataPersistent> dataPersistenceObjects;
     private FileDataHandler fileDataHandler;
     private string selectedProfileId = "";
-    private GameData gameData;
+    private Coroutine autoSaveCoroutine;
+    public static GameManager instance;
     private void Awake()
     {
         if (instance != null)
@@ -33,10 +36,17 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-            this.fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
-            this.selectedProfileId = fileDataHandler.GetMostRecentlyUpdateProfileId();
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+        
+        if (disableDataPersistence)
+        {
+            Debug.LogWarning("Data Persistence is currently disabled!");
+        }
+        
+        this.fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+
+        InitializeSelectedProfileId();
     }
     private void OnEnable()
     {
@@ -52,6 +62,12 @@ public class GameManager : MonoBehaviour
     {
         this.dataPersistenceObjects = FindAllDataPersistenceObject();
         LoadGame();
+        
+        if (autoSaveCoroutine != null) 
+        {
+            StopCoroutine(autoSaveCoroutine);
+        }
+        autoSaveCoroutine = StartCoroutine(AutoSave());
     }
 
     public void ChangeSelectedProfile(string newProfileId)
@@ -60,6 +76,22 @@ public class GameManager : MonoBehaviour
         LoadGame();
     }
 
+    public void DeleteProfileData(string profileId)
+    {
+        fileDataHandler.Delete(profileId);
+        InitializeSelectedProfileId();
+        LoadGame();
+    }
+
+    private void InitializeSelectedProfileId()
+    {
+        this.selectedProfileId = fileDataHandler.GetMostRecentlyUpdateProfileId();
+        if (overrideSelectedProfileId)
+        {
+            this.selectedProfileId = testSelectedProfileId;
+            Debug.LogWarning("Overrode selected profile id with test id: " + testSelectedProfileId);
+        }
+    }
     public void NewGame()
     {
         this.gameData = new GameData();
@@ -69,7 +101,7 @@ public class GameManager : MonoBehaviour
     {
         this.gameData = fileDataHandler.Load(selectedProfileId);
 
-        if(this.gameData == null && initializeDataIfNull)
+        if (this.gameData == null && initializeDataIfNull)
         {
             NewGame();
         }
@@ -93,7 +125,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("No data was found, creating a new game data object");
             return;
         }
-        foreach(IDataPersistent dataPersistentObj in dataPersistenceObjects)
+        foreach (IDataPersistent dataPersistentObj in dataPersistenceObjects)
         {
             dataPersistentObj.SaveData(gameData);
         }
@@ -108,12 +140,13 @@ public class GameManager : MonoBehaviour
 
     public List<IDataPersistent> FindAllDataPersistenceObject()
     {
-        IEnumerable<IDataPersistent> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistent>();
+        IEnumerable<IDataPersistent> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataPersistent>();
 
         return new List<IDataPersistent>(dataPersistenceObjects);
     }
-    
-    public bool HasGameData(){
+
+    public bool HasGameData()
+    {
         return gameData != null;
     }
 
@@ -122,5 +155,14 @@ public class GameManager : MonoBehaviour
         return fileDataHandler.LoadAllProfiles();
     }
 
+    private IEnumerator AutoSave() 
+    {
+        while (true) 
+        {
+            yield return new WaitForSeconds(autoSaveTime);
+            SaveGame();
+            Debug.Log("Auto Saved Game");
+        }
+    }
 }
 

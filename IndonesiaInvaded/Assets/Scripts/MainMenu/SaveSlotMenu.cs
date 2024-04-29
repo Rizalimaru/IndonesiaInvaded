@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SaveSlotsMenu : MonoBehaviour
+public class SaveSlotsMenu : Menu
 {
     [Header("Menu Navigation")]
     [SerializeField] private MainMenu mainMenu;
-    
+
     [Header("Menu Button")]
     [SerializeField] private Button backButton;
 
@@ -18,7 +18,7 @@ public class SaveSlotsMenu : MonoBehaviour
     [SerializeField] private Slider loadingBarFill;
 
     List<AsyncOperation> scenesToLoad = new List<AsyncOperation>();
-    
+
     private SaveSlot[] saveSlots;
 
     private bool isLoadingGame = false;
@@ -41,28 +41,42 @@ public class SaveSlotsMenu : MonoBehaviour
         // Menyembunyikan UI Mission Selected dan memulai animasi load game
         UI_ControlMainMenu.Instance.HideSelectedMissionInGame();
         UI_AnimatorUI.instance.LoadGameAnimation();
-        
         yield return new WaitForSeconds(0.5f);
-        
-        GameManager.instance.ChangeSelectedProfile(saveSlot.GetProfileId());
-        if (!isLoadingGame)
+
+        if (isLoadingGame)
         {
-            GameManager.instance.NewGame();
+            GameManager.instance.ChangeSelectedProfile(saveSlot.GetProfileId());
+            SaveGameandLoadScene();
         }
+        else if (saveSlot.hasData)
+        {
+            GameManager.instance.ChangeSelectedProfile(saveSlot.GetProfileId());
+            GameManager.instance.NewGame();
+            SaveGameandLoadScene();
+        }
+        else
+        {
+            GameManager.instance.ChangeSelectedProfile(saveSlot.GetProfileId());
+            GameManager.instance.NewGame();
+            SaveGameandLoadScene();
+            loadingScreen.SetActive(true);
+            while (!scenesToLoad.All(op => op.isDone))
+            {
+                float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
+                loadingBarFill.value = progress;
 
+                yield return null;
+            }
+        }
+    }
+
+    private void SaveGameandLoadScene()
+    {
         GameManager.instance.SaveGame();
-
-        // Menambahkan Progress Loading Screen dan Scene Load
         scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay"));
         scenesToLoad.Add(SceneManager.LoadSceneAsync("BlockoutJakarta", LoadSceneMode.Additive));
-        loadingScreen.SetActive(true);
-        while (!scenesToLoad.All(op => op.isDone))
-        {
-            float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
-            loadingBarFill.value = progress;
 
-            yield return null;
-        }
+
     }
 
     public void OnBackClicked()
@@ -81,8 +95,8 @@ public class SaveSlotsMenu : MonoBehaviour
         mainMenu.EnableMenuandAnimationButton();
 
         this.DeactivateMenu();
-        
-        
+
+
     }
 
     public void ActivateMenu(bool isLoadingGame)
@@ -93,6 +107,9 @@ public class SaveSlotsMenu : MonoBehaviour
 
         Dictionary<string, GameData> profileGameData = GameManager.instance.GetAllProfileGameData();
 
+        backButton.interactable = true;
+
+        GameObject firstSelected = backButton.gameObject;
         foreach (SaveSlot saveSlot in saveSlots)
         {
             GameData profileData = null;
@@ -106,8 +123,15 @@ public class SaveSlotsMenu : MonoBehaviour
             else
             {
                 saveSlot.SetInteractable(true);
+                if (firstSelected.Equals(backButton.gameObject))
+                {
+                    firstSelected = saveSlot.gameObject;
+                }
             }
         }
+
+        Button firstSelectedButton = firstSelected.GetComponent<Button>();
+        this.SetFirstSelected(firstSelectedButton);
     }
 
 
