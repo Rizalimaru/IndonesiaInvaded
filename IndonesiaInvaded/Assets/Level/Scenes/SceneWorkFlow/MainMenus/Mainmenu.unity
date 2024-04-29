@@ -3157,9 +3157,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e4b5422627799b4a84643a7a9303ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableDataPersistence: 0
   initializeDataIfNull: 0
+  overrideSelectedProfileId: 0
+  testSelectedProfileId: test
   fileName: Kelompok8.dat
   useEncryption: 1
+  autoSaveTime: 10
 --- !u!4 &588456218
 Transform:
   m_ObjectHideFlags: 0
@@ -4815,6 +4819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd20b76f2266e8a4e9ef340b59bde9b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstSelected: {fileID: 51881100}
   saveSlotsMenu: {fileID: 2117533413}
   newGameButton: {fileID: 51881100}
   loadButton: {fileID: 1493873577}
@@ -5671,62 +5676,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1458129111
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1458129113}
-  - component: {fileID: 1458129112}
-  m_Layer: 0
-  m_Name: Scene Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1458129112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1458129111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4cbeb6641eee5b4abb44163126d3192, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blockOutJakarta:
-    sceneAsset: {fileID: 102900000, guid: 4b1e15d35591b0c41973037cbd81bd82, type: 3}
-    sceneName: BlockoutJakarta
-  blockOutInvert:
-    sceneAsset: {fileID: 102900000, guid: 0b804c84907c1494ca858eb16826094b, type: 3}
-    sceneName: BlockoutInvert
-  blockOutBandung:
-    sceneAsset: {fileID: 102900000, guid: 3a433976f6842d34b9a6354885806c66, type: 3}
-    sceneName: BlockoutBandung
-  MainMenu:
-    sceneAsset: {fileID: 102900000, guid: 1baf5a9e6cb8f394e86a995ad09b426b, type: 3}
-    sceneName: Mainmenu
---- !u!4 &1458129113
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1458129111}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 373.8479, y: 45.740623, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1477369156
 GameObject:
   m_ObjectHideFlags: 0
@@ -6810,6 +6759,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 187764207001292251, guid: acafc1960fcd6ae45bb3963aa0600b35, type: 3}
   m_PrefabInstance: {fileID: 351752268}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1762880677 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8433963431924470744, guid: bf77c25bf1efa0a4c9e70a7c6cfc5f1f, type: 3}
+  m_PrefabInstance: {fileID: 8163998205942356167}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1773312658
 GameObject:
   m_ObjectHideFlags: 0
@@ -8081,7 +8041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 51881097}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &2050694529
@@ -8239,6 +8199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18aa0165568b0f947a2c48094c573be7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstSelected: {fileID: 1762880677}
   mainMenu: {fileID: 1112979058}
   backButton: {fileID: 1715880884}
   loadingScreen: {fileID: 914055346}
@@ -8383,7 +8344,6 @@ SceneRoots:
   - {fileID: 2103558308}
   - {fileID: 588456218}
   - {fileID: 1001237073}
-  - {fileID: 1458129113}
   - {fileID: 977011042}
   - {fileID: 1319249928}
   - {fileID: 200038146}
