@@ -10,7 +10,7 @@ public class UI_PauseGame : MonoBehaviour
     // Singleton instance
     public static UI_PauseGame instance;
     
-    public AudioManager audioManagerInstance;
+    private AudioManager audioManagerInstance;
 
     public static bool GameIsPaused = false;
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,8 +13,11 @@ public class SaveSlotsMenu : MonoBehaviour
     [Header("Menu Button")]
     [SerializeField] private Button backButton;
 
-    [Header("Scene Load Data")]
-    [SerializeField] private SceneField sceneField;
+    [Header("Loading Screen")]
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private Slider loadingBarFill;
+
+    List<AsyncOperation> scenesToLoad = new List<AsyncOperation>();
     
     private SaveSlot[] saveSlots;
 
@@ -24,25 +28,60 @@ public class SaveSlotsMenu : MonoBehaviour
         saveSlots = this.GetComponentsInChildren<SaveSlot>();
     }
 
-   
 
     public void OnSaveClicked(SaveSlot saveSlot)
     {
+        StartCoroutine(DelaySave(saveSlot));
+    }
+
+    IEnumerator DelaySave(SaveSlot saveSlot)
+    {
         DisableMenuButton();
+
+        // Menyembunyikan UI Mission Selected dan memulai animasi load game
+        UI_ControlMainMenu.Instance.HideSelectedMissionInGame();
+        UI_AnimatorUI.instance.LoadGameAnimation();
+        
+        yield return new WaitForSeconds(1f);
+        
         GameManager.instance.ChangeSelectedProfile(saveSlot.GetProfileId());
         if (!isLoadingGame)
         {
             GameManager.instance.NewGame();
         }
-        SceneManager.LoadSceneAsync(sceneField);
+
+
+        // Menambahkan Progress Loading Screen dan Scene Load
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay"));
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("BlockoutJakarta", LoadSceneMode.Additive));
+        loadingScreen.SetActive(true);
+        while (!scenesToLoad.All(op => op.isDone))
+        {
+            float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
+            loadingBarFill.value = progress;
+
+            yield return null;
+        }
     }
 
-    
-     public void OnBackClicked()
+    public void OnBackClicked()
     {
+        StartCoroutine(DelayBack());
+    }
+
+    IEnumerator DelayBack()
+    {
+        UI_ControlMainMenu.Instance.HideMissionSelected();
+
+        yield return new WaitForSeconds(0.9f);
+
+        // Mengaktifkan Main Menu dan Interactable Button
         mainMenu.ActivateMenu();
-        // UI_ControlMainMenu.Instance.HideMissionSelected();
+        mainMenu.EnableMenuandAnimationButton();
+
         this.DeactivateMenu();
+        
+        
     }
 
     public void ActivateMenu(bool isLoadingGame)
