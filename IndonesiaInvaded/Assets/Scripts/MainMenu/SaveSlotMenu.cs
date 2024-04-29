@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,12 +13,11 @@ public class SaveSlotsMenu : MonoBehaviour
     [Header("Menu Button")]
     [SerializeField] private Button backButton;
 
-    [Header("Scene Load Data")]
-    [SerializeField] private SceneField sceneField;
-
     [Header("Loading Screen")]
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Slider loadingBarFill;
+
+    List<AsyncOperation> scenesToLoad = new List<AsyncOperation>();
     
     private SaveSlot[] saveSlots;
 
@@ -52,11 +52,12 @@ public class SaveSlotsMenu : MonoBehaviour
 
 
         // Menambahkan Progress Loading Screen dan Scene Load
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneField);
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay"));
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("BlockoutJakarta", LoadSceneMode.Additive));
         loadingScreen.SetActive(true);
-        while (!operation.isDone)
+        while (!scenesToLoad.All(op => op.isDone))
         {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
             loadingBarFill.value = progress;
 
             yield return null;
