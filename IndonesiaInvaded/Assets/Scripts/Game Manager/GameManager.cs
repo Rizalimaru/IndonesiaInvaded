@@ -41,24 +41,17 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         this.dataPersistenceObjects = FindAllDataPersistenceObject();
         LoadGame();
-    }
-
-    public void OnSceneUnloaded(Scene scene)
-    {
-        SaveGame();
     }
 
     public void ChangeSelectedProfile(string newProfileId)
@@ -102,7 +95,7 @@ public class GameManager : MonoBehaviour
         }
         foreach(IDataPersistent dataPersistentObj in dataPersistenceObjects)
         {
-            dataPersistentObj.SaveData(ref gameData);
+            dataPersistentObj.SaveData(gameData);
         }
         gameData.lastUpdate = System.DateTime.Now.ToBinary();
         fileDataHandler.Save(gameData, selectedProfileId);

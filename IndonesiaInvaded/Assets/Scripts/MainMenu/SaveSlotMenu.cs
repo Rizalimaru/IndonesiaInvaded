@@ -42,7 +42,7 @@ public class SaveSlotsMenu : MonoBehaviour
         UI_ControlMainMenu.Instance.HideSelectedMissionInGame();
         UI_AnimatorUI.instance.LoadGameAnimation();
         
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         
         GameManager.instance.ChangeSelectedProfile(saveSlot.GetProfileId());
         if (!isLoadingGame)
@@ -50,6 +50,7 @@ public class SaveSlotsMenu : MonoBehaviour
             GameManager.instance.NewGame();
         }
 
+        GameManager.instance.SaveGame();
 
         // Menambahkan Progress Loading Screen dan Scene Load
         scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay"));

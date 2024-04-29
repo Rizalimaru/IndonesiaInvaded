@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour, IDataPersistent
 {
     public static PlayerMovement instance;
+    
     [Header("Movement")]
     private float moveSpeed;
     public float walkSpeed;
@@ -239,7 +240,7 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     {
         this.transform.position = data.playerPosition;
     }
-    public void SaveData(ref GameData data)
+    public void SaveData(GameData data)
     {
         data.playerPosition = this.transform.position;
     }
