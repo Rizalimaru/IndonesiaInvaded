@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class Combat : MonoBehaviour
 {
@@ -9,8 +10,19 @@ public class Combat : MonoBehaviour
 
 
     private AudioManager audioManagerInstance;
+
+    [Header("Hit")]
     private Animator anim;
     public float cooldownTime = 2f;
+
+    [Header("Skill")]
+    public KeyCode skillRoarKey = KeyCode.E;
+    public KeyCode skillEnhance = KeyCode.Q;
+    public CameraShake cameraShake;
+    public float shakeDuration = 0.5f;
+    public float shakeMagnitude = 0.1f;
+
+
     private float nextFireTime = 0f;
     public static int noOfClicks = 0;
     float lastClickedTime = 0;
@@ -20,7 +32,6 @@ public class Combat : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         audioManagerInstance = AudioManager.Instance;
-
         
     }
 
@@ -52,6 +63,8 @@ public class Combat : MonoBehaviour
                 OnClick();
             }
         }
+
+        skillCast();
     }
 
     void OnClick()
@@ -81,6 +94,17 @@ public class Combat : MonoBehaviour
             Debug.Log("Hit 3");
             SuccessfulCombo(); // Panggil method baru untuk menangani combo sukses
         }
+    }
+
+    void skillCast()
+    {
+        if(Input.GetKeyDown(skillRoarKey))
+        {   
+            StartCoroutine(cameraShake.Shake(shakeDuration, shakeMagnitude));
+            anim.SetTrigger("SkillRoar");
+            
+        }
+
     }
 
     void SuccessfulCombo()

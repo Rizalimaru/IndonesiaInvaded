@@ -5,15 +5,16 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
-   [Header("Menu Navigation")]
+
+
+    [Header("Menu Navigation")]
     [SerializeField] private SaveSlotsMenu saveSlotsMenu;
     
     [Header("Button UI")]
-    [SerializeField] private Button newGameButton;
-    [SerializeField] private Button loadButton;
-    [SerializeField] private Button optionsButton;
-    [SerializeField] private Button exitButton;
-    
+    public Button newGameButton;
+    public Button loadButton;
+    public Button optionsButton;
+    public Button exitButton;
 
     private void Start(){
         DisableButtonsDependingOnData();
@@ -24,16 +25,42 @@ public class MainMenu : MonoBehaviour
         if (!GameManager.instance.HasGameData()) 
         {
             loadButton.interactable = false;
+            loadButton.GetComponentInChildren<Text>().color = Color.gray;
         }
     }
     public void OnNewGameClicked()
     {
-        saveSlotsMenu.ActivateMenu(false);
-        this.DeactivateMenu();
+        //UI_ControlMainMenu.Instance.ChangeSceneLoadGame();
+        StartCoroutine(DelayNewGame());
     }
 
 
-    public void OnLoadGameClicked(){
+    //Delay saaat OnNewGameClicked
+    IEnumerator DelayNewGame()
+    {
+        UI_ControlMainMenu.Instance.HideUI();
+        DisableMenuandAnimationButton();
+        yield return new WaitForSeconds(0.9f);
+
+        UI_ControlMainMenu.Instance.ShowMissionSelected();
+        saveSlotsMenu.ActivateMenu(false);
+        this.DeactivateMenu();
+    }
+    
+    public void OnLoadGameClicked()
+    {
+        StartCoroutine(DelayLoadGame());
+    }
+
+    IEnumerator DelayLoadGame()
+    {
+        UI_ControlMainMenu.Instance.HideUI();
+
+        DisableMenuandAnimationButton();
+
+        yield return new WaitForSeconds(0.9f);
+
+        UI_ControlMainMenu.Instance.ShowMissionSelected();
         saveSlotsMenu.ActivateMenu(true);
         this.DeactivateMenu();
     }
@@ -46,6 +73,22 @@ public class MainMenu : MonoBehaviour
     public void OnExitClicked()
     {
         Debug.Log("Exit Clicked");
+    }
+
+    public void DisableMenuandAnimationButton()
+    {
+        newGameButton.interactable = false;
+        loadButton.interactable = false;
+        optionsButton.interactable = false;
+        exitButton.interactable = false;
+    }
+
+    public void EnableMenuandAnimationButton()
+    {
+        newGameButton.interactable = true;
+        loadButton.interactable = true; 
+        optionsButton.interactable = true;
+        exitButton.interactable = true;
     }
 
     public void ActivateMenu(){
