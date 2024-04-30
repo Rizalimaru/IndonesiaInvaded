@@ -78,8 +78,8 @@ public class EnemySpawner : MonoBehaviour
             if (NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, -1))
             {
                 enemy.Agent.Warp(hit.position);
-                enemy.StateManager.target = player;
-                enemy.StateManager.StartAgent();
+                enemy.target = player;
+                enemy.stateManager.StartAgent();
                 enemy.Agent.enabled = true;
             }
             else

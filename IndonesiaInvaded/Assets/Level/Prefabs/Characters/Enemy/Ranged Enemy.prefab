@@ -121,12 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0ffba53ebb4b34b94e0d14ca0c09c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: {fileID: 11400000, guid: 90bc00c2555041f46812dc2f550a9a78, type: 2}
+  enemyObject: {fileID: 4822139126151152396}
   animator: {fileID: 7523146498524430479}
-  agent: {fileID: 4325685399952016178}
-  target: {fileID: 1501732846235728247, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
-  attackType: {fileID: 6996787608992688860, guid: 8a34ecc366f4a154c809157d9445b09a, type: 3}
-  spawnPoint: {fileID: 1677896408194963592}
 --- !u!95 &7523146498524430479
 Animator:
   serializedVersion: 5
@@ -155,14 +151,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4873056344523076884}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec1f35a853f35e04397842a12eb9aa77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StateManager: {fileID: 3607292961364766965}
+  stateManager: {fileID: 3607292961364766965}
+  enemyType: {fileID: 11400000, guid: 90bc00c2555041f46812dc2f550a9a78, type: 2}
   Agent: {fileID: 4325685399952016178}
-  Health: 100
+  target: {fileID: 0}
+  attackType: {fileID: 6996787608992688860, guid: 8a34ecc366f4a154c809157d9445b09a, type: 3}
+  spawnPoint: {fileID: 1677896408194963592}
 --- !u!1 &7971076345714111087
 GameObject:
   m_ObjectHideFlags: 0
