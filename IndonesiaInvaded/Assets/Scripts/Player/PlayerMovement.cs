@@ -66,11 +66,11 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     private CheckPointManager checkPointManager;
     public void LoadData(GameData data)
     {
-        checkPointManager.SetCheckpointPosition(data.checkpointPosition);
+        this.transform.position = data.checkpointPosition;
     }
     public void SaveData(GameData data)
     {
-        data.checkpointPosition = checkPointManager.GetCheckpointPosition();
+        data.checkpointPosition = this.transform.position;
     }
     private void Start()
     {
