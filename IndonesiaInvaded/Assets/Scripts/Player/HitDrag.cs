@@ -9,12 +9,14 @@ public class HitDrag : MonoBehaviour
     public float detectionRadius = 5f; // Jarak deteksi musuh terdekat
 
     private bool isMoving = false; // Status gerakan player
-    private Transform nearestEnemy; // Referensi ke musuh terdekat
+    public Transform nearestEnemy; // Referensi ke musuh terdekat
+
+    public Transform combatLookAt; // Referensi ke titik yang harus dilihat oleh player saat berada dalam mode combat
 
     void Start()
     {
         // Mengambil komponen Animator dari objek player
-        animator = GetComponent<Animator>();
+        animator = player.GetComponent<Animator>();
     }
 
     void Update()
@@ -23,7 +25,7 @@ public class HitDrag : MonoBehaviour
         DetectNearestEnemy();
 
         // Memeriksa apakah parameter hit1 true dan musuh berada dalam jarak deteksi
-        if (animator.GetBool("hit1") && nearestEnemy != null && Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(nearestEnemy.position.x, 0, nearestEnemy.position.z)) <= detectionRadius)
+        if (animator.GetBool("hit1") && nearestEnemy != null && Vector3.Distance(player.position, nearestEnemy.position) <= detectionRadius)
         {
             MoveToEnemy(); // Memanggil fungsi untuk bergerak ke enemy
         }
@@ -33,7 +35,7 @@ public class HitDrag : MonoBehaviour
         }
     }
 
-    void DetectNearestEnemy()
+    public void DetectNearestEnemy()
     {
         Collider[] colliders = Physics.OverlapSphere(player.position, detectionRadius); // Mendeteksi semua collider dalam radius
 
@@ -44,7 +46,7 @@ public class HitDrag : MonoBehaviour
         {
             if (collider.CompareTag("Enemy"))
             {
-                float distance = Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(collider.transform.position.x, 0, collider.transform.position.z));
+                float distance = Vector3.Distance(player.position, collider.transform.position);
                 if (distance < shortestDistance)
                 {
                     shortestDistance = distance;
@@ -56,14 +58,14 @@ public class HitDrag : MonoBehaviour
         nearestEnemy = nearest; // Menetapkan musuh terdekat sebagai referensi
     }
 
-    void MoveToEnemy()
+    public void MoveToEnemy()
     {
         if (!isMoving) // Memastikan player tidak sedang dalam proses gerakan
         {
             isMoving = true; // Menandai player sedang dalam proses gerakan
 
             Vector3 direction = (nearestEnemy.position - player.position).normalized; // Menghitung arah menuju enemy
-            Vector3 targetPosition = nearestEnemy.position - new Vector3(direction.x, 0, direction.z) * 1.5f; // Menentukan posisi target player
+            Vector3 targetPosition = nearestEnemy.position - direction * 1.5f; // Menentukan posisi target player
 
             StartCoroutine(MovePlayer(targetPosition)); // Memulai proses gerakan player ke posisi target
         }
@@ -73,17 +75,17 @@ public class HitDrag : MonoBehaviour
     {
         if (isMoving) // Memastikan player sedang dalam proses gerakan
         {
-            StopCoroutine(MovePlayer(Vector3.zero)); // Menghentikan proses gerakan player
+            StopAllCoroutines(); // Menghentikan semua proses gerakan player
             isMoving = false; // Menandai player tidak lagi dalam proses gerakan
         }
     }
 
     System.Collections.IEnumerator MovePlayer(Vector3 targetPosition)
     {
-        while (Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(targetPosition.x, 0, targetPosition.z)) > 0.1f) // Selama player belum mencapai posisi target
+        while (Vector3.Distance(player.position, targetPosition) > 0.1f) // Selama player belum mencapai posisi target
         {
             // Menggerakkan player ke arah target
-            player.position = Vector3.MoveTowards(new Vector3(player.position.x, 0, player.position.z), new Vector3(targetPosition.x, 0, targetPosition.z), movementSpeed * Time.deltaTime);
+            player.position = Vector3.MoveTowards(player.position, targetPosition, movementSpeed * Time.deltaTime);
 
             yield return null;
         }

@@ -136,6 +136,7 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
 
+        
         // start dodge
         if(Input.GetKeyDown(dodgeKey))
         {
