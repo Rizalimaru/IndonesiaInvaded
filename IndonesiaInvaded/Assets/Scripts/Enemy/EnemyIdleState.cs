@@ -7,7 +7,7 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void EnterState(EnemyStateManager enemy)
     {
-        if (enemy.enemyTitle == EnemyScriptableObject.title.Boss) Debug.Log("Boss is Idle");
+        if (enemy.enemyObject.enemyTitle == EnemyScriptableObject.title.Boss) Debug.Log("Boss is Idle");
         else Debug.Log("Enemy is Idle");
 
         enemy.animator.SetBool("isWalking", false);
@@ -25,7 +25,7 @@ public class EnemyIdleState : EnemyBaseState
         }
         else
         {
-            if (Vector3.Distance(enemy.agent.transform.position, enemy.target.transform.position) <= enemy.triggerDistance)
+            if (Vector3.Distance(enemy.enemyObject.Agent.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.triggerDistance)
             {
                 enemy.SwitchState(enemy.movingState);
             }

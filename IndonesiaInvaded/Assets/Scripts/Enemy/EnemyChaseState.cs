@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
 
 
 public class EnemyChaseState : EnemyBaseState
@@ -8,7 +7,7 @@ public class EnemyChaseState : EnemyBaseState
     public override void EnterState(EnemyStateManager enemy)
     {
 
-        if (enemy.enemyTitle == EnemyScriptableObject.title.Boss) Debug.Log("Boss is Moving");
+        if (enemy.enemyObject.enemyTitle == EnemyScriptableObject.title.Boss) Debug.Log("Boss is Moving");
         else Debug.Log("Enemy is Moving");
 
         enemy.GetComponent<NavMeshAgent>().isStopped = false;
@@ -18,10 +17,10 @@ public class EnemyChaseState : EnemyBaseState
 
     public override void UpdateState(EnemyStateManager enemy)
     {
-        if (Vector3.Distance(enemy.agent.transform.position, enemy.target.transform.position) <= enemy.triggerDistance)
+        if (Vector3.Distance(enemy.enemyObject.Agent.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.triggerDistance)
         {
-            enemy.agent.SetDestination(enemy.target.transform.position);
-            if(Vector3.Distance(enemy.agent.transform.position, enemy.target.transform.position) <= enemy.attackDistance)
+            enemy.enemyObject.Agent.SetDestination(enemy.enemyObject.target.transform.position);
+            if(Vector3.Distance(enemy.enemyObject.Agent.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.attackDistance)
             {
                 enemy.SwitchState(enemy.attackState);
             }
@@ -34,11 +33,7 @@ public class EnemyChaseState : EnemyBaseState
 
     public override void OnCollisionEnter(EnemyStateManager enemy, Collision collision)
     {
-        /** GameObject other = collision.gameObject;
-        if (other.CompareTag("Player"))
-        {
-            enemy.SwitchState(enemy.attackState);
-        } **/
+        
     }
 
     public override void OnCollisionExit(EnemyStateManager enemy, Collision collision)

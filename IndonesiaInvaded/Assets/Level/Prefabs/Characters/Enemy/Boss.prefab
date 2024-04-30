@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1073414049936348716}
   - component: {fileID: 2373472428739764155}
   - component: {fileID: 7806051362613850049}
+  - component: {fileID: 5740982810606183585}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -84,8 +85,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.4148655, y: 4.5503774, z: 8.480185}
-  m_Center: {x: -0.02710247, y: 2.2088225, z: -0.40653133}
+  m_Size: {x: 4.4148655, y: 3.484261, z: 7.0343566}
+  m_Center: {x: -0.02710247, y: 1.7487862, z: 0.009691954}
 --- !u!195 &1073414049936348716
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -95,7 +96,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 79662333049342309}
   m_Enabled: 1
   m_AgentTypeID: -334000983
-  m_Radius: 0.5
+  m_Radius: 3.5
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -104,7 +105,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 3.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -120,12 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0ffba53ebb4b34b94e0d14ca0c09c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: {fileID: 11400000, guid: 0811cb70574df7e498f91a60a492a5c9, type: 2}
+  enemyObject: {fileID: 5740982810606183585}
   animator: {fileID: 7806051362613850049}
-  agent: {fileID: 1073414049936348716}
-  target: {fileID: 0}
-  attackType: {fileID: 0}
-  spawnPoint: {fileID: 7677666840634279286}
 --- !u!95 &7806051362613850049
 Animator:
   serializedVersion: 5
@@ -136,7 +133,7 @@ Animator:
   m_GameObject: {fileID: 79662333049342309}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 2f4e6492f506bbb4a8aeba850e3bb52f, type: 3}
-  m_Controller: {fileID: 9100000, guid: 08f6634017a8e784a8807f193b72bec9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 52eee98a408ec6f478073f5f78b92530, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -147,6 +144,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5740982810606183585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79662333049342309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1f35a853f35e04397842a12eb9aa77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateManager: {fileID: 2373472428739764155}
+  enemyType: {fileID: 11400000, guid: 0811cb70574df7e498f91a60a492a5c9, type: 2}
+  Agent: {fileID: 1073414049936348716}
+  target: {fileID: 0}
+  attackType: {fileID: 1140068009292807327, guid: 01f6cff6905ab0c4996b32a635ca3062, type: 3}
+  spawnPoint: {fileID: 7677666840634279286}
 --- !u!1 &4111984932586215796
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,10 +243,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 409566, guid: a3e7850e56f7e2d4a8cb9e150f10c835, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9533082, guid: a3e7850e56f7e2d4a8cb9e150f10c835, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -123,12 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0ffba53ebb4b34b94e0d14ca0c09c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: {fileID: 11400000, guid: 452109eec27feed4aa32774aacaa81df, type: 2}
+  enemyObject: {fileID: 3150260632144247062}
   animator: {fileID: 1216154163867354785}
-  agent: {fileID: 3538684814105915976}
-  target: {fileID: 0}
-  attackType: {fileID: 6535422420660446745, guid: 93c26a8a35897bf48894990d35c264a1, type: 3}
-  spawnPoint: {fileID: 5054064272348271330}
 --- !u!95 &1216154163867354785
 Animator:
   serializedVersion: 5
@@ -157,14 +153,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4768682672980297416}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec1f35a853f35e04397842a12eb9aa77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StateManager: {fileID: 1672179526895879005}
+  stateManager: {fileID: 1672179526895879005}
+  enemyType: {fileID: 11400000, guid: 452109eec27feed4aa32774aacaa81df, type: 2}
   Agent: {fileID: 3538684814105915976}
-  Health: 100
+  target: {fileID: 0}
+  attackType: {fileID: 6535422420660446745, guid: 93c26a8a35897bf48894990d35c264a1, type: 3}
+  spawnPoint: {fileID: 5054064272348271330}
 --- !u!82 &6834412334276563063
 AudioSource:
   m_ObjectHideFlags: 0
