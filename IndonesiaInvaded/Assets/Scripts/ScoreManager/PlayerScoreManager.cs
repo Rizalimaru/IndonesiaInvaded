@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerScoreManager : MonoBehaviour
 {
+
+    public Collider collider;
     
     private void Start(){
 
@@ -16,6 +18,12 @@ public class PlayerScoreManager : MonoBehaviour
 
         // Periksa apakah objek yang bertabrakan memiliki tag "CheckHitScore"
         if(collider.tag == "CheckHitScore" && (isAttacking || isAttacking2 || isAttacking3))
+        {
+            // Tambah skor jika kriteria terpenuhi
+            ScoreManager.instance.AddScore(100);
+        }
+
+        if(collider.tag == "Enemy_Melee" && (isAttacking || isAttacking2 || isAttacking3))
         {
             // Tambah skor jika kriteria terpenuhi
             ScoreManager.instance.AddScore(100);
