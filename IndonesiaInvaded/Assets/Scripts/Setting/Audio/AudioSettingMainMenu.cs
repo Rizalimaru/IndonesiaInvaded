@@ -61,7 +61,7 @@ public class AudioSettingMainMenu : MonoBehaviour
 
     private void Start()
     { 
-        audioManagerInstance.PlayBackgroundMusic("Mainmenu", 0);
+        audioManagerInstance.PlayBackgroundMusicWithTransition("Mainmenu", 0, 1f);
     }
 
     public void Sceneloader(int SceneIndex)
@@ -80,15 +80,12 @@ public class AudioSettingMainMenu : MonoBehaviour
     }
 
     // Stop Background Music
+
     public void StopBackgroundMusic()
     {
-        audioManagerInstance.StopBackgroundMusic("Mainmenu");
+        audioManagerInstance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
     }
 
-    public void PlayBackgroundMusic()
-    {
-        audioManagerInstance.PlayBackgroundMusic("Mainmenu", 1);
-    }
 
 
 

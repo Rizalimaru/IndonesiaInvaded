@@ -18,7 +18,7 @@ public class AudioSetting : MonoBehaviour
 
     private void Start()
     { 
-        audioManagerInstance.PlayBackgroundMusic("Mainmenu", 0);
+        audioManagerInstance.PlayBackgroundMusicWithTransition("Game",0,1f);
     }
 
     private void Awake()
@@ -78,15 +78,7 @@ public class AudioSetting : MonoBehaviour
     }
 
     // Stop Background Music
-    public void StopBackgroundMusic()
-    {
-        audioManagerInstance.StopBackgroundMusic("Mainmenu");
-    }
 
-    public void PlayBackgroundMusic()
-    {
-        audioManagerInstance.PlayBackgroundMusic("Mainmenu", 1);
-    }
 
 
 

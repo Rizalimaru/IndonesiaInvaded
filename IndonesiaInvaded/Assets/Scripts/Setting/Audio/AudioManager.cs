@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
+
 
 public class AudioManager : MonoBehaviour
 {
@@ -88,17 +90,86 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void PlayBackgroundMusic(string groupName, int index)
+    public void PlayBackgroundMusicWithTransition(string groupName, int index, float fadeInDuration)
     {
         BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);
         if (group != null && index >= 0 && index < group.backgroundMusics.Length)
         {
-            group.backgroundMusics[index].Play();
+            StartCoroutine(FadeInAndPlayBackgroundMusic(group.backgroundMusics[index], fadeInDuration));
         }
         else
         {
             Debug.LogWarning("Background music group or index not found.");
         }
+    }
+
+    IEnumerator FadeInAndPlayBackgroundMusic(AudioSource audioSource, float fadeInDuration)
+    {
+        // Simpan volume awal
+        float startVolume = 0f;
+
+        // Set volume awal ke 0 untuk fade in
+        audioSource.volume = startVolume;
+
+        // Hitung target volume
+        float targetVolume = audioSource.volume;
+
+        // Hitung increment per frame
+        float deltaVolume = 1f / fadeInDuration;
+
+        // Fade in musik dengan menambahkan volume setiap frame
+        while (audioSource.volume < 1)
+        {
+            audioSource.volume += deltaVolume * Time.deltaTime;
+            yield return null;
+        }
+
+        // Pastikan volume tidak melebihi 1
+        audioSource.volume = Mathf.Clamp(audioSource.volume, 0f, 1f);
+
+        // Mainkan musik setelah selesai fade in
+        audioSource.Play();
+    }
+
+    public void StopBackgroundMusicWithTransition(string groupName, float fadeOutDuration)
+    {
+        BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);
+        if (group != null)
+        {
+            foreach (AudioSource audioSource in group.backgroundMusics)
+            {
+                StartCoroutine(FadeOutBackgroundMusic(audioSource, fadeOutDuration));
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Background music group not found.");
+        }
+    }
+
+    IEnumerator FadeOutBackgroundMusic(AudioSource audioSource, float fadeOutDuration)
+    {
+        // Simpan volume awal
+        float startVolume = audioSource.volume;
+
+        // Hitung target volume
+        float targetVolume = 0f;
+
+        // Hitung increment per frame
+        float deltaVolume = startVolume / fadeOutDuration;
+
+        // Fade out musik dengan mengurangi volume setiap frame
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= deltaVolume * Time.deltaTime;
+            yield return null;
+        }
+
+        // Pastikan volume tidak negatif
+        audioSource.volume = 0f;
+
+        // Hentikan musik setelah selesai fade out
+        audioSource.Stop();
     }
 
     public void PlaySFX(string groupName, int index)
@@ -111,22 +182,6 @@ public class AudioManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Sound effect group or index not found.");
-        }
-    }
-
-    public void StopBackgroundMusic(string groupName)
-    {
-        BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);
-        if (group != null)
-        {
-            foreach (AudioSource audioSource in group.backgroundMusics)
-            {
-                audioSource.Stop();
-            }
-        }   
-        else
-        {
-            Debug.LogWarning("Background music group not found.");
         }
     }
 

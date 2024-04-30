@@ -40,13 +40,22 @@ public class MainMenu : MonoBehaviour
     {
         UI_ControlMainMenu.Instance.HideUI();
         DisableMenuandAnimationButton();
+        
         yield return new WaitForSeconds(0.9f);
 
         UI_ControlMainMenu.Instance.ShowMissionSelected();
+        
         saveSlotsMenu.ActivateMenu(false);
         this.DeactivateMenu();
     }
     
+    public void OnContinueClicked()
+    {
+        DisableMenuandAnimationButton();
+        GameManager.instance.SaveGame();
+        SceneManager.LoadSceneAsync("Gameplay");
+        SceneManager.LoadSceneAsync("BlockoutJakarta", LoadSceneMode.Additive);
+    }
     public void OnLoadGameClicked()
     {
         StartCoroutine(DelayLoadGame());
@@ -63,16 +72,6 @@ public class MainMenu : MonoBehaviour
         UI_ControlMainMenu.Instance.ShowMissionSelected();
         saveSlotsMenu.ActivateMenu(true);
         this.DeactivateMenu();
-    }
-
-    public void OnOptionsClicked()
-    {
-        Debug.Log("Options Clicked");
-    }
-
-    public void OnExitClicked()
-    {
-        Debug.Log("Exit Clicked");
     }
 
     public void DisableMenuandAnimationButton()

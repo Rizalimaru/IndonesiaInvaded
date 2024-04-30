@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,25 +14,24 @@ public class EnemyRepositionState : EnemyBaseState
 
     public override void UpdateState(EnemyStateManager enemy)
     {
-        Vector3 direction = enemy.target.position - enemy.agent.transform.position;
-        float angle = Vector3.Angle(direction, enemy.agent.transform.forward);
-        bool canSeePlayer = direction.magnitude < float.MaxValue && angle < enemy.viewAngle;
-        float step = 3.0f * Time.deltaTime;
-        float enemyPlayerDistance = Vector3.Distance(enemy.agent.transform.position, enemy.target.transform.position);
+        Vector3 direction = enemy.enemyObject.target.position - enemy.enemyObject.Agent.transform.position;
 
-        Vector3 facingDirection = Vector3.RotateTowards(enemy.agent.transform.forward, direction, step, 0.0f);
-        
-        enemy.agent.transform.rotation = Quaternion.LookRotation(facingDirection);
+        bool canSeePlayer = enemy.enemyObject.checkIfSeeTarget();
+        float step = 8.0f * Time.deltaTime;
+        float enemyPlayerDistance = Vector3.Distance(enemy.enemyObject.Agent.transform.position, enemy.enemyObject.target.transform.position);
 
-        if (canSeePlayer && enemyPlayerDistance <= enemy.attackDistance + 1)
+        Vector3 facingDirection = Vector3.RotateTowards(enemy.enemyObject.Agent.transform.forward, direction, step, 0.0f);
+        enemy.enemyObject.Agent.transform.rotation = Quaternion.LookRotation(facingDirection);
+
+        if (canSeePlayer && enemyPlayerDistance <= enemy.enemyObject.attackDistance + 1)
         {
             enemy.SwitchState(enemy.attackState);
         }
-        else if (canSeePlayer && enemyPlayerDistance <= enemy.triggerDistance && enemyPlayerDistance > enemy.attackDistance)
+        else if (canSeePlayer && enemyPlayerDistance <= enemy.enemyObject.attackDistance && enemyPlayerDistance > enemy.enemyObject.attackDistance)
         {
             enemy.SwitchState(enemy.movingState);
         }
-        else if (canSeePlayer && enemyPlayerDistance > enemy.triggerDistance)
+        else if (canSeePlayer && enemyPlayerDistance > enemy.enemyObject.attackDistance)
         {
             enemy.SwitchState(enemy.idleState);
         }
