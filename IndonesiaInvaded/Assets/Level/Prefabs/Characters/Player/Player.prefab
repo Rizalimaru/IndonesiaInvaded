@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 7153151500934823563}
   - component: {fileID: 5513581624899345111}
   - component: {fileID: 6484667871350195624}
+  - component: {fileID: 6564272840558940198}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -73,6 +74,7 @@ Transform:
   - {fileID: 8964449387861791797}
   - {fileID: 1553329004054554991}
   - {fileID: 7835744536218457098}
+  - {fileID: 3457766325533606494}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &5907773204926507305
@@ -137,12 +139,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d9c2046037785b43b0b94751f8315b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 4
+  walkSpeed: 5
   sprintSpeed: 10
-  groundDrag: 2
-  jumpForce: 9
-  jumpCooldown: 1
+  groundDrag: 8
+  jumpForce: 20
+  jumpCooldown: 1.3
   airMultiplier: 0.4
+  dodgeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  dodgeKey: 306
   crouchSpeed: 0
   crouchYScale: 0
   jumpKey: 32
@@ -208,6 +235,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownTime: 2
+  skillRoarKey: 101
+  skillEnhance: 113
+  cameraShake: {fileID: 0}
+  shakeDuration: 0.5
+  shakeMagnitude: 0.1
 --- !u!114 &7153151500934823563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,8 +286,83 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1501732846235728247}
-  enemy: {fileID: 0}
-  movementSpeed: 50
+  movementSpeed: 100
+  detectionRadius: 5
+  nearestEnemy: {fileID: 0}
+  combatLookAt: {fileID: 0}
+--- !u!114 &6564272840558940198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093167237751254063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b4d4a306b8105249ae8f3db12925d29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 500
+  currentHealth: 0
+  maxSP: 100
+  currentSP: 0
+  healthBar: {fileID: 0}
+  skillBar: {fileID: 0}
+--- !u!1 &4029081902527982358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3457766325533606494}
+  - component: {fileID: 5428108869581204518}
+  m_Layer: 6
+  m_Name: EnemyCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3457766325533606494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029081902527982358}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1501732846235728247}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &5428108869581204518
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029081902527982358}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5162115096185298781
 GameObject:
   m_ObjectHideFlags: 0
