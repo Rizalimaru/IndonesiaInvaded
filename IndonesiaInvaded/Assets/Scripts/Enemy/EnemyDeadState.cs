@@ -1,32 +1,33 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAttackState : EnemyBaseState
+public class EnemyDeadState : EnemyBaseState
 {
     float delay;
+
     public override void EnterState(EnemyStateManager enemy)
     {
-        if (enemy.enemyObject.enemyTitle == EnemyScriptableObject.title.Boss) Debug.Log("Boss is Attacking");
-        else Debug.Log("Enemy is Attacking");
+        Debug.Log("Enemy is defeated");
 
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
-        enemy.animator.SetBool("isWalking", false);
-        enemy.animator.SetBool("isAttacking", true);
-        enemy.animator.SetBool("isResting", false);
-        delay = enemy.enemyObject.animDelay;
 
-        enemy.enemyObject.Attack();
+        enemy.animator.SetBool("isAttacking", false);
+        enemy.animator.SetBool("isResting", false);
+        enemy.animator.SetBool("isWalking", false);
+        enemy.animator.SetBool("isDead", true);
+
+        delay = enemy.enemyObject.animDelay;
     }
 
     public override void UpdateState(EnemyStateManager enemy)
     {
-        if (delay > 0)
+        if(delay > 0)
         {
             delay -= Time.deltaTime;
         }
         else
         {
-            enemy.SwitchState(enemy.restState);
+            Object.Destroy(enemy.gameObject);
         }
     }
 
