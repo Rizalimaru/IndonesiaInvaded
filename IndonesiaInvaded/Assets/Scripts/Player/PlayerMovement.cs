@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour, IDataPersistent
-{   
+{
     public static PlayerMovement instance;
+    
     [Header("Movement")]
     private float moveSpeed;
     public float walkSpeed;
@@ -18,12 +20,6 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     public float airMultiplier;
     bool readyToJump;
 
-    [Header("Dodge")]
-    [SerializeField] AnimationCurve dodgeCurve;
-    bool isDodging;
-    float dodgeTimer;
-    public KeyCode dodgeKey = KeyCode.LeftControl;
-
     [Header("Crouching")]
     public float crouchSpeed;
     public float crouchYScale;
@@ -32,7 +28,7 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
-    public KeyCode crouchKey = KeyCode.C;
+    public KeyCode crouchKey = KeyCode.LeftControl;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -53,8 +49,6 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     Vector3 moveDirection;
     internal Vector3 velocity;
 
-    private Animator animator;
-
     Rigidbody rb;
 
     public MovementState state;
@@ -69,24 +63,27 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     [Header("Gravity")]
     public float gravity = 9.81f; // Default gravity value
 
+    private CheckPointManager checkPointManager;
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.checkpointPosition;
+    }
+    public void SaveData(GameData data)
+    {
+        data.checkpointPosition = this.transform.position;
+    }
     private void Start()
-    {   
-        animator = GetComponent<Animator>();
+    {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
         readyToJump = true;
 
         startYScale = transform.localScale.y;
-
-        Keyframe dodge_lastFrame = dodgeCurve[dodgeCurve.length - 1];
-        dodgeTimer = dodge_lastFrame.time;
     }
 
     private void Update()
-    {   
-    
-        bool hit1 = animator.GetBool("hit1");
+    {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
@@ -94,12 +91,10 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
         SpeedControl();
         StateHandler();
 
-        if (grounded)
+        if(InputManager.instance.GetExitPressed())
         {
-            animator.SetBool("isGrounded", true);
-        }else
-        {
-            animator.SetBool("isGrounded", false);
+            GameManager.instance.SaveGame();
+            SceneManager.LoadSceneAsync("MainMenu");
         }
     }
 
@@ -135,36 +130,7 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
         {
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
-
-        
-        // start dodge
-        if(Input.GetKeyDown(dodgeKey))
-        {
-            if(moveDirection.magnitude !=0)
-            {
-                StartCoroutine(Dodge());
-            }
-        }
-
     }
-
-    IEnumerator Dodge()
-    {
-        isDodging = true;
-        float timer = 0;
-        animator.SetTrigger("Dodge");
-        while(timer < dodgeTimer)
-        {
-            float speed = dodgeCurve.Evaluate(timer);
-            Vector3 dir = (transform.forward * speed) + (Vector3.up * rb.velocity.y); // Menggunakan rb.velocity
-            // Mengganti pemanggilan CharacterController.Move() dengan pemanggilan transform.Translate() atau rb.MovePosition() jika tidak menggunakan CharacterController
-            transform.Translate(dir * Time.deltaTime); // atau rb.MovePosition(transform.position + dir * Time.deltaTime) jika tidak menggunakan CharacterController
-            timer += Time.deltaTime;
-            yield return null;
-        }
-        isDodging = false;
-    }
-
 
     private void StateHandler()
     {
@@ -196,30 +162,8 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
         }
     }
 
-   private void MovePlayer()
-    {   
-        if(isDodging)
-        {
-            return;
-        }
-
-        if(animator.GetBool("SkillRoar"))
-        {
-            return;
-        }
-        
-        // Check if any hit animation is active
-        bool hit1 = animator.GetBool("hit1");
-        bool hit2 = animator.GetBool("hit2");
-        bool hit3 = animator.GetBool("hit3");
-
-        // Stop player movement if hit animation is active
-        if (hit1 || hit2 || hit3)
-        {
-            rb.velocity = Vector3.zero; // Stop player movement
-            return; // Exit the method early
-        }
-
+    private void MovePlayer()
+    {
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
@@ -233,17 +177,16 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
         }
 
         // on ground
-        else if (grounded)
+        else if(grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
         // in air
-        else if (!grounded)
+        else if(!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
         // Apply gravity
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
     }
-
 
     private void SpeedControl()
     {
@@ -309,13 +252,5 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
         velocity = Vector3.zero;
     }
 
-    public void LoadData(GameData data)
-    {
-        this.transform.position = data.playerPosition;
-    }
-    public void SaveData(ref GameData data)
-    {
-        data.playerPosition = this.transform.position;
-    }
     
 }

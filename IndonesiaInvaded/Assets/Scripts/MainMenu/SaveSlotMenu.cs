@@ -45,18 +45,18 @@ public class SaveSlotsMenu : Menu
 
         if (isLoadingGame)
         {
-            GameManager.instance.ChangeSelectedProfile(saveSlot.GetProfileId());
+            GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             SaveGameandLoadScene();
         }
         else if (saveSlot.hasData)
         {
-            GameManager.instance.ChangeSelectedProfile(saveSlot.GetProfileId());
+            GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
         }
         else
         {
-            GameManager.instance.ChangeSelectedProfile(saveSlot.GetProfileId());
+            GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
             loadingScreen.SetActive(true);
@@ -105,7 +105,7 @@ public class SaveSlotsMenu : Menu
         this.gameObject.SetActive(true);
         this.isLoadingGame = isLoadingGame;
 
-        Dictionary<string, GameData> profileGameData = GameManager.instance.GetAllProfileGameData();
+        Dictionary<string, GameData> profileGameData = GameManager.instance.GetAllProfilesGameData();
 
         backButton.interactable = true;
 
