@@ -1,37 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class GameData
 {
-    public long lastUpdate;
-    public List<string> passedScenes;
+    public long lastUpdated;
     public Vector3 playerPosition;
-    public SerializableDictionary<string, bool> monsterKilled;
-    public AttributeData playerAttributeData;
-    
+    public Vector3 checkpointPosition;
+    public SerializableDictionary<string, bool> monstersCollected;
+    public AttributeData playerAttributesData;
 
-    public GameData()
+    public GameData() 
     {
         playerPosition = Vector3.zero;
-        monsterKilled = new SerializableDictionary<string, bool>();
-        playerAttributeData = new AttributeData();
+        checkpointPosition = Vector3.zero;
+        monstersCollected = new SerializableDictionary<string, bool>();
+        playerAttributesData = new AttributeData();
     }
-    public int GetPercentageCompelete(){
+
+    public int GetPercentageComplete() 
+    {
         int totalCollected = 0;
-        foreach (bool collected in monsterKilled.Values)
+        foreach (bool collected in monstersCollected.Values) 
         {
-            if(collected){
+            if (collected) 
+            {
                 totalCollected++;
             }
         }
-        int percentageComplete = -1;
-        if(monsterKilled.Count != 0){
-            percentageComplete = (totalCollected * 100)  / monsterKilled.Count;
-        }
 
-        return percentageComplete;
+        int percentageCompleted = 0;
+        if (monstersCollected.Count != 0) 
+        {
+            percentageCompleted = (totalCollected * 100 / monstersCollected.Count);
+        }
+        return percentageCompleted;
     }
 }

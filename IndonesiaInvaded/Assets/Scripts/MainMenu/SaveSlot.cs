@@ -13,16 +13,17 @@ public class SaveSlot : MonoBehaviour
     [Header("Content")]
     [SerializeField] private GameObject noDataContent;
     [SerializeField] private GameObject hasDataContent;
+    [SerializeField] private TextMeshProUGUI MissionText;
+    [SerializeField] private TextMeshProUGUI CityMissionText;
     [SerializeField] private TextMeshProUGUI percentageCompeleteText;
 
-    private Button saveSlotButton;
     public bool hasData {get; private set;} = false;
+    private Button saveSlotButton;
+    
     private void Awake(){
         saveSlotButton = this.GetComponent<Button>();
     }
-
-
-
+    
     public void SetData(GameData data){
         if(data == null)
         {
@@ -35,7 +36,7 @@ public class SaveSlot : MonoBehaviour
             noDataContent.SetActive(false);
             hasDataContent.SetActive(true);
 
-            percentageCompeleteText.text = data.GetPercentageCompelete() + "% COMPLETE";
+            percentageCompeleteText.text = data.GetPercentageComplete() + "% COMPLETE";
         }
     }
 

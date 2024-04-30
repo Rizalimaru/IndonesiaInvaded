@@ -63,13 +63,14 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     [Header("Gravity")]
     public float gravity = 9.81f; // Default gravity value
 
+    private CheckPointManager checkPointManager;
     public void LoadData(GameData data)
     {
-        this.transform.position = data.playerPosition;
+        checkPointManager.SetCheckpointPosition(data.checkpointPosition);
     }
     public void SaveData(GameData data)
     {
-        data.playerPosition = this.transform.position;
+        data.checkpointPosition = checkPointManager.GetCheckpointPosition();
     }
     private void Start()
     {
