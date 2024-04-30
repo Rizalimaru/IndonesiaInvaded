@@ -1,21 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class GameData
 {
     public long lastUpdate;
+    public List<string> passedScenes;
     public Vector3 playerPosition;
     public SerializableDictionary<string, bool> monsterKilled;
+    public AttributeData playerAttributeData;
     
 
     public GameData()
     {
         playerPosition = Vector3.zero;
         monsterKilled = new SerializableDictionary<string, bool>();
+        playerAttributeData = new AttributeData();
     }
-
     public int GetPercentageCompelete(){
         int totalCollected = 0;
         foreach (bool collected in monsterKilled.Values)
