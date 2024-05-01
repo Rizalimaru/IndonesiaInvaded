@@ -83,7 +83,7 @@ public class UI_HUDManagement : MonoBehaviour
         // Transisi fadeIn
         while (canvasGroup.alpha < 1)
         {
-            canvasGroup.alpha += Time.deltaTime;
+            canvasGroup.alpha += Time.deltaTime*2;
             yield return null;
         }
     }
