@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class SkillManager : MonoBehaviour
 {
     // Singleton instance
+    private Animator animator;
     public static SkillManager instance;
 
     [Header("Skill 1")]
@@ -28,7 +29,8 @@ public class SkillManager : MonoBehaviour
     }
 
     private void Start()
-    {
+    {   
+        animator = GetComponent<Animator>();
         skillImage1.fillAmount = 0;
         skillImage2.fillAmount = 0;
     }
@@ -43,7 +45,8 @@ public class SkillManager : MonoBehaviour
     {
         PlayerAttribut player = PlayerAttribut.instance;
         if (player != null && !isCooldown1 && player.currentSP >= 30)
-        {
+        {   
+            animator.SetTrigger("SkillRoar");
             player.currentSP -= 30;
             Debug.Log("Skill 1 activated!");
             player.skillBar.SetSkill(player.currentSP);
