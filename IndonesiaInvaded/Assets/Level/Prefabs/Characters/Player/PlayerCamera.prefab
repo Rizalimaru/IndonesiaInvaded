@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7522247111663242660}
   - component: {fileID: 7522247111663242661}
   - component: {fileID: 868640218966302434}
+  - component: {fileID: 4466875714985105675}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: Untagged
@@ -139,7 +140,7 @@ MonoBehaviour:
   minimumDistance: 1
   maximumDistance: 6
   smoothing: 4
-  zoomSensitivity: 1
+  zoomSensitivity: 13
 --- !u!114 &7522247111663242661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,12 +176,27 @@ MonoBehaviour:
   player: {fileID: 0}
   playerObj: {fileID: 0}
   rb: {fileID: 0}
-  rotationSpeed: 7
+  target: {fileID: 0}
+  rotationToEnemySpeed: 20
+  hitDrag: {fileID: 0}
+  rotationSpeed: 10
   combatLookAt: {fileID: 0}
   thirdPersonCam: {fileID: 0}
   combatCam: {fileID: 0}
   topDownCam: {fileID: 0}
   currentStyle: 0
+--- !u!114 &4466875714985105675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7522247111663242659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61fd722437a09974ca370a464adc9bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7522247112809039680
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +265,7 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
-  m_CameraDistance: 5.999999
+  m_CameraDistance: 6
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
