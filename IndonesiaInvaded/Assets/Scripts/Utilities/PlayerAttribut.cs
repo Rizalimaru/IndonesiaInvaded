@@ -36,28 +36,10 @@ public class PlayerAttribut : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            TakeDamage(20);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            UseSkill1();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            UseSkill2();
-        }
-
-        if(instance == null)
-        {
-            instance = this;
-        }
-
-        
-        
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    TakeDamage(20);
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -94,7 +76,6 @@ public class PlayerAttribut : MonoBehaviour
 
         }
     }
-
 
     // Method untuk memulai serangan
     public void StopRegenerateHealth()
@@ -138,33 +119,4 @@ public class PlayerAttribut : MonoBehaviour
         skillBar.SetSkill(currentSP); // Update tampilan bar skill
     }
 
-    public void UseSkill1()
-    {
-        if (currentSP >= 30)
-        {
-            currentSP -= 30;
-            Debug.Log("Skill 1 activated!");    
-            skillBar.SetSkill(currentSP);
-            // Lakukan tindakan Skill 1 di sini
-        }
-        else
-        {
-            Debug.Log("Not enough SP for Skill 1!");
-        }
-    }
-
-    public void UseSkill2()
-    {
-        if (currentSP >= 50)
-        {
-            currentSP -= 50;
-            Debug.Log("Skill 2 activated!");
-            skillBar.SetSkill(currentSP);
-            // Lakukan tindakan Skill 2 di sini
-        }
-        else
-        {
-            Debug.Log("Not enough SP for Skill 2!");
-        }
-    }
 }

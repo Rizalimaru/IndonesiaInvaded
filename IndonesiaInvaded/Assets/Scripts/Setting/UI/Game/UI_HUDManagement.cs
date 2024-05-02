@@ -21,8 +21,9 @@ public class UI_HUDManagement : MonoBehaviour
         bool isAttacking = PlayerAnimator.instance.anim.GetBool("hit1");
         bool isAttacking2 = PlayerAnimator.instance.anim.GetBool("hit2");
         bool isAttacking3 = PlayerAnimator.instance.anim.GetBool("hit3");
+        bool isJumping = PlayerAnimator.instance.anim.GetBool("isJump");
 
-        if (isIdle && !isAttacking && !isAttacking2 && !isAttacking3)
+        if (isIdle && !isAttacking && !isAttacking2 && !isAttacking3 && !isJumping)
         {
             // Memulai atau melanjutkan coroutine hanya jika player sedang idle
             if (idleCoroutine == null)
@@ -82,7 +83,7 @@ public class UI_HUDManagement : MonoBehaviour
         // Transisi fadeIn
         while (canvasGroup.alpha < 1)
         {
-            canvasGroup.alpha += Time.deltaTime;
+            canvasGroup.alpha += Time.deltaTime*2;
             yield return null;
         }
     }
