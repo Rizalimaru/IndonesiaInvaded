@@ -1,7 +1,13 @@
 using UnityEngine;
 
 public class HitDrag : MonoBehaviour
-{
+{   
+    public enum TagEnemyOptions
+    {
+        Enemy,
+        EnemyMeleeCollider,
+    }
+    public TagEnemyOptions tagEnemyOptions;
     public Transform player; // Referensi ke objek player
     private Animator animator; // Referensi ke animator controller player
 
@@ -44,7 +50,7 @@ public class HitDrag : MonoBehaviour
 
         foreach (Collider collider in colliders)
         {
-            if (collider.CompareTag("Enemy"))
+            if (collider.CompareTag(tagEnemyOptions.ToString()))
             {
                 float distance = Vector3.Distance(player.position, collider.transform.position);
                 if (distance < shortestDistance)

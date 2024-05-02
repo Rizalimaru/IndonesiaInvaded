@@ -13,6 +13,9 @@ public class SkillManager : MonoBehaviour
     public float cooldown1 = 5;
     private bool isCooldown1 = false;
     public KeyCode skill1Key;
+    public CameraShake cameraShake;
+    public float shakeDuration = 0.5f;
+    public float shakeMagnitude = 0.1f;
 
     [Header("Skill 2")]
     public Image skillImage2;
@@ -46,7 +49,7 @@ public class SkillManager : MonoBehaviour
         PlayerAttribut player = PlayerAttribut.instance;
         if (player != null && !isCooldown1 && player.currentSP >= 30)
         {   
-            animator.SetTrigger("SkillRoar");
+            animator.SetTrigger("RoarSkill");
             player.currentSP -= 30;
             Debug.Log("Skill 1 activated!");
             player.skillBar.SetSkill(player.currentSP);
