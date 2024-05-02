@@ -66,16 +66,20 @@ public class HitDrag : MonoBehaviour
 
     public void MoveToEnemy()
     {
-        if (!isMoving) // Memastikan player tidak sedang dalam proses gerakan
+        if (!isMoving && nearestEnemy != null) // Memastikan player tidak sedang dalam proses gerakan dan terdapat musuh terdekat
         {
             isMoving = true; // Menandai player sedang dalam proses gerakan
 
             Vector3 direction = (nearestEnemy.position - player.position).normalized; // Menghitung arah menuju enemy
             Vector3 targetPosition = nearestEnemy.position - direction * 1.5f; // Menentukan posisi target player
 
+            // Mengatur posisi target dengan nilai y tetap dari posisi player
+            targetPosition.y = player.position.y;
+
             StartCoroutine(MovePlayer(targetPosition)); // Memulai proses gerakan player ke posisi target
         }
     }
+
 
     void StopMoving()
     {
