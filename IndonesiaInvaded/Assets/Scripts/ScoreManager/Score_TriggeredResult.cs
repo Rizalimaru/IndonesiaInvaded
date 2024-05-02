@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Score_TriggeredResult : MonoBehaviour
 {
-
-    public GameObject triggeredResult;
+        
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +21,8 @@ public class Score_TriggeredResult : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            triggeredResult.SetActive(true);
             UI_ResultGame.instance.ShowResult();
+            UI_PauseGame.instance.ShowResult();
         }
     }
 }

@@ -31,6 +31,12 @@ public class GraphicsQuality : MonoBehaviour
         FPS60 = 60,
         FPS120 = 120
     }
+
+    void Awake()
+    {
+        // Set FPS ke 30
+        fpsDropdown.value = PlayerPrefs.GetInt(fpsDropdownIndexKey, 0);
+    }
     void Start()
     {   
         // Menyimpan nilai kualitas pada dropdown quality ke dalam PlayerPrefs dengan key QualityDropdownIndexKey

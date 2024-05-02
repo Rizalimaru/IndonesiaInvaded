@@ -48,7 +48,6 @@ GameObject:
   - component: {fileID: 4149217423386793282}
   - component: {fileID: 5891494012393991014}
   - component: {fileID: 7153151500934823563}
-  - component: {fileID: 5513581624899345111}
   - component: {fileID: 6484667871350195624}
   - component: {fileID: 2987648104949693347}
   - component: {fileID: 4900809783995673873}
@@ -143,7 +142,7 @@ MonoBehaviour:
   walkSpeed: 5
   sprintSpeed: 10
   groundDrag: 2
-  jumpForce: 9
+  jumpForce: 20
   jumpCooldown: 1.3
   airMultiplier: 0.4
   dodgeCurve:
@@ -257,24 +256,6 @@ MonoBehaviour:
   weapon: {fileID: 6380587300963034910}
   weaponHolder: {fileID: 4234664189581931362}
   isAttacking: 0
---- !u!114 &5513581624899345111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093167237751254063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b4d4a306b8105249ae8f3db12925d29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 500
-  currentHealth: 0
-  maxSP: 100
-  currentSP: 0
-  healthBar: {fileID: 0}
-  skillBar: {fileID: 0}
 --- !u!114 &6484667871350195624
 MonoBehaviour:
   m_ObjectHideFlags: 0
