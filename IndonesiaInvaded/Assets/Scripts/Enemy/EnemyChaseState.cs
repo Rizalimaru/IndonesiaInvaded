@@ -17,10 +17,10 @@ public class EnemyChaseState : EnemyBaseState
 
     public override void UpdateState(EnemyStateManager enemy)
     {
-        if (Vector3.Distance(enemy.enemyObject.Agent.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.triggerDistance)
+        if (Vector3.Distance(enemy.enemyObject.spawnPoint.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.triggerDistance)
         {
             enemy.enemyObject.Agent.SetDestination(enemy.enemyObject.target.transform.position);
-            if(Vector3.Distance(enemy.enemyObject.Agent.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.attackDistance)
+            if(Vector3.Distance(enemy.enemyObject.spawnPoint.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.attackDistance)
             {
                 enemy.SwitchState(enemy.attackState);
             }
