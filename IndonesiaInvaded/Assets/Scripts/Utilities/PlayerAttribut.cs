@@ -44,12 +44,12 @@ public class PlayerAttribut : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy_Melee"))
+        if (other.CompareTag("EnemyMeleeCollider"))
         {
             TakeDamage(40);
             StopRegenerateHealth();
         }
-        else if (other.CompareTag("Enemy_Ranged"))
+        else if (other.CompareTag("EnemyRangedCollider"))
         {
             TakeDamage(20);
             StopRegenerateHealth();
