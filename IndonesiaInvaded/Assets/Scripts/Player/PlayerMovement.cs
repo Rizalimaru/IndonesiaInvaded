@@ -208,11 +208,12 @@ public class PlayerMovement : MonoBehaviour
         bool hit1 = animator.GetBool("hit1");
         bool hit2 = animator.GetBool("hit2");
         bool hit3 = animator.GetBool("hit3");
+        bool RoarSkill = animator.GetBool("RoarSkill");
 
         // Stop player movement if hit animation is active
-        if (hit1 || hit2 || hit3)
+        if (hit1 || hit2 || hit3 || RoarSkill)
         {
-            rb.velocity = Vector3.zero; // Stop player movement
+            StopMovement(); // Stop player movement
             return; // Exit the method early
         }
 
@@ -238,6 +239,12 @@ public class PlayerMovement : MonoBehaviour
 
         // Apply gravity
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+    }
+
+    public void StopMovement()
+    {
+        rb.velocity = Vector3.zero; // Mengatur kecepatan pemain menjadi nol
+        moveDirection = Vector3.zero; // Mengatur arah gerakan pemain menjadi nol
     }
 
     private void SpeedControl()
