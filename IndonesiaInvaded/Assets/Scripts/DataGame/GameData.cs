@@ -1,28 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class GameData
 {
     public long lastUpdated;
     public Vector3 playerPosition;
-    public Vector3 checkpointPosition;
-    public SerializableDictionary<string, bool> monstersCollected;
-    public AttributeData playerAttributesData;
-
+    public Checkpoint checkpoint;
+    public PlayerAttribut playerAttribut;
+    public SerializableDictionary<string, bool> enemy;
+    
     public GameData() 
     {
         playerPosition = Vector3.zero;
-        checkpointPosition = Vector3.zero;
-        monstersCollected = new SerializableDictionary<string, bool>();
-        playerAttributesData = new AttributeData();
+        enemy = new SerializableDictionary<string, bool>();
+        playerAttribut = new PlayerAttribut();
+        checkpoint  = null;
+        lastUpdated = DateTime.Now.Ticks;
     }
 
     public int GetPercentageComplete() 
     {
         int totalCollected = 0;
-        foreach (bool collected in monstersCollected.Values) 
+        foreach (bool collected in enemy.Values) 
         {
             if (collected) 
             {
@@ -30,11 +32,12 @@ public class GameData
             }
         }
 
-        int percentageCompleted = 0;
-        if (monstersCollected.Count != 0) 
+        int percentageCompleted = -1;
+        if (enemy.Count != 0) 
         {
-            percentageCompleted = (totalCollected * 100 / monstersCollected.Count);
+            percentageCompleted = (totalCollected * 100 / enemy.Count);
         }
         return percentageCompleted;
     }
+
 }

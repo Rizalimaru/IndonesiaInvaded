@@ -41,6 +41,7 @@ public class UI_PauseGame : MonoBehaviour
 
     public Animator pauseAnimator;
     public Animator optionsAnimatorGame;
+    private GameData gameData;
 
     private void Awake()
     {
@@ -206,7 +207,6 @@ public class UI_PauseGame : MonoBehaviour
         isCursorLocked = true; // Lock cursor when unpaused
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
 
         GameResumed.Invoke(); // Invoke resume event
@@ -221,11 +221,12 @@ public class UI_PauseGame : MonoBehaviour
         gameResult.SetActive(false);
         gameOver.SetActive(false);
         GameIsPaused = false;
-
         audioManagerInstance.StopBackgroundMusicWithTransition("Game", 1f);
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+        
         GameManager.instance.SaveGame();
-        SceneMainMenuManager.instance.LoadMainMenu();
+        // SceneMainMenuManager.instance.LoadMainMenu();
+        SceneManager.LoadScene(0);
     }
 
 

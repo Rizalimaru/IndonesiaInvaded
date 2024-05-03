@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,17 +16,13 @@ public class GameManager : MonoBehaviour
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
     [SerializeField] private bool useEncryption;
-
-    [Header("Auto Saving Configuration")]
-    [SerializeField] private float autoSaveTimeSeconds = 60f;
-
+    
     private GameData gameData;
     private List<IDataPersistent> dataPersistenceObjects;
     private FileDataHandler dataHandler;
+    
 
     private string selectedProfileId = "";
-
-    private Coroutine autoSaveCoroutine;
 
     public static GameManager instance { get; private set; }
 
@@ -64,12 +61,6 @@ public class GameManager : MonoBehaviour
     {
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
-
-        // if (autoSaveCoroutine != null) 
-        // {
-        //     StopCoroutine(autoSaveCoroutine);
-        // }
-        // autoSaveCoroutine = StartCoroutine(AutoSave());
     }
 
     public void ChangeSelectedProfileId(string newProfileId) 
@@ -145,10 +136,9 @@ public class GameManager : MonoBehaviour
         }
 
         gameData.lastUpdated = System.DateTime.Now.ToBinary();
+
         dataHandler.Save(gameData, selectedProfileId);
     }
-
-    
 
     private void OnApplicationQuit() 
     {
@@ -173,13 +163,4 @@ public class GameManager : MonoBehaviour
         return dataHandler.LoadAllProfiles();
     }
 
-    // private IEnumerator AutoSave() 
-    // {
-    //     while (true) 
-    //     {
-    //         yield return new WaitForSeconds(autoSaveTimeSeconds);
-    //         SaveGame();
-    //         Debug.Log("Auto Saved Game");
-    //     }
-    // }
 }

@@ -59,6 +59,8 @@ public class SaveSlotsMenu : Menu
             GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
+
+            
             loadingScreen.SetActive(true);
             while (!scenesToLoad.All(op => op.isDone))
             {

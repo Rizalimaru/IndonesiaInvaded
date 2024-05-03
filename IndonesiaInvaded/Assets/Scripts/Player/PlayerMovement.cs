@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerMovement : MonoBehaviour, IDataPersistent
+public class PlayerMovement : MonoBehaviour
 {   
     private Animator animator;
     public static PlayerMovement instance;
@@ -52,9 +52,7 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     float horizontalInput;
     float verticalInput;
 
-    Vector2 look;
     Vector3 moveDirection;
-    internal Vector3 velocity;
 
     Rigidbody rb;
 
@@ -69,16 +67,7 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
 
     [Header("Gravity")]
     public float gravity = 9.81f; // Default gravity value
-
-    private CheckPointManager checkPointManager;
-    public void LoadData(GameData data)
-    {
-        this.transform.position = data.checkpointPosition;
-    }
-    public void SaveData(GameData data)
-    {
-        data.checkpointPosition = this.transform.position;
-    }
+    
     private void Start()
     {   
         animator = GetComponent<Animator>();
@@ -311,14 +300,6 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
 
-    public void Teleport(Vector3 position, Quaternion rotation)
-    {
-        transform.position = position;
-        Physics.SyncTransforms();
-        look.x = rotation.eulerAngles.y;
-        look.y = rotation.eulerAngles.z;
-        velocity = Vector3.zero;
-    }
 
     
 }
