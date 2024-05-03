@@ -20,10 +20,7 @@ public class GameManager : MonoBehaviour
     private GameData gameData;
     private List<IDataPersistent> dataPersistenceObjects;
     private FileDataHandler dataHandler;
-    
-
     private string selectedProfileId = "";
-
     public static GameManager instance { get; private set; }
 
     private void Awake() 

@@ -9,13 +9,14 @@ public class PlayerDataSaving : MonoBehaviour, IDataPersistent
     Vector2 look;
     internal Vector3 velocity;
     
+
     public void LoadData(GameData data) 
     {
-        player.transform.position = data.playerPosition;
+        data.playerPosition = player.transform.position;
     }
     public void SaveData(GameData data) 
     {
-        data.playerPosition = player.transform.position;
+        player.transform.position = data.playerPosition;
     }
 
     public void Update(){

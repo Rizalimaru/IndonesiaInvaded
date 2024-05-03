@@ -12,6 +12,8 @@ public class GameData
     public PlayerAttribut playerAttribut;
     public SerializableDictionary<string, bool> enemy;
     
+    // the values defined in this constructor will be the default values
+    // the game starts with when there's no data to load
     public GameData() 
     {
         playerPosition = Vector3.zero;

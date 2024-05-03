@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class Checkpoint : MonoBehaviour,IDataPersistent
+public class Checkpoint : MonoBehaviour
 {
-    public GameObject player;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -11,15 +10,6 @@ public class Checkpoint : MonoBehaviour,IDataPersistent
             Debug.Log("Checkpoint Saved Game");
 
         }
-    }
-
-    public void LoadData(GameData data){
-        player.transform.position = data.playerPosition;
-    }
-
-    public void SaveData(GameData data){
-        data.playerPosition = player.transform.position;  
-
     }
 
 }

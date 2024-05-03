@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -507,7 +507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1473405832}
   animator: {fileID: 252325237}
-  player: {fileID: 1724052261}
+  player: {fileID: 1724052274}
   playerCamera: {fileID: 2001562138}
 --- !u!65 &392541559
 BoxCollider:
@@ -812,7 +812,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1001526731}
   animator: {fileID: 252325237}
-  player: {fileID: 1724052261}
+  player: {fileID: 1724052274}
   playerCamera: {fileID: 2001562138}
 --- !u!65 &510701956
 BoxCollider:
@@ -1014,7 +1014,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2093167237751254063, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1724052274}
   m_SourcePrefab: {fileID: 100100000, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
 --- !u!54 &626572544 stripped
 Rigidbody:
@@ -1041,7 +1044,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5891494012393991014, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
   m_PrefabInstance: {fileID: 626572543}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1546420086}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd0d819c460c09849a6c4281d03183b9, type: 3}
@@ -1177,7 +1180,6 @@ GameObject:
   - component: {fileID: 656700263}
   - component: {fileID: 656700262}
   - component: {fileID: 656700261}
-  - component: {fileID: 656700260}
   m_Layer: 0
   m_Name: CheckPoint
   m_TagString: CheckPoint
@@ -1185,18 +1187,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &656700260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 656700259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1154698a3c5d0fb489aee83f43ac027c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &656700261
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1334,7 +1324,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 813262627}
-  - component: {fileID: 813262628}
   m_Layer: 0
   m_Name: CheckPoint Manager
   m_TagString: Untagged
@@ -1357,18 +1346,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 366329190}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &813262628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 813262626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 309f7da13de8fa24fa3f272f0b879b69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &815923197
 GameObject:
   m_ObjectHideFlags: 0
@@ -1514,7 +1491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Size.x
-      value: 1855.8202
+      value: 1385.6489
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Size.y
@@ -1522,15 +1499,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Size.z
-      value: 2385.416
+      value: 1215.7834
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Center.x
-      value: 1078.3936
+      value: 927.70276
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Center.z
-      value: 1749.8774
+      value: 2021.3055
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_IsTrigger
@@ -2815,6 +2792,11 @@ CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 2270564364661300935, guid: 78055adac7432ff4fa1565788c44b100, type: 3}
   m_PrefabInstance: {fileID: 1226105030}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1546420086 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2093167237751254063, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
+  m_PrefabInstance: {fileID: 626572543}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1554046140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2900,7 +2882,6 @@ GameObject:
   - component: {fileID: 1626057759}
   - component: {fileID: 1626057758}
   - component: {fileID: 1626057757}
-  - component: {fileID: 1626057756}
   m_Layer: 0
   m_Name: CheckPoint
   m_TagString: CheckPoint
@@ -2908,18 +2889,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1626057756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1626057755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1154698a3c5d0fb489aee83f43ac027c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1626057757
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3157,25 +3126,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 408840178}
   animator: {fileID: 252325237}
-  player: {fileID: 1724052261}
+  player: {fileID: 1724052274}
   playerCamera: {fileID: 2001562138}
---- !u!114 &1724052261 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4250335120195895467, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
-  m_PrefabInstance: {fileID: 626572543}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d9c2046037785b43b0b94751f8315b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1724052268 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6484667871350195624, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
   m_PrefabInstance: {fileID: 626572543}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1546420086}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6536862c5a7eb594e84d69611a2e27ac, type: 3}
@@ -3186,6 +3144,19 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 2631689077824012360, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
   m_PrefabInstance: {fileID: 626572543}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1724052274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546420086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63a9027fe70caa54c9c3980d57d97187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1546420086}
 --- !u!1 &1785152514
 GameObject:
   m_ObjectHideFlags: 0
@@ -3263,6 +3234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   enemyDefeats: 0
+  bossDefeats: 0
   scoreTextInGame: {fileID: 399963105}
   scoreTextPaused: {fileID: 1851977754}
   timeText: {fileID: 794628783}
@@ -3384,23 +3356,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Size.x
-      value: 2595.6958
+      value: 1876.4541
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Size.y
-      value: 551.1652
+      value: 585.9537
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Size.z
-      value: 658.9251
+      value: 1046.4667
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Center.x
-      value: 1022.9365
+      value: 1382.5574
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
+      propertyPath: m_Center.y
+      value: 17.394196
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Center.z
-      value: 423.53323
+      value: 396.87524
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_IsTrigger
@@ -3715,7 +3691,6 @@ GameObject:
   - component: {fileID: 2018009556}
   - component: {fileID: 2018009555}
   - component: {fileID: 2018009554}
-  - component: {fileID: 2018009553}
   m_Layer: 0
   m_Name: CheckPoint
   m_TagString: CheckPoint
@@ -3723,18 +3698,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2018009553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2018009552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1154698a3c5d0fb489aee83f43ac027c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &2018009554
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4014,7 +3977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Size.x
-      value: 713.35583
+      value: 913.975
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Size.y
@@ -4022,11 +3985,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Size.z
-      value: 607.8504
+      value: 792.2343
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Center.x
-      value: -248.0274
+      value: -239.97784
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Center.y
@@ -4034,7 +3997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_Center.z
-      value: 202.0936
+      value: 178.57065
       objectReference: {fileID: 0}
     - target: {fileID: 4862404964401883747, guid: 9fb6ffa99e3f38c4fa9c3474f0235180, type: 3}
       propertyPath: m_IsTrigger
