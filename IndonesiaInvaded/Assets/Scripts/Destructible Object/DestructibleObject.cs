@@ -17,6 +17,9 @@ public class DestructibleObject : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            // Add score when player destroys the object
+            ScoreManager.instance.AddScore(500);
+
             DestroyObject();
         }
     }
