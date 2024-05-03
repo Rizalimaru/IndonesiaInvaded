@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 public class MainMenu : MonoBehaviour
 {
 
@@ -15,6 +16,13 @@ public class MainMenu : MonoBehaviour
     public Button loadButton;
     public Button optionsButton;
     public Button exitButton;
+
+    [Header("Title Game")]
+    // animasi title game
+    public Animator titleGameAnimator;
+
+
+
 
     private void Start(){
         DisableButtonsDependingOnData();
@@ -41,7 +49,9 @@ public class MainMenu : MonoBehaviour
         UI_ControlMainMenu.Instance.HideUI();
         DisableMenuandAnimationButton();
         
+        
         yield return new WaitForSeconds(0.9f);
+        titleGameAnimator.SetTrigger("hide");
 
         UI_ControlMainMenu.Instance.ShowMissionSelected();
         
@@ -68,6 +78,8 @@ public class MainMenu : MonoBehaviour
         DisableMenuandAnimationButton();
 
         yield return new WaitForSeconds(0.9f);
+        titleGameAnimator.SetTrigger("hide");
+        
 
         UI_ControlMainMenu.Instance.ShowMissionSelected();
         saveSlotsMenu.ActivateMenu(true);

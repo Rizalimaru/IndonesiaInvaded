@@ -47,12 +47,28 @@ public class SaveSlotsMenu : Menu
         {
             GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             SaveGameandLoadScene();
+            loadingScreen.SetActive(true);
+            while (!scenesToLoad.All(op => op.isDone))
+            {
+                float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
+                loadingBarFill.value = progress;
+
+                yield return null;
+            }
         }
         else if (saveSlot.hasData)
         {
             GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
+            loadingScreen.SetActive(true);
+            while (!scenesToLoad.All(op => op.isDone))
+            {
+                float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
+                loadingBarFill.value = progress;
+
+                yield return null;
+            }
         }
         else
         {
@@ -91,6 +107,7 @@ public class SaveSlotsMenu : Menu
         yield return new WaitForSeconds(0.9f);
 
         // Mengaktifkan Main Menu dan Interactable Button
+        mainMenu.titleGameAnimator.SetTrigger("show");
         mainMenu.ActivateMenu();
         mainMenu.EnableMenuandAnimationButton();
 

@@ -71,6 +71,7 @@ public class UI_ResultGame : MonoBehaviour
         bossDefeatsText.text = "0";
         bonusText.text = "0";
         totalScoreText.text = "0";
+        scoreImage.gameObject.SetActive(false);
     }
     // Metode untuk menghitung total skor berdasarkan skor, jumlah musuh yang dikalahkan, jumlah boss yang dikalahkan, dan bonus
     private int CalculateTotalScore(int score, int enemyDefeats, int bossDefeats, int bonus)
