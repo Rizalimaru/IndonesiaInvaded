@@ -42,10 +42,12 @@ public class SceneManagers : MonoBehaviour
     {
         CurrentLevelIndex++;
         LoadLevelWithIndex(CurrentLevelIndex);
+        GameManager.instance.SaveGame();
     }
     public void RestartLevel()
     {
         LoadLevelWithIndex(CurrentLevelIndex);
+        GameManager.instance.LoadGame();
     }
 
     public void LoadMainMenu()
