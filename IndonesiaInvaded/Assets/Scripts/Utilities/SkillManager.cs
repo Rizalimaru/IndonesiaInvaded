@@ -26,17 +26,18 @@ public class SkillManager : MonoBehaviour
     public float movementSpeed = 5f;
     private float distanceToMove;
     public float rotationToEnemySpeed = 5.0f;
+    
+    [Header("Slow Motion Effect")]
+    private bool isSlowMotionActive = false;
+    public float slowMotionDuration = 1f; // Durasi slow motion dalam detik
+    public float slowMotionTimeScale = 0.5f; // Skala waktu selama slow motion
+
 
     [Header("Skill 2")]
     public Image skillImage2;
     public float cooldown2 = 8; // Cooldown for Skill 2
     private bool isCooldown2 = false;
     public KeyCode skill2Key;
-
-    [Header("Slow Motion Effect")]
-    private bool isSlowMotionActive = false;
-    public float slowMotionDuration = 1f; // Durasi slow motion dalam detik
-    public float slowMotionTimeScale = 0.5f; // Skala waktu selama slow motion
 
     [Header("Skill Detection")]
     public Transform player;
