@@ -40,7 +40,7 @@ public class SkillManager : MonoBehaviour
 
     [Header("Skill Detection")]
     public Transform player;
-    public Transform nearestEnemy;
+    private Transform nearestEnemy;
 
     private void Awake()
     {   

@@ -36,7 +36,7 @@ public class UI_LoadingScene : MonoBehaviour
 
     IEnumerator LoadScenesAsync()
     {
-        AudioManager.instance.StopBackgroundMusicWithTransition("MainMenu", 1f);
+    
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
 
