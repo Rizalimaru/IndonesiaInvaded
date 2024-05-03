@@ -8,6 +8,10 @@ public class GameData
 {
     public long lastUpdated;
     public Vector3 playerPosition;
+    public int currentCheckpointIndex = 0;
+    public Vector3 currentCheckpointPosition;
+    public Vector3 currentCheckpointRotation;
+
     public PlayerAttribut playerAttribut;
     public SerializableDictionary<string, bool> enemy;
 
@@ -37,14 +41,6 @@ public class GameData
             percentageCompleted = (totalCollected * 100 / enemy.Count);
         }
         return percentageCompleted;
-    }
-
-    public string GetNameLevel()
-    {
-        if(enemy == null){
-
-        }
-        return "";
     }
 
 }

@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class PlayerDataSaving : MonoBehaviour, IDataPersistent
 {    
     public Transform player;
-    public Transform respawnPoint;
     Vector2 look;
     internal Vector3 velocity;
     
@@ -46,12 +45,6 @@ public class PlayerDataSaving : MonoBehaviour, IDataPersistent
 
     private void Respawn() 
     {
-        // move the player to the respawn point
-        this.transform.position = respawnPoint.position;
-    }
-
-    public string GetNameLevel(){
         
-        return "";
     }
 }
