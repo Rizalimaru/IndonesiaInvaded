@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PortalGoToBandung : MonoBehaviour
 {
@@ -8,8 +9,10 @@ public class PortalGoToBandung : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] PlayerDataSaving player;
     [SerializeField] GameObject playerCamera;
+    [SerializeField] GameObject ui_ResultGame;
 
-    [SerializeField] GameObject UI_ResultGame;
+    [Header("Next Stage Button")]
+    [SerializeField] Button[] nextStageButton;
     
     public void NextStage()
     {
@@ -18,18 +21,26 @@ public class PortalGoToBandung : MonoBehaviour
 
     IEnumerator LoadLevel()
     {
+        Time.timeScale = 1;
         animator.SetTrigger("End");
         player.gameObject.SetActive(false);
+        ui_ResultGame.SetActive(false);
         playerCamera.SetActive(false);
-        UI_ResultGame.SetActive(false);
-
         yield return new WaitForSeconds(1);
 
         player.Teleport(destination.position, destination.rotation);
 
         player.gameObject.SetActive(true);
+        UI_PauseGame.instance.HideResult();
+        
         playerCamera.SetActive(true);
         animator.SetTrigger("Start");
+
         ScoreManager.instance.ResetAllValues();
+        UI_ResultGame.instance.ResetAllValues();
+
+        nextStageButton[0].gameObject.SetActive(false);
+        nextStageButton[1].gameObject.SetActive(false);
+        nextStageButton[2].gameObject.SetActive(true);
     }
 }

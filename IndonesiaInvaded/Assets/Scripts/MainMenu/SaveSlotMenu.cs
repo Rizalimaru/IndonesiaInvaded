@@ -62,24 +62,13 @@ public class SaveSlotsMenu : Menu
             GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
-
-            
-            loadingScreen.SetActive(true);
-            while (!scenesToLoad.All(op => op.isDone))
-            {
-                float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
-                loadingBarFill.value = progress;
-
-                yield return null;
-            }
         }
     }
 
     public void SaveGameandLoadScene()
     {
         GameManager.instance.SaveGame();
-        scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay1"));
-        scenesToLoad.Add(SceneManager.LoadSceneAsync("Level1", LoadSceneMode.Additive));
+        Scene_Loading.instance.LoadScenes();
 
 
     }
@@ -98,6 +87,8 @@ public class SaveSlotsMenu : Menu
         // Mengaktifkan Main Menu dan Interactable Button
         mainMenu.ActivateMenu();
         mainMenu.EnableMenuandAnimationButton();
+        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
+
 
         this.DeactivateMenu();
 
