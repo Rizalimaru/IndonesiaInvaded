@@ -2,37 +2,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
+
+    [Header("Value")]
     public int score;
-
     public int enemyDefeats;
-
     public int bossDefeats;
+    public float time;
 
     [Header("UI Text")]
-
-    public TMP_Text scoreTextInGame; // Referensi ke UI Text untuk menampilkan skor
-    public TMP_Text scoreTextPaused; // Referensi ke UI Text lain untuk menampilkan skor
-
-    public TMP_Text timeText; // Referensi ke UI Text untuk menampilkan waktu
-
-    public int bonus { get; private set; }
+    public TMP_Text timeTextInPaused; 
+    public TMP_Text scoreTextInGame; 
+    public TMP_Text scoreTextPaused; 
     
     [Header("Animation")]
     private Animator scoreAnimator;
 
-
-
+    [Header("Private Variable and Haven't been used yet")]
     private Coroutine hideScoreTextCoroutine;
     private float hideDelay = 10f; // Delay sebelum teks skor di game di hide
-
-    public float timeValue 
-    {
-        get { return float.Parse(timeText.text.Split(' ')[0]); }
-    }
+    public int bonus { get; private set; }
 
     private void Awake()
     {
@@ -41,16 +35,6 @@ public class ScoreManager : MonoBehaviour
             instance = this;
         }
     }
-
-    private void Update()
-    {
-        // Update waktu
-        timeText.text = Time.time.ToString("F0") + " S";
-
-        DetermineBonus();
-
-    }
-
     private void Start()
     {
         // Ambil komponen Animator dari UI Text skor di game
@@ -59,24 +43,50 @@ public class ScoreManager : MonoBehaviour
         scoreTextInGame.gameObject.SetActive(false);
     }
 
-    public void ResetTime()
+    private void Update()
     {
-        timeText.text = "0 S";
+        // Update waktu
+        time += Time.deltaTime;
+
+        //Update score
+        scoreTextPaused.text = score.ToString();
+
+        // Tampilkan waktu di pause menu
+        DisplayTime(time);
+
+        // Hitung bonus berdasarkan waktu
+        DetermineBonus();
+    }
+    void DisplayTime(float timeToDisplay)
+    {
+        timeToDisplay +=1;
+
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+
+        timeTextInPaused.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
+    // Restart Semua Nilai
+    public void ResetAllValues()
+    {
+        score = 0;
+        enemyDefeats = 0;
+        bossDefeats = 0;
+        time = 0;
+    }
+    
     private void DetermineBonus()
     {
-        float timeCompleted = timeValue; // Waktu selesai permainan dalam detik
-
-        if (timeCompleted < 240) // Kurang dari 4 menit (240 detik)
+        if (time < 240) // Kurang dari 4 menit (240 detik)
         {
             bonus = 10000;
         }
-        else if (timeCompleted < 300) // Kurang dari 5 menit (300 detik)
+        else if (time < 300) // Kurang dari 5 menit (300 detik)
         {
             bonus = 8000;
         }
-        else if (timeCompleted < 360) // Kurang dari 6 menit (360 detik)
+        else if (time < 360) // Kurang dari 6 menit (360 detik)
         {
             bonus = 7000;
         }
@@ -85,10 +95,6 @@ public class ScoreManager : MonoBehaviour
             bonus = 5000;
         }
     }
-
-
-    
-
     public void AddScore(int amount)
     {
         score += amount;
@@ -105,7 +111,6 @@ public class ScoreManager : MonoBehaviour
         }
         hideScoreTextCoroutine = StartCoroutine(HideScoreTextAfterDelay());
     }
-
     private IEnumerator HideScoreTextAfterDelay()
     {
         yield return new WaitForSeconds(hideDelay);
@@ -120,7 +125,6 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateScoreTextInGame()
     {
-        
         // Perbarui teks UI Text di game dengan nilai skor yang baru
         scoreTextInGame.text = score.ToString();
 
