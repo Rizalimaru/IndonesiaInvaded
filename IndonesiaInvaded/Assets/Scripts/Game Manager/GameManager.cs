@@ -4,6 +4,9 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using System.IO;
+#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +24,8 @@ public class GameManager : MonoBehaviour
     private List<IDataPersistent> dataPersistenceObjects;
     private FileDataHandler dataHandler;
     private string selectedProfileId = "";
+    static int s_CurrentEpisode = -1;
+    static int s_CurrentLevel = -1;
     public static GameManager instance { get; private set; }
 
     private void Awake() 
@@ -160,4 +165,35 @@ public class GameManager : MonoBehaviour
         return dataHandler.LoadAllProfiles();
     }
 
+
+    public void NextLevel()
+    {
+#if UNITY_EDITOR
+        //in editor if we didn't found the current episode or level, mean we are playing a test scene not part of the
+        //game database list, so calling next level is the same as restarting level
+        if (s_CurrentEpisode < 0 || s_CurrentLevel < 0)
+        {
+            var asyncOp = EditorSceneManager.LoadSceneAsyncInPlayMode(EditorSceneManager.GetActiveScene().path, new LoadSceneParameters(LoadSceneMode.Single));
+            return;
+        }
+#endif
+        
+        
+        s_CurrentLevel += 1;
+
+        if (GameDatabase.Instance.episodes[s_CurrentEpisode].scenes.Length <= s_CurrentLevel)
+        {
+            s_CurrentLevel = 0;
+            s_CurrentEpisode += 1;
+        }
+
+        if (s_CurrentEpisode >= GameDatabase.Instance.episodes.Length)
+            s_CurrentEpisode = 0;
+
+#if UNITY_EDITOR
+        var op = EditorSceneManager.LoadSceneAsyncInPlayMode(GameDatabase.Instance.episodes[s_CurrentEpisode].scenes[s_CurrentLevel], new LoadSceneParameters(LoadSceneMode.Single));
+#else
+        SceneManager.LoadScene(GameDatabase.Instance.episodes[s_CurrentEpisode].scenes[s_CurrentLevel]);
+#endif
+    }
 }

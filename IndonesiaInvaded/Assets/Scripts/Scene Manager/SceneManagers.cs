@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,31 +8,48 @@ public class SceneManagers : MonoBehaviour
 {
     public static SceneManagers instance;
 
-    [Header("Scenes To Load")]
-    public SceneField blockOutJakarta;
-    public SceneField blockOutInvert;
-    public SceneField blockOutBandung;
-    public SceneField MainMenu;
-
+    public List<Level> levels = new List<Level>();
+    public List<Menus> menus = new List<Menus>();
+    public int CurrentLevelIndex=1;
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            // DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            // Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 
-    public void NewGame(){
+    public void LoadLevelWithIndex(int index)
+    {
         
+        if (index <= levels.Count)
+        {
+            //Load Gameplay scene for the level
+            SceneManager.LoadSceneAsync("Gameplay" + index.ToString());
+            //Load first part of the level in additive mode
+            SceneManager.LoadSceneAsync("Level" + index.ToString(), LoadSceneMode.Additive);
+        }
+        //reset the index if we have no more levels
+        else CurrentLevelIndex =1;
+    }
+
+    public void NextLevel()
+    {
+        CurrentLevelIndex++;
+        LoadLevelWithIndex(CurrentLevelIndex);
+    }
+    public void RestartLevel()
+    {
+        LoadLevelWithIndex(CurrentLevelIndex);
     }
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene(MainMenu);
+        SceneManager.LoadSceneAsync(menus[(int)Type.Main_Menu].sceneName);
     }
 }

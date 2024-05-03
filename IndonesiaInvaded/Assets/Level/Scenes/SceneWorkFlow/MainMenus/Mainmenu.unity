@@ -574,18 +574,6 @@ MonoBehaviour:
           m_StringArgument: BlokoutJakarta
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 7d87e07fa4890d746927696759788643, type: 2}
-        m_TargetAssemblyTypeName: ScenesData, Assembly-CSharp
-        m_MethodName: NewGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &51881101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4937,62 +4925,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1458129111
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1458129113}
-  - component: {fileID: 1458129112}
-  m_Layer: 0
-  m_Name: Scene Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1458129112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1458129111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4cbeb6641eee5b4abb44163126d3192, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blockOutJakarta:
-    sceneAsset: {fileID: 102900000, guid: 4b1e15d35591b0c41973037cbd81bd82, type: 3}
-    sceneName: Level1
-  blockOutInvert:
-    sceneAsset: {fileID: 102900000, guid: 0b804c84907c1494ca858eb16826094b, type: 3}
-    sceneName: Level2
-  blockOutBandung:
-    sceneAsset: {fileID: 102900000, guid: 3a433976f6842d34b9a6354885806c66, type: 3}
-    sceneName: Level3
-  MainMenu:
-    sceneAsset: {fileID: 102900000, guid: 1baf5a9e6cb8f394e86a995ad09b426b, type: 3}
-    sceneName: Mainmenu
---- !u!4 &1458129113
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1458129111}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 373.8479, y: 45.740623, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1465688552 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4275986200979658501, guid: 7d32cb8bd9776484fa22b3857dafe5f3, type: 3}
@@ -7519,7 +7451,6 @@ SceneRoots:
   - {fileID: 2103558308}
   - {fileID: 588456218}
   - {fileID: 332932078}
-  - {fileID: 1458129113}
   - {fileID: 977011042}
   - {fileID: 1319249928}
   - {fileID: 200038146}

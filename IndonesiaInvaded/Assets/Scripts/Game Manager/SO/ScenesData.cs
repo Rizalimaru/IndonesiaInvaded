@@ -8,6 +8,7 @@ public class ScenesData : ScriptableObject
     public List<Level> levels = new List<Level>();
     public List<Menus> menus = new List<Menus>();
     public int CurrentLevelIndex=1;
+    
 
     /*
      * Levels
@@ -16,6 +17,7 @@ public class ScenesData : ScriptableObject
     //Load a scene with a given index
     public void LoadLevelWithIndex(int index)
     {
+        
         if (index <= levels.Count)
         {
             //Load Gameplay scene for the level
@@ -40,6 +42,7 @@ public class ScenesData : ScriptableObject
     //New game, load level 1
     public void NewGame()
     {
+
         LoadLevelWithIndex(1);
     }
    

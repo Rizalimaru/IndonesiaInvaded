@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class SaveSlotsMenu : Menu
 {
+    public static SaveSlotsMenu instance;
+
     [Header("Menu Navigation")]
     [SerializeField] private MainMenu mainMenu;
 
@@ -25,6 +27,7 @@ public class SaveSlotsMenu : Menu
 
     private void Awake()
     {
+        instance = this;
         saveSlots = this.GetComponentsInChildren<SaveSlot>();
     }
 
@@ -72,7 +75,7 @@ public class SaveSlotsMenu : Menu
         }
     }
 
-    private void SaveGameandLoadScene()
+    public void SaveGameandLoadScene()
     {
         GameManager.instance.SaveGame();
         scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay1"));
