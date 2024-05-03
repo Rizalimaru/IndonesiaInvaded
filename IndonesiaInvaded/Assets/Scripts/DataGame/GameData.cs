@@ -1,40 +1,50 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class GameData
 {
     public long lastUpdated;
     public Vector3 playerPosition;
-    public Vector3 checkpointPosition;
-    public SerializableDictionary<string, bool> monstersCollected;
-    public AttributeData playerAttributesData;
+    public PlayerAttribut playerAttribut;
+    public SerializableDictionary<string, bool> enemy;
 
-    public GameData() 
+    // the values defined in this constructor will be the default values
+    // the game starts with when there's no data to load
+    public GameData()
     {
         playerPosition = Vector3.zero;
-        checkpointPosition = Vector3.zero;
-        monstersCollected = new SerializableDictionary<string, bool>();
-        playerAttributesData = new AttributeData();
+        enemy = new SerializableDictionary<string, bool>();
+        playerAttribut = new PlayerAttribut();
     }
 
-    public int GetPercentageComplete() 
+    public int GetPercentageComplete()
     {
         int totalCollected = 0;
-        foreach (bool collected in monstersCollected.Values) 
+        foreach (bool collected in enemy.Values)
         {
-            if (collected) 
+            if (collected)
             {
                 totalCollected++;
             }
         }
 
-        int percentageCompleted = 0;
-        if (monstersCollected.Count != 0) 
+        int percentageCompleted = -1;
+        if (enemy.Count != 0)
         {
-            percentageCompleted = (totalCollected * 100 / monstersCollected.Count);
+            percentageCompleted = (totalCollected * 100 / enemy.Count);
         }
         return percentageCompleted;
     }
+
+    public string GetNameLevel()
+    {
+        if(enemy == null){
+
+        }
+        return "";
+    }
+
 }

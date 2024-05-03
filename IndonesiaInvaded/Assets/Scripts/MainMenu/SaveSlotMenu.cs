@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class SaveSlotsMenu : Menu
 {
+    public static SaveSlotsMenu instance;
+
     [Header("Menu Navigation")]
     [SerializeField] private MainMenu mainMenu;
 
@@ -25,6 +27,7 @@ public class SaveSlotsMenu : Menu
 
     private void Awake()
     {
+        instance = this;
         saveSlots = this.GetComponentsInChildren<SaveSlot>();
     }
 
@@ -47,29 +50,36 @@ public class SaveSlotsMenu : Menu
         {
             GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             SaveGameandLoadScene();
-            
         }
         else if (saveSlot.hasData)
         {
             GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
-            
-
         }
         else
         {
             GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
- 
+
+            
+            loadingScreen.SetActive(true);
+            while (!scenesToLoad.All(op => op.isDone))
+            {
+                float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
+                loadingBarFill.value = progress;
+
+                yield return null;
+            }
         }
     }
 
-    private void SaveGameandLoadScene()
+    public void SaveGameandLoadScene()
     {
         GameManager.instance.SaveGame();
-        Scene_Loading.instance.LoadScenes();
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay1"));
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("Level1", LoadSceneMode.Additive));
 
 
     }
@@ -86,7 +96,6 @@ public class SaveSlotsMenu : Menu
         yield return new WaitForSeconds(0.9f);
 
         // Mengaktifkan Main Menu dan Interactable Button
-        mainMenu.titleGameAnimator.SetTrigger("show");
         mainMenu.ActivateMenu();
         mainMenu.EnableMenuandAnimationButton();
 

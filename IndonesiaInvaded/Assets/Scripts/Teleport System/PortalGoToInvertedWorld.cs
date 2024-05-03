@@ -7,7 +7,7 @@ public class PortalGoToInvertedWorld : MonoBehaviour
 {
     [SerializeField] Transform destination;
     [SerializeField] Animator animator;
-    [SerializeField] PlayerMovement player;
+    [SerializeField] PlayerDataSaving player;
     [SerializeField] GameObject playerCamera;
     [SerializeField] GameObject ui_ResultGame;
 

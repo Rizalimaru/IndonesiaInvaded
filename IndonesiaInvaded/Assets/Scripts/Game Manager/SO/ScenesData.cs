@@ -1,29 +1,20 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManagers : MonoBehaviour
+[CreateAssetMenu(fileName = "sceneDB", menuName = "Scene Data/Database")]
+public class ScenesData : ScriptableObject
 {
-    public static SceneManagers instance;
-
     public List<Level> levels = new List<Level>();
     public List<Menus> menus = new List<Menus>();
     public int CurrentLevelIndex=1;
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    
 
+    /*
+     * Levels
+     */
+
+    //Load a scene with a given index
     public void LoadLevelWithIndex(int index)
     {
         
@@ -37,17 +28,29 @@ public class SceneManagers : MonoBehaviour
         //reset the index if we have no more levels
         else CurrentLevelIndex =1;
     }
-
+    //Start next level
     public void NextLevel()
     {
         CurrentLevelIndex++;
         LoadLevelWithIndex(CurrentLevelIndex);
     }
+    //Restart current level
     public void RestartLevel()
     {
         LoadLevelWithIndex(CurrentLevelIndex);
     }
+    //New game, load level 1
+    public void NewGame()
+    {
 
+        LoadLevelWithIndex(1);
+    }
+   
+    /*
+     * Menus
+     */
+
+    //Load main Menu
     public void LoadMainMenu()
     {
         SceneManager.LoadSceneAsync(menus[(int)Type.Main_Menu].sceneName);
