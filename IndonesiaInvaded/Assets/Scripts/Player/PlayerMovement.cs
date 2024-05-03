@@ -203,11 +203,6 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-
-        if(animator.GetBool("SkillRoar"))
-        {
-            return;
-        }
         
         // Check if any hit animation is active
         bool hit1 = animator.GetBool("hit1");

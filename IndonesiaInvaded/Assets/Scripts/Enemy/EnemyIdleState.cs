@@ -25,7 +25,7 @@ public class EnemyIdleState : EnemyBaseState
         }
         else
         {
-            if (Vector3.Distance(enemy.enemyObject.Agent.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.triggerDistance)
+            if (Vector3.Distance(enemy.enemyObject.spawnPoint.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.triggerDistance)
             {
                 enemy.SwitchState(enemy.movingState);
             }
