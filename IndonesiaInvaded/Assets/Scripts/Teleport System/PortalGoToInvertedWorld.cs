@@ -7,12 +7,20 @@ public class PortalGoToInvertedWorld : MonoBehaviour
 {
     [SerializeField] Transform destination;
     [SerializeField] Animator animator;
-    [SerializeField] PlayerMovement player;
+    [SerializeField] PlayerDataSaving player;
     [SerializeField] GameObject playerCamera;
     [SerializeField] GameObject ui_ResultGame;
 
     [Header("Next Stage Button")]
     [SerializeField] Button[] nextStageButton;
+
+    void Start()
+    {
+        nextStageButton[0].gameObject.SetActive(true);
+        nextStageButton[1].gameObject.SetActive(false);
+        nextStageButton[2].gameObject.SetActive(false);
+
+    }
     
     public void NextStage()
     {
@@ -35,7 +43,14 @@ public class PortalGoToInvertedWorld : MonoBehaviour
         
         playerCamera.SetActive(true);
         animator.SetTrigger("Start");
+
         ScoreManager.instance.ResetAllValues();
         UI_ResultGame.instance.ResetAllValues();
+
+        nextStageButton[0].gameObject.SetActive(false);
+        nextStageButton[1].gameObject.SetActive(true);
+        nextStageButton[2].gameObject.SetActive(false);
+
+
     }
 }

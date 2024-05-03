@@ -51,6 +51,7 @@ GameObject:
   - component: {fileID: 6484667871350195624}
   - component: {fileID: 2987648104949693347}
   - component: {fileID: 4900809783995673873}
+  - component: {fileID: 8256567148742708587}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -216,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b0e16b157a50a64a9f38e18e66b376c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  anim: {fileID: 2631689077824012360}
   playerHeight: 0
   whatIsGround:
     serializedVersion: 2
@@ -236,11 +237,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownTime: 2
-  skillRoarKey: 101
-  skillEnhance: 113
-  cameraShake: {fileID: 0}
-  shakeDuration: 0.5
-  shakeMagnitude: 0.1
 --- !u!114 &7153151500934823563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6536862c5a7eb594e84d69611a2e27ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tagEnemyOptions: 0
   player: {fileID: 1501732846235728247}
   movementSpeed: 100
   detectionRadius: 5
@@ -306,9 +303,26 @@ MonoBehaviour:
   skillImage1: {fileID: 0}
   cooldown1: 5
   skill1Key: 101
+  cameraShake: {fileID: 0}
+  shakeDuration: 0.5
+  shakeMagnitude: 0.1
   skillImage2: {fileID: 0}
   cooldown2: 8
   skill2Key: 113
+--- !u!114 &8256567148742708587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093167237751254063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63a9027fe70caa54c9c3980d57d97187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1501732846235728247}
+  respawnPoint: {fileID: 0}
 --- !u!1 &4029081902527982358
 GameObject:
   m_ObjectHideFlags: 0

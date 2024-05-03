@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PortalInstant : MonoBehaviour
 {
-    [SerializeField] Transform destination;
-    [SerializeField] Animator animator;
-    [SerializeField] PlayerMovement player;
-    [SerializeField] GameObject playerCamera;
+   [SerializeField] Transform destination;
+   [SerializeField] Animator animator;
+   [SerializeField] PlayerDataSaving player;
+   [SerializeField] GameObject playerCamera;
     
 
     void OnTriggerEnter(Collider other)
@@ -15,6 +15,7 @@ public class PortalInstant : MonoBehaviour
         if(other.CompareTag("Player")){
             StartCoroutine(LoadLevel());
         }
+
     }
 
     IEnumerator LoadLevel()
@@ -27,5 +28,6 @@ public class PortalInstant : MonoBehaviour
         player.gameObject.SetActive(true);
         playerCamera.SetActive(true);
         animator.SetTrigger("Start");
+        GameManager.instance.SaveGame();
     }
 }

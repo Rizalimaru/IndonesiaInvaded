@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class SaveSlotsMenu : Menu
 {
+    public static SaveSlotsMenu instance;
+
     [Header("Menu Navigation")]
     [SerializeField] private MainMenu mainMenu;
 
@@ -25,6 +27,7 @@ public class SaveSlotsMenu : Menu
 
     private void Awake()
     {
+        instance = this;
         saveSlots = this.GetComponentsInChildren<SaveSlot>();
     }
 
@@ -59,22 +62,13 @@ public class SaveSlotsMenu : Menu
             GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
-            loadingScreen.SetActive(true);
-            while (!scenesToLoad.All(op => op.isDone))
-            {
-                float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
-                loadingBarFill.value = progress;
-
-                yield return null;
-            }
         }
     }
 
-    private void SaveGameandLoadScene()
+    public void SaveGameandLoadScene()
     {
         GameManager.instance.SaveGame();
-        scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay"));
-        scenesToLoad.Add(SceneManager.LoadSceneAsync("BlockoutJakarta", LoadSceneMode.Additive));
+        Scene_Loading.instance.LoadScenes();
 
 
     }
@@ -93,6 +87,8 @@ public class SaveSlotsMenu : Menu
         // Mengaktifkan Main Menu dan Interactable Button
         mainMenu.ActivateMenu();
         mainMenu.EnableMenuandAnimationButton();
+        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
+
 
         this.DeactivateMenu();
 
