@@ -29,12 +29,19 @@ public class PlayerScoreManager : MonoBehaviour
             ScoreManager.instance.AddScore(100);
         }
 
+        
+
         if(collider.tag == "AmountEnemyScore" && (isAttacking || isAttacking2 || isAttacking3))
         {
             Debug.Log("Enemy Defeated");
             Destroy(collider.gameObject);
-            ScoreManager.instance.AddScore(500);
             ScoreManager.instance.AddEnemyDefeats(1);
+
+        }
+        if(collider.tag == "AmountBossScore" && (isAttacking || isAttacking2 || isAttacking3))
+        {
+            Destroy(collider.gameObject);
+            ScoreManager.instance.AddBossDefeats(1);
 
         }
     }
