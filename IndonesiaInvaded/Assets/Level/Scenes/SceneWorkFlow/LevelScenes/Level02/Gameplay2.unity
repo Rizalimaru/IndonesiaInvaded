@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -333,7 +333,7 @@ Transform:
   - {fileID: 1475572177}
   - {fileID: 1450548238}
   - {fileID: 813262627}
-  - {fileID: 1787183152}
+  - {fileID: 1660619179}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &399963105 stripped
@@ -1447,6 +1447,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1226105032 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 295837682822904471, guid: 78055adac7432ff4fa1565788c44b100, type: 3}
+  m_PrefabInstance: {fileID: 1226105030}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1226105035 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6553538765337876957, guid: 78055adac7432ff4fa1565788c44b100, type: 3}
@@ -2342,6 +2353,80 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1660619178
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 366329190}
+    m_Modifications:
+    - target: {fileID: 711203655938682401, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711203655938682401, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711203655938682401, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711203655938682401, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 711203655938682401, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711203655938682401, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711203655938682401, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711203655938682401, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711203655938682401, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711203655938682401, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613171377210709720, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: m_Name
+      value: ScoreManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8382876916541632608, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: scoreTextInGame
+      value: 
+      objectReference: {fileID: 399963105}
+    - target: {fileID: 8382876916541632608, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: scoreTextPaused
+      value: 
+      objectReference: {fileID: 1851977754}
+    - target: {fileID: 8382876916541632608, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+      propertyPath: timeTextInPaused
+      value: 
+      objectReference: {fileID: 1226105032}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+--- !u!4 &1660619179 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 711203655938682401, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
+  m_PrefabInstance: {fileID: 1660619178}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1683477969
 GameObject:
   m_ObjectHideFlags: 0
@@ -2589,57 +2674,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 872794100}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1787183151
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1787183152}
-  - component: {fileID: 1787183153}
-  m_Layer: 0
-  m_Name: ScoreManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1787183152
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1787183151}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 366329190}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1787183153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1787183151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c0c6c7bdfa4678418687cadec307d84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 0
-  enemyDefeats: 0
-  bossDefeats: 0
-  time: 0
-  timeTextInPaused: {fileID: 0}
-  scoreTextInGame: {fileID: 399963105}
-  scoreTextPaused: {fileID: 1851977754}
 --- !u!1 &1806198876
 GameObject:
   m_ObjectHideFlags: 0
