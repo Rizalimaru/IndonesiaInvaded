@@ -69,7 +69,7 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     private void Start()
     {
-        titleGameAnimationPlayed = true;
+        
     }
 
     private void Update()
