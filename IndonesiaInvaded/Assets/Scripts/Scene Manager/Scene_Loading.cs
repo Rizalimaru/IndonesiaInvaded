@@ -30,6 +30,7 @@ public class Scene_Loading : MonoBehaviour
         loadingScreen.SetActive(true);
 
         loadingBarFill.value = 0;
+        
         StartCoroutine(LoadScenesAsync());
     }
 
@@ -37,7 +38,7 @@ public class Scene_Loading : MonoBehaviour
     {
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
-        AudioManager._instance.StopBackgroundMusicWithTransition("MainMenu", 1f);
+        
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
         scenes.Add(SceneManager.LoadSceneAsync("Gameplay1"));
