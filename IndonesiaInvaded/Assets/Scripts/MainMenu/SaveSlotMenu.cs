@@ -47,50 +47,29 @@ public class SaveSlotsMenu : Menu
         {
             GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             SaveGameandLoadScene();
-            loadingScreen.SetActive(true);
-            while (!scenesToLoad.All(op => op.isDone))
-            {
-                float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
-                loadingBarFill.value = progress;
-
-                yield return null;
-            }
+            
         }
         else if (saveSlot.hasData)
         {
             GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
-            loadingScreen.SetActive(true);
-            while (!scenesToLoad.All(op => op.isDone))
-            {
-                float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
-                loadingBarFill.value = progress;
+            
 
-                yield return null;
-            }
         }
         else
         {
             GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
-            loadingScreen.SetActive(true);
-            while (!scenesToLoad.All(op => op.isDone))
-            {
-                float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
-                loadingBarFill.value = progress;
-
-                yield return null;
-            }
+ 
         }
     }
 
     private void SaveGameandLoadScene()
     {
         GameManager.instance.SaveGame();
-        scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay"));
-        scenesToLoad.Add(SceneManager.LoadSceneAsync("BlockoutJakarta", LoadSceneMode.Additive));
+        Scene_Loading.instance.LoadScenes();
 
 
     }
