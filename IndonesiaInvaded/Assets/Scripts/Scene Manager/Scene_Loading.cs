@@ -32,7 +32,7 @@ public class Scene_Loading : MonoBehaviour
         loadingBarFill.value = 0;
         
         StartCoroutine(LoadScenesAsync());
-    }
+    } 
 
     IEnumerator LoadScenesAsync()
     {
