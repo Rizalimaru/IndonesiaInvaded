@@ -241,7 +241,7 @@ public class UI_PauseGame : MonoBehaviour
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
         
         GameManager.instance.SaveGame();
-        SceneMainMenuManager.instance.LoadMainMenu();
+        //SceneMainMenuManager.instance.LoadMainMenu();
         // SceneManager.LoadScene(0);
     }
 

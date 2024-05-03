@@ -70,6 +70,8 @@ public class UI_HUDManagement : MonoBehaviour
         uiHUD.SetActive(false);
     }
 
+    
+
     IEnumerator FadeOut(CanvasGroup canvasGroup)
     {
         // Transisi fadeOut

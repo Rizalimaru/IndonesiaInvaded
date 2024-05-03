@@ -36,8 +36,8 @@ public class UI_LoadingScene : MonoBehaviour
 
     IEnumerator LoadScenesAsync()
     {
+        
         List<AsyncOperation> scenes = new List<AsyncOperation>();
-
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
         scenes.Add(SceneManager.LoadSceneAsync("Gameplay"));
         scenes.Add(SceneManager.LoadSceneAsync("BlockoutJakarta", LoadSceneMode.Additive));

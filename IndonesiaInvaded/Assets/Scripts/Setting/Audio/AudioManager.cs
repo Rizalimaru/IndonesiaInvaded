@@ -7,7 +7,7 @@ using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
-    private static AudioManager _instance;
+    public static AudioManager _instance;
     public static AudioManager Instance { get { return _instance; } }
 
     private Dictionary<AudioSource, bool> soundEffectStatus = new Dictionary<AudioSource, bool>();

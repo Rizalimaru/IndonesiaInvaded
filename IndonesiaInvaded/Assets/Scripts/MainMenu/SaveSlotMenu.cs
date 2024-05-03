@@ -34,6 +34,7 @@ public class SaveSlotsMenu : Menu
 
     public void OnSaveClicked(SaveSlot saveSlot)
     {
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
         StartCoroutine(DelaySave(saveSlot));
     }
 
@@ -67,6 +68,7 @@ public class SaveSlotsMenu : Menu
 
     public void SaveGameandLoadScene()
     {
+        
         GameManager.instance.SaveGame();
         Scene_Loading.instance.LoadScenes();
 
