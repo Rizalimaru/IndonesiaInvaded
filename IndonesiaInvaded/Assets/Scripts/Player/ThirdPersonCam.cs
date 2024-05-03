@@ -12,6 +12,7 @@ public class ThirdPersonCam : MonoBehaviour
     public Transform player;
     public Transform playerObj;
     public Rigidbody rb;
+    private SkillManager skillManager;
 
 
     [Header("Rotation To Enemy")]
@@ -19,7 +20,6 @@ public class ThirdPersonCam : MonoBehaviour
     public Transform target;
     public float rotationToEnemySpeed;
     public HitDrag hitDrag;
-
 
     [Header("Settings")]
     public float rotationSpeed;
@@ -106,4 +106,5 @@ public class ThirdPersonCam : MonoBehaviour
 
         currentStyle = newStyle;
     }
+
 }

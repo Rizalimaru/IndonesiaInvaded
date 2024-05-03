@@ -124,7 +124,8 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     }
 
     private void MyInput()
-    {
+    {   
+
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
