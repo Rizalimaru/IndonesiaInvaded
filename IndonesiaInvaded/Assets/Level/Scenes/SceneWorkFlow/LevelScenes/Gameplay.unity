@@ -988,9 +988,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1351797799}
     - target: {fileID: 2987648104949693347, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
+      propertyPath: currentSP
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987648104949693347, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 526993265}
+    - target: {fileID: 4250335120195895467, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
+      propertyPath: jumpCooldown
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4900809783995673873, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 626572546}
+    - target: {fileID: 4900809783995673873, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
+      propertyPath: cameraShake
+      value: 
+      objectReference: {fileID: 2001562139}
     - target: {fileID: 4900809783995673873, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
       propertyPath: skillImage1
       value: 
@@ -999,6 +1015,14 @@ PrefabInstance:
       propertyPath: skillImage2
       value: 
       objectReference: {fileID: 1127260426}
+    - target: {fileID: 4900809783995673873, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
+      propertyPath: movementSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4900809783995673873, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
+      propertyPath: SkillDetectionRadius
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3921,7 +3945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7522247112809039687, guid: 21b667a7238e0c440b6cafd867108fcb, type: 3}
       propertyPath: m_CameraDistance
-      value: 5.999999
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3938,6 +3962,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7522247111663242659, guid: 21b667a7238e0c440b6cafd867108fcb, type: 3}
   m_PrefabInstance: {fileID: 2001562136}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2001562139 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4466875714985105675, guid: 21b667a7238e0c440b6cafd867108fcb, type: 3}
+  m_PrefabInstance: {fileID: 2001562136}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001562138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61fd722437a09974ca370a464adc9bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2018009552
 GameObject:
   m_ObjectHideFlags: 0

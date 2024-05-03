@@ -1,10 +1,15 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
+using IndonesiaInvaded;
 
 public class SkillManager : MonoBehaviour
 {
     // Singleton instance
+    private HitDrag hitDrag;
+    private PlayerMovement playerMovement;
+    private CameraZoom cameraZoom;
     private Animator animator;
     public static SkillManager instance;
 
@@ -16,6 +21,8 @@ public class SkillManager : MonoBehaviour
     public CameraShake cameraShake;
     public float shakeDuration = 0.5f;
     public float shakeMagnitude = 0.1f;
+    public float SkillDetectionRadius = 10f;
+    public float movementSpeed = 5f;
 
     [Header("Skill 2")]
     public Image skillImage2;
@@ -23,8 +30,13 @@ public class SkillManager : MonoBehaviour
     private bool isCooldown2 = false;
     public KeyCode skill2Key;
 
+    [Header("Skill Detection")]
+    public Transform player;
+    public Transform nearestEnemy;
+
     private void Awake()
-    {
+    {   
+
         if (instance == null)
         {
             instance = this;
@@ -49,12 +61,15 @@ public class SkillManager : MonoBehaviour
         PlayerAttribut player = PlayerAttribut.instance;
         if (player != null && !isCooldown1 && player.currentSP >= 30)
         {   
-            animator.SetTrigger("RoarSkill");
+            animator.SetBool("RoarSkill", true);
+            StartCoroutine(DelayToCharge(1.5f));
             player.currentSP -= 30;
             Debug.Log("Skill 1 activated!");
             player.skillBar.SetSkill(player.currentSP);
             // Start cooldown
             StartCoroutine(CooldownSkill1());
+            // Zoom camera in
+            //StartCoroutine(DelayZoomSkill1());
         }
         else if (player.currentSP < 30)
         {
@@ -79,6 +94,22 @@ public class SkillManager : MonoBehaviour
         }
     }
 
+    private IEnumerator DelayZoomSkill1()
+    {
+        CameraZoom cameraZoom = FindObjectOfType<CameraZoom>(); // Mendapatkan instance dari CameraZoom
+        if(cameraZoom != null)
+        {
+            cameraZoom.ZoomIn(1.5f); // Mengatur durasi zoom in ke 1.5 detik
+        }
+
+        yield return new WaitForSeconds(5.0f); // Menunggu selama 2 detik sebelum melakukan zoom out
+
+        if(cameraZoom != null)
+        {
+            cameraZoom.ZoomOut(1.5f); // Mengatur durasi zoom out ke 1.5 detik
+        }
+    }
+
     private IEnumerator CooldownSkill1()
     {
         isCooldown1 = true;
@@ -92,6 +123,40 @@ public class SkillManager : MonoBehaviour
         isCooldown1 = false;
         skillImage1.fillAmount = 0;
     }
+
+    private IEnumerator DelayToCharge(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        animator.SetTrigger("ChargeAtk");
+        animator.SetBool("RoarSkill", false);
+
+        DetectNearestEnemyForSkill(); // Deteksi musuh terdekat
+        StartCoroutine(MoveToEnemyAfterCharge()); // Mulai pergerakan ke musuh setelah ChargeAtk
+    }
+
+    private IEnumerator MoveToEnemyAfterCharge()
+    {
+        if (nearestEnemy != null) // Memastikan ada musuh terdekat
+        {   
+            yield return new WaitForSeconds(.5f); // Menunggu selama 1.5 detik sebelum mulai pergerakan
+            Vector3 targetPosition = nearestEnemy.position;
+            float duration = Vector3.Distance(player.position, targetPosition) / movementSpeed; // Hitung durasi pergerakan berdasarkan jarak dan kecepatan
+
+            float timeElapsed = 0f;
+            while (timeElapsed < duration) // Pergerakan berdasarkan durasi
+            {
+                // Interpolasi pergerakan
+                player.position = Vector3.Lerp(player.position, targetPosition, timeElapsed / duration);
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+            // Pastikan posisi player benar-benar mencapai posisi target
+            player.position = targetPosition;
+        }
+    }
+
+
 
     private IEnumerator CooldownSkill2()
     {
@@ -121,5 +186,29 @@ public class SkillManager : MonoBehaviour
         {
             UseSkill2();
         }
+    }
+
+
+    public void DetectNearestEnemyForSkill()
+    {
+        Collider[] colliders = Physics.OverlapSphere(player.position, SkillDetectionRadius); // Mendeteksi semua collider dalam radius
+
+        float shortestDistance = Mathf.Infinity;
+        Transform nearest = null;
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Enemy"))
+            {
+                float distance = Vector3.Distance(player.position, collider.transform.position);
+                if (distance < shortestDistance)
+                {
+                    shortestDistance = distance;
+                    nearest = collider.transform;
+                }
+            }
+        }
+
+        nearestEnemy = nearest; // Menetapkan musuh terdekat sebagai referensi
     }
 }
