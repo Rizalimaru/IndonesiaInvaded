@@ -5,18 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class PlayerDataSaving : MonoBehaviour, IDataPersistent
 {    
-    public GameObject player;
+    public Transform player;
+    public Transform respawnPoint;
     Vector2 look;
     internal Vector3 velocity;
     
 
     public void LoadData(GameData data) 
     {
-        player.transform.position = data.playerPosition;
+        player.position = data.playerPosition;
     }
     public void SaveData(GameData data) 
     {
-         data.playerPosition = player.transform.position;
+         data.playerPosition = player.position;
     }
 
     public void Update(){
@@ -36,5 +37,21 @@ public class PlayerDataSaving : MonoBehaviour, IDataPersistent
         velocity = Vector3.zero;
     }
 
+    private  void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("dead")){
+            Respawn();
+        }
+    }
 
+    private void Respawn() 
+    {
+        // move the player to the respawn point
+        this.transform.position = respawnPoint.position;
+    }
+
+    public string GetNameLevel(){
+        
+        return "";
+    }
 }

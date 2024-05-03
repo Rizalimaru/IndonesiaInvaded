@@ -75,8 +75,8 @@ public class SaveSlotsMenu : Menu
     private void SaveGameandLoadScene()
     {
         GameManager.instance.SaveGame();
-        scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay"));
-        scenesToLoad.Add(SceneManager.LoadSceneAsync("BlockoutJakarta", LoadSceneMode.Additive));
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay1"));
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("Level1", LoadSceneMode.Additive));
 
 
     }
