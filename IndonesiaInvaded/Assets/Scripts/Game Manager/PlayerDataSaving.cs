@@ -12,11 +12,11 @@ public class PlayerDataSaving : MonoBehaviour, IDataPersistent
 
     public void LoadData(GameData data) 
     {
-        data.playerPosition = player.transform.position;
+        player.transform.position = data.playerPosition;
     }
     public void SaveData(GameData data) 
     {
-        player.transform.position = data.playerPosition;
+         data.playerPosition = player.transform.position;
     }
 
     public void Update(){
