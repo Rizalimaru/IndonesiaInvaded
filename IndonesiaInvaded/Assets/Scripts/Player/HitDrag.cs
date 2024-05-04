@@ -1,7 +1,13 @@
 using UnityEngine;
 
 public class HitDrag : MonoBehaviour
-{
+{   
+    public enum TagEnemyOptions
+    {
+        Enemy,
+        EnemyMeleeCollider,
+    }
+    public TagEnemyOptions tagEnemyOptions;
     public Transform player; // Referensi ke objek player
     private Animator animator; // Referensi ke animator controller player
 
@@ -44,7 +50,7 @@ public class HitDrag : MonoBehaviour
 
         foreach (Collider collider in colliders)
         {
-            if (collider.CompareTag("Enemy"))
+            if (collider.CompareTag(tagEnemyOptions.ToString()))
             {
                 float distance = Vector3.Distance(player.position, collider.transform.position);
                 if (distance < shortestDistance)
@@ -60,16 +66,20 @@ public class HitDrag : MonoBehaviour
 
     public void MoveToEnemy()
     {
-        if (!isMoving) // Memastikan player tidak sedang dalam proses gerakan
+        if (!isMoving && nearestEnemy != null) // Memastikan player tidak sedang dalam proses gerakan dan terdapat musuh terdekat
         {
             isMoving = true; // Menandai player sedang dalam proses gerakan
 
             Vector3 direction = (nearestEnemy.position - player.position).normalized; // Menghitung arah menuju enemy
             Vector3 targetPosition = nearestEnemy.position - direction * 1.5f; // Menentukan posisi target player
 
+            // Mengatur posisi target dengan nilai y tetap dari posisi player
+            targetPosition.y = player.position.y;
+
             StartCoroutine(MovePlayer(targetPosition)); // Memulai proses gerakan player ke posisi target
         }
     }
+
 
     void StopMoving()
     {

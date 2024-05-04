@@ -26,7 +26,7 @@ public class UI_HUDManagement : MonoBehaviour
         if (isIdle && !isAttacking && !isAttacking2 && !isAttacking3 && !isJumping)
         {
             // Memulai atau melanjutkan coroutine hanya jika player sedang idle
-            if (idleCoroutine == null)
+            if (UIGroup.alpha > 0 && UIGroup.alpha <= 1 && idleCoroutine == null)
             {
                 idleCoroutine = StartCoroutine(IdleTimer());
             }
@@ -40,8 +40,8 @@ public class UI_HUDManagement : MonoBehaviour
                 idleCoroutine = null;
             }
 
-            // Tampilkan UI jika sedang bergerak
-            if (!uiHUD.activeSelf)
+            // Tampilkan UI jika sedang idle
+            if (UIGroup.alpha == 0)
             {
                 uiHUD.SetActive(true);
                 StartCoroutine(ShowUI());
@@ -54,19 +54,23 @@ public class UI_HUDManagement : MonoBehaviour
     {
         // Mulai fadeIn
         yield return StartCoroutine(FadeIn(UIGroup));
+
+        
     }
 
     IEnumerator IdleTimer()
     {
         // Tunggu selama idleTimeThreshold sebelum menyembunyikan UI
         yield return new WaitForSeconds(idleTimeThreshold);
+        UIGroup.alpha = 0;
 
         // Mulai fadeOut
-        yield return StartCoroutine(FadeOut(UIGroup));
-        
+        //yield return StartCoroutine(FadeOut(UIGroup));
         // Setelah fadeOut selesai, sembunyikan UI
         uiHUD.SetActive(false);
     }
+
+    
 
     IEnumerator FadeOut(CanvasGroup canvasGroup)
     {
@@ -83,7 +87,7 @@ public class UI_HUDManagement : MonoBehaviour
         // Transisi fadeIn
         while (canvasGroup.alpha < 1)
         {
-            canvasGroup.alpha += Time.deltaTime;
+            canvasGroup.alpha += Time.deltaTime*2;
             yield return null;
         }
     }

@@ -6,7 +6,7 @@ public class PortalInstant : MonoBehaviour
 {
    [SerializeField] Transform destination;
    [SerializeField] Animator animator;
-   [SerializeField] PlayerMovement player;
+   [SerializeField] PlayerDataSaving player;
    [SerializeField] GameObject playerCamera;
     
 
@@ -28,5 +28,6 @@ public class PortalInstant : MonoBehaviour
         player.gameObject.SetActive(true);
         playerCamera.SetActive(true);
         animator.SetTrigger("Start");
+        GameManager.instance.SaveGame();
     }
 }

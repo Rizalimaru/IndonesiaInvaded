@@ -13,6 +13,7 @@ public class SaveSlot : MonoBehaviour
     [Header("Content")]
     [SerializeField] private GameObject noDataContent;
     [SerializeField] private GameObject hasDataContent;
+    [SerializeField] private RawImage screenShoot;
     [SerializeField] private TextMeshProUGUI MissionText;
     [SerializeField] private TextMeshProUGUI CityMissionText;
     [SerializeField] private TextMeshProUGUI percentageCompeleteText;

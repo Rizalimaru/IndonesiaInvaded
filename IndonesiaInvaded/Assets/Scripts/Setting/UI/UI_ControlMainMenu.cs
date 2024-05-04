@@ -12,6 +12,8 @@ public class UI_ControlMainMenu: MonoBehaviour
     public GameObject gameObjectMenu;
     public GameObject gameObjectOptions;
 
+    public GameObject gameObjectTitle;
+
     // Objek page press any key
     public GameObject gameObjectPressAnyKey;
 
@@ -21,9 +23,12 @@ public class UI_ControlMainMenu: MonoBehaviour
     public Animator buttonAnimator;
     public Animator optionsAnimator;
 
+    public Animator titleGameAnimator;
+
+    public bool titleGameAnimationPlayed = true;
+
     public Animator pressAnyKeyAnimator;
 
-    public Animator missionSelectedAnimator;
 
     public static UI_ControlMainMenu Instance { get; private set; }
 
@@ -58,6 +63,12 @@ public class UI_ControlMainMenu: MonoBehaviour
 
         mainMenu.EnableMenuandAnimationButton();
 
+        
+    }
+
+
+    private void Start()
+    {
         
     }
 
@@ -117,8 +128,21 @@ public class UI_ControlMainMenu: MonoBehaviour
             if (gameObjectPressAnyKey.activeSelf)
             {
                 ShowPressAnyKey();
+                if (titleGameAnimationPlayed == true)
+                {
+                    titleGameAnimator.SetTrigger("show");
+                    titleGameAnimationPlayed = false;
+                }
             }
         }
+    }
+
+    // Mendapatkan value bool titleGameAnimationPlayed
+
+    // Mengubah value bool titleGameAnimationPlayed
+    public void SetTitleGameAnimationPlayed(bool value)
+    {
+        titleGameAnimationPlayed = value;
     }
 
     //Pindah scene ke scene yang diinginkan
