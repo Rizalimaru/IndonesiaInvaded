@@ -38,8 +38,6 @@ public class Scene_Loading : MonoBehaviour
     {
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
-        
-
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
         scenes.Add(SceneManager.LoadSceneAsync("Gameplay1"));
         scenes.Add(SceneManager.LoadSceneAsync("Level1", LoadSceneMode.Additive));
@@ -66,4 +64,5 @@ public class Scene_Loading : MonoBehaviour
 
         loadingScreen.SetActive(false);
     }
+
 }

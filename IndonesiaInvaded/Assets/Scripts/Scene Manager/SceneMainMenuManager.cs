@@ -29,7 +29,7 @@ public class SceneMainMenuManager : MonoBehaviour
     {
         animator.SetTrigger("End");
         yield return new WaitForSeconds(1);
-        SceneManager.LoadSceneAsync(0);
+        //SceneManager.LoadSceneAsync(0);
         animator.SetTrigger("Start");
     }
 

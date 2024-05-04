@@ -230,6 +230,7 @@ public class UI_PauseGame : MonoBehaviour
 
     public void LoadMenu()
     {
+        SceneMainMenuManager.instance.LoadMainMenu();
         Time.timeScale = 1f;
         gameObjectPause.SetActive(false);
         gameObjectUI.SetActive(false);
@@ -241,7 +242,7 @@ public class UI_PauseGame : MonoBehaviour
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
         
         GameManager.instance.SaveGame();
-        //SceneMainMenuManager.instance.LoadMainMenu();
+        
         // SceneManager.LoadScene(0);
     }
 

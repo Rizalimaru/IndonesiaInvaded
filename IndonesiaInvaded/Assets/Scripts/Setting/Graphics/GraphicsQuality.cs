@@ -48,12 +48,8 @@ public class GraphicsQuality : MonoBehaviour
         // Menyimpan nilai fps pada dropdown fps ke dalam PlayerPrefs dengan key FPSDropdownIndexKey
         fpsDropdown.value = PlayerPrefs.GetInt(fpsDropdownIndexKey, 0);
 
-         /* Load nilai kecerahan dari PlayerPrefs saat memulai permainan
-        float brightnessLevel = PlayerPrefs.GetFloat(brightnessLevelKey, 1f);
-        SetBrightness(brightnessLevel);
+        SetFPS(fpsDropdown.value);
 
-        // Set nilai slider berdasarkan nilai kecerahan yang disimpan
-        brightnessSlider.value = brightnessLevel;*/
     }
 
     public void SetFPS(int index)
