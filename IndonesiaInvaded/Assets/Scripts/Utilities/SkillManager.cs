@@ -81,6 +81,7 @@ public class SkillManager : MonoBehaviour
         if (player != null && !isCooldown1 && player.currentSP >= 30)
         {   
             animator.SetBool("RoarSkill", true);
+            AudioManager._instance.PlaySFX("Skillplayer",0);
             StartCoroutine(DelayToCharge(1.5f));
             player.currentSP -= 30;
             StartCoroutine(StartSlowMotion());
