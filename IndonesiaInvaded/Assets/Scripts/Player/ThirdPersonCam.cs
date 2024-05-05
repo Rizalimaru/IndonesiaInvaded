@@ -23,9 +23,7 @@ public class ThirdPersonCam : MonoBehaviour
 
     [Header("Settings")]
     public float rotationSpeed;
-
     public Transform combatLookAt;
-
     public GameObject thirdPersonCam;
     public GameObject combatCam;
     public GameObject topDownCam;
@@ -47,7 +45,6 @@ public class ThirdPersonCam : MonoBehaviour
 
     private void Update()
     {   
-        hitDrag.DetectNearestEnemy();
         // Toggle cursor lock mode
         if (Input.GetKeyDown(LockCamera))
         {
@@ -86,10 +83,10 @@ public class ThirdPersonCam : MonoBehaviour
         if (currentStyle == CameraStyle.Basic && animator.GetBool("hit1") && hitDrag.nearestEnemy !=null )
         {
             // Rotate player towards the target
-            Vector3 targetDirection = hitDrag.nearestEnemy.position - player.position;
-            targetDirection.y = 0f; // Keep the rotation in the horizontal plane
-            Quaternion rotation = Quaternion.LookRotation(targetDirection);
-            playerObj.rotation = Quaternion.Slerp(playerObj.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
+            LookAtEnemyForHitdrag();
+        }else if (animator.GetBool("RoarSkill"))
+        {
+            StartCoroutine(LookAtEnemyForSkill());
         }
     }
 
@@ -105,6 +102,23 @@ public class ThirdPersonCam : MonoBehaviour
         if (newStyle == CameraStyle.Topdown) topDownCam.SetActive(true);
 
         currentStyle = newStyle;
+    }
+
+    public void LookAtEnemyForHitdrag()
+    {
+        Vector3 targetDirection = hitDrag.nearestEnemy.position - player.position;
+        targetDirection.y = 0f; // Keep the rotation in the horizontal plane
+        Quaternion rotation = Quaternion.LookRotation(targetDirection);
+        playerObj.rotation = Quaternion.Slerp(playerObj.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
+    }
+
+    public IEnumerator LookAtEnemyForSkill()
+    {   
+        yield return new WaitForSeconds(1f);
+        Vector3 targetDirection = hitDrag.nearestEnemy.position - player.position;
+        targetDirection.y = 0f; // Keep the rotation in the horizontal plane
+        Quaternion rotation = Quaternion.LookRotation(targetDirection);
+        playerObj.rotation = Quaternion.Slerp(playerObj.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
     }
 
 }
