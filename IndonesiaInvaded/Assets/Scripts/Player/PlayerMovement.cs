@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed;
     public float walkSpeed;
     public float sprintSpeed;
-
     public float groundDrag;
 
     [Header("Jumping")]
@@ -48,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
     private bool exitingSlope;
 
     public Transform orientation;
+    public Transform orientationForAtk;
 
     float horizontalInput;
     float verticalInput;
@@ -81,10 +81,9 @@ public class PlayerMovement : MonoBehaviour
         Keyframe dodge_lastFrame = dodgeCurve[dodgeCurve.length - 1];
         dodgeTimer = dodge_lastFrame.time;
     }
-
+    
     private void Update()
     {   
-        bool hit1 = animator.GetBool("hit1");
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
@@ -108,8 +107,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        MovePlayer();
+    {   
+        if(animator.GetBool("hit1") || animator.GetBool("hit2") || animator.GetBool("hit3"))
+        {
+            MoveForwardWhileAtk();
+        }else
+        {
+            MovePlayer();
+        }
+        
     }
 
 
@@ -201,19 +207,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {   
-        if(isDodging)
-        {
-            return;
-        }
-        
         // Check if any hit animation is active
         bool hit1 = animator.GetBool("hit1");
         bool hit2 = animator.GetBool("hit2");
         bool hit3 = animator.GetBool("hit3");
         bool RoarSkill = animator.GetBool("RoarSkill");
 
+        if(isDodging)
+        {
+            return;
+        }
+    
         // Stop player movement if hit animation is active
-        if (hit1 || hit2 || hit3 || RoarSkill)
+        if (RoarSkill)
         {
             StopMovement(); // Stop player movement
             return; // Exit the method early
@@ -242,6 +248,41 @@ public class PlayerMovement : MonoBehaviour
         // Apply gravity
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
     }
+
+    private void MoveForwardWhileAtk()
+    {   
+        // Mengecek apakah sedang melakukan animasi hit1, hit2, atau hit3
+        bool hit1 = animator.GetBool("hit1");
+        bool hit2 = animator.GetBool("hit2");
+        bool hit3 = animator.GetBool("hit3");
+
+        // Mengatur kecepatan berdasarkan animasi yang sedang aktif
+        float forwardSpeed = 0f;
+        if(hit1)
+        {
+            forwardSpeed = 1f;
+        }
+        else if(hit2)
+        {
+            forwardSpeed = 2f;
+        }
+        else if(hit3)
+        {
+            forwardSpeed = 1f;
+        }
+
+        // Hanya melakukan pergerakan maju jika karakter berada di tanah dan tidak ada input dari pengguna
+        if(grounded && !Input.anyKey)
+        {
+            // Menentukan arah gerakan berdasarkan orientasi karakter
+            moveDirection = orientationForAtk.forward;
+
+            // Menambahkan gaya untuk bergerak maju dengan kecepatan sesuai animasi serangan
+            Vector3 targetVelocity = moveDirection.normalized * forwardSpeed * 2f;
+            rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * 10f); // Menggunakan lerp untuk menginterpolasi kecepatan
+        }
+    }
+
 
     public void StopMovement()
     {
