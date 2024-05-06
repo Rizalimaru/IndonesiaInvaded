@@ -9,8 +9,6 @@ public class GameData
     public long lastUpdated;
     public Vector3 playerPosition;
     public int currentCheckpointIndex = 0;
-
-    public PlayerAttribut playerAttribut;
     public SerializableDictionary<string, bool> enemy;
 
     public GameData()

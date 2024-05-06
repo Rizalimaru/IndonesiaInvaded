@@ -168,6 +168,10 @@ public class GameManager : MonoBehaviour
         return gameData != null;
     }
 
+    public GameData GetGameData(){
+        return gameData;
+    }
+
     public Dictionary<string, GameData> GetAllProfilesGameData()
     {
         return dataHandler.LoadAllProfiles();

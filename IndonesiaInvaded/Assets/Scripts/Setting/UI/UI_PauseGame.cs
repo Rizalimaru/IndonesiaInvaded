@@ -134,7 +134,7 @@ public class UI_PauseGame : MonoBehaviour
     public void Pause()
     {
         pauseAnimator.SetTrigger("pausein");
-
+        GameManager.instance.SaveGame();
         gameObjectPause.SetActive(true);
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(false);
@@ -230,6 +230,7 @@ public class UI_PauseGame : MonoBehaviour
 
     public void LoadMenu()
     {
+        GameManager.instance.SaveGame();
         SceneMainMenuManager.instance.LoadMainMenu();
         Time.timeScale = 1f;
         gameObjectPause.SetActive(false);
@@ -240,10 +241,6 @@ public class UI_PauseGame : MonoBehaviour
         GameIsPaused = false;
         audioManagerInstance.StopBackgroundMusicWithTransition("Game", 1f);
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
-        
-        GameManager.instance.SaveGame();
-        
-        // SceneManager.LoadScene(0);
     }
 
 

@@ -33,6 +33,7 @@ public class SceneManagers : MonoBehaviour
             SceneManager.LoadSceneAsync("Gameplay" + index.ToString());
             //Load first part of the level in additive mode
             SceneManager.LoadSceneAsync("Level" + index.ToString(), LoadSceneMode.Additive);
+            GameManager.instance.SaveGame();
         }
         //reset the index if we have no more levels
         else CurrentLevelIndex =1;
@@ -40,6 +41,7 @@ public class SceneManagers : MonoBehaviour
 
     public void NextLevel()
     {
+        GameManager.instance.SaveGame();
         UI_PauseGame.instance.HideResult();
         CurrentLevelIndex++;
         LoadLevelWithIndex(CurrentLevelIndex);
@@ -51,8 +53,20 @@ public class SceneManagers : MonoBehaviour
         LoadLevelWithIndex(CurrentLevelIndex);
     }
 
+    public void Level3(){
+
+        GameManager.instance.SaveGame();
+        UI_PauseGame.instance.HideResult();
+        SceneManager.LoadSceneAsync("Gameplay3");
+        SceneManager.LoadSceneAsync("Level3", LoadSceneMode.Additive);
+        GameManager.instance.SaveGame();
+    }
+
     public void LoadMainMenu()
     {
+        GameManager.instance.SaveGame();
+        UI_PauseGame.instance.HideResult();
         SceneManager.LoadSceneAsync(menus[(int)Type.Main_Menu].sceneName);
+        GameManager.instance.SaveGame();
     }
 }
