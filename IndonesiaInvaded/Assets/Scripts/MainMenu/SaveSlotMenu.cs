@@ -89,7 +89,10 @@ public class SaveSlotsMenu : Menu
         // Mengaktifkan Main Menu dan Interactable Button
         mainMenu.ActivateMenu();
         mainMenu.EnableMenuandAnimationButton();
+        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("showbackground");
+        yield return new WaitForSeconds(0.5f);
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
+        
 
 
         this.DeactivateMenu();

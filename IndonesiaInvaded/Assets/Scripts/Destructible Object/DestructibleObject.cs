@@ -3,15 +3,21 @@ using UnityEngine;
 public class DestructibleObject : MonoBehaviour
 {
     public GameObject destroyed;
+    private ObjectiveManager objectiveManager;
     public GameObject hpOrbPrefab;
     public GameObject spOrbPrefab;
     [SerializeField] private float explosionForce = 500f;
     [SerializeField] private float explosionRadius = 3f;
 
+
     // Persentase drop orb
     [SerializeField] private int emptyChance = 50;
     [SerializeField] private int hpOrbChance = 25;
     [SerializeField] private int spOrbChance = 25;
+    private void Start()
+    {
+        objectiveManager = FindObjectOfType<ObjectiveManager>(); // Mengubah pencarian kelas
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -21,6 +27,10 @@ public class DestructibleObject : MonoBehaviour
             ScoreManager.instance.AddScore(500);
 
             DestroyObject();
+            if (objectiveManager != null) // Mengubah nama variabel
+            {
+                objectiveManager.DestroyBox(); // Mengubah nama metode
+            }
         }
     }
 

@@ -130,7 +130,8 @@ public class UI_ControlMainMenu: MonoBehaviour
                 ShowPressAnyKey();
                 if (titleGameAnimationPlayed == true)
                 {
-                    titleGameAnimator.SetTrigger("show");
+                    titleGameAnimator.SetTrigger("showbackground");
+                    
                     titleGameAnimationPlayed = false;
                 }
             }
@@ -169,6 +170,8 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     // Menampilkan objek press any key
 
+    #region Show and Hide Mission Selected
+
     public void ShowPressAnyKey()
     {
         if (!anyKeyDownHandled)
@@ -181,12 +184,15 @@ public class UI_ControlMainMenu: MonoBehaviour
     IEnumerator DelayPressAnyKey()
     {
         pressAnyKeyAnimator.SetTrigger("FadeIn");
+        
         yield return new WaitForSeconds(1.4f);
         gameObjectPressAnyKey.SetActive(false);
         gameObjectMenu.SetActive(true);
         ShowUI();
         
     }
+
+    #endregion PressAnyKey
     public void HideMenu()
     {
         // Mengdelay sebelum menyembunyikan menu

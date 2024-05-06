@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd0d819c460c09849a6c4281d03183b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 2
+  cooldownTime: 1
 --- !u!114 &7153151500934823563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,7 +285,7 @@ MonoBehaviour:
   maxHealth: 500
   currentHealth: 0
   maxSP: 100
-  currentSP: 0
+  currentSP: 2147483647
   healthBar: {fileID: 0}
   skillBar: {fileID: 0}
 --- !u!114 &4900809783995673873
@@ -300,15 +300,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3a31b7a6f6733408dd2d17d797f346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerObj: {fileID: 1501732846235728247}
   skillImage1: {fileID: 0}
   cooldown1: 5
   skill1Key: 101
   cameraShake: {fileID: 0}
   shakeDuration: 0.5
   shakeMagnitude: 0.1
+  SkillDetectionRadius: 20
+  movementSpeed: 15
+  rotationToEnemySpeed: 5
+  slowMotionDuration: 1
+  slowMotionTimeScale: 0.5
+  waitBeforeSlowMotion: 0.5
   skillImage2: {fileID: 0}
   cooldown2: 8
   skill2Key: 113
+  player: {fileID: 1501732846235728247}
+  nearestEnemy: {fileID: 0}
 --- !u!114 &8256567148742708587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +331,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1501732846235728247}
-  respawnPoint: {fileID: 0}
 --- !u!1 &4029081902527982358
 GameObject:
   m_ObjectHideFlags: 0
