@@ -60,7 +60,6 @@ public class Scene_Loading : MonoBehaviour
         }
 
         // Tunggu sedikit waktu tambahan sebelum menonaktifkan layar loading
-        yield return new WaitForSeconds(1f);
 
         loadingScreen.SetActive(false);
     }

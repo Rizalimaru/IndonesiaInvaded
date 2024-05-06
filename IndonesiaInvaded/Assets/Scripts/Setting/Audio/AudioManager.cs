@@ -10,6 +10,10 @@ public class AudioManager : MonoBehaviour
     public static AudioManager _instance;
     public static AudioManager Instance { get { return _instance; } }
 
+    
+
+    
+
     private Dictionary<AudioSource, bool> soundEffectStatus = new Dictionary<AudioSource, bool>();
 
     // Membuat kelas untuk menyimpan grup sound effect

@@ -112,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
     }
 
+
     private void MyInput()
     {   
 

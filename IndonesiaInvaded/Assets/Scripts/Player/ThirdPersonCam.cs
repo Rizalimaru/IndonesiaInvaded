@@ -66,6 +66,14 @@ public class ThirdPersonCam : MonoBehaviour
         {
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
+
+            // Nonaktifkan input horizontal dan vertikal jika RoarSkill aktif
+            if (animator.GetBool("RoarSkill"))
+            {
+                horizontalInput = 0f;
+                verticalInput = 0f;
+            }
+            
             Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
             if (inputDir != Vector3.zero)
@@ -104,6 +112,8 @@ public class ThirdPersonCam : MonoBehaviour
         currentStyle = newStyle;
     }
 
+#region CameraLook Function
+
     public void LookAtEnemyForHitdrag()
     {
         Vector3 targetDirection = hitDrag.nearestEnemy.position - player.position;
@@ -114,11 +124,18 @@ public class ThirdPersonCam : MonoBehaviour
 
     public IEnumerator LookAtEnemyForSkill()
     {   
-        yield return new WaitForSeconds(1f);
-        Vector3 targetDirection = hitDrag.nearestEnemy.position - player.position;
-        targetDirection.y = 0f; // Keep the rotation in the horizontal plane
-        Quaternion rotation = Quaternion.LookRotation(targetDirection);
-        playerObj.rotation = Quaternion.Slerp(playerObj.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
+        if(hitDrag.nearestEnemy != null)
+        {
+            yield return new WaitForSeconds(1f);
+            Vector3 targetDirection = hitDrag.nearestEnemy.position - player.position;
+            targetDirection.y = 0f; // Keep the rotation in the horizontal plane
+            Quaternion rotation = Quaternion.LookRotation(targetDirection);
+            playerObj.rotation = Quaternion.Slerp(playerObj.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
+        }else
+        {
+            yield return new WaitForSeconds(1f);
+        }
     }
+#endregion
 
 }
