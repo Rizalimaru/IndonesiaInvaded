@@ -40,6 +40,7 @@ public class SceneManagers : MonoBehaviour
 
     public void NextLevel()
     {
+        UI_PauseGame.instance.HideResult();
         CurrentLevelIndex++;
         LoadLevelWithIndex(CurrentLevelIndex);
         GameManager.instance.SaveGame();

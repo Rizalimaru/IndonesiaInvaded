@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using IndonesiaInvaded;
+using System.ComponentModel;
 
 public class SkillManager : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class SkillManager : MonoBehaviour
     private bool isSlowMotionActive = false;
     public float slowMotionDuration = 1f; // Durasi slow motion dalam detik
     public float slowMotionTimeScale = 0.5f; // Skala waktu selama slow motion
-
+    public float waitBeforeSlowMotion = 0.5f; // Waktu tunggu sebelum slow motion aktif
 
     [Header("Skill 2")]
     public Image skillImage2;
@@ -41,7 +42,7 @@ public class SkillManager : MonoBehaviour
 
     [Header("Skill Detection")]
     public Transform player;
-    private Transform nearestEnemy;
+    public Transform nearestEnemy;
 
     private void Awake()
     {   
@@ -60,18 +61,27 @@ public class SkillManager : MonoBehaviour
     }
 
     private void Update()
-    {
+    {   
+        DetectNearestEnemyForSkill();
         Skill1();
         Skill2(); // Call Skill2 method in the Update loop
-        distanceToMove = Mathf.Sqrt(Mathf.Pow((player.position.x - nearestEnemy.position.x),2) + Mathf.Pow((player.position.z - nearestEnemy.position.z),2) );
+        if(nearestEnemy != null)
+        {
+            distanceToMove = Mathf.Sqrt(Mathf.Pow((player.position.x - nearestEnemy.position.x),2) + Mathf.Pow((player.position.z - nearestEnemy.position.z),2) );
+        }else
+        {
+            distanceToMove = 10f;
+        }
     }
 
+#region UsableSkill Function
     public void UseSkill1()
     {
         PlayerAttribut player = PlayerAttribut.instance;
         if (player != null && !isCooldown1 && player.currentSP >= 30)
         {   
             animator.SetBool("RoarSkill", true);
+            AudioManager._instance.PlaySFX("Skillplayer",0);
             StartCoroutine(DelayToCharge(1.5f));
             player.currentSP -= 30;
             StartCoroutine(StartSlowMotion());
@@ -105,6 +115,8 @@ public class SkillManager : MonoBehaviour
         }
     }
 
+#endregion
+
     private IEnumerator DelayZoomSkill1()
     {
         CameraZoom cameraZoom = FindObjectOfType<CameraZoom>(); // Mendapatkan instance dari CameraZoom
@@ -133,44 +145,6 @@ public class SkillManager : MonoBehaviour
         }
         isCooldown1 = false;
         skillImage1.fillAmount = 0;
-    }
-
-    private IEnumerator DelayToCharge(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        animator.SetTrigger("ChargeAtk");
-        animator.SetBool("RoarSkill", false);
-
-        DetectNearestEnemyForSkill(); // Deteksi musuh terdekat
-        StartCoroutine(MoveToEnemyAfterCharge()); // Mulai pergerakan ke musuh setelah ChargeAtk
-    }
-
-    private IEnumerator MoveToEnemyAfterCharge()
-    {
-        if (nearestEnemy != null) // Memastikan ada musuh terdekat
-        {   
-            yield return new WaitForSeconds(.5f); // Menunggu 1 detik sebelum pergerakan dimulai
-            LookAtEnemy(); // Menghadap ke arah musuh
-            Vector3 startPosition = player.position; // Simpan posisi awal player
-            Vector3 moveDirection = (nearestEnemy.position - startPosition).normalized; // Hitung arah pergerakan ke musuh
-
-             // Jarak yang ingin dijelajahi (misalnya 5 meter)
-            Vector3 targetPosition = startPosition + moveDirection * distanceToMove; // Hitung posisi target berdasarkan jarak yang ditentukan
-
-            float duration = distanceToMove / movementSpeed; // Hitung durasi pergerakan berdasarkan jarak dan kecepatan
-
-            float timeElapsed = 0f;
-            while (timeElapsed < duration) // Pergerakan berdasarkan durasi
-            {
-                // Interpolasi pergerakan
-                player.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
-                timeElapsed += Time.deltaTime;
-                yield return null;
-            }
-            // Pastikan posisi player benar-benar mencapai posisi target
-            player.position = targetPosition;
-        }
     }
 
     private IEnumerator CooldownSkill2()
@@ -203,6 +177,31 @@ public class SkillManager : MonoBehaviour
         }
     }
 
+#region Region function for skill Roar
+
+    //Fungsi untuk membuat effect Slow Motion
+    public IEnumerator StartSlowMotion()
+    {
+        if (!isSlowMotionActive)
+        {   
+            yield return new WaitForSeconds(waitBeforeSlowMotion);
+            // Mengaktifkan slow motion
+            Time.timeScale = slowMotionTimeScale;
+            isSlowMotionActive = true;
+
+            // Membatalkan slow motion setelah beberapa detik
+            Invoke("StopSlowMotion", slowMotionDuration);
+        }
+    }
+
+    public void StopSlowMotion()
+    {
+        // Menonaktifkan slow motion
+        Time.timeScale = 1f;
+        isSlowMotionActive = false;
+    }
+
+    //Fungsi untuk mendeteksi musuh terdekat dalam radius tertentu
     public void DetectNearestEnemyForSkill()
     {
         Collider[] colliders = Physics.OverlapSphere(player.position, SkillDetectionRadius); // Mendeteksi semua collider dalam radius
@@ -226,6 +225,48 @@ public class SkillManager : MonoBehaviour
         nearestEnemy = nearest; // Menetapkan musuh terdekat sebagai referensi
     }
 
+    //Fungsi untuk bergerak ke arah musuh setelah melakukan Roar
+    private IEnumerator MoveToEnemyAfterCharge()
+    {
+        if (nearestEnemy != null) // Memastikan ada musuh terdekat
+        {   
+            yield return new WaitForSeconds(.5f); // Menunggu 1 detik sebelum pergerakan dimulai
+            LookAtEnemy(); // Menghadap ke arah musuh
+            Vector3 startPosition = player.position; // Simpan posisi awal player
+            Vector3 moveDirection = (nearestEnemy.position - startPosition).normalized; // Hitung arah pergerakan ke musuh
+
+             // Jarak yang ingin dijelajahi (misalnya 5 meter)
+            Vector3 targetPosition = startPosition + moveDirection * distanceToMove; // Hitung posisi target berdasarkan jarak yang ditentukan
+
+            float duration = distanceToMove / movementSpeed; // Hitung durasi pergerakan berdasarkan jarak dan kecepatan
+
+            float timeElapsed = 0f;
+            while (timeElapsed < duration) // Pergerakan berdasarkan durasi
+            {
+                // Interpolasi pergerakan
+                player.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+            // Pastikan posisi player benar-benar mencapai posisi target
+            player.position = targetPosition;
+        }
+    }
+
+    //Fungsi untuk menunda ChargeAtk setelah Roar
+    private IEnumerator DelayToCharge(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        animator.SetTrigger("ChargeAtk");
+        animator.SetBool("RoarSkill", false);
+
+        DetectNearestEnemyForSkill(); // Deteksi musuh terdekat
+        StartCoroutine(MoveToEnemyAfterCharge()); // Mulai pergerakan ke musuh setelah ChargeAtk
+        StartCoroutine(StartSlowMotion());
+    }
+    
+    //Fungsi untuk menghadap musuh
     public void LookAtEnemy()
     {
         Vector3 targetDirection = nearestEnemy.position - player.position;
@@ -233,25 +274,7 @@ public class SkillManager : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(targetDirection);
         playerObj.rotation = Quaternion.Slerp(playerObj.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
     }
+#endregion
 
-    public IEnumerator StartSlowMotion()
-    {
-        if (!isSlowMotionActive)
-        {   
-            yield return new WaitForSeconds(1f);
-            // Mengaktifkan slow motion
-            Time.timeScale = slowMotionTimeScale;
-            isSlowMotionActive = true;
 
-            // Membatalkan slow motion setelah beberapa detik
-            Invoke("StopSlowMotion", slowMotionDuration);
-        }
-    }
-
-    public void StopSlowMotion()
-    {
-        // Menonaktifkan slow motion
-        Time.timeScale = 1f;
-        isSlowMotionActive = false;
-    }
 }
