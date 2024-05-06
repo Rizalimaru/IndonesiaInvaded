@@ -9,19 +9,14 @@ public class GameData
     public long lastUpdated;
     public Vector3 playerPosition;
     public int currentCheckpointIndex = 0;
-    public Vector3 currentCheckpointPosition;
-    public Vector3 currentCheckpointRotation;
 
     public PlayerAttribut playerAttribut;
     public SerializableDictionary<string, bool> enemy;
 
-    // the values defined in this constructor will be the default values
-    // the game starts with when there's no data to load
     public GameData()
     {
         playerPosition = Vector3.zero;
         enemy = new SerializableDictionary<string, bool>();
-        playerAttribut = new PlayerAttribut();
     }
 
     public int GetPercentageComplete()

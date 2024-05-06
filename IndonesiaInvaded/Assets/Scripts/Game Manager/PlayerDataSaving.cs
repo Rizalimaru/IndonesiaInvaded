@@ -5,18 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class PlayerDataSaving : MonoBehaviour, IDataPersistent
 {    
-    public Transform player;
     Vector2 look;
     internal Vector3 velocity;
     
 
     public void LoadData(GameData data) 
     {
-        player.position = data.playerPosition;
+         this.transform.position = data.playerPosition;
     }
     public void SaveData(GameData data) 
     {
-         data.playerPosition = player.position;
+         data.playerPosition = this.transform.position;
     }
 
     public void Update(){

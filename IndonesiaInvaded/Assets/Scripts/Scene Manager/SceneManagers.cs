@@ -47,8 +47,8 @@ public class SceneManagers : MonoBehaviour
     }
     public void RestartLevel()
     {
-        LoadLevelWithIndex(CurrentLevelIndex);
         GameManager.instance.LoadGame();
+        LoadLevelWithIndex(CurrentLevelIndex);
     }
 
     public void LoadMainMenu()
