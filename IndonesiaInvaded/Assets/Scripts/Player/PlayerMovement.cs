@@ -213,6 +213,11 @@ public class PlayerMovement : MonoBehaviour
         bool hit3 = animator.GetBool("hit3");
         bool RoarSkill = animator.GetBool("RoarSkill");
 
+        if(hit1)
+        {
+            return;
+        }
+
         if(isDodging)
         {
             return;
@@ -272,10 +277,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Hanya melakukan pergerakan maju jika karakter berada di tanah dan tidak ada input dari pengguna
-        if(grounded && !Input.anyKey)
+        if(grounded)
         {
             // Menentukan arah gerakan berdasarkan orientasi karakter
-            moveDirection = orientationForAtk.forward;
+            moveDirection = orientationForAtk.forward * verticalInput + orientation.right * horizontalInput;
 
             // Menambahkan gaya untuk bergerak maju dengan kecepatan sesuai animasi serangan
             Vector3 targetVelocity = moveDirection.normalized * forwardSpeed * 2f;
