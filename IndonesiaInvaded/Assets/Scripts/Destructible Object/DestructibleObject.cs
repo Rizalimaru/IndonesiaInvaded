@@ -3,7 +3,7 @@ using UnityEngine;
 public class DestructibleObject : MonoBehaviour
 {
     public GameObject destroyed;
-    private ObjectiveManager objectiveManager;
+    //private ObjectiveManager objectiveManager;
     public GameObject hpOrbPrefab;
     public GameObject spOrbPrefab;
     [SerializeField] private float explosionForce = 500f;
@@ -14,10 +14,12 @@ public class DestructibleObject : MonoBehaviour
     [SerializeField] private int emptyChance = 50;
     [SerializeField] private int hpOrbChance = 25;
     [SerializeField] private int spOrbChance = 25;
-    private void Start()
-    {
-        objectiveManager = FindObjectOfType<ObjectiveManager>(); // Mengubah pencarian kelas
-    }
+
+
+    //private void Start()
+    //{
+    //    objectiveManager = FindObjectOfType<ObjectiveManager>();
+    //}
 
     private void OnCollisionEnter(Collision collision)
     {

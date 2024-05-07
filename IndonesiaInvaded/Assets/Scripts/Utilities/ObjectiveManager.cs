@@ -1,13 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class ObjectiveManager : MonoBehaviour
 {
     public GameObject objectiveUIPanel;
     public TMP_Text objectiveUIText;
-    public int targetEnemyCount = 2; 
-    private int destroyedEnemyCount = 0; 
+    public int targetEnemyCount = 2;
+    private int killedEnemyCount = 0; // Mengganti destroyedEnemyCount menjadi killedEnemyCount
     private bool objectiveActive = false;
     private bool objectiveCompleted = false;
 
@@ -39,7 +38,7 @@ public class ObjectiveManager : MonoBehaviour
     {
         objectiveActive = true;
         objectiveUIPanel.SetActive(true);
-        objectiveUIText.text = "Defeat enemies (0/" + targetEnemyCount + ")"; 
+        objectiveUIText.text = "Defeat enemies (0/" + targetEnemyCount + ")";
     }
 
     private void EndObjective()
@@ -51,14 +50,15 @@ public class ObjectiveManager : MonoBehaviour
         Destroy(this);
     }
 
-    public void DestroyEnemy()
+    // Mengubah DestroyEnemy menjadi EnemyKilled
+    public void EnemyKilled()
     {
         if (objectiveActive)
         {
-            destroyedEnemyCount++;
-            objectiveUIText.text = "Defeat enemies (" + destroyedEnemyCount + "/" + targetEnemyCount + ")";
+            killedEnemyCount++; // Mengubah destroyedEnemyCount menjadi killedEnemyCount
+            objectiveUIText.text = "Defeat enemies (" + killedEnemyCount + "/" + targetEnemyCount + ")";
 
-            if (destroyedEnemyCount >= targetEnemyCount && !objectiveCompleted)
+            if (killedEnemyCount >= targetEnemyCount && !objectiveCompleted)
             {
                 CompleteObjective();
             }
