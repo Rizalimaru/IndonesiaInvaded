@@ -54,7 +54,6 @@ public class EnemyStateManager : MonoBehaviour
         currentState.OnCollisionExit(this, collision); 
     }
 
-
     public void SwitchState(EnemyBaseState state)
     {
         currentState = state;

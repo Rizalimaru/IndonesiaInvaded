@@ -29,6 +29,7 @@ public class Combat : MonoBehaviour
 
     void Update()
     {
+
         if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(0).IsName("hit1"))
         {
             anim.SetBool("hit1", false);

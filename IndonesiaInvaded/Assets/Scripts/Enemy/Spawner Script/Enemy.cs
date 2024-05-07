@@ -32,10 +32,20 @@ public class Enemy : PoolableObject
 
     public void Update()
     {
-        if(health <= 0)
+        if (health <= 0)
         {
-            stateManager.currentState = stateManager.deadState;
-        }   
+            stateManager.SwitchState(stateManager.deadState);
+            //Debug.Log("Enemy is defeated");
+            //Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Sword"))
+        {
+            health -= 200;
+        }
     }
 
     public void Attack()
