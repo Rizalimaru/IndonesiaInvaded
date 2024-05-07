@@ -227,30 +227,28 @@ public class SkillManager : MonoBehaviour
 
     //Fungsi untuk bergerak ke arah musuh setelah melakukan Roar
     private IEnumerator MoveToEnemyAfterCharge()
-    {
-        if (nearestEnemy != null) // Memastikan ada musuh terdekat
-        {   
-            yield return new WaitForSeconds(.5f); // Menunggu 1 detik sebelum pergerakan dimulai
-            LookAtEnemy(); // Menghadap ke arah musuh
-            Vector3 startPosition = player.position; // Simpan posisi awal player
-            Vector3 moveDirection = (nearestEnemy.position - startPosition).normalized; // Hitung arah pergerakan ke musuh
+    {   
+        yield return new WaitForSeconds(.5f); // Menunggu 1 detik sebelum pergerakan dimulai
+        LookAtEnemy(); // Menghadap ke arah musuh
+        Vector3 startPosition = player.position; // Simpan posisi awal player
+        Vector3 moveDirection = (nearestEnemy.position - startPosition).normalized; // Hitung arah pergerakan ke musuh
 
-             // Jarak yang ingin dijelajahi (misalnya 5 meter)
-            Vector3 targetPosition = startPosition + moveDirection * distanceToMove; // Hitung posisi target berdasarkan jarak yang ditentukan
+        // Jarak yang ingin dijelajahi (misalnya 5 meter)
+        Vector3 targetPosition = startPosition + moveDirection * distanceToMove; // Hitung posisi target berdasarkan jarak yang ditentukan
 
-            float duration = distanceToMove / movementSpeed; // Hitung durasi pergerakan berdasarkan jarak dan kecepatan
+        float duration = distanceToMove / movementSpeed; // Hitung durasi pergerakan berdasarkan jarak dan kecepatan
 
-            float timeElapsed = 0f;
-            while (timeElapsed < duration) // Pergerakan berdasarkan durasi
-            {
-                // Interpolasi pergerakan
-                player.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
-                timeElapsed += Time.deltaTime;
-                yield return null;
-            }
-            // Pastikan posisi player benar-benar mencapai posisi target
-            player.position = targetPosition;
+        float timeElapsed = 0f;
+        while (timeElapsed < duration) // Pergerakan berdasarkan durasi
+        {
+            // Interpolasi pergerakan
+            player.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
         }
+        // Pastikan posisi player benar-benar mencapai posisi target
+        player.position = targetPosition;
+        
     }
 
     //Fungsi untuk menunda ChargeAtk setelah Roar
@@ -258,21 +256,36 @@ public class SkillManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        animator.SetTrigger("ChargeAtk");
-        animator.SetBool("RoarSkill", false);
+        if(nearestEnemy == null)
+        {
+            animator.SetBool("RoarSkill", false);
+        }else
+        {
+            animator.SetTrigger("ChargeAtk");
+            animator.SetBool("RoarSkill", false);
 
-        DetectNearestEnemyForSkill(); // Deteksi musuh terdekat
-        StartCoroutine(MoveToEnemyAfterCharge()); // Mulai pergerakan ke musuh setelah ChargeAtk
-        StartCoroutine(StartSlowMotion());
+            DetectNearestEnemyForSkill(); // Deteksi musuh terdekat
+            StartCoroutine(MoveToEnemyAfterCharge()); // Mulai pergerakan ke musuh setelah ChargeAtk
+            StartCoroutine(StartSlowMotion());
+        }
+
+        
     }
     
     //Fungsi untuk menghadap musuh
     public void LookAtEnemy()
     {
-        Vector3 targetDirection = nearestEnemy.position - player.position;
-        targetDirection.y = 0f; // Keep the rotation in the horizontal plane
-        Quaternion rotation = Quaternion.LookRotation(targetDirection);
-        playerObj.rotation = Quaternion.Slerp(playerObj.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
+        if(nearestEnemy != null)
+        {
+            Vector3 targetDirection = nearestEnemy.position - player.position;
+            targetDirection.y = 0f; // Keep the rotation in the horizontal plane
+            Quaternion rotation = Quaternion.LookRotation(targetDirection);
+            playerObj.rotation = Quaternion.Slerp(playerObj.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
+        }else
+        {
+            return;
+        }
+        
     }
 #endregion
 

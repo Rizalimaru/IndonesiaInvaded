@@ -39,6 +39,7 @@ public class SceneManagers : MonoBehaviour
         else CurrentLevelIndex =1;
     }
 
+
     public void NextLevel()
     {
         GameManager.instance.SaveGame();
