@@ -13,13 +13,14 @@ public class EnemyIdleState : EnemyBaseState
         enemy.animator.SetBool("isWalking", false);
         enemy.animator.SetBool("isAttacking", false);
         enemy.animator.SetBool("isResting", false);
+        enemy.animator.SetBool("isDead", false);
         delay = 1f;
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
     }
 
     public override void UpdateState(EnemyStateManager enemy)
     {
-        if(delay > 0)
+        if (delay > 0)
         {
             delay -= Time.deltaTime;
         }

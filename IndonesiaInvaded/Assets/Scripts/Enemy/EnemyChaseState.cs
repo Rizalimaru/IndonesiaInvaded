@@ -13,6 +13,8 @@ public class EnemyChaseState : EnemyBaseState
         enemy.GetComponent<NavMeshAgent>().isStopped = false;
         enemy.animator.SetBool("isWalking", true);
         enemy.animator.SetBool("isAttacking", false);
+        enemy.animator.SetBool("isResting", false);
+        enemy.animator.SetBool("isDead", false);
     }
 
     public override void UpdateState(EnemyStateManager enemy)

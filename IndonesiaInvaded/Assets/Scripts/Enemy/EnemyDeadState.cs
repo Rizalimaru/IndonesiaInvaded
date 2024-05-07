@@ -16,19 +16,12 @@ public class EnemyDeadState : EnemyBaseState
         enemy.animator.SetBool("isWalking", false);
         enemy.animator.SetBool("isDead", true);
 
-        delay = enemy.enemyObject.animDelay;
+        delay = 1f;
     }
 
     public override void UpdateState(EnemyStateManager enemy)
     {
-        if(delay > 0)
-        {
-            delay -= Time.deltaTime;
-        }
-        else
-        {
-            Object.Destroy(enemy.gameObject);
-        }
+        Object.Destroy(enemy.gameObject, delay);
     }
 
     public override void OnCollisionEnter(EnemyStateManager enemy, Collision collision)
