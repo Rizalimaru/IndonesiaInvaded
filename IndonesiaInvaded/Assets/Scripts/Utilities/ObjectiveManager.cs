@@ -3,14 +3,13 @@ using UnityEngine.UI;
 using TMPro;
 
 public class ObjectiveManager : MonoBehaviour
-
 {
     public GameObject objectiveUIPanel;
     public TMP_Text objectiveUIText;
-    public int targetBoxCount = 2;
-    private int destroyedBoxCount = 0;
+    public int targetEnemyCount = 2; 
+    private int destroyedEnemyCount = 0; 
     private bool objectiveActive = false;
-    private bool objectiveCompleted = false; 
+    private bool objectiveCompleted = false;
 
     private Collider objectiveCollider;
 
@@ -22,7 +21,7 @@ public class ObjectiveManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !objectiveCompleted) 
+        if (other.CompareTag("Player") && !objectiveCompleted)
         {
             StartObjective();
         }
@@ -40,26 +39,26 @@ public class ObjectiveManager : MonoBehaviour
     {
         objectiveActive = true;
         objectiveUIPanel.SetActive(true);
-        objectiveUIText.text = "Destroy boxes (0/" + targetBoxCount + ")";
+        objectiveUIText.text = "Defeat enemies (0/" + targetEnemyCount + ")"; 
     }
 
     private void EndObjective()
     {
         objectiveActive = false;
         objectiveUIPanel.SetActive(false);
-        objectiveUIText.text = ""; 
-        Destroy(objectiveCollider); 
-        Destroy(this); 
+        objectiveUIText.text = "";
+        Destroy(objectiveCollider);
+        Destroy(this);
     }
 
-    public void DestroyBox()
+    public void DestroyEnemy()
     {
         if (objectiveActive)
         {
-            destroyedBoxCount++;
-            objectiveUIText.text = "Destroy boxes (" + destroyedBoxCount + "/" + targetBoxCount + ")";
+            destroyedEnemyCount++;
+            objectiveUIText.text = "Defeat enemies (" + destroyedEnemyCount + "/" + targetEnemyCount + ")";
 
-            if (destroyedBoxCount >= targetBoxCount && !objectiveCompleted) 
+            if (destroyedEnemyCount >= targetEnemyCount && !objectiveCompleted)
             {
                 CompleteObjective();
             }

@@ -27,10 +27,6 @@ public class DestructibleObject : MonoBehaviour
             ScoreManager.instance.AddScore(500);
 
             DestroyObject();
-            if (objectiveManager != null) // Mengubah nama variabel
-            {
-                objectiveManager.DestroyBox(); // Mengubah nama metode
-            }
         }
     }
 
