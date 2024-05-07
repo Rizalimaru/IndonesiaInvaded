@@ -19,6 +19,7 @@ public class Combat : MonoBehaviour
     public static int noOfClicks = 0;
     float lastClickedTime = 0;
     float maxComboDelay = 1;
+    [HideInInspector] public bool isAttacking = false;
 
     private void Start()
     {
@@ -58,6 +59,19 @@ public class Combat : MonoBehaviour
         }
 
         skillCast();
+
+        bool hit1 = anim.GetBool("hit1");
+        bool hit2 = anim.GetBool("hit2");
+        bool hit3 = anim.GetBool("hit3");
+
+        if(hit1 || hit2 || hit3)
+        {
+            isAttacking = true;
+        }else
+        {
+            isAttacking = false;
+        
+        }
     }
     void OnClick()
     {
