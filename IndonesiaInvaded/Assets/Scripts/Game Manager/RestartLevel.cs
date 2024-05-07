@@ -7,9 +7,4 @@ public class RestartLevel : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
-    public void NextLevel()
-    {
-        GameManager.instance.NextLevel();
-    }
 }
