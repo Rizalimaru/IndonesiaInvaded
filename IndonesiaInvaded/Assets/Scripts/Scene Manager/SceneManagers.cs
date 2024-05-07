@@ -52,6 +52,7 @@ public class SceneManagers : MonoBehaviour
     {
         GameManager.instance.LoadGame();
         LoadLevelWithIndex(CurrentLevelIndex);
+        
     }
 
     public void Level3(){
@@ -69,5 +70,20 @@ public class SceneManagers : MonoBehaviour
         UI_PauseGame.instance.HideResult();
         SceneManager.LoadSceneAsync(menus[(int)Type.Main_Menu].sceneName);
         GameManager.instance.SaveGame();
+    }
+
+    public void RestartLevel1(){
+        SceneManager.LoadSceneAsync("Gameplay1");
+        SceneManager.LoadSceneAsync("Level1", LoadSceneMode.Additive);
+    }
+
+    public void RestartLevel2(){
+        SceneManager.LoadSceneAsync("Gameplay2");
+        SceneManager.LoadSceneAsync("Level2", LoadSceneMode.Additive);
+    }
+
+    public void RestartLevel3(){
+        SceneManager.LoadSceneAsync("Gameplay3");
+        SceneManager.LoadSceneAsync("Level3", LoadSceneMode.Additive);
     }
 }
