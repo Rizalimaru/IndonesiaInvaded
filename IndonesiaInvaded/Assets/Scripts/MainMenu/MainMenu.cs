@@ -33,7 +33,6 @@ public class MainMenu : MonoBehaviour
         if (!GameManager.instance.HasGameData()) 
         {
             loadButton.interactable = false;
-            loadButton.GetComponentInChildren<Text>().color = Color.gray;
         }
     }
     public void OnNewGameClicked()
