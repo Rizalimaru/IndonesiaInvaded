@@ -94,11 +94,11 @@ public class UI_PauseGame : MonoBehaviour
                 }
             }
 
-            // if (PlayerAttribut.instance.currentHealth <= 0)
-            // {
-            //     GameOver();
-            //     isGameOver = true; // Set isGameOver to true after calling GameOver()
-            // }
+            if (PlayerAttribut.instance.currentHealth <= 0)
+            {
+                GameOver();
+                isGameOver = true; // Set isGameOver to true after calling GameOver()
+            }
         }
     }
 
