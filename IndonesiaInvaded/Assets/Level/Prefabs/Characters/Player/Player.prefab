@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 5907773204926507305}
   - component: {fileID: 8078761931949095257}
   - component: {fileID: 4250335120195895467}
+  - component: {fileID: 8256567148742708587}
   - component: {fileID: 2631689077824012360}
   - component: {fileID: 4149217423386793282}
   - component: {fileID: 5891494012393991014}
@@ -51,7 +52,6 @@ GameObject:
   - component: {fileID: 6484667871350195624}
   - component: {fileID: 2987648104949693347}
   - component: {fileID: 4900809783995673873}
-  - component: {fileID: 8256567148742708587}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -185,6 +185,18 @@ MonoBehaviour:
   orientationForAtk: {fileID: 8964449387861791797}
   state: 0
   gravity: 20
+--- !u!114 &8256567148742708587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093167237751254063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63a9027fe70caa54c9c3980d57d97187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &2631689077824012360
 Animator:
   serializedVersion: 5
@@ -238,6 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownTime: 1
+  isAttacking: 0
 --- !u!114 &7153151500934823563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,18 +332,6 @@ MonoBehaviour:
   skill2Key: 113
   player: {fileID: 1501732846235728247}
   nearestEnemy: {fileID: 0}
---- !u!114 &8256567148742708587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093167237751254063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63a9027fe70caa54c9c3980d57d97187, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4029081902527982358
 GameObject:
   m_ObjectHideFlags: 0

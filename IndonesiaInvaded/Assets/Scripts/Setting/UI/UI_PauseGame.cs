@@ -43,7 +43,6 @@ public class UI_PauseGame : MonoBehaviour
 
     public Animator pauseAnimator;
     public Animator optionsAnimatorGame;
-    private GameData gameData;
 
     private void Awake()
     {
@@ -134,7 +133,6 @@ public class UI_PauseGame : MonoBehaviour
     public void Pause()
     {
         pauseAnimator.SetTrigger("pausein");
-        GameManager.instance.SaveGame();
         gameObjectPause.SetActive(true);
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(false);
@@ -230,7 +228,6 @@ public class UI_PauseGame : MonoBehaviour
 
     public void LoadMenu()
     {
-        GameManager.instance.SaveGame();
         SceneMainMenuManager.instance.LoadMainMenu();
         Time.timeScale = 1f;
         gameObjectPause.SetActive(false);

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class GameManager : MonoBehaviour
 {
@@ -184,20 +183,6 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(autoSaveTimeSeconds);
             SaveGame();
             Debug.Log("Auto Saved Game");
-        }
-    }
-
-    public void UpdateCheckpoint(int checkpointIndex)
-    {
-        if (gameData != null)
-        {
-            gameData.currentCheckpointIndex = checkpointIndex;
-            SaveGame();
-            Debug.Log("Checkpoint " + checkpointIndex);
-        }
-        else
-        {
-            Debug.LogWarning("GameData is null. Unable to update checkpoint.");
         }
     }
 }
