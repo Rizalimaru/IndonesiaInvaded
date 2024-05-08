@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
 
 
     [Header("Menu Navigation")]
-    [SerializeField] private SaveSlotsMenu saveSlotsMenu;
+    [SerializeField] private SaveSlotMenu saveSlotsMenu;
     
     [Header("Button UI")]
     public Button newGameButton;
@@ -50,7 +50,7 @@ public class MainMenu : MonoBehaviour
         DisableMenuandAnimationButton();
         
         
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(0.5f);
         titleGameAnimator.SetTrigger("hide");
 
         UI_ControlMainMenu.Instance.ShowMissionSelected();

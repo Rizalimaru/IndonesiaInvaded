@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1446,6 +1446,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5cb85c402b3a134190d020bb25bc1f9, type: 3}
+--- !u!114 &1364850288 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6902090238596163724, guid: a5cb85c402b3a134190d020bb25bc1f9, type: 3}
+  m_PrefabInstance: {fileID: 1364850287}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4cbeb6641eee5b4abb44163126d3192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1377030412 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4124208812314691767, guid: a5cb85c402b3a134190d020bb25bc1f9, type: 3}
@@ -2424,6 +2435,46 @@ PrefabInstance:
     - target: {fileID: 3064903891740730224, guid: 1718c37e82089b840a1e6e30436f18a7, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -250
+      objectReference: {fileID: 0}
+    - target: {fileID: 3163627330229846071, guid: 1718c37e82089b840a1e6e30436f18a7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3163627330229846071, guid: 1718c37e82089b840a1e6e30436f18a7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3163627330229846071, guid: 1718c37e82089b840a1e6e30436f18a7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 287017699}
+    - target: {fileID: 3163627330229846071, guid: 1718c37e82089b840a1e6e30436f18a7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1364850288}
+    - target: {fileID: 3163627330229846071, guid: 1718c37e82089b840a1e6e30436f18a7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3163627330229846071, guid: 1718c37e82089b840a1e6e30436f18a7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideResult
+      objectReference: {fileID: 0}
+    - target: {fileID: 3163627330229846071, guid: 1718c37e82089b840a1e6e30436f18a7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Level3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3163627330229846071, guid: 1718c37e82089b840a1e6e30436f18a7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI_PauseGame, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3163627330229846071, guid: 1718c37e82089b840a1e6e30436f18a7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SceneManagers, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3163627330229846071, guid: 1718c37e82089b840a1e6e30436f18a7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5606036552585259324, guid: 1718c37e82089b840a1e6e30436f18a7, type: 3}
       propertyPath: m_Pivot.x
@@ -3622,7 +3673,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1014967446}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8345973495647866645, guid: 0d41f4cf8130d9044b52bb437415d403, type: 3}
+    - {fileID: 3188674202917834618, guid: 0d41f4cf8130d9044b52bb437415d403, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d41f4cf8130d9044b52bb437415d403, type: 3}

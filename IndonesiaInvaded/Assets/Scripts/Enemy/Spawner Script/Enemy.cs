@@ -7,6 +7,7 @@ public class Enemy : PoolableObject
     public EnemyStateManager stateManager;
     public EnemyScriptableObject enemyType;
     public NavMeshAgent Agent;
+    private ObjectiveManager objectiveManager;
 
     // Offensive Attribute Declaration
     public Transform target;
@@ -28,6 +29,7 @@ public class Enemy : PoolableObject
     public void Awake()
     {
         target = GameObject.FindWithTag("Player").transform;
+        objectiveManager = FindObjectOfType<ObjectiveManager>();
     }
 
     public void Update()
@@ -45,6 +47,11 @@ public class Enemy : PoolableObject
         if (other.CompareTag("Sword"))
         {
             health -= 200;
+            if (health <= 0)
+            {
+                objectiveManager.EnemyKilled();
+                ScoreManager.instance.AddScore(1000);
+            }
         }
     }
 

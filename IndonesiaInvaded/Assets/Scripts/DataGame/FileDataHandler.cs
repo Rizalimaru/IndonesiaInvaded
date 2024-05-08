@@ -11,8 +11,6 @@ public class FileDataHandler
     private bool useEncryption = false;
     private readonly string encryptionCodeWord = "AGATE";
     private readonly string backupExtension = ".bak";
-    private readonly string screenshotDirName = "Screenshots";
-    private readonly string screenshotExtension = ".png";    
 
     public FileDataHandler(string dataDirPath, string dataFileName, bool useEncryption) 
     {

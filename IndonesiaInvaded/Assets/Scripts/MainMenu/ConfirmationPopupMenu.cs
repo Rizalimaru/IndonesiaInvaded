@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
-public class ConfirmationPopupMenu : Menu
+public class ConfirmationPopupMenu : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private TextMeshProUGUI displayText;
