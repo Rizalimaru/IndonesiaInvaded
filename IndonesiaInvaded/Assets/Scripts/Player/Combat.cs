@@ -21,7 +21,7 @@ public class Combat : MonoBehaviour
     public float hitResetTime = .1f;
     private bool isPerformingHit = false;
     [HideInInspector] public bool isAttacking = false;
-    private Coroutine hitResetCoroutine;
+    private Coroutine hitResetCoroutine = null;
 
     private void Start()
     {
@@ -35,20 +35,11 @@ public class Combat : MonoBehaviour
     }
     void Update()
     {
-         // Mengecek input dari mouse kiri
         if (Input.GetMouseButtonDown(0) && animator.GetBool("isGrounded"))
         {
-            // Memanggil fungsi untuk melakukan hit
             PerformHit();
-
-            // Memulai coroutine untuk mereset hit jika coroutine sebelumnya masih berjalan
-            if (hitResetCoroutine != null)
-            {
-                StopCoroutine(hitResetCoroutine);
-            }
-            hitResetCoroutine = StartCoroutine(ResetHitsAfterDelay());
         }
-
+        ResetCombo();
         // Pengecekan jika klik masih ditekan setelah mencapai hit terakhir
         if (Input.GetMouseButton(0) && currentHit >= 9)
         {
@@ -108,21 +99,45 @@ public class Combat : MonoBehaviour
         currentHit++;
     }
 
-    IEnumerator ResetHitsAfterDelay()
+    // IEnumerator ResetCombo()
+    // {
+    //     yield return new WaitForSeconds(hitResetTime);
+    //     animator.SetBool("hit1", false);
+    //     animator.SetBool("hit2", false);
+    //     animator.SetBool("hit3", false);
+    //     animator.SetBool("hit4", false);
+    //     currentHit = 0;
+    // }
+    
+    void ResetCombo()
     {
-        // Menunggu selama hitResetTime sebelum mengubah nilai-nilai animator kembali menjadi false
-        yield return new WaitForSeconds(hitResetTime);
-
-        // Mengubah nilai-nilai animator kembali menjadi false
-        animator.SetBool("hit1", false);
-        animator.SetBool("hit2", false);
-        animator.SetBool("hit3", false);
-        animator.SetBool("hit4", false);
-
-        // Mereset hit saat ini ke 0
-        currentHit = 0;
+        if(isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit1"))
+        {
+            animator.SetBool("hit1", false);
+            currentHit=0;
+        }
+        else if(isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit2"))
+        {   
+            animator.SetBool("hit1", false);
+            animator.SetBool("hit2", false);
+            currentHit=0;
+        }
+        else if(isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit3"))
+        {   
+            animator.SetBool("hit1", false);
+            animator.SetBool("hit2", false);
+            animator.SetBool("hit3", false);
+            currentHit=0;
+        }
+        else if(isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit4"))
+        {   
+            animator.SetBool("hit1", false);
+            animator.SetBool("hit2", false);
+            animator.SetBool("hit3", false);
+            animator.SetBool("hit4", false);
+            currentHit=0;
+        }
     }
-
     void OnClick()
     {
         float currentTime = Time.time;

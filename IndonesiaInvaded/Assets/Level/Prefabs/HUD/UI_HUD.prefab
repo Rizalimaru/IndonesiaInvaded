@@ -1086,8 +1086,8 @@ GameObject:
   - component: {fileID: 8862133925129256048}
   - component: {fileID: 2658590532841066337}
   - component: {fileID: 7433479021524042400}
-  - component: {fileID: 5789112861511456296}
   - component: {fileID: 2032468259707285728}
+  - component: {fileID: 6128576637132962762}
   m_Layer: 5
   m_Name: UI_Score
   m_TagString: Untagged
@@ -1211,27 +1211,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!95 &5789112861511456296
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6288033491788302365}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e78a570799c8f034085d249b1e15c10f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 2
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2032468259707285728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1276,6 +1255,27 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 3
   animationSpeed: 0.5
+--- !u!95 &6128576637132962762
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6288033491788302365}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e78a570799c8f034085d249b1e15c10f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6307460117454194050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1703,7 +1703,7 @@ GameObject:
   - component: {fileID: 1274705744879260440}
   - component: {fileID: 7919679347972902716}
   - component: {fileID: 763569786722306484}
-  - component: {fileID: 8609224462278922849}
+  - component: {fileID: 125695061048897696}
   m_Layer: 5
   m_Name: UI_HUD
   m_TagString: Untagged
@@ -1779,7 +1779,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &763569786722306484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1797,7 +1797,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!225 &8609224462278922849
+--- !u!225 &125695061048897696
 CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

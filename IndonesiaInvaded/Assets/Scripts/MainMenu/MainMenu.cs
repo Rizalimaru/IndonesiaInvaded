@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
 
 
     [Header("Menu Navigation")]
-    [SerializeField] private SaveSlotsMenu saveSlotsMenu;
+    [SerializeField] private SaveSlotMenu saveSlotsMenu;
     
     [Header("Button UI")]
     public Button newGameButton;
