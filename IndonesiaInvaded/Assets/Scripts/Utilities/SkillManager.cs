@@ -78,7 +78,7 @@ public class SkillManager : MonoBehaviour
     public void UseSkill1()
     {
         PlayerAttribut player = PlayerAttribut.instance;
-        if (player != null && !isCooldown1 && player.currentSP >= 30)
+        if (player != null && !isCooldown1 && player.currentSP >= 30 && animator.GetBool("isGrounded"))
         {   
             animator.SetBool("RoarSkill", true);
             AudioManager._instance.PlaySFX("Skillplayer",0);
