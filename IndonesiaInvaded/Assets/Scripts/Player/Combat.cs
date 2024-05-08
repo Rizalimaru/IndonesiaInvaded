@@ -14,7 +14,6 @@ public class Combat : MonoBehaviour
     [Header("Hit")]
     private Animator anim;
     public float cooldownTime = 2f;
-
     private float nextFireTime = 0f;
     public static int noOfClicks = 0;
     float lastClickedTime = 0;

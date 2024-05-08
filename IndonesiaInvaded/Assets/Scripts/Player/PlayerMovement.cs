@@ -280,7 +280,7 @@ public class PlayerMovement : MonoBehaviour
         if(grounded)
         {
             // Menentukan arah gerakan berdasarkan orientasi karakter
-            moveDirection = orientationForAtk.forward * verticalInput + orientation.right * horizontalInput;
+            moveDirection = orientationForAtk.forward * verticalInput + orientationForAtk.right * horizontalInput;
 
             // Menambahkan gaya untuk bergerak maju dengan kecepatan sesuai animasi serangan
             Vector3 targetVelocity = moveDirection.normalized * forwardSpeed * 2f;
