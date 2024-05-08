@@ -1,16 +1,14 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class ObjectiveManager : MonoBehaviour
-
 {
     public GameObject objectiveUIPanel;
     public TMP_Text objectiveUIText;
-    public int targetBoxCount = 2;
-    private int destroyedBoxCount = 0;
+    public int targetEnemyCount = 2;
+    private int killedEnemyCount = 0; // Mengganti destroyedEnemyCount menjadi killedEnemyCount
     private bool objectiveActive = false;
-    private bool objectiveCompleted = false; 
+    private bool objectiveCompleted = false;
 
     private Collider objectiveCollider;
 
@@ -22,7 +20,7 @@ public class ObjectiveManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !objectiveCompleted) 
+        if (other.CompareTag("Player") && !objectiveCompleted)
         {
             StartObjective();
         }
@@ -40,26 +38,27 @@ public class ObjectiveManager : MonoBehaviour
     {
         objectiveActive = true;
         objectiveUIPanel.SetActive(true);
-        objectiveUIText.text = "Destroy boxes (0/" + targetBoxCount + ")";
+        objectiveUIText.text = "Defeat enemies (0/" + targetEnemyCount + ")";
     }
 
     private void EndObjective()
     {
         objectiveActive = false;
         objectiveUIPanel.SetActive(false);
-        objectiveUIText.text = ""; 
-        Destroy(objectiveCollider); 
-        Destroy(this); 
+        objectiveUIText.text = "";
+        Destroy(objectiveCollider);
+        Destroy(this);
     }
 
-    public void DestroyBox()
+    // Mengubah DestroyEnemy menjadi EnemyKilled
+    public void EnemyKilled()
     {
         if (objectiveActive)
         {
-            destroyedBoxCount++;
-            objectiveUIText.text = "Destroy boxes (" + destroyedBoxCount + "/" + targetBoxCount + ")";
+            killedEnemyCount++; // Mengubah destroyedEnemyCount menjadi killedEnemyCount
+            objectiveUIText.text = "Defeat enemies (" + killedEnemyCount + "/" + targetEnemyCount + ")";
 
-            if (destroyedBoxCount >= targetBoxCount && !objectiveCompleted) 
+            if (killedEnemyCount >= targetEnemyCount && !objectiveCompleted)
             {
                 CompleteObjective();
             }
