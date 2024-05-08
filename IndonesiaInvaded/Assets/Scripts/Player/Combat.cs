@@ -99,17 +99,43 @@ public class Combat : MonoBehaviour
         currentHit++;
     }
 
-        bool hit1 = anim.GetBool("hit1");
-        bool hit2 = anim.GetBool("hit2");
-        bool hit3 = anim.GetBool("hit3");
-
-        if(hit1 || hit2 || hit3)
+    // IEnumerator ResetCombo()
+    // {
+    //     yield return new WaitForSeconds(hitResetTime);
+    //     animator.SetBool("hit1", false);
+    //     animator.SetBool("hit2", false);
+    //     animator.SetBool("hit3", false);
+    //     animator.SetBool("hit4", false);
+    //     currentHit = 0;
+    // }
+    
+    void ResetCombo()
+    {
+        if(isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit1"))
         {
-            isAttacking = true;
-        }else
-        {
-            isAttacking = false;
-        
+            animator.SetBool("hit1", false);
+            currentHit=0;
+        }
+        else if(isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit2"))
+        {   
+            animator.SetBool("hit1", false);
+            animator.SetBool("hit2", false);
+            currentHit=0;
+        }
+        else if(isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit3"))
+        {   
+            animator.SetBool("hit1", false);
+            animator.SetBool("hit2", false);
+            animator.SetBool("hit3", false);
+            currentHit=0;
+        }
+        else if(isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit4"))
+        {   
+            animator.SetBool("hit1", false);
+            animator.SetBool("hit2", false);
+            animator.SetBool("hit3", false);
+            animator.SetBool("hit4", false);
+            currentHit=0;
         }
     }
     void OnClick()
