@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool useEncryption;
 
     [Header("Auto Saving Configuration")]
-    [SerializeField] private float autoSaveTimeSeconds = 60f;
+    [SerializeField] private float autoSaveTimeSeconds = 25f;
 
     private GameData gameData;
     private List<IDataPersistent> dataPersistenceObjects;
@@ -29,9 +30,9 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance { get; private set; }
 
-    private void Awake() 
+    private void Awake()
     {
-        if (instance != null) 
+        if (instance != null)
         {
             Debug.Log("Found more than one Data Persistence Manager in the scene. Destroying the newest one.");
             Destroy(this.gameObject);
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-        if (disableDataPersistence) 
+        if (disableDataPersistence)
         {
             Debug.LogWarning("Data Persistence is currently disabled!");
         }
@@ -50,77 +51,77 @@ public class GameManager : MonoBehaviour
         InitializeSelectedProfileId();
     }
 
-    private void OnEnable() 
+    private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnDisable() 
+    private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    public void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
 
-        // if (autoSaveCoroutine != null) 
-        // {
-        //     StopCoroutine(autoSaveCoroutine);
-        // }
-        // autoSaveCoroutine = StartCoroutine(AutoSave());
+        if (autoSaveCoroutine != null)
+        {
+            StopCoroutine(autoSaveCoroutine);
+        }
+        autoSaveCoroutine = StartCoroutine(AutoSave());
     }
 
-    public void ChangeSelectedProfileId(string newProfileId) 
+    public void ChangeSelectedProfileId(string newProfileId)
     {
         this.selectedProfileId = newProfileId;
         LoadGame();
     }
 
-    public void DeleteProfileData(string profileId) 
+    public void DeleteProfileData(string profileId)
     {
         dataHandler.Delete(profileId);
         InitializeSelectedProfileId();
         LoadGame();
     }
 
-    private void InitializeSelectedProfileId() 
+    private void InitializeSelectedProfileId()
     {
         this.selectedProfileId = dataHandler.GetMostRecentlyUpdatedProfileId();
-        if (overrideSelectedProfileId) 
+        if (overrideSelectedProfileId)
         {
             this.selectedProfileId = testSelectedProfileId;
             Debug.LogWarning("Overrode selected profile id with test id: " + testSelectedProfileId);
         }
     }
 
-    public void NewGame() 
+    public void NewGame()
     {
         this.gameData = new GameData();
     }
 
     public void LoadGame()
     {
-        if (disableDataPersistence) 
+        if (disableDataPersistence)
         {
             return;
         }
 
         this.gameData = dataHandler.Load(selectedProfileId);
 
-        if (this.gameData == null && initializeDataIfNull) 
+        if (this.gameData == null && initializeDataIfNull)
         {
             NewGame();
         }
 
-        if (this.gameData == null) 
+        if (this.gameData == null)
         {
             Debug.Log("No data was found. A New Game needs to be started before data can be loaded.");
             return;
         }
 
-        foreach (IDataPersistent dataPersistenceObj in dataPersistenceObjects) 
+        foreach (IDataPersistent dataPersistenceObj in dataPersistenceObjects)
         {
             dataPersistenceObj.LoadData(gameData);
         }
@@ -128,34 +129,33 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
-        if (disableDataPersistence) 
+        if (disableDataPersistence)
         {
             return;
         }
 
-        if (this.gameData == null) 
+        if (this.gameData == null)
         {
             Debug.LogWarning("No data was found. A New Game needs to be started before data can be saved.");
             return;
         }
 
-        foreach (IDataPersistent dataPersistenceObj in dataPersistenceObjects) 
+        foreach (IDataPersistent dataPersistenceObj in dataPersistenceObjects)
         {
             dataPersistenceObj.SaveData(gameData);
         }
 
         gameData.lastUpdated = System.DateTime.Now.ToBinary();
+
         dataHandler.Save(gameData, selectedProfileId);
     }
 
-    
-
-    private void OnApplicationQuit() 
+    private void OnApplicationQuit()
     {
         SaveGame();
     }
 
-    private List<IDataPersistent> FindAllDataPersistenceObjects() 
+    private List<IDataPersistent> FindAllDataPersistenceObjects()
     {
         IEnumerable<IDataPersistent> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>(true)
             .OfType<IDataPersistent>();
@@ -163,23 +163,41 @@ public class GameManager : MonoBehaviour
         return new List<IDataPersistent>(dataPersistenceObjects);
     }
 
-    public bool HasGameData() 
+    public bool HasGameData()
     {
         return gameData != null;
     }
 
-    public Dictionary<string, GameData> GetAllProfilesGameData() 
+    public GameData GetGameData(){
+        return gameData;
+    }
+
+    public Dictionary<string, GameData> GetAllProfilesGameData()
     {
         return dataHandler.LoadAllProfiles();
     }
 
-    // private IEnumerator AutoSave() 
-    // {
-    //     while (true) 
-    //     {
-    //         yield return new WaitForSeconds(autoSaveTimeSeconds);
-    //         SaveGame();
-    //         Debug.Log("Auto Saved Game");
-    //     }
-    // }
+    private IEnumerator AutoSave()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(autoSaveTimeSeconds);
+            SaveGame();
+            Debug.Log("Auto Saved Game");
+        }
+    }
+
+    public void UpdateCheckpoint(int checkpointIndex)
+    {
+        if (gameData != null)
+        {
+            gameData.currentCheckpointIndex = checkpointIndex;
+            SaveGame();
+            Debug.Log("Checkpoint " + checkpointIndex);
+        }
+        else
+        {
+            Debug.LogWarning("GameData is null. Unable to update checkpoint.");
+        }
+    }
 }

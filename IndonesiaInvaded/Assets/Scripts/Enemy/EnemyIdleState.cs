@@ -13,19 +13,20 @@ public class EnemyIdleState : EnemyBaseState
         enemy.animator.SetBool("isWalking", false);
         enemy.animator.SetBool("isAttacking", false);
         enemy.animator.SetBool("isResting", false);
+        enemy.animator.SetBool("isDead", false);
         delay = 1f;
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
     }
 
     public override void UpdateState(EnemyStateManager enemy)
     {
-        if(delay > 0)
+        if (delay > 0)
         {
             delay -= Time.deltaTime;
         }
         else
         {
-            if (Vector3.Distance(enemy.enemyObject.Agent.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.triggerDistance)
+            if (Vector3.Distance(enemy.enemyObject.spawnPoint.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.triggerDistance)
             {
                 enemy.SwitchState(enemy.movingState);
             }

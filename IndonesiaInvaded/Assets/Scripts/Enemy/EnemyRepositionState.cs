@@ -7,9 +7,11 @@ public class EnemyRepositionState : EnemyBaseState
     {
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
         Debug.Log("Repositioning");
+
+        enemy.animator.SetBool("isWalking", false);
         enemy.animator.SetBool("isAttacking", false);
         enemy.animator.SetBool("isResting", true);
-        enemy.animator.SetBool("isWalking", false);
+        enemy.animator.SetBool("isDead", false);
     }
 
     public override void UpdateState(EnemyStateManager enemy)
@@ -27,7 +29,7 @@ public class EnemyRepositionState : EnemyBaseState
         {
             enemy.SwitchState(enemy.attackState);
         }
-        else if (canSeePlayer && enemyPlayerDistance <= enemy.enemyObject.attackDistance && enemyPlayerDistance > enemy.enemyObject.attackDistance)
+        else if (canSeePlayer && enemyPlayerDistance <= enemy.enemyObject.triggerDistance && enemyPlayerDistance > enemy.enemyObject.attackDistance)
         {
             enemy.SwitchState(enemy.movingState);
         }

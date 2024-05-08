@@ -1,4 +1,3 @@
-using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,6 +7,7 @@ public class Enemy : PoolableObject
     public EnemyStateManager stateManager;
     public EnemyScriptableObject enemyType;
     public NavMeshAgent Agent;
+    private ObjectiveManager objectiveManager;
 
     // Offensive Attribute Declaration
     public Transform target;
@@ -29,14 +29,30 @@ public class Enemy : PoolableObject
     public void Awake()
     {
         target = GameObject.FindWithTag("Player").transform;
+        objectiveManager = FindObjectOfType<ObjectiveManager>();
     }
 
     public void Update()
     {
-        if(health <= 0)
+        if (health <= 0)
         {
-            stateManager.currentState = stateManager.deadState;
-        }   
+            stateManager.SwitchState(stateManager.deadState);
+            //Debug.Log("Enemy is defeated");
+            //Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Sword"))
+        {
+            health -= 200;
+            if (health <= 0)
+            {
+                objectiveManager.EnemyKilled();
+                ScoreManager.instance.AddScore(1000);
+            }
+        }
     }
 
     public void Attack()

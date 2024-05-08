@@ -5,8 +5,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SaveSlotsMenu : Menu
+public class SaveSlotMenu : MonoBehaviour
 {
+    public static SaveSlotMenu instance;
+
     [Header("Menu Navigation")]
     [SerializeField] private MainMenu mainMenu;
 
@@ -25,12 +27,14 @@ public class SaveSlotsMenu : Menu
 
     private void Awake()
     {
+        instance = this;
         saveSlots = this.GetComponentsInChildren<SaveSlot>();
     }
 
 
     public void OnSaveClicked(SaveSlot saveSlot)
     {
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
         StartCoroutine(DelaySave(saveSlot));
     }
 
@@ -59,22 +63,14 @@ public class SaveSlotsMenu : Menu
             GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
-            loadingScreen.SetActive(true);
-            while (!scenesToLoad.All(op => op.isDone))
-            {
-                float progress = Mathf.Clamp01(scenesToLoad.Sum(op => op.progress) / (0.9f * scenesToLoad.Count));
-                loadingBarFill.value = progress;
-
-                yield return null;
-            }
         }
     }
 
-    private void SaveGameandLoadScene()
+    public void SaveGameandLoadScene()
     {
+        
         GameManager.instance.SaveGame();
-        scenesToLoad.Add(SceneManager.LoadSceneAsync("Gameplay"));
-        scenesToLoad.Add(SceneManager.LoadSceneAsync("BlockoutJakarta", LoadSceneMode.Additive));
+        Scene_Loading.instance.LoadScenes();
 
 
     }
@@ -93,6 +89,11 @@ public class SaveSlotsMenu : Menu
         // Mengaktifkan Main Menu dan Interactable Button
         mainMenu.ActivateMenu();
         mainMenu.EnableMenuandAnimationButton();
+        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("showbackground");
+        yield return new WaitForSeconds(0.5f);
+        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
+        
+
 
         this.DeactivateMenu();
 
@@ -106,10 +107,6 @@ public class SaveSlotsMenu : Menu
         this.isLoadingGame = isLoadingGame;
 
         Dictionary<string, GameData> profileGameData = GameManager.instance.GetAllProfilesGameData();
-
-        backButton.interactable = true;
-
-        GameObject firstSelected = backButton.gameObject;
         foreach (SaveSlot saveSlot in saveSlots)
         {
             GameData profileData = null;
@@ -123,15 +120,8 @@ public class SaveSlotsMenu : Menu
             else
             {
                 saveSlot.SetInteractable(true);
-                if (firstSelected.Equals(backButton.gameObject))
-                {
-                    firstSelected = saveSlot.gameObject;
-                }
             }
         }
-
-        Button firstSelectedButton = firstSelected.GetComponent<Button>();
-        this.SetFirstSelected(firstSelectedButton);
     }
 
 

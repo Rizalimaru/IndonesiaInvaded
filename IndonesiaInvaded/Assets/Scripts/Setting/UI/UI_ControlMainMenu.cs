@@ -12,6 +12,8 @@ public class UI_ControlMainMenu: MonoBehaviour
     public GameObject gameObjectMenu;
     public GameObject gameObjectOptions;
 
+    public GameObject gameObjectTitle;
+
     // Objek page press any key
     public GameObject gameObjectPressAnyKey;
 
@@ -21,9 +23,12 @@ public class UI_ControlMainMenu: MonoBehaviour
     public Animator buttonAnimator;
     public Animator optionsAnimator;
 
+    public Animator titleGameAnimator;
+
+    public bool titleGameAnimationPlayed = true;
+
     public Animator pressAnyKeyAnimator;
 
-    public Animator missionSelectedAnimator;
 
     public static UI_ControlMainMenu Instance { get; private set; }
 
@@ -58,6 +63,12 @@ public class UI_ControlMainMenu: MonoBehaviour
 
         mainMenu.EnableMenuandAnimationButton();
 
+        
+    }
+
+
+    private void Start()
+    {
         
     }
 
@@ -117,8 +128,22 @@ public class UI_ControlMainMenu: MonoBehaviour
             if (gameObjectPressAnyKey.activeSelf)
             {
                 ShowPressAnyKey();
+                if (titleGameAnimationPlayed == true)
+                {
+                    titleGameAnimator.SetTrigger("showbackground");
+                    
+                    titleGameAnimationPlayed = false;
+                }
             }
         }
+    }
+
+    // Mendapatkan value bool titleGameAnimationPlayed
+
+    // Mengubah value bool titleGameAnimationPlayed
+    public void SetTitleGameAnimationPlayed(bool value)
+    {
+        titleGameAnimationPlayed = value;
     }
 
     //Pindah scene ke scene yang diinginkan
@@ -145,6 +170,8 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     // Menampilkan objek press any key
 
+    #region Show and Hide Mission Selected
+
     public void ShowPressAnyKey()
     {
         if (!anyKeyDownHandled)
@@ -157,12 +184,15 @@ public class UI_ControlMainMenu: MonoBehaviour
     IEnumerator DelayPressAnyKey()
     {
         pressAnyKeyAnimator.SetTrigger("FadeIn");
+        
         yield return new WaitForSeconds(1.4f);
         gameObjectPressAnyKey.SetActive(false);
         gameObjectMenu.SetActive(true);
         ShowUI();
         
     }
+
+    #endregion PressAnyKey
     public void HideMenu()
     {
         // Mengdelay sebelum menyembunyikan menu
@@ -176,6 +206,7 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     
     }
+    
 
     IEnumerator HideMenuDelay()
     {
@@ -183,6 +214,7 @@ public class UI_ControlMainMenu: MonoBehaviour
         optionsAnimator.SetTrigger("FadeInOptions");
 
         mainMenu.DisableMenuandAnimationButton();
+        HideUI();
         
         yield return new WaitForSeconds(0.5f);
         
@@ -215,6 +247,7 @@ public class UI_ControlMainMenu: MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         
         gameObjectMenu.SetActive(true);
+        ShowUI();
         gameObjectOptions.SetActive(false);
     }
 

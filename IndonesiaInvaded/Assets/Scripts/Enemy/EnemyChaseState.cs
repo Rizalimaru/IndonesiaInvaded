@@ -13,14 +13,16 @@ public class EnemyChaseState : EnemyBaseState
         enemy.GetComponent<NavMeshAgent>().isStopped = false;
         enemy.animator.SetBool("isWalking", true);
         enemy.animator.SetBool("isAttacking", false);
+        enemy.animator.SetBool("isResting", false);
+        enemy.animator.SetBool("isDead", false);
     }
 
     public override void UpdateState(EnemyStateManager enemy)
     {
-        if (Vector3.Distance(enemy.enemyObject.Agent.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.triggerDistance)
+        if (Vector3.Distance(enemy.enemyObject.spawnPoint.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.triggerDistance)
         {
             enemy.enemyObject.Agent.SetDestination(enemy.enemyObject.target.transform.position);
-            if(Vector3.Distance(enemy.enemyObject.Agent.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.attackDistance)
+            if(Vector3.Distance(enemy.enemyObject.spawnPoint.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.attackDistance)
             {
                 enemy.SwitchState(enemy.attackState);
             }

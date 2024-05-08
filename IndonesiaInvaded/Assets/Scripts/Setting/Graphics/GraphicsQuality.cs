@@ -31,6 +31,12 @@ public class GraphicsQuality : MonoBehaviour
         FPS60 = 60,
         FPS120 = 120
     }
+
+    void Awake()
+    {
+        // Set FPS ke 30
+        fpsDropdown.value = PlayerPrefs.GetInt(fpsDropdownIndexKey, 0);
+    }
     void Start()
     {   
         // Menyimpan nilai kualitas pada dropdown quality ke dalam PlayerPrefs dengan key QualityDropdownIndexKey
@@ -42,12 +48,8 @@ public class GraphicsQuality : MonoBehaviour
         // Menyimpan nilai fps pada dropdown fps ke dalam PlayerPrefs dengan key FPSDropdownIndexKey
         fpsDropdown.value = PlayerPrefs.GetInt(fpsDropdownIndexKey, 0);
 
-         /* Load nilai kecerahan dari PlayerPrefs saat memulai permainan
-        float brightnessLevel = PlayerPrefs.GetFloat(brightnessLevelKey, 1f);
-        SetBrightness(brightnessLevel);
+        SetFPS(fpsDropdown.value);
 
-        // Set nilai slider berdasarkan nilai kecerahan yang disimpan
-        brightnessSlider.value = brightnessLevel;*/
     }
 
     public void SetFPS(int index)

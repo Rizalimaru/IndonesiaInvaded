@@ -16,6 +16,8 @@ public class UI_PauseGame : MonoBehaviour
 
     private bool isGameOver = false;
 
+
+    private bool isResultScreenShown = false; // Check if the result screen is shown
     // Lock cursor when the game is not paused
     private bool isCursorLocked = true;
 
@@ -41,6 +43,7 @@ public class UI_PauseGame : MonoBehaviour
 
     public Animator pauseAnimator;
     public Animator optionsAnimatorGame;
+    private GameData gameData;
 
     private void Awake()
     {
@@ -68,7 +71,7 @@ public class UI_PauseGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isGameOver) // tambahkan kondisi !isGameOver
+        if (!isGameOver && !isResultScreenShown) // Check if the result screen is not shown
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -80,24 +83,21 @@ public class UI_PauseGame : MonoBehaviour
                     }
                     else
                     {
-
                         Resume(); // Resume the game if options are not active
-                        Cursor.lockState = CursorLockMode.Locked;
-                        Cursor.visible = false;
+
                         Debug.Log("Game resumed");
                     }
                 }
                 else
                 {
                     Pause(); // Pause the game if not paused
-                    
                 }
             }
 
             if (PlayerAttribut.instance.currentHealth <= 0)
             {
                 GameOver();
-                isGameOver = true; // setelah memanggil GameOver(), set isGameOver menjadi true
+                isGameOver = true; // Set isGameOver to true after calling GameOver()
             }
         }
     }
@@ -131,10 +131,11 @@ public class UI_PauseGame : MonoBehaviour
         ShowPanel(3);
     }
 
+
     public void Pause()
     {
         pauseAnimator.SetTrigger("pausein");
-
+        GameManager.instance.SaveGame();
         gameObjectPause.SetActive(true);
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(false);
@@ -179,19 +180,37 @@ public class UI_PauseGame : MonoBehaviour
     public void ShowResult()
     {
 
-        gameOver.SetActive(false);
+        gameResult.SetActive(true);
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(false);
-        gameResult.SetActive(true);
+        gameOver.SetActive(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
+        isResultScreenShown = true; // Set isResultScreenShown to true when showing the result screen
         isCursorLocked = false; // Unlock cursor when paused
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
+
+        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer"); 
 
 
+    }
+
+    public void HideResult()
+    {
+        gameResult.SetActive(false);
+        gameObjectUI.SetActive(true);
+        playerCamera.SetActive(true);
+        gameOver.SetActive(false);
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+        isResultScreenShown = false; // Set isResultScreenShown to true when showing the result screen
+        isCursorLocked = true; // Lock cursor when unpaused
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
     }
 
     public void Resume()
@@ -206,7 +225,6 @@ public class UI_PauseGame : MonoBehaviour
         isCursorLocked = true; // Lock cursor when unpaused
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
 
         GameResumed.Invoke(); // Invoke resume event
@@ -214,6 +232,8 @@ public class UI_PauseGame : MonoBehaviour
 
     public void LoadMenu()
     {
+        GameManager.instance.SaveGame();
+        SceneMainMenuManager.instance.LoadMainMenu();
         Time.timeScale = 1f;
         gameObjectPause.SetActive(false);
         gameObjectUI.SetActive(false);
@@ -221,11 +241,8 @@ public class UI_PauseGame : MonoBehaviour
         gameResult.SetActive(false);
         gameOver.SetActive(false);
         GameIsPaused = false;
-
         audioManagerInstance.StopBackgroundMusicWithTransition("Game", 1f);
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
-        GameManager.instance.SaveGame();
-        SceneMainMenuManager.instance.LoadMainMenu();
     }
 
 

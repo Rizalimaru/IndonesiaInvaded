@@ -32,6 +32,7 @@ public class FileDataHandler
         {
             try 
             {
+    
                 string dataToLoad = "";
                 using (FileStream stream = new FileStream(fullPath, FileMode.Open))
                 {
@@ -40,23 +41,32 @@ public class FileDataHandler
                         dataToLoad = reader.ReadToEnd();
                     }
                 }
+
+    
                 if (useEncryption) 
                 {
                     dataToLoad = EncryptDecrypt(dataToLoad);
                 }
+
+    
                 loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
             }
             catch (Exception e) 
             {
+    
+    
+    
                 if (allowRestoreFromBackup) 
                 {
                     Debug.LogWarning("Failed to load data file. Attempting to roll back.\n" + e);
                     bool rollbackSuccess = AttemptRollback(fullPath);
                     if (rollbackSuccess)
                     {
+            
                         loadedData = Load(profileId, false);
                     }
                 }
+    
                 else 
                 {
                     Debug.LogError("Error occured when trying to load file at path: " + fullPath  + " and backup did not work.\n" + e);
@@ -77,14 +87,18 @@ public class FileDataHandler
         string backupFilePath = fullPath + backupExtension;
         try 
         {
+
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
+
             string dataToStore = JsonUtility.ToJson(data, true);
+
 
             if (useEncryption) 
             {
                 dataToStore = EncryptDecrypt(dataToStore);
             }
+
 
             using (FileStream stream = new FileStream(fullPath, FileMode.Create))
             {
@@ -94,11 +108,14 @@ public class FileDataHandler
                 }
             }
 
+
             GameData verifiedGameData = Load(profileId);
+
             if (verifiedGameData != null) 
             {
                 File.Copy(fullPath, backupFilePath, true);
             }
+
             else 
             {
                 throw new Exception("Save file could not be verified and backup could not be created.");
@@ -121,8 +138,10 @@ public class FileDataHandler
         string fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
         try 
         {
+
             if (File.Exists(fullPath)) 
             {
+    
                 Directory.Delete(Path.GetDirectoryName(fullPath), true);
             }
             else 
@@ -145,6 +164,9 @@ public class FileDataHandler
         foreach (DirectoryInfo dirInfo in dirInfos) 
         {
             string profileId = dirInfo.Name;
+
+
+
             string fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
             if (!File.Exists(fullPath))
             {
@@ -153,7 +175,10 @@ public class FileDataHandler
                 continue;
             }
 
+
             GameData profileData = Load(profileId);
+
+
             if (profileData != null) 
             {
                 profileDictionary.Add(profileId, profileData);
@@ -177,19 +202,23 @@ public class FileDataHandler
             string profileId = pair.Key;
             GameData gameData = pair.Value;
 
+
             if (gameData == null) 
             {
                 continue;
             }
 
+
             if (mostRecentProfileId == null) 
             {
                 mostRecentProfileId = profileId;
             }
+
             else 
             {
                 DateTime mostRecentDateTime = DateTime.FromBinary(profilesGameData[mostRecentProfileId].lastUpdated);
                 DateTime newDateTime = DateTime.FromBinary(gameData.lastUpdated);
+    
                 if (newDateTime > mostRecentDateTime) 
                 {
                     mostRecentProfileId = profileId;
@@ -198,7 +227,6 @@ public class FileDataHandler
         }
         return mostRecentProfileId;
     }
-
     private string EncryptDecrypt(string data) 
     {
         string modifiedData = "";
@@ -215,12 +243,14 @@ public class FileDataHandler
         string backupFilePath = fullPath + backupExtension;
         try 
         {
+
             if (File.Exists(backupFilePath))
             {
                 File.Copy(backupFilePath, fullPath, true);
                 success = true;
                 Debug.LogWarning("Had to roll back to backup file at: " + backupFilePath);
             }
+
             else 
             {
                 throw new Exception("Tried to roll back, but no backup file exists to roll back to.");

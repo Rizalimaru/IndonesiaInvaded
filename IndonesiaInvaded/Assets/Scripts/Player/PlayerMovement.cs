@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerMovement : MonoBehaviour, IDataPersistent
+public class PlayerMovement : MonoBehaviour
 {   
     private Animator animator;
     public static PlayerMovement instance;
@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     private float moveSpeed;
     public float walkSpeed;
     public float sprintSpeed;
-
     public float groundDrag;
 
     [Header("Jumping")]
@@ -48,13 +47,12 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     private bool exitingSlope;
 
     public Transform orientation;
+    public Transform orientationForAtk;
 
     float horizontalInput;
     float verticalInput;
 
-    Vector2 look;
     Vector3 moveDirection;
-    internal Vector3 velocity;
 
     Rigidbody rb;
 
@@ -69,16 +67,7 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
 
     [Header("Gravity")]
     public float gravity = 9.81f; // Default gravity value
-
-    private CheckPointManager checkPointManager;
-    public void LoadData(GameData data)
-    {
-        this.transform.position = data.checkpointPosition;
-    }
-    public void SaveData(GameData data)
-    {
-        data.checkpointPosition = this.transform.position;
-    }
+    
     private void Start()
     {   
         animator = GetComponent<Animator>();
@@ -92,10 +81,9 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
         Keyframe dodge_lastFrame = dodgeCurve[dodgeCurve.length - 1];
         dodgeTimer = dodge_lastFrame.time;
     }
-
+    
     private void Update()
     {   
-        bool hit1 = animator.GetBool("hit1");
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
@@ -119,12 +107,21 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
     }
 
     private void FixedUpdate()
-    {
-        MovePlayer();
+    {   
+        if(animator.GetBool("hit1") || animator.GetBool("hit2") || animator.GetBool("hit3"))
+        {
+            MoveForwardWhileAtk();
+        }else
+        {
+            MovePlayer();
+        }
+        
     }
 
+
     private void MyInput()
-    {
+    {   
+
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -210,25 +207,26 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
 
     private void MovePlayer()
     {   
-        if(isDodging)
-        {
-            return;
-        }
-
-        if(animator.GetBool("SkillRoar"))
-        {
-            return;
-        }
-        
         // Check if any hit animation is active
         bool hit1 = animator.GetBool("hit1");
         bool hit2 = animator.GetBool("hit2");
         bool hit3 = animator.GetBool("hit3");
+        bool RoarSkill = animator.GetBool("RoarSkill");
 
-        // Stop player movement if hit animation is active
-        if (hit1 || hit2 || hit3)
+        if(hit1)
         {
-            rb.velocity = Vector3.zero; // Stop player movement
+            return;
+        }
+
+        if(isDodging)
+        {
+            return;
+        }
+    
+        // Stop player movement if hit animation is active
+        if (RoarSkill)
+        {
+            StopMovement(); // Stop player movement
             return; // Exit the method early
         }
 
@@ -254,6 +252,47 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
 
         // Apply gravity
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+    }
+
+    private void MoveForwardWhileAtk()
+    {   
+        // Mengecek apakah sedang melakukan animasi hit1, hit2, atau hit3
+        bool hit1 = animator.GetBool("hit1");
+        bool hit2 = animator.GetBool("hit2");
+        bool hit3 = animator.GetBool("hit3");
+
+        // Mengatur kecepatan berdasarkan animasi yang sedang aktif
+        float forwardSpeed = 0f;
+        if(hit1)
+        {
+            forwardSpeed = 1f;
+        }
+        else if(hit2)
+        {
+            forwardSpeed = 2f;
+        }
+        else if(hit3)
+        {
+            forwardSpeed = 1f;
+        }
+
+        // Hanya melakukan pergerakan maju jika karakter berada di tanah dan tidak ada input dari pengguna
+        if(grounded)
+        {
+            // Menentukan arah gerakan berdasarkan orientasi karakter
+            moveDirection = orientationForAtk.forward * verticalInput + orientation.right * horizontalInput;
+
+            // Menambahkan gaya untuk bergerak maju dengan kecepatan sesuai animasi serangan
+            Vector3 targetVelocity = moveDirection.normalized * forwardSpeed * 2f;
+            rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * 10f); // Menggunakan lerp untuk menginterpolasi kecepatan
+        }
+    }
+
+
+    public void StopMovement()
+    {
+        rb.velocity = Vector3.zero; // Mengatur kecepatan pemain menjadi nol
+        moveDirection = Vector3.zero; // Mengatur arah gerakan pemain menjadi nol
     }
 
     private void SpeedControl()
@@ -311,14 +350,6 @@ public class PlayerMovement : MonoBehaviour, IDataPersistent
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
 
-    public void Teleport(Vector3 position, Quaternion rotation)
-    {
-        transform.position = position;
-        Physics.SyncTransforms();
-        look.x = rotation.eulerAngles.y;
-        look.y = rotation.eulerAngles.z;
-        velocity = Vector3.zero;
-    }
 
     
 }

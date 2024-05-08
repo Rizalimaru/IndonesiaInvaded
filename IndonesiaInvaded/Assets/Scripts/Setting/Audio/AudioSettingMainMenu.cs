@@ -68,12 +68,13 @@ public class AudioSettingMainMenu : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(SceneIndex);
     }
+
+    
     
     public void PlaySFXSound()
     {
-        audioManagerInstance.PlaySFX("UISFX", 0);
+        audioManagerInstance.PlaySFX("Skillplayer", 0);
     }
-
     public void PlaySFXCollision()
     {
         audioManagerInstance.PlaySFX("Collision", 0);

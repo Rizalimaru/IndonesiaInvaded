@@ -13,6 +13,7 @@ public class EnemyAttackState : EnemyBaseState
         enemy.animator.SetBool("isWalking", false);
         enemy.animator.SetBool("isAttacking", true);
         enemy.animator.SetBool("isResting", false);
+        enemy.animator.SetBool("isDead", false);
         delay = enemy.enemyObject.animDelay;
 
         enemy.enemyObject.Attack();
