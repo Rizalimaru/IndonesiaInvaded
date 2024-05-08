@@ -1086,8 +1086,9 @@ GameObject:
   - component: {fileID: 8862133925129256048}
   - component: {fileID: 2658590532841066337}
   - component: {fileID: 7433479021524042400}
-  - component: {fileID: 5789112861511456296}
   - component: {fileID: 2032468259707285728}
+  - component: {fileID: 9077435302212887056}
+  - component: {fileID: 2944100954424078798}
   m_Layer: 5
   m_Name: UI_Score
   m_TagString: Untagged
@@ -1211,7 +1212,51 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!95 &5789112861511456296
+--- !u!114 &2032468259707285728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6288033491788302365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5397114970031914bb237fd9122be712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMeshPro: {fileID: 7433479021524042400}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 0.10980393, g: 0.5647059, b: 0.5647059, a: 1}
+    key1: {r: 0.095674604, g: 0.6430265, b: 0.8113208, a: 1}
+    key2: {r: 0.10946956, g: 0.5660378, b: 0.5660378, a: 1}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 14264
+    ctime1: 34888
+    ctime2: 54163
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 40478
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 2
+    m_ColorSpace: -1
+    m_NumColorKeys: 3
+    m_NumAlphaKeys: 3
+  animationSpeed: 0.5
+--- !u!95 &9077435302212887056
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -1232,7 +1277,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2032468259707285728
+--- !u!114 &2944100954424078798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1627,7 +1672,7 @@ GameObject:
   - component: {fileID: 1274705744879260440}
   - component: {fileID: 7919679347972902716}
   - component: {fileID: 763569786722306484}
-  - component: {fileID: 8609224462278922849}
+  - component: {fileID: 76921356553153792}
   m_Layer: 5
   m_Name: UI_HUD
   m_TagString: Untagged
@@ -1721,7 +1766,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!225 &8609224462278922849
+--- !u!225 &76921356553153792
 CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
