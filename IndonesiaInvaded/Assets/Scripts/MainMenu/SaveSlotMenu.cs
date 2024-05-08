@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SaveSlotsMenu : Menu
+public class SaveSlotMenu : MonoBehaviour
 {
-    public static SaveSlotsMenu instance;
+    public static SaveSlotMenu instance;
 
     [Header("Menu Navigation")]
     [SerializeField] private MainMenu mainMenu;
@@ -107,10 +107,6 @@ public class SaveSlotsMenu : Menu
         this.isLoadingGame = isLoadingGame;
 
         Dictionary<string, GameData> profileGameData = GameManager.instance.GetAllProfilesGameData();
-
-        backButton.interactable = true;
-
-        GameObject firstSelected = backButton.gameObject;
         foreach (SaveSlot saveSlot in saveSlots)
         {
             GameData profileData = null;
@@ -124,15 +120,8 @@ public class SaveSlotsMenu : Menu
             else
             {
                 saveSlot.SetInteractable(true);
-                if (firstSelected.Equals(backButton.gameObject))
-                {
-                    firstSelected = saveSlot.gameObject;
-                }
             }
         }
-
-        Button firstSelectedButton = firstSelected.GetComponent<Button>();
-        this.SetFirstSelected(firstSelectedButton);
     }
 
 
