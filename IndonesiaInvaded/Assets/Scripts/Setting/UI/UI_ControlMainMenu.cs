@@ -206,6 +206,7 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     
     }
+    
 
     IEnumerator HideMenuDelay()
     {
@@ -213,6 +214,7 @@ public class UI_ControlMainMenu: MonoBehaviour
         optionsAnimator.SetTrigger("FadeInOptions");
 
         mainMenu.DisableMenuandAnimationButton();
+        HideUI();
         
         yield return new WaitForSeconds(0.5f);
         
@@ -245,6 +247,7 @@ public class UI_ControlMainMenu: MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         
         gameObjectMenu.SetActive(true);
+        ShowUI();
         gameObjectOptions.SetActive(false);
     }
 

@@ -68,6 +68,7 @@ public class AudioSettingMainMenu : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(SceneIndex);
     }
+
     
     
     public void PlaySFXSound()

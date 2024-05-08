@@ -130,6 +130,7 @@ public class UI_PauseGame : MonoBehaviour
         ShowPanel(3);
     }
 
+
     public void Pause()
     {
         pauseAnimator.SetTrigger("pausein");
@@ -187,6 +188,7 @@ public class UI_PauseGame : MonoBehaviour
         isCursorLocked = false; // Unlock cursor when paused
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
 
         audioManagerInstance.PauseSoundEffectGroup("AttackPlayer"); 
 
