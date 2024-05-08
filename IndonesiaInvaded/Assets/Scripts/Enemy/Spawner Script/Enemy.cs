@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : PoolableObject
+public class Enemy : MonoBehaviour
 {
     // Main Declaration
     public EnemyStateManager stateManager;
@@ -13,6 +13,7 @@ public class Enemy : PoolableObject
     public Transform target;
     public GameObject attackType;
     public Transform spawnPoint;
+    public Animator playerAnimator;
 
     // Attribute Declaration
     [System.NonSerialized] public float health;
@@ -26,25 +27,39 @@ public class Enemy : PoolableObject
     [System.NonSerialized] public float animDelay;
     [System.NonSerialized] public EnemyScriptableObject.title enemyTitle;
 
+    private bool isAttacking = false;
+
     public void Awake()
     {
+        playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
         objectiveManager = FindObjectOfType<ObjectiveManager>();
     }
 
     public void Update()
     {
+        bool hit1 = playerAnimator.GetBool("hit1");
+        bool hit2 = playerAnimator.GetBool("hit2");
+        bool hit3 = playerAnimator.GetBool("hit3");
+
+        if (hit1 || hit2 || hit3)
+        {
+            isAttacking = true;
+        }
+        else
+        {
+            isAttacking = false;
+        }
+
         if (health <= 0)
         {
             stateManager.SwitchState(stateManager.deadState);
-            //Debug.Log("Enemy is defeated");
-            //Destroy(gameObject);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Sword"))
+        if (other.CompareTag("Sword") && isAttacking == true)
         {
             health -= 200;
             if (health <= 0)
@@ -78,6 +93,12 @@ public class Enemy : PoolableObject
         }
     }
 
+    private void OnDestroy()
+    {
+        Debug.Log("Enemy Object is Destroyed");
+
+    }
+
     public void SetupAgent()
     {
         health = enemyType.Health;
@@ -106,10 +127,4 @@ public class Enemy : PoolableObject
         animDelay = enemyType.animationDelay;
     }
 
-    public override void OnDisable()
-    {
-        base.OnDisable();
-
-        Agent.enabled = false;
-    }
 }

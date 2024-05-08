@@ -189,6 +189,8 @@ public class UI_PauseGame : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        GamePaused.Invoke();
+
 
         audioManagerInstance.PauseSoundEffectGroup("AttackPlayer"); 
 
@@ -207,6 +209,8 @@ public class UI_PauseGame : MonoBehaviour
         isCursorLocked = true; // Lock cursor when unpaused
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        GameResumed.Invoke(); // Invoke resume event
 
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
     }

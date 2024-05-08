@@ -260,6 +260,7 @@ public class PlayerMovement : MonoBehaviour
         bool hit1 = animator.GetBool("hit1");
         bool hit2 = animator.GetBool("hit2");
         bool hit3 = animator.GetBool("hit3");
+        bool hit4 = animator.GetBool("hit4");
 
         // Mengatur kecepatan berdasarkan animasi yang sedang aktif
         float forwardSpeed = 0f;
@@ -269,9 +270,13 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(hit2)
         {
-            forwardSpeed = 2f;
+            forwardSpeed = 1f;
         }
         else if(hit3)
+        {
+            forwardSpeed = 2f;
+        }
+        else if(hit4)
         {
             forwardSpeed = 1f;
         }
@@ -280,7 +285,7 @@ public class PlayerMovement : MonoBehaviour
         if(grounded)
         {
             // Menentukan arah gerakan berdasarkan orientasi karakter
-            moveDirection = orientationForAtk.forward * verticalInput + orientation.right * horizontalInput;
+            moveDirection = orientationForAtk.forward * verticalInput + orientationForAtk.right * horizontalInput;
 
             // Menambahkan gaya untuk bergerak maju dengan kecepatan sesuai animasi serangan
             Vector3 targetVelocity = moveDirection.normalized * forwardSpeed * 2f;
