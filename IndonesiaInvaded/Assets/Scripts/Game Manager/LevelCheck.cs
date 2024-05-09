@@ -7,6 +7,8 @@ public class LevelCheck : MonoBehaviour
 {
     [Header("LeveL")]
     public int levelNumber;
+    public GameObject levelLocked;
+    public GameObject levelUnlock;
     private void Start()
     {
         if (!GameManager.instance.IsLevelUnlocked(levelNumber))
@@ -17,10 +19,12 @@ public class LevelCheck : MonoBehaviour
 
     private void LockLevel()
     {
-        foreach (Transform child in transform)
-        {
-            child.gameObject.SetActive(false);
-        }
+        // foreach (Transform child in transform)
+        // {
+        //     child.gameObject.SetActive(false);
+        // }
+        levelLocked.SetActive(true);
+        levelUnlock.SetActive(false);
         GetComponent<Button>().interactable = false;
     }
 }

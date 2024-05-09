@@ -5,10 +5,12 @@ using UnityEngine;
 public class GameComplete : MonoBehaviour
 {
     [SerializeField] Animator animator;
+    [SerializeField] int levelNumber;
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
+            GameManager.instance.OnCompleteLevel(levelNumber);
             StartCoroutine(NextLevel());
         }
     }
