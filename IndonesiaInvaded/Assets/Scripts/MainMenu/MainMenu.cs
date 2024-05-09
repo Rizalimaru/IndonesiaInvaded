@@ -6,10 +6,8 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-
-
     [Header("Menu Navigation")]
-    [SerializeField] private SaveSlotMenu saveSlotsMenu;
+    [SerializeField] private LevelMenu saveSlotsMenu;
     
     [Header("Button UI")]
     public Button newGameButton;
@@ -21,9 +19,6 @@ public class MainMenu : MonoBehaviour
     // animasi title game
     public Animator titleGameAnimator;
 
-
-
-
     private void Start(){
         DisableButtonsDependingOnData();
     }
@@ -33,17 +28,18 @@ public class MainMenu : MonoBehaviour
         if (!GameManager.instance.HasGameData()) 
         {
             loadButton.interactable = false;
-            loadButton.GetComponentInChildren<Text>().color = Color.gray;
         }
+    }
+    public void NewGame(){
+        DisableMenuandAnimationButton();
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
+        Scene_Loading.instance.LoadScenes();
     }
     public void OnNewGameClicked()
     {
         //UI_ControlMainMenu.Instance.ChangeSceneLoadGame();
         StartCoroutine(DelayNewGame());
     }
-
-
-    //Delay saaat OnNewGameClicked
     IEnumerator DelayNewGame()
     {
         UI_ControlMainMenu.Instance.HideUI();
@@ -55,22 +51,20 @@ public class MainMenu : MonoBehaviour
 
         UI_ControlMainMenu.Instance.ShowMissionSelected();
         
-        saveSlotsMenu.ActivateMenu(false);
+        // saveSlotsMenu.ActivateMenu(false);
         this.DeactivateMenu();
     }
-    
     public void OnContinueClicked()
     {
         DisableMenuandAnimationButton();
         GameManager.instance.SaveGame();
-        SceneManager.LoadSceneAsync("Gameplay");
-        SceneManager.LoadSceneAsync("BlockoutJakarta", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("Gameplay1");
+        SceneManager.LoadSceneAsync("Level1", LoadSceneMode.Additive);
     }
     public void OnLoadGameClicked()
     {
         StartCoroutine(DelayLoadGame());
     }
-
     IEnumerator DelayLoadGame()
     {
         UI_ControlMainMenu.Instance.HideUI();
@@ -82,10 +76,9 @@ public class MainMenu : MonoBehaviour
         
 
         UI_ControlMainMenu.Instance.ShowMissionSelected();
-        saveSlotsMenu.ActivateMenu(true);
-        this.DeactivateMenu();
+        // saveSlotsMenu.ActivateMenu(true);
+        // this.DeactivateMenu();
     }
-
     public void DisableMenuandAnimationButton()
     {
         newGameButton.interactable = false;
@@ -93,7 +86,6 @@ public class MainMenu : MonoBehaviour
         optionsButton.interactable = false;
         exitButton.interactable = false;
     }
-
     public void EnableMenuandAnimationButton()
     {
         newGameButton.interactable = true;
@@ -101,12 +93,10 @@ public class MainMenu : MonoBehaviour
         optionsButton.interactable = true;
         exitButton.interactable = true;
     }
-
     public void ActivateMenu(){
         this.gameObject.SetActive(true);
         DisableButtonsDependingOnData();
     }
-
     public void DeactivateMenu(){
         this.gameObject.SetActive(false);
     }

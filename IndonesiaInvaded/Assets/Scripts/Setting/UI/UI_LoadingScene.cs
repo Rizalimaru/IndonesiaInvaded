@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class UI_LoadingScene : MonoBehaviour
 {
+    public enum SceneName
+    {
+        Gameplay,
+        Level1,
+        Level2,
+        Level3,
+    }
     public static UI_LoadingScene instance;
 
     public GameObject loadingScreen;
@@ -25,6 +33,33 @@ public class UI_LoadingScene : MonoBehaviour
         }
     }
 
+    public void LoadLevelAsync(SceneName level)
+    {
+        loadingScreen.SetActive(true);
+        mainMenu.SetActive(false);
+
+        loadingBarFill.value = 0;
+        LoadScenesAsync(level);
+    }
+    IEnumerator LoadScenesAsync(SceneName level)
+    {
+        List<AsyncOperation> scenes = new List<AsyncOperation>();
+
+        // Load the gameplay scene
+        scenes.Add(SceneManager.LoadSceneAsync(SceneName.Gameplay.ToString()));
+
+        // Load the level scene
+        scenes.Add(SceneManager.LoadSceneAsync(level.ToString(), LoadSceneMode.Additive));
+
+        // Wait for all scenes to load
+        while (scenes.Any(scene => !scene.isDone))
+        {
+            float progress = scenes.Average(scene => scene.progress);
+            loadingBarFill.value = progress;
+            yield return null;
+        }
+    }
+
     public void LoadScenes()
     {
         loadingScreen.SetActive(true);
@@ -36,14 +71,12 @@ public class UI_LoadingScene : MonoBehaviour
 
     IEnumerator LoadScenesAsync()
     {
-        
+
         List<AsyncOperation> scenes = new List<AsyncOperation>();
-        // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
+
         scenes.Add(SceneManager.LoadSceneAsync("Gameplay"));
-        scenes.Add(SceneManager.LoadSceneAsync("BlockoutJakarta", LoadSceneMode.Additive));
+        scenes.Add(SceneManager.LoadSceneAsync("Level1", LoadSceneMode.Additive));
 
-
-        // Tunggu hingga semua scene dimuat
         foreach (var scene in scenes)
         {
             while (!scene.isDone)

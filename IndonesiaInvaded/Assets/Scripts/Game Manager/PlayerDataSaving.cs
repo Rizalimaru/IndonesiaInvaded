@@ -17,6 +17,15 @@ public class PlayerDataSaving : MonoBehaviour, IDataPersistent
             data.playerPosition = this.transform.position;
     }
 
+    private void Update() 
+    {
+        if (InputManager.instance.GetExitPressed()) 
+        {
+            GameManager.instance.SaveGame();
+            SceneManager.LoadSceneAsync("MainMenu");
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("dead")){
