@@ -7,9 +7,12 @@ using UnityEngine.SceneManagement;
 public class Scene_Loading : MonoBehaviour
 {
     public static Scene_Loading instance;
-
-    public GameObject loadingScreen;
     
+    [Header("Scene Animator")]
+    [SerializeField] Animator animator;
+    
+    [Header("UI Animator")]
+    public GameObject loadingScreen;
     public Slider loadingBarFill;
 
     private void Awake()
@@ -24,7 +27,11 @@ public class Scene_Loading : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
     }
-
+    public void LoadMainMenu()
+    {
+        GameManager.instance.SaveGame();
+        StartCoroutine(MainMenu());
+    }
     public void LoadScenes()
     {
         loadingScreen.SetActive(true);
@@ -139,5 +146,11 @@ public class Scene_Loading : MonoBehaviour
 
         loadingScreen.SetActive(false);
     }
-
+    IEnumerator MainMenu()
+    {
+        animator.SetTrigger("End");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadSceneAsync(0);
+        animator.SetTrigger("Start");
+    }
 }

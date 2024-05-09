@@ -2102,7 +2102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3144963592425309316, guid: 7d32cb8bd9776484fa22b3857dafe5f3, type: 3}
       propertyPath: m_text
-      value: 'MISSION 2
+      value: 'MISSION 3
 
 '
       objectReference: {fileID: 0}
@@ -2715,19 +2715,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 977011042}
+    m_TransformParent: {fileID: 751512820}
     m_Modifications:
     - target: {fileID: 4090262575170219599, guid: 9c4713f9d1e3c4e40ba131888c360c0e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -373.8479
+      value: 32.34169
       objectReference: {fileID: 0}
     - target: {fileID: 4090262575170219599, guid: 9c4713f9d1e3c4e40ba131888c360c0e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -45.740623
+      value: 31.0468
       objectReference: {fileID: 0}
     - target: {fileID: 4090262575170219599, guid: 9c4713f9d1e3c4e40ba131888c360c0e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -65.98413
       objectReference: {fileID: 0}
     - target: {fileID: 4090262575170219599, guid: 9c4713f9d1e3c4e40ba131888c360c0e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3428,6 +3428,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1242226949}
   - {fileID: 566716018}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3443,6 +3444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 255850d6e9c77a649aa8123953970ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1242226948}
   loadingScreen: {fileID: 566716017}
   loadingBarFill: {fileID: 1583271167}
 --- !u!1 &774709395
@@ -3968,54 +3970,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1046575402228243182, guid: acafc1960fcd6ae45bb3963aa0600b35, type: 3}
   m_PrefabInstance: {fileID: 351752268}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &977011040
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 977011042}
-  - component: {fileID: 977011041}
-  m_Layer: 0
-  m_Name: Scene Main Menu Transition
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &977011041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977011040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9ec26b171f1d3f428f866516724c996, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1242226948}
-  loadingScreen: {fileID: 566716017}
-  loadingBarFill: {fileID: 1583271167}
---- !u!4 &977011042
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977011040}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 373.8479, y: 45.740623, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1242226949}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &983408885 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 784152295080472347, guid: 7d32cb8bd9776484fa22b3857dafe5f3, type: 3}
@@ -6015,6 +5969,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 452046147718106469, guid: 3d535f3bce777df4b9f118ee6cd195e8, type: 3}
+      propertyPath: autoSaveTimeSeconds
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 452046147718106469, guid: 3d535f3bce777df4b9f118ee6cd195e8, type: 3}
       propertyPath: initializeDataIfNull
       value: 0
       objectReference: {fileID: 0}
@@ -6243,7 +6201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7985454114608875210, guid: 2d89d33a6ce97244184fd6c343f55b5f, type: 3}
       propertyPath: m_Name
-      value: Audio Manager (1)
+      value: Audio Manager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8034,7 +7992,6 @@ SceneRoots:
   - {fileID: 2103558308}
   - {fileID: 1570874878}
   - {fileID: 1650449727}
-  - {fileID: 977011042}
   - {fileID: 751512820}
   - {fileID: 1319249928}
   - {fileID: 200038146}

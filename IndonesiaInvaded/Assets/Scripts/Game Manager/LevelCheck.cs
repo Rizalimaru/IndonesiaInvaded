@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class LevelCheck : MonoBehaviour
 {
-    [Header("LeveL")]
+    [Header("Level")]
     public int levelNumber;
     public GameObject levelLocked;
     public GameObject levelUnlock;
@@ -19,10 +19,6 @@ public class LevelCheck : MonoBehaviour
 
     private void LockLevel()
     {
-        // foreach (Transform child in transform)
-        // {
-        //     child.gameObject.SetActive(false);
-        // }
         levelLocked.SetActive(true);
         levelUnlock.SetActive(false);
         GetComponent<Button>().interactable = false;
