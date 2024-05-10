@@ -41,7 +41,6 @@ public class LevelMenu : MonoBehaviour
 
         yield return new WaitForSeconds(0.9f);
 
-        // Mengaktifkan Main Menu dan Interactable Button
         mainMenu.ActivateMenu();
         mainMenu.EnableMenuandAnimationButton();
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("showbackground");
@@ -50,5 +49,5 @@ public class LevelMenu : MonoBehaviour
         
         this.DeactivateMenu();
     }
-    
+
 }
