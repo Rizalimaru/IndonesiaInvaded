@@ -332,6 +332,7 @@ Transform:
   - {fileID: 1450548238}
   - {fileID: 813262627}
   - {fileID: 1787183152}
+  - {fileID: 840796162}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &399963105 stripped
@@ -470,6 +471,7 @@ GameObject:
   m_Component:
   - component: {fileID: 498304264}
   - component: {fileID: 498304263}
+  - component: {fileID: 498304265}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -555,6 +557,29 @@ Transform:
   - {fileID: 1310049163}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &498304265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498304262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!114 &526993265 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2320393709718642774, guid: 0569f06d6393d55439633195ea67e402, type: 3}
@@ -778,6 +803,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &840796161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 840796162}
+  - component: {fileID: 840796163}
+  m_Layer: 0
+  m_Name: GlobalVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &840796162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840796161}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 366329190}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &840796163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840796161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 3821075bbc74178468fde87beea71fa4, type: 2}
 --- !u!1 &872794099
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +904,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AdjustmentBrightnessGame
       objectReference: {fileID: 0}
+    - target: {fileID: 6278621079810484192, guid: 453a6451219fe1a4ab5af2f645f41212, type: 3}
+      propertyPath: brightnessSlider
+      value: 
+      objectReference: {fileID: 1683280871}
     - target: {fileID: 7883097349173620595, guid: 453a6451219fe1a4ab5af2f645f41212, type: 3}
       propertyPath: m_LocalPosition.x
       value: -855.65814
@@ -875,17 +953,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 453a6451219fe1a4ab5af2f645f41212, type: 3}
---- !u!114 &1014967444 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2923577041816795394, guid: 453a6451219fe1a4ab5af2f645f41212, type: 3}
-  m_PrefabInstance: {fileID: 1014967443}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6171245a5af56284196a22470e755b89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1014967445 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7883097349173620595, guid: 453a6451219fe1a4ab5af2f645f41212, type: 3}
@@ -2515,7 +2582,7 @@ PrefabInstance:
     - target: {fileID: 8764825056280416463, guid: 0d41f4cf8130d9044b52bb437415d403, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1014967444}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
