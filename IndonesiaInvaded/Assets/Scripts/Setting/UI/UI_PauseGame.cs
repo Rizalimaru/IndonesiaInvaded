@@ -175,6 +175,22 @@ public class UI_PauseGame : MonoBehaviour
 
     }
 
+    public void ResetGameOver(){
+        gameOver.SetActive(false);
+        gameObjectUI.SetActive(true);
+        playerCamera.SetActive(true);
+        gameResult.SetActive(false);
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+        isCursorLocked = true; // Lock cursor when unpaused
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        GameResumed.Invoke(); // Invoke resume event
+
+        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+    }
+
     public void ShowResult()
     {
 
