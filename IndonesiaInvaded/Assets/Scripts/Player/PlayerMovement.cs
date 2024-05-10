@@ -287,6 +287,12 @@ public class PlayerMovement : MonoBehaviour
             // Menentukan arah gerakan berdasarkan orientasi karakter
             moveDirection = orientationForAtk.forward * verticalInput + orientationForAtk.right * horizontalInput;
 
+            // Jika sedang menyerang dan tidak ada input vertikal, tetapkan kecepatan maju
+            if ((hit1 || hit2 || hit3 || hit4) && verticalInput == 0)
+            {
+                moveDirection += orientationForAtk.forward;
+            }
+
             // Menambahkan gaya untuk bergerak maju dengan kecepatan sesuai animasi serangan
             Vector3 targetVelocity = moveDirection.normalized * forwardSpeed * 2f;
             rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * 10f); // Menggunakan lerp untuk menginterpolasi kecepatan
