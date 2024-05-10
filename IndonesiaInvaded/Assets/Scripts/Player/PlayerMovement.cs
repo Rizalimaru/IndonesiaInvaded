@@ -35,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
+    [Header("KnockBack")]
+    public float knockShield = 100f;
+    public float knockBackForce;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -299,6 +302,32 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {   
+        if (other.CompareTag("EnemyMeleeCollider"))
+        {
+            knockShield -= 5f;
+        }else if (other.CompareTag("EnemyRangedCollider"))
+        {
+            knockShield -= 5f;
+        }
+
+        if (other.CompareTag("EnemyMeleeCollider") && knockShield <= 20f)
+        {
+            playerKnockBack();
+        }
+    }
+    
+
+    void playerKnockBack()
+    {
+        animator.SetTrigger("getHit");
+
+        moveDirection = orientationForAtk.forward * -1f;
+        rb.AddForce(moveDirection.normalized * 10f, ForceMode.Impulse);
+        knockShield = 100f;
+    }
+
 
     public void StopMovement()
     {
@@ -359,8 +388,5 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
-    }
-
-
-    
+    } 
 }
