@@ -14,6 +14,14 @@ public class SpawningManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            SpawnEnemy(enemyType[0], spawnPoint[0].position);
+        }
+    }
+/**
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -33,7 +41,7 @@ public class SpawningManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+**/
     private void SpawnEnemy(Enemy enemyToSpawn, Vector3 spawnPos)
     {
         Enemy enemy = enemyToSpawn.GetComponent<Enemy>();

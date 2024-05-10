@@ -13,6 +13,7 @@ public class EnemyScriptableObject : ScriptableObject
     public float attackForce = 1000f;
     public float attackDecay = 0.1f; // Dictate the life of attack collider
     public float viewingAngle = 30f;
+    public float knockbackGuard = 15f;
 
     // NavMesh Config = Steering
     public float Speed = 3;

@@ -13,6 +13,8 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyAttackState attackState = new EnemyAttackState();
     public EnemyRepositionState repositionState = new EnemyRepositionState();
     public EnemyDeadState deadState = new EnemyDeadState();
+    public EnemyKnockbackState knockbackState = new EnemyKnockbackState();
+    public EnemyConfusedState confusedState = new EnemyConfusedState();
 
     // Enemy Declaration
     public Enemy enemyObject;

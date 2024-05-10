@@ -26,8 +26,13 @@ public class Enemy : MonoBehaviour
     [System.NonSerialized] public float viewAngle;
     [System.NonSerialized] public float animDelay;
     [System.NonSerialized] public EnemyScriptableObject.title enemyTitle;
+    [System.NonSerialized] public bool isKnockedBack = false;
+    [System.NonSerialized] public float knockbackForce;
+    [System.NonSerialized] public float knockbackGuard;
+    [System.NonSerialized] public float knockbackDelay;
 
     private bool isAttacking = false;
+    
 
     public void Awake()
     {
@@ -59,13 +64,43 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Sword") && isAttacking == true)
+        if (other.CompareTag("Sword") && isAttacking == true && health > 0)
         {
-            health -= 200;
+            Debug.Log("Damaged");
+            health -= 1;
+            knockbackForce = 25f;
+
+            if (enemyTitle == EnemyScriptableObject.title.Basic)
+            {
+                knockbackDelay = 0.2f;
+            }
+            else
+            {
+                knockbackDelay = 1.5f;
+            }
+
+            if ( isKnockedBack == false )
+            {
+                stateManager.SwitchState(stateManager.knockbackState);
+                isKnockedBack = true;
+            }
+
             if (health <= 0)
             {
                 objectiveManager.EnemyKilled();
                 ScoreManager.instance.AddScore(1000);
+            }
+        }
+
+        if (other.CompareTag("Skill Collider"))
+        {
+            knockbackForce = 100f;
+            knockbackDelay = 2f;
+
+            if (isKnockedBack == false)
+            {
+                stateManager.SwitchState(stateManager.knockbackState);
+                isKnockedBack = true;
             }
         }
     }
@@ -109,6 +144,7 @@ public class Enemy : MonoBehaviour
         attackForce = enemyType.attackForce;
         attackDecay = enemyType.attackDecay;
         viewAngle = enemyType.viewingAngle;
+        knockbackGuard = enemyType.knockbackGuard;
 
         Agent.speed = enemyType.Speed;
         Agent.angularSpeed = enemyType.AngularSpeed;
