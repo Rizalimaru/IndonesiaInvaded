@@ -204,18 +204,18 @@ public class GameManager : MonoBehaviour
     }
 
     public void OnCompleteLevel(int levelNumber)
-{
-    if (!IsLevelUnlocked(levelNumber))
     {
-        UnlockLevel(levelNumber);
-    }
+        if (!IsLevelUnlocked(levelNumber))
+        {
+            UnlockLevel(levelNumber);
+        }
 
-    if (levelNumber < MaxLevelNumber)
-    {
-        UnlockLevel(levelNumber + 1);
-    }
+        if (levelNumber < MaxLevelNumber)
+        {
+            UnlockLevel(levelNumber + 1);
+        }
 
-    SaveGame();
-}
+        SaveGame();
+    }
 
 }
