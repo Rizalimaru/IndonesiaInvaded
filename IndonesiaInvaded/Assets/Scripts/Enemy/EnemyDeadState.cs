@@ -9,7 +9,7 @@ public class EnemyDeadState : EnemyBaseState
     {
         Debug.Log("Enemy is defeated");
 
-        enemy.GetComponent<NavMeshAgent>().isStopped = true;
+        enemy.enemyObject.Agent.enabled = false;
 
         enemy.animator.SetBool("isAttacking", false);
         enemy.animator.SetBool("isResting", false);
