@@ -72,32 +72,11 @@ public class SaveSlotMenu : MonoBehaviour
         GameManager.instance.SaveGame();
         Scene_Loading.instance.LoadScenes();
 
-
     }
 
     public void OnBackClicked()
     {
         StartCoroutine(DelayBack());
-    }
-
-    IEnumerator DelayBack()
-    {
-        UI_ControlMainMenu.Instance.HideMissionSelected();
-
-        yield return new WaitForSeconds(0.9f);
-
-        // Mengaktifkan Main Menu dan Interactable Button
-        mainMenu.ActivateMenu();
-        mainMenu.EnableMenuandAnimationButton();
-        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("showbackground");
-        yield return new WaitForSeconds(0.5f);
-        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
-        
-
-
-        this.DeactivateMenu();
-
-
     }
 
     public void ActivateMenu(bool isLoadingGame)
@@ -124,7 +103,6 @@ public class SaveSlotMenu : MonoBehaviour
         }
     }
 
-
     public void DeactivateMenu()
     {
         this.gameObject.SetActive(false);
@@ -137,5 +115,21 @@ public class SaveSlotMenu : MonoBehaviour
             saveSlot.SetInteractable(false);
         }
         backButton.interactable = false;
+    }
+
+    IEnumerator DelayBack()
+    {
+        UI_ControlMainMenu.Instance.HideMissionSelected();
+
+        yield return new WaitForSeconds(0.9f);
+
+        // Mengaktifkan Main Menu dan Interactable Button
+        mainMenu.ActivateMenu();
+        mainMenu.EnableMenuandAnimationButton();
+        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("showbackground");
+        yield return new WaitForSeconds(0.5f);
+        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
+        
+        this.DeactivateMenu();
     }
 }
