@@ -27,6 +27,7 @@ public class DestructibleObject : MonoBehaviour
         {
             // Add score when player destroys the object
             ScoreManager.instance.AddScore(500);
+            AudioManager._instance.PlaySFX("DestructibleObject", 0);
 
             DestroyObject();
         }

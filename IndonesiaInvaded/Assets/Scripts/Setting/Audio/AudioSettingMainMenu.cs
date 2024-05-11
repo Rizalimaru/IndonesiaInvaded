@@ -75,6 +75,21 @@ public class AudioSettingMainMenu : MonoBehaviour
     {
         audioManagerInstance.PlaySFX("Skillplayer", 0);
     }
+
+    public void PlaySFXButtonClicked()
+    {
+        audioManagerInstance.PlaySFX("Button", 0);
+    }
+
+    public void PlaySFXButtonClicked2()
+    {
+        audioManagerInstance.PlaySFX("Button", 1);
+    }
+
+    public void PlaySFXButtonHighlight()
+    {
+        audioManagerInstance.PlaySFX("Button", 2);
+    }
     public void PlaySFXCollision()
     {
         audioManagerInstance.PlaySFX("Collision", 0);
