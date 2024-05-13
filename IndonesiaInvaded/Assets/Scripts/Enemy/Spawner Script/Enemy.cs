@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("Skill Collider"))
+        if (other.CompareTag("SkillRoarCollider"))
         {
             knockbackForce = 100f;
             knockbackDelay = 2f;
