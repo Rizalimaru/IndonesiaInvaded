@@ -129,6 +129,8 @@ public class UI_ControlMainMenu: MonoBehaviour
             {
                 ShowPressAnyKey();
                 if (titleGameAnimationPlayed == true)
+
+                AudioManager._instance.PlaySFX("Button",3);
                 {
                     titleGameAnimator.SetTrigger("showbackground");
                     

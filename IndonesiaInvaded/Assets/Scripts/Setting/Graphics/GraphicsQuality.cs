@@ -35,15 +35,18 @@ public class GraphicsQuality : MonoBehaviour
     void Awake()
     {
         // Set FPS ke 30
-        fpsDropdown.value = PlayerPrefs.GetInt(fpsDropdownIndexKey, 0);
     }
     void Start()
     {   
         // Menyimpan nilai kualitas pada dropdown quality ke dalam PlayerPrefs dengan key QualityDropdownIndexKey
         qualityDropdown.value = PlayerPrefs.GetInt(qualityDropdownIndexKey, 0);
 
+        SetQualityLevelDropdown(qualityDropdown.value);
+
         // Menyimpan nilai resolusi pada dropdown resolution ke dalam PlayerPrefs dengan key ResolutionDropdownIndexKey
         resolutionDropdown.value = PlayerPrefs.GetInt(resolutionDropdownIndexKey, 0);
+
+        SetResolution(resolutionDropdown.value);
 
         // Menyimpan nilai fps pada dropdown fps ke dalam PlayerPrefs dengan key FPSDropdownIndexKey
         fpsDropdown.value = PlayerPrefs.GetInt(fpsDropdownIndexKey, 0);

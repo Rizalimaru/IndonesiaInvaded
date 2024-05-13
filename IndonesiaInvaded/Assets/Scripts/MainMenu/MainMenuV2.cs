@@ -27,8 +27,19 @@ public class MainMenuV2 : MonoBehaviour
         instance = this;
     }
     public void NewGame(){
-        DisableMenuAndAnimationButton();
+        StartCoroutine(DelayNewGame());
+        
+
+    }
+
+    IEnumerator DelayNewGame()
+    {
+        
         AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
+        DisableMenuAndAnimationButton();
+        UI_ControlMainMenu.Instance.HideUI();
+        yield return new WaitForSeconds(1f);
+
         Scene_Loading.instance.LoadScenes();
     }
 
@@ -38,6 +49,7 @@ public class MainMenuV2 : MonoBehaviour
 
     IEnumerator DelayLoadGame()
     {
+        DisableMenuAndAnimationButton();
         UI_ControlMainMenu.Instance.HideUI();
         yield return new WaitForSeconds(0.9f);
         titleGameAnimator.SetTrigger("hide");
