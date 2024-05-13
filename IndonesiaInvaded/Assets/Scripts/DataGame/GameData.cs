@@ -6,12 +6,10 @@ using UnityEngine;
 public class GameData
 {
     public long lastUpdated;
-    public int currentCheckpointIndex;
     public Dictionary<string, bool> enemyCollected;
     public List<int> unlockedLevels = new List<int>();
     public GameData()
     {
-        this.currentCheckpointIndex = 0;
         enemyCollected = new Dictionary<string, bool>();
         this.unlockedLevels = new List<int>();
     }

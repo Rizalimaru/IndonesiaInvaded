@@ -745,6 +745,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 928470042}
     - target: {fileID: 8256567148742708587, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 252325237}
+    - target: {fileID: 8256567148742708587, guid: 65dc63cdce16e9e44891f4264dd7c1c0, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 2001562138}
@@ -877,7 +881,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 852693338}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1297,7 +1301,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086680894}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2346,7 +2350,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626057755}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2698,7 +2702,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1889847140}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3018,9 +3022,9 @@ RectTransform:
   - {fileID: 1534188627762919662}
   m_Father: {fileID: 4415620657147035303}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 340, y: -15}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &333311224848321667
@@ -4315,7 +4319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7915653220376760645, guid: 63a253dc9779c314592ab906e7c928cc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4351,9 +4355,9 @@ RectTransform:
   - {fileID: 8603947674829742839}
   m_Father: {fileID: 4415620657147035303}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80, y: -15}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &4217423606978950523
@@ -4505,6 +4509,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckPoint Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 699735108144697995, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
+      propertyPath: m_TagString
+      value: CheckPointManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1977250842285131506, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 928470042}
+    - target: {fileID: 1977250842285131506, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 252325237}
+    - target: {fileID: 1977250842285131506, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 2001562138}
+    - target: {fileID: 1977250842285131506, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
+      propertyPath: checkPoints.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1977250842285131506, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
+      propertyPath: checkPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1638646183}
+    - target: {fileID: 1977250842285131506, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
+      propertyPath: checkPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1626057755}
+    - target: {fileID: 1977250842285131506, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
+      propertyPath: checkPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 852693338}
+    - target: {fileID: 1977250842285131506, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
+      propertyPath: checkPoints.Array.data[3]
+      value: 
+      objectReference: {fileID: 1086680894}
+    - target: {fileID: 1977250842285131506, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
+      propertyPath: checkPoints.Array.data[4]
+      value: 
+      objectReference: {fileID: 1889847140}
+    - target: {fileID: 1977250842285131506, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
+      propertyPath: checkPoints.Array.data[5]
+      value: 
+      objectReference: {fileID: 1086680894}
     - target: {fileID: 8443772845591525818, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
