@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class AudioSetting : MonoBehaviour
 {
+
+    public static AudioSetting instance;
     public Slider sliderMasterVolume;
     [SerializeField] private Slider sliderBackgroundMusic;
     [SerializeField] private Slider sliderSoundEffect;
@@ -18,6 +20,15 @@ public class AudioSetting : MonoBehaviour
 
     private void Start()
     { 
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
         
     }
 
@@ -70,6 +81,16 @@ public class AudioSetting : MonoBehaviour
     public void PlaySFXSound()
     {
         audioManagerInstance.PlaySFX("UISFX", 0);
+    }
+
+    public void PlaySFXButtonClicked()
+    {
+        audioManagerInstance.PlaySFX("Button", 1);
+    }
+
+    public void PlayPauseSoundEffect()
+    {
+        audioManagerInstance.PlaySFX("Pause", 0);
     }
 
     public void PlaySFXCollision()

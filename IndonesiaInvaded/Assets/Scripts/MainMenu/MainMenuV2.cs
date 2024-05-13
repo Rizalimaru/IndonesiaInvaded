@@ -47,7 +47,7 @@ public class MainMenuV2 : MonoBehaviour
 
         Scene_Loading.instance.LoadScenes();
         yield return new WaitForSeconds(0.9f);
-        AudioManager.Instance.PlayBackgroundMusicWithTransition("Game", 0,1f);
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Game",0, 1f);
     }
 
     public void LoadGame(){
