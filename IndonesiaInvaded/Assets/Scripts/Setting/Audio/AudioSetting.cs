@@ -18,7 +18,7 @@ public class AudioSetting : MonoBehaviour
 
     private void Start()
     { 
-        audioManagerInstance.PlayBackgroundMusicWithTransition("Game",0,1f);
+        
     }
 
     private void Awake()
