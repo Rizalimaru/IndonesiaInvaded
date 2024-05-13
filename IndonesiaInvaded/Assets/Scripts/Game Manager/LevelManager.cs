@@ -7,8 +7,8 @@ public class LevelManager : MonoBehaviour, IDataPersistence
     public static LevelManager instance;
 
     [Header("Unlock Level")]
-    public int maxLevelNumber = 4;
     public List<int> unlockedLevels = new List<int>();
+    public int maxLevelNumber = 4;
 
     private void Awake()
     {
@@ -53,13 +53,11 @@ public class LevelManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        this.maxLevelNumber = data.maxLevelNumber;
         this.unlockedLevels = data.unlockedLevels;
     }
 
     public void SaveData(GameData data)
     {
-        data.maxLevelNumber = this.maxLevelNumber;
         data.unlockedLevels = this.unlockedLevels;
     }
 }

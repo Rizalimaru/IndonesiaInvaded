@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelCheck : MonoBehaviour, IDataPersistence
+public class LevelCheck : MonoBehaviour
 {
     [Header("Level")]
     public int levelNumber;
@@ -44,14 +44,4 @@ public class LevelCheck : MonoBehaviour, IDataPersistence
         GetComponent<Button>().interactable = true;
     }
 
-    public void LoadData(GameData data)
-    {
-        this.levelNumber = data.levelNumber;
-    }
-
-    public void SaveData(GameData data)
-    {
-        data.levelNumber = this.levelNumber;
-        
-    }
 }
