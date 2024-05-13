@@ -8,6 +8,7 @@ public class Enemy : PoolableObject
     public EnemyScriptableObject enemyType;
     public NavMeshAgent Agent;
     private ObjectiveManager objectiveManager;
+    public EnemyScriptableObject enemyConfiguration;
 
     // Offensive Attribute Declaration
     public Transform target;
