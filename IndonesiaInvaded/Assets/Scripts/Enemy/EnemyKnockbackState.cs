@@ -30,7 +30,10 @@ public class EnemyKnockbackState : EnemyBaseState
         enemy.animator.SetBool("repositioning", false);
         enemy.animator.SetBool("confused", false);
 
-        enemy.GetComponent<NavMeshAgent>().isStopped = true;
+        enemy.GetComponent<NavMeshAgent>().enabled = false;
+
+        enemy.enemyObject.GetComponent<Rigidbody>().useGravity = true;
+        enemy.enemyObject.GetComponent<Rigidbody>().isKinematic = false;
 
         direction = enemy.transform.forward * -1;
         

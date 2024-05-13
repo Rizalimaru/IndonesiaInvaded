@@ -1,74 +1,95 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class ObjectiveManager : MonoBehaviour
 {
+    public static ObjectiveManager instance;
     public GameObject objectiveUIPanel;
-    public TMP_Text objectiveUIText;
-    public int targetEnemyCount = 2;
-    private int killedEnemyCount = 0; // Mengganti destroyedEnemyCount menjadi killedEnemyCount
-    private bool objectiveActive = false;
+    public TextMeshProUGUI objectiveUIText;
+    private int killedEnemyCount = 0;
     private bool objectiveCompleted = false;
 
-    private Collider objectiveCollider;
-
-    private void Start()
+    private void Awake()
     {
-        // Dapatkan collider dari game object ini
-        objectiveCollider = GetComponent<Collider>();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && !objectiveCompleted)
+        if (instance == null)
         {
-            StartObjective();
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void Update()
     {
-        if (other.CompareTag("Player") && objectiveCompleted)
+        if (GameObject.FindWithTag("ObjectiveUI") != null)
         {
-            EndObjective();
+            objectiveUIPanel = GameObject.FindWithTag("ObjectiveUI").GetComponent<GameObject>();
         }
+            
     }
 
-    private void StartObjective()
+    private int GetCurrentEnemy()
     {
-        objectiveActive = true;
-        objectiveUIPanel.SetActive(true);
-        objectiveUIText.text = "Defeat enemies (0/" + targetEnemyCount + ")";
+        int enemy = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        return enemy;
     }
 
-    private void EndObjective()
+
+    // Menampilkan UI objektif dengan teks yang sudah ditentukan
+    public void ShowObjective()
     {
-        objectiveActive = false;
+        if (objectiveUIPanel != null) 
+        {
+            objectiveUIPanel.SetActive(true);
+            objectiveUIText.text = "Defeat enemies (0/" + GetCurrentEnemy() + ")";
+        }
+        
+    }
+
+    // Menyembunyikan UI objektif
+    public void HideObjective()
+    {
         objectiveUIPanel.SetActive(false);
-        objectiveUIText.text = "";
-        Destroy(objectiveCollider);
-        Destroy(this);
     }
 
-    // Mengubah DestroyEnemy menjadi EnemyKilled
-    public void EnemyKilled()
+    // Memulai objektif dan spawning musuh
+    public void StartObjective()
     {
-        if (objectiveActive)
-        {
-            killedEnemyCount++; // Mengubah destroyedEnemyCount menjadi killedEnemyCount
-            objectiveUIText.text = "Defeat enemies (" + killedEnemyCount + "/" + targetEnemyCount + ")";
+        ShowObjective();
+        Debug.Log("UI Terbuka");
+    }
 
-            if (killedEnemyCount >= targetEnemyCount && !objectiveCompleted)
-            {
-                CompleteObjective();
-            }
+    // Memperbarui UI objektif dengan jumlah musuh yang dibunuh
+    public void UpdateObjective()
+    {
+        killedEnemyCount++;
+        objectiveUIText.text = "Defeat enemies (" + killedEnemyCount + "/" + GetCurrentEnemy() + ")";
+
+        if (killedEnemyCount >= GetCurrentEnemy() && !objectiveCompleted)
+        {
+            objectiveCompleted = true;
+            StartCoroutine(HideObjectiveAfterDelay(5f));
+            objectiveUIText.text = "All Enemy Killed";
         }
     }
 
-    private void CompleteObjective()
+    // Mengakhiri objektif dan menyembunyikan UI objektif
+    public void EndObjective()
     {
-        objectiveActive = false;
-        objectiveCompleted = true;
-        Debug.Log("Objective completed!");
+        HideObjective();
     }
+
+    // Menyembunyikan UI objektif setelah penundaan
+    private IEnumerator HideObjectiveAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        HideObjective();
+        objectiveCompleted = false; 
+    }
+
+
 }
