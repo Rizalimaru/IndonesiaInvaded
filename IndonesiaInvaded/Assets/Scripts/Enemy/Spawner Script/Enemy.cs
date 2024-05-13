@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     public EnemyScriptableObject enemyType;
     public NavMeshAgent Agent;
     private ObjectiveManager objectiveManager;
+    public EnemyScriptableObject enemyConfiguration;
 
     // Offensive Attribute Declaration
     public Transform target;
@@ -59,6 +60,7 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             stateManager.SwitchState(stateManager.deadState);
+            
         }
     }
 
@@ -67,8 +69,8 @@ public class Enemy : MonoBehaviour
         if (other.CompareTag("Sword") && isAttacking == true && health > 0)
         {
             Debug.Log("Damaged");
-            health -= 1;
-            knockbackForce = 35f;
+            health -= 50;
+            knockbackForce = 25f;
 
             if (enemyTitle == EnemyScriptableObject.title.Basic)
             {
@@ -79,23 +81,21 @@ public class Enemy : MonoBehaviour
                 knockbackDelay = 1.5f;
             }
 
-            if ( isKnockedBack == false )
+            if (isKnockedBack == false)
             {
                 stateManager.SwitchState(stateManager.knockbackState);
                 isKnockedBack = true;
             }
-
             if (health <= 0)
             {
-                objectiveManager.EnemyKilled();
-                ScoreManager.instance.AddScore(1000);
+                objectiveManager.UpdateObjective();
             }
         }
 
-        if (other.CompareTag("SkillRoarCollider"))
+        if (other.CompareTag("Skill Collider"))
         {
-            knockbackForce = 65f;
-            knockbackDelay = 5f;
+            knockbackForce = 100f;
+            knockbackDelay = 2f;
 
             if (isKnockedBack == false)
             {

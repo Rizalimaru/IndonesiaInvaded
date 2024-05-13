@@ -3,10 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 
 public class UI_ControlMainMenu: MonoBehaviour
 {
+    public UnityEvent buttonClicked;
+    public UnityEvent buttonNoClicked;
 
     [Header("-------------GameObjects-------------")]
     public GameObject gameObjectMenu;
@@ -143,6 +146,14 @@ public class UI_ControlMainMenu: MonoBehaviour
     // Mendapatkan value bool titleGameAnimationPlayed
 
     // Mengubah value bool titleGameAnimationPlayed
+
+    public void ButtonClick(){
+        buttonClicked.Invoke();
+    }
+
+    public void ButtonNoClick(){
+        buttonNoClicked.Invoke();
+    }
     public void SetTitleGameAnimationPlayed(bool value)
     {
         titleGameAnimationPlayed = value;

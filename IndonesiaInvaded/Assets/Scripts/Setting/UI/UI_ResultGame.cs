@@ -157,4 +157,8 @@ public class UI_ResultGame : MonoBehaviour
 
         scoreImage.gameObject.SetActive(true);
     }
+
+    public string GetTotalScore(){
+        return totalScoreText.text;
+    }
 }

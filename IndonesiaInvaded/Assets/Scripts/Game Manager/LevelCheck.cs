@@ -9,12 +9,25 @@ public class LevelCheck : MonoBehaviour
     public int levelNumber;
     public GameObject levelLocked;
     public GameObject levelUnlock;
+    
     private void Start()
     {
-        if (!GameManager.instance.IsLevelUnlocked(levelNumber))
+        GameManager gameManager = GameManager.instance;
+        if (gameManager != null)
+    {
+        if (!gameManager.IsLevelUnlocked(levelNumber))
         {
             LockLevel();
         }
+        else
+        {
+            LoadLevel();
+        }
+    }
+    else
+    {
+        Debug.LogError("GameManager instance is null. Cannot load level data.");
+    }
     }
 
     private void LockLevel()
@@ -23,4 +36,11 @@ public class LevelCheck : MonoBehaviour
         levelUnlock.SetActive(false);
         GetComponent<Button>().interactable = false;
     }
+
+    private void LoadLevel()
+{
+    levelLocked.SetActive(false);
+    levelUnlock.SetActive(true);
+    GetComponent<Button>().interactable = true;
+}
 }
