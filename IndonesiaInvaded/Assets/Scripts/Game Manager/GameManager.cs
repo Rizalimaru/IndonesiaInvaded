@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
     [SerializeField] private bool useEncryption;
-
-    private Vector3 lastCheckpointPosition;
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
@@ -108,14 +106,4 @@ public class GameManager : MonoBehaviour
         return dataHandler.LoadAllProfiles();
     }
 
-    
-    public void SetLastCheckpoint(Vector3 position)
-    {
-        lastCheckpointPosition = position;
-    }
-
-    public Vector3 GetLastCheckpointPosition()
-    {
-        return lastCheckpointPosition;
-    }
 }

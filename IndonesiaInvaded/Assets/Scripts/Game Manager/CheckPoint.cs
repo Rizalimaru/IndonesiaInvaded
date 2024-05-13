@@ -1,18 +1,15 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            ActivateCheckpoint();
+            CheckPointManager.instance.AddCheckpoint(this.transform.position);
+            Destroy(other.gameObject);
+            Debug.Log("Checkpoint : " + this.transform.position);
         }
-    }
-
-    private void ActivateCheckpoint()
-    {
-        GameManager.instance.SetLastCheckpoint(transform.position);
-        Debug.Log("Checkpoint activated!");
     }
 }
