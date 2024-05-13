@@ -94,6 +94,18 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    // Stop semua musik latar belakang
+    public void StopAllBackgroundMusic()
+    {
+        foreach (BackgroundMusicGroup group in audioBackgroundMusicGroups)
+        {
+            foreach (AudioSource audioSource in group.backgroundMusics)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
+
     public void PlayBackgroundMusicWithTransition(string groupName, int index, float fadeInDuration)
     {
         BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);

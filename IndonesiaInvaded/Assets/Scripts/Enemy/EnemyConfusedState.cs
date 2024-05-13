@@ -17,7 +17,11 @@ public class EnemyConfusedState : EnemyBaseState
         enemy.animator.SetBool("repositioning", false);
         enemy.animator.SetBool("confused", true);
 
-        enemy.GetComponent<NavMeshAgent>().isStopped = false;
+        enemy.GetComponent<NavMeshAgent>().enabled = true;
+        enemy.GetComponent<Rigidbody>().useGravity = false;
+        enemy.GetComponent<Rigidbody>().isKinematic = true;
+
+        enemy.enemyObject.Agent.Warp(enemy.transform.position);
 
         delay = enemy.enemyObject.knockbackDelay;
     }
