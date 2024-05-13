@@ -60,6 +60,7 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             stateManager.SwitchState(stateManager.deadState);
+            
         }
     }
 
@@ -68,7 +69,7 @@ public class Enemy : MonoBehaviour
         if (other.CompareTag("Sword") && isAttacking == true && health > 0)
         {
             Debug.Log("Damaged");
-            health -= 1;
+            health -= 50;
             knockbackForce = 25f;
 
             if (enemyTitle == EnemyScriptableObject.title.Basic)
@@ -80,16 +81,14 @@ public class Enemy : MonoBehaviour
                 knockbackDelay = 1.5f;
             }
 
-            if ( isKnockedBack == false )
+            if (isKnockedBack == false)
             {
                 stateManager.SwitchState(stateManager.knockbackState);
                 isKnockedBack = true;
             }
-
             if (health <= 0)
             {
-                objectiveManager.EnemyKilled();
-                ScoreManager.instance.AddScore(1000);
+                objectiveManager.UpdateObjective();
             }
         }
 

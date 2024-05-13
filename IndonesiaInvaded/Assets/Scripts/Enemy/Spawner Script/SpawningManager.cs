@@ -4,33 +4,30 @@ using UnityEngine;
 
 public class SpawningManager : MonoBehaviour
 {
-
     public Transform targetPlayer;
     public List<Enemy> enemyType = new List<Enemy>();
     public Transform[] spawnPoint;
 
-    void Start()
-    {
 
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.P))
+    //    {
+    //        SpawnEnemy(enemyType[0], spawnPoint[0].position);
+    //    }
+    //}
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            SpawnEnemy(enemyType[0], spawnPoint[0].position);
-        }
-    }
-/**
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            
             Debug.Log("Spawning Enemy");
             for (int i = 0; i < enemyType.Count; i++)
             {
                 SpawnEnemy(enemyType[i], spawnPoint[i].position);
             }
+            ObjectiveManager.instance.StartObjective();
         }
     }
 
@@ -41,7 +38,7 @@ public class SpawningManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-**/
+
     private void SpawnEnemy(Enemy enemyToSpawn, Vector3 spawnPos)
     {
         Enemy enemy = enemyToSpawn.GetComponent<Enemy>();
@@ -49,5 +46,7 @@ public class SpawningManager : MonoBehaviour
         Instantiate(enemy, spawnPos, Quaternion.identity);
 
         enemy.Agent.enabled = true;
+
     }
+    
 }
