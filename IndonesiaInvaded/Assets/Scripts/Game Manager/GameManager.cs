@@ -16,19 +16,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string fileName;
     [SerializeField] private bool useEncryption;
 
-    [Header("Auto Saving Configuration")]
-    [SerializeField] private float autoSaveTimeSeconds = 25f;
+    // [Header("Auto Saving Configuration")]
+    // [SerializeField] private float autoSaveTimeSeconds = 25f;
     [Header("Unlock Level")]
     public List<int> unlockedLevels = new List<int>();
     public int MaxLevelNumber = 4;
-
+    private Vector3 lastCheckpointPosition;
     private GameData gameData;
     private List<IDataPersistent> dataPersistenceObjects;
     private FileDataHandler dataHandler;
-
     private string selectedProfileId = "";
-
-    private Coroutine autoSaveCoroutine;
+    // private Coroutine autoSaveCoroutine;
 
     public static GameManager instance { get; private set; }
 
@@ -68,11 +66,11 @@ public class GameManager : MonoBehaviour
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
 
-        if (autoSaveCoroutine != null)
-        {
-            StopCoroutine(autoSaveCoroutine);
-        }
-        autoSaveCoroutine = StartCoroutine(AutoSave());
+        // if (autoSaveCoroutine != null)
+        // {
+        //     StopCoroutine(autoSaveCoroutine);
+        // }
+        // autoSaveCoroutine = StartCoroutine(AutoSave());
     }
 
     public void ChangeSelectedProfileId(string newProfileId)
@@ -180,15 +178,15 @@ public class GameManager : MonoBehaviour
         return dataHandler.LoadAllProfiles();
     }
 
-    private IEnumerator AutoSave()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(autoSaveTimeSeconds);
-            SaveGame();
-            Debug.Log("Auto Saved Game");
-        }
-    }
+    // private IEnumerator AutoSave()
+    // {
+    //     while (true)
+    //     {
+    //         yield return new WaitForSeconds(autoSaveTimeSeconds);
+    //         SaveGame();
+    //         Debug.Log("Auto Saved Game");
+    //     }
+    // }
 
     public void UnlockLevel(int levelNumber)
     {
@@ -204,18 +202,30 @@ public class GameManager : MonoBehaviour
     }
 
     public void OnCompleteLevel(int levelNumber)
-{
-    if (!IsLevelUnlocked(levelNumber))
     {
-        UnlockLevel(levelNumber);
+        if (!IsLevelUnlocked(levelNumber))
+        {
+            UnlockLevel(levelNumber);
+        }
+
+        if (levelNumber < MaxLevelNumber)
+        {
+            UnlockLevel(levelNumber + 1);
+        }
+
+        SaveGame();
     }
 
-    if (levelNumber < MaxLevelNumber)
+
+
+
+    public void SetLastCheckpoint(Vector3 position)
     {
-        UnlockLevel(levelNumber + 1);
+        lastCheckpointPosition = position;
     }
 
-    SaveGame();
-}
-
+    public Vector3 GetLastCheckpointPosition()
+    {
+        return lastCheckpointPosition;
+    }
 }

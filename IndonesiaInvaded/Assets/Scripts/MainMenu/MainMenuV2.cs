@@ -26,6 +26,10 @@ public class MainMenuV2 : MonoBehaviour
     private void Awake(){
         instance = this;
     }
+
+    private void Start(){
+        CheckLevel1Completion();
+    }
     public void NewGame(){
         StartCoroutine(DelayNewGame());
         
@@ -94,4 +98,17 @@ public class MainMenuV2 : MonoBehaviour
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
         mission.SetActive(false);   
     }
+
+    void CheckLevel1Completion()
+    {
+        if (GameManager.instance.IsLevelUnlocked(1))
+        {
+            loadButton.interactable = true;
+        }
+        else
+        {
+            loadButton.interactable = false;
+        }
+    }
+
 }
