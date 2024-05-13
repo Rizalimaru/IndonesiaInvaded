@@ -19,6 +19,7 @@ public class UI_SettingDisplay : MonoBehaviour
         {
             if (settingMenu.activeSelf)
             {
+                UI_ControlMainMenu.Instance.ButtonNoClick();
                 UI_ControlMainMenu.Instance.ShowMenu();
             }
         }

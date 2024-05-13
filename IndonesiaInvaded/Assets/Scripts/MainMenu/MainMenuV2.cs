@@ -43,6 +43,7 @@ public class MainMenuV2 : MonoBehaviour
         DisableMenuAndAnimationButton();
         UI_ControlMainMenu.Instance.HideUI();
         yield return new WaitForSeconds(1f);
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Game", 0,1f);
 
         Scene_Loading.instance.LoadScenes();
     }
