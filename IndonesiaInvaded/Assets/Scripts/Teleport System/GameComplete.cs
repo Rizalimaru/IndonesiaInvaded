@@ -16,7 +16,7 @@ public class GameComplete : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            GameManager.instance.OnCompleteLevel(levelNumber);
+            LevelManager.instance.OnCompleteLevel(levelNumber);
             StartCoroutine(NextLevel());
         }
     }

@@ -19,14 +19,10 @@ public class FileDataHandler
         this.useEncryption = useEncryption;
     }
 
-    public GameData Load(string profileId, bool allowRestoreFromBackup = true) 
+    public GameData Load(bool allowRestoreFromBackup = true) 
     {
-        if (profileId == null) 
-        {
-            return null;
-        }
 
-        string fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
+        string fullPath = Path.Combine(dataDirPath, dataFileName);
         GameData loadedData = null;
         if (File.Exists(fullPath)) 
         {
@@ -47,8 +43,7 @@ public class FileDataHandler
                 {
                     dataToLoad = EncryptDecrypt(dataToLoad);
                 }
-
-    
+                
                 loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
             }
             catch (Exception e) 
@@ -63,7 +58,7 @@ public class FileDataHandler
                     if (rollbackSuccess)
                     {
             
-                        loadedData = Load(profileId, false);
+                        loadedData = Load(false);
                     }
                 }
     
@@ -76,14 +71,9 @@ public class FileDataHandler
         return loadedData;
     }
 
-    public void Save(GameData data, string profileId) 
+    public void Save(GameData data) 
     {
-        if (profileId == null) 
-        {
-            return;
-        }
-
-        string fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
+        string fullPath = Path.Combine(dataDirPath, dataFileName);
         string backupFilePath = fullPath + backupExtension;
         try 
         {
@@ -109,7 +99,7 @@ public class FileDataHandler
             }
 
 
-            GameData verifiedGameData = Load(profileId);
+            GameData verifiedGameData = Load();
 
             if (verifiedGameData != null) 
             {
@@ -125,34 +115,6 @@ public class FileDataHandler
         catch (Exception e) 
         {
             Debug.LogError("Error occured when trying to save data to file: " + fullPath + "\n" + e);
-        }
-    }
-
-    public void Delete(string profileId) 
-    {
-        if (profileId == null) 
-        {
-            return;
-        }
-
-        string fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
-        try 
-        {
-
-            if (File.Exists(fullPath)) 
-            {
-    
-                Directory.Delete(Path.GetDirectoryName(fullPath), true);
-            }
-            else 
-            {
-                Debug.LogWarning("Tried to delete profile data, but data was not found at path: " + fullPath);
-            }
-        }
-        catch (Exception e) 
-        {
-            Debug.LogError("Failed to delete profile data for profileId: " 
-                + profileId + " at path: " + fullPath + "\n" + e);
         }
     }
 
@@ -176,7 +138,7 @@ public class FileDataHandler
             }
 
 
-            GameData profileData = Load(profileId);
+            GameData profileData = Load();
 
 
             if (profileData != null) 

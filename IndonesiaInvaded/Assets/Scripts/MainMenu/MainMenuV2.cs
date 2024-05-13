@@ -1,9 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuV2 : MonoBehaviour
@@ -86,10 +82,9 @@ public class MainMenuV2 : MonoBehaviour
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
         mission.SetActive(false);   
     }
-
     void CheckLevel1Completion()
     {
-        if (GameManager.instance.IsLevelUnlocked(1))
+        if (LevelManager.instance.IsLevelUnlocked(1))
         {
             loadButton.interactable = true;
         }
