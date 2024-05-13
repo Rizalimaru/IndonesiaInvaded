@@ -49,18 +49,18 @@ public class SaveSlotMenu : MonoBehaviour
 
         if (isLoadingGame)
         {
-            GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
+            // GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             SaveGameandLoadScene();
         }
         else if (saveSlot.hasData)
         {
-            GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
+            // GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
         }
         else
         {
-            GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
+            // GameManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
             GameManager.instance.NewGame();
             SaveGameandLoadScene();
         }

@@ -34,36 +34,30 @@ public class Scene_Loading : MonoBehaviour
     }
     public void LoadScenes()
     {
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
-        UI_AnimatorUI.instance.LoadGameAnimation();
+        loadingScreen.SetActive(true);
 
+        loadingBarFill.value = 0;
+        GameManager.instance.NewGame();
         StartCoroutine(LoadScenesAsync());
     } 
     public void LoadScenes2()
     {
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
-        UI_AnimatorUI.instance.LoadGameAnimation();
-        
+        loadingScreen.SetActive(true);
+
+        loadingBarFill.value = 0;
+        GameManager.instance.NewGame();
         StartCoroutine(LoadLevel2());
     } 
     public void LoadScenes3()
     {
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
-        UI_AnimatorUI.instance.LoadGameAnimation();
-        
+        loadingScreen.SetActive(true);
+
+        loadingBarFill.value = 0;
+        GameManager.instance.NewGame();
         StartCoroutine(LoadLevel3());
     } 
     IEnumerator LoadScenesAsync()
     {
-        yield return new WaitForSeconds(1f);
-
-        loadingScreen.SetActive(true);
-        loadingBarFill.value = 0;
-
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
-        UI_AnimatorUI.instance.LoadGameAnimation();
-
-        yield return new WaitForSeconds(0.5f);
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
@@ -94,11 +88,6 @@ public class Scene_Loading : MonoBehaviour
     }
     IEnumerator LoadLevel2()
     {
-        yield return new WaitForSeconds(1f);
-
-        loadingScreen.SetActive(true);
-        loadingBarFill.value = 0;
-
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
@@ -129,11 +118,6 @@ public class Scene_Loading : MonoBehaviour
     }
     IEnumerator LoadLevel3()
     {
-        yield return new WaitForSeconds(1f);
-
-        loadingScreen.SetActive(true);
-        loadingBarFill.value = 0;
-        
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
