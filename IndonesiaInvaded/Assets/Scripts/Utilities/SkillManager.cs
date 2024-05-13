@@ -28,6 +28,7 @@ public class SkillManager : MonoBehaviour
     private float distanceToMove;
     public float rotationToEnemySpeed = 5.0f;
     public Object SkillRoarCollider;
+    public float destroyTimeColliderRoar = 1.5f;
     
     [Header("Slow Motion Effect")]
     private bool isSlowMotionActive = false;
@@ -274,8 +275,6 @@ public class SkillManager : MonoBehaviour
             StartCoroutine(MoveToEnemyAfterCharge()); // Mulai pergerakan ke musuh setelah ChargeAtk
             StartCoroutine(StartSlowMotion());
         }
-
-        
     }
     
     //Fungsi untuk menghadap musuh
@@ -291,13 +290,11 @@ public class SkillManager : MonoBehaviour
         {
             return;
         }
-        
     }
-
     void SpawnRoarCollider()
     {
         GameObject roarCollider = Instantiate(SkillRoarCollider, player.position, player.rotation) as GameObject;
-        Destroy(roarCollider, 1.5f); 
+        Destroy(roarCollider, destroyTimeColliderRoar); 
     }
 #endregion
 
