@@ -27,6 +27,7 @@ public class SkillManager : MonoBehaviour
     public float movementSpeed = 5f;
     private float distanceToMove;
     public float rotationToEnemySpeed = 5.0f;
+    public Object SkillRoarCollider;
     
     [Header("Slow Motion Effect")]
     private bool isSlowMotionActive = false;
@@ -78,9 +79,10 @@ public class SkillManager : MonoBehaviour
     public void UseSkill1()
     {
         PlayerAttribut player = PlayerAttribut.instance;
-        if (player != null && !isCooldown1 && player.currentSP >= 30)
+        if (player != null && !isCooldown1 && player.currentSP >= 30 && animator.GetBool("isGrounded"))
         {   
             animator.SetBool("RoarSkill", true);
+            SpawnRoarCollider();
             AudioManager._instance.PlaySFX("Skillplayer",0);
             StartCoroutine(DelayToCharge(1.5f));
             player.currentSP -= 30;
@@ -248,6 +250,10 @@ public class SkillManager : MonoBehaviour
         }
         // Pastikan posisi player benar-benar mencapai posisi target
         player.position = targetPosition;
+        if(player.position == targetPosition)
+        {
+            SpawnRoarCollider();
+        }
         
     }
 
@@ -286,6 +292,12 @@ public class SkillManager : MonoBehaviour
             return;
         }
         
+    }
+
+    void SpawnRoarCollider()
+    {
+        GameObject roarCollider = Instantiate(SkillRoarCollider, player.position, player.rotation) as GameObject;
+        Destroy(roarCollider, 1.5f); 
     }
 #endregion
 

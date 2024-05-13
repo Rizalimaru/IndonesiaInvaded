@@ -13,29 +13,28 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyAttackState attackState = new EnemyAttackState();
     public EnemyRepositionState repositionState = new EnemyRepositionState();
     public EnemyDeadState deadState = new EnemyDeadState();
+    public EnemyKnockbackState knockbackState = new EnemyKnockbackState();
+    public EnemyConfusedState confusedState = new EnemyConfusedState();
 
     // Enemy Declaration
     public Enemy enemyObject;
     public Animator animator;
-    
+
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        enemyObject.SetupAgent();
+        currentState = idleState;
+    }
 
     void Start()
     { 
-        // For single enemy testing uncomment StartAgent() and enable NavMeshAgent component in inspector
-
-        animator = GetComponent<Animator>();
-        
-        enemyObject.SetupAgent();
-        
-        StartAgent();
-
         currentState.EnterState(this);
     }
 
     public void StartAgent()
     {
-        // StartAgent is used for external script to enable each enemy statemanager
-
         currentState = idleState;
     }
 

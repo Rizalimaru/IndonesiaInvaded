@@ -26,7 +26,12 @@ public class WeaponBattleEquip : MonoBehaviour
     void Update()
     {
         // If currently attacking, check for hit animation
-        if (animator.GetBool("hit1")==true || animator.GetBool("hit2")==true || animator.GetBool("hit3")==true)
+        if (animator.GetBool("hit1")==true || 
+        animator.GetBool("hit2")==true || 
+        animator.GetBool("hit3")==true ||
+        animator.GetBool("hit4")==true ||
+        animator.GetBool("RoarSkill")==true
+        )
         {
             // If hit1 animation is playing, show weapon    
                 ShowWeapon();

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +18,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Auto Saving Configuration")]
     [SerializeField] private float autoSaveTimeSeconds = 25f;
+    [Header("Unlock Level")]
+    public List<int> unlockedLevels = new List<int>();
+    public int MaxLevelNumber = 4;
 
     private GameData gameData;
     private List<IDataPersistent> dataPersistenceObjects;
@@ -168,7 +170,8 @@ public class GameManager : MonoBehaviour
         return gameData != null;
     }
 
-    public GameData GetGameData(){
+    public GameData GetGameData()
+    {
         return gameData;
     }
 
@@ -187,17 +190,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void UpdateCheckpoint(int checkpointIndex)
+    public void UnlockLevel(int levelNumber)
     {
-        if (gameData != null)
+        if (!unlockedLevels.Contains(levelNumber))
         {
-            gameData.currentCheckpointIndex = checkpointIndex;
-            SaveGame();
-            Debug.Log("Checkpoint " + checkpointIndex);
-        }
-        else
-        {
-            Debug.LogWarning("GameData is null. Unable to update checkpoint.");
+            unlockedLevels.Add(levelNumber);
         }
     }
+
+    public bool IsLevelUnlocked(int levelNumber)
+    {
+        return unlockedLevels.Contains(levelNumber);
+    }
+
+    public void OnCompleteLevel(int levelNumber)
+{
+    if (!IsLevelUnlocked(levelNumber))
+    {
+        UnlockLevel(levelNumber);
+    }
+
+    if (levelNumber < MaxLevelNumber)
+    {
+        UnlockLevel(levelNumber + 1);
+    }
+
+    SaveGame();
+}
+
 }

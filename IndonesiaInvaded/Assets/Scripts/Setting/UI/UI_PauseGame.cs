@@ -43,7 +43,6 @@ public class UI_PauseGame : MonoBehaviour
 
     public Animator pauseAnimator;
     public Animator optionsAnimatorGame;
-    private GameData gameData;
 
     private void Awake()
     {
@@ -135,7 +134,6 @@ public class UI_PauseGame : MonoBehaviour
     public void Pause()
     {
         pauseAnimator.SetTrigger("pausein");
-        GameManager.instance.SaveGame();
         gameObjectPause.SetActive(true);
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(false);
@@ -177,6 +175,22 @@ public class UI_PauseGame : MonoBehaviour
 
     }
 
+    public void ResetGameOver(){
+        gameOver.SetActive(false);
+        gameObjectUI.SetActive(true);
+        playerCamera.SetActive(true);
+        gameResult.SetActive(false);
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+        isCursorLocked = true; // Lock cursor when unpaused
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        GameResumed.Invoke(); // Invoke resume event
+
+        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+    }
+
     public void ShowResult()
     {
 
@@ -190,6 +204,8 @@ public class UI_PauseGame : MonoBehaviour
         isCursorLocked = false; // Unlock cursor when paused
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        GamePaused.Invoke();
 
 
         audioManagerInstance.PauseSoundEffectGroup("AttackPlayer"); 
@@ -209,6 +225,8 @@ public class UI_PauseGame : MonoBehaviour
         isCursorLocked = true; // Lock cursor when unpaused
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        GameResumed.Invoke(); // Invoke resume event
 
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
     }
@@ -232,8 +250,7 @@ public class UI_PauseGame : MonoBehaviour
 
     public void LoadMenu()
     {
-        GameManager.instance.SaveGame();
-        SceneMainMenuManager.instance.LoadMainMenu();
+        Scene_Loading.instance.LoadMainMenu();
         Time.timeScale = 1f;
         gameObjectPause.SetActive(false);
         gameObjectUI.SetActive(false);

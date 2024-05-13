@@ -35,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
+    [Header("KnockBack")]
+    public float knockShield = 100f;
+    public float knockBackForce;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -260,6 +263,7 @@ public class PlayerMovement : MonoBehaviour
         bool hit1 = animator.GetBool("hit1");
         bool hit2 = animator.GetBool("hit2");
         bool hit3 = animator.GetBool("hit3");
+        bool hit4 = animator.GetBool("hit4");
 
         // Mengatur kecepatan berdasarkan animasi yang sedang aktif
         float forwardSpeed = 0f;
@@ -269,9 +273,13 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(hit2)
         {
-            forwardSpeed = 2f;
+            forwardSpeed = 1f;
         }
         else if(hit3)
+        {
+            forwardSpeed = 2f;
+        }
+        else if(hit4)
         {
             forwardSpeed = 1f;
         }
@@ -280,12 +288,44 @@ public class PlayerMovement : MonoBehaviour
         if(grounded)
         {
             // Menentukan arah gerakan berdasarkan orientasi karakter
-            moveDirection = orientationForAtk.forward * verticalInput + orientation.right * horizontalInput;
+            moveDirection = orientationForAtk.forward * verticalInput + orientationForAtk.right * horizontalInput;
+
+            // Jika sedang menyerang dan tidak ada input vertikal, tetapkan kecepatan maju
+            if ((hit1 || hit2 || hit3 || hit4) && verticalInput == 0)
+            {
+                moveDirection += orientationForAtk.forward;
+            }
 
             // Menambahkan gaya untuk bergerak maju dengan kecepatan sesuai animasi serangan
             Vector3 targetVelocity = moveDirection.normalized * forwardSpeed * 2f;
             rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * 10f); // Menggunakan lerp untuk menginterpolasi kecepatan
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {   
+        if (other.CompareTag("EnemyMeleeCollider"))
+        {
+            knockShield -= 5f;
+        }else if (other.CompareTag("EnemyRangedCollider"))
+        {
+            knockShield -= 5f;
+        }
+
+        if (other.CompareTag("EnemyMeleeCollider") && knockShield <= 20f)
+        {
+            playerKnockBack();
+        }
+    }
+    
+
+    void playerKnockBack()
+    {
+        animator.SetTrigger("getHit");
+
+        moveDirection = orientationForAtk.forward * -1f;
+        rb.AddForce(moveDirection.normalized * 10f, ForceMode.Impulse);
+        knockShield = 100f;
     }
 
 
@@ -348,8 +388,5 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
-    }
-
-
-    
+    } 
 }
