@@ -9,6 +9,7 @@ public class Combat : MonoBehaviour
     public static event Action SuccessfulComboEvent; // Event untuk mengirim sinyal bahwa combo berhasil
 
     private AudioManager audioManagerInstance;
+    public static Combat instance;
 
     [Header("Hit")]
     private Animator animator;
@@ -22,6 +23,18 @@ public class Combat : MonoBehaviour
     private bool isPerformingHit = false;
     [HideInInspector] public bool isAttacking = false;
     private Coroutine hitResetCoroutine = null;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject); // Ensure only one instance of Combat exists
+        }
+    }
 
     private void Start()
     {
