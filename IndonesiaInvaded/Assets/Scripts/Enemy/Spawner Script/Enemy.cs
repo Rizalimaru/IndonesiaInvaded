@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Damaged");
             health -= 1;
-            knockbackForce = 25f;
+            knockbackForce = 35f;
 
             if (enemyTitle == EnemyScriptableObject.title.Basic)
             {
@@ -94,8 +94,8 @@ public class Enemy : MonoBehaviour
 
         if (other.CompareTag("SkillRoarCollider"))
         {
-            knockbackForce = 100f;
-            knockbackDelay = 2f;
+            knockbackForce = 65f;
+            knockbackDelay = 5f;
 
             if (isKnockedBack == false)
             {
