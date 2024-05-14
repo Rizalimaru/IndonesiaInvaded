@@ -17,18 +17,10 @@ public class PlayerDataSaving : MonoBehaviour
     }
     private void Update()
     {
-
-        if (InputManager.instance.GetExitPressed())
-        {
-            GameManager.instance.SaveGame();
-            SceneManager.LoadSceneAsync("MainMenu");
-        }
-
         if (Input.GetKeyDown(KeyCode.L))
         {
             CheckPointManager.instance.Respawn();
         }
-
     }
 
     public void Teleport(Vector3 position, Quaternion rotation)

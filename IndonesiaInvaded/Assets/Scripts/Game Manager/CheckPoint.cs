@@ -9,6 +9,7 @@ public class Checkpoint : MonoBehaviour
         {
             CheckPointManager.instance.SetCheckPoint(transform.position);
             Destroy(gameObject);
+            Debug.Log("Checkpoint " + transform.position);
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
-public class UI_ResultGame : MonoBehaviour
+public class UI_ResultGame : MonoBehaviour, IDataPersistence
 {
 
     public static UI_ResultGame instance;
@@ -158,7 +158,11 @@ public class UI_ResultGame : MonoBehaviour
         scoreImage.gameObject.SetActive(true);
     }
 
-    public string GetTotalScore(){
-        return totalScoreText.text;
+    public void LoadData(GameData data){
+        totalScoreText.text = data.totalScore.ToString();
+    }
+
+    public void SaveData(GameData data){
+        data.totalScore = int.Parse(totalScoreText.text);
     }
 }
