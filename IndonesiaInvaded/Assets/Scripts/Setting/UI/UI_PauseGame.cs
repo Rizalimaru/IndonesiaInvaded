@@ -16,6 +16,8 @@ public class UI_PauseGame : MonoBehaviour
 
     private bool isGameOver = false;
 
+    private bool isLoadMainMenu = false;
+
 
     private bool isResultScreenShown = false; // Check if the result screen is shown
     // Lock cursor when the game is not paused
@@ -70,7 +72,7 @@ public class UI_PauseGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isGameOver && !isResultScreenShown) // Check if the result screen is not shown
+        if (!isGameOver && !isResultScreenShown && !isLoadMainMenu) // Check if the result screen is not shown
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -133,6 +135,7 @@ public class UI_PauseGame : MonoBehaviour
 
     public void Pause()
     {
+        AudioSetting.instance.PlayPauseSoundEffect();
         pauseAnimator.SetTrigger("pausein");
         gameObjectPause.SetActive(true);
         gameObjectUI.SetActive(false);
@@ -258,6 +261,7 @@ public class UI_PauseGame : MonoBehaviour
         gameResult.SetActive(false);
         gameOver.SetActive(false);
         GameIsPaused = false;
+        isLoadMainMenu = true; // Set isLoadMainMenu to true after calling LoadMenu()
         audioManagerInstance.StopAllBackgroundMusic();
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
     }

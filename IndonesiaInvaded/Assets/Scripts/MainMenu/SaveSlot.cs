@@ -37,7 +37,6 @@ public class SaveSlot : MonoBehaviour
             noDataContent.SetActive(false);
             hasDataContent.SetActive(true);
 
-            percentageCompeleteText.text = data.GetPercentageComplete() + "% COMPLETE";
         }
     }
 

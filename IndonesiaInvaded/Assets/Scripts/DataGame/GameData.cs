@@ -1,39 +1,20 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
+[System.Serializable]
 public class GameData
 {
     public long lastUpdated;
-    public Vector3 playerPosition;
-    public int currentCheckpointIndex = 0;
-    public SerializableDictionary<string, bool> enemy;
-
+    public int currentCheckpointIndex;
+    public Dictionary<string, bool> enemyCollected;
+    public List<int> unlockedLevels = new List<int>();
     public GameData()
     {
-        playerPosition = Vector3.zero;
-        enemy = new SerializableDictionary<string, bool>();
+        this.currentCheckpointIndex = 0;
+        enemyCollected = new Dictionary<string, bool>();
+        this.unlockedLevels = new List<int>();
     }
 
-    public int GetPercentageComplete()
-    {
-        int totalCollected = 0;
-        foreach (bool collected in enemy.Values)
-        {
-            if (collected)
-            {
-                totalCollected++;
-            }
-        }
-
-        int percentageCompleted = -1;
-        if (enemy.Count != 0)
-        {
-            percentageCompleted = (totalCollected * 100 / enemy.Count);
-        }
-        return percentageCompleted;
-    }
 
 }

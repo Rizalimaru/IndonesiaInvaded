@@ -1,9 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuV2 : MonoBehaviour
@@ -43,9 +39,15 @@ public class MainMenuV2 : MonoBehaviour
         DisableMenuAndAnimationButton();
         UI_ControlMainMenu.Instance.HideUI();
         yield return new WaitForSeconds(1f);
-        AudioManager.Instance.PlayBackgroundMusicWithTransition("Game", 0,1f);
+        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1f);
+
+        
+        
 
         Scene_Loading.instance.LoadScenes();
+        yield return new WaitForSeconds(0.9f);
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Game",0, 1f);
     }
 
     public void LoadGame(){
@@ -99,10 +101,9 @@ public class MainMenuV2 : MonoBehaviour
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
         mission.SetActive(false);   
     }
-
     void CheckLevel1Completion()
     {
-        if (GameManager.instance.IsLevelUnlocked(1))
+        if (LevelManager.instance.IsLevelUnlocked(1))
         {
             loadButton.interactable = true;
         }

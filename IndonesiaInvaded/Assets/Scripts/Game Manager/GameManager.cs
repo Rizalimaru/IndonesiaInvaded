@@ -6,27 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Debugging")]
-    [SerializeField] private bool disableDataPersistence = false;
-    [SerializeField] private bool initializeDataIfNull = false;
-    [SerializeField] private bool overrideSelectedProfileId = false;
-    [SerializeField] private string testSelectedProfileId = "test";
-
+    
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
     [SerializeField] private bool useEncryption;
-
-    // [Header("Auto Saving Configuration")]
-    // [SerializeField] private float autoSaveTimeSeconds = 25f;
-    [Header("Unlock Level")]
-    public List<int> unlockedLevels = new List<int>();
-    public int MaxLevelNumber = 4;
-    private Vector3 lastCheckpointPosition;
     private GameData gameData;
-    private List<IDataPersistent> dataPersistenceObjects;
+    private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
-    private string selectedProfileId = "";
-    // private Coroutine autoSaveCoroutine;
 
     public static GameManager instance { get; private set; }
 
@@ -41,14 +27,8 @@ public class GameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-        if (disableDataPersistence)
-        {
-            Debug.LogWarning("Data Persistence is currently disabled!");
-        }
-
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
 
-        InitializeSelectedProfileId();
     }
 
     private void OnEnable()
@@ -65,35 +45,6 @@ public class GameManager : MonoBehaviour
     {
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
-
-        // if (autoSaveCoroutine != null)
-        // {
-        //     StopCoroutine(autoSaveCoroutine);
-        // }
-        // autoSaveCoroutine = StartCoroutine(AutoSave());
-    }
-
-    public void ChangeSelectedProfileId(string newProfileId)
-    {
-        this.selectedProfileId = newProfileId;
-        LoadGame();
-    }
-
-    public void DeleteProfileData(string profileId)
-    {
-        dataHandler.Delete(profileId);
-        InitializeSelectedProfileId();
-        LoadGame();
-    }
-
-    private void InitializeSelectedProfileId()
-    {
-        this.selectedProfileId = dataHandler.GetMostRecentlyUpdatedProfileId();
-        if (overrideSelectedProfileId)
-        {
-            this.selectedProfileId = testSelectedProfileId;
-            Debug.LogWarning("Overrode selected profile id with test id: " + testSelectedProfileId);
-        }
     }
 
     public void NewGame()
@@ -103,25 +54,15 @@ public class GameManager : MonoBehaviour
 
     public void LoadGame()
     {
-        if (disableDataPersistence)
-        {
-            return;
-        }
-
-        this.gameData = dataHandler.Load(selectedProfileId);
-
-        if (this.gameData == null && initializeDataIfNull)
-        {
-            NewGame();
-        }
+        this.gameData = dataHandler.Load();
 
         if (this.gameData == null)
         {
             Debug.Log("No data was found. A New Game needs to be started before data can be loaded.");
-            return;
+            NewGame();
         }
 
-        foreach (IDataPersistent dataPersistenceObj in dataPersistenceObjects)
+        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
             dataPersistenceObj.LoadData(gameData);
         }
@@ -129,25 +70,19 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
-        if (disableDataPersistence)
-        {
+        if(this.gameData == null){
+            Debug.LogWarning("No data was found, A New Game needs to be started before data can be saved");
             return;
         }
 
-        if (this.gameData == null)
-        {
-            Debug.LogWarning("No data was found. A New Game needs to be started before data can be saved.");
-            return;
-        }
-
-        foreach (IDataPersistent dataPersistenceObj in dataPersistenceObjects)
+        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
             dataPersistenceObj.SaveData(gameData);
         }
 
         gameData.lastUpdated = System.DateTime.Now.ToBinary();
 
-        dataHandler.Save(gameData, selectedProfileId);
+        dataHandler.Save(gameData);
     }
 
     private void OnApplicationQuit()
@@ -155,12 +90,10 @@ public class GameManager : MonoBehaviour
         SaveGame();
     }
 
-    private List<IDataPersistent> FindAllDataPersistenceObjects()
+    private List<IDataPersistence> FindAllDataPersistenceObjects()
     {
-        IEnumerable<IDataPersistent> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>(true)
-            .OfType<IDataPersistent>();
-
-        return new List<IDataPersistent>(dataPersistenceObjects);
+        IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataPersistence>();
+        return new List<IDataPersistence>(dataPersistenceObjects);
     }
 
     public bool HasGameData()
@@ -168,64 +101,9 @@ public class GameManager : MonoBehaviour
         return gameData != null;
     }
 
-    public GameData GetGameData()
-    {
-        return gameData;
-    }
-
     public Dictionary<string, GameData> GetAllProfilesGameData()
     {
         return dataHandler.LoadAllProfiles();
     }
 
-    // private IEnumerator AutoSave()
-    // {
-    //     while (true)
-    //     {
-    //         yield return new WaitForSeconds(autoSaveTimeSeconds);
-    //         SaveGame();
-    //         Debug.Log("Auto Saved Game");
-    //     }
-    // }
-
-    public void UnlockLevel(int levelNumber)
-    {
-        if (!unlockedLevels.Contains(levelNumber))
-        {
-            unlockedLevels.Add(levelNumber);
-        }
-    }
-
-    public bool IsLevelUnlocked(int levelNumber)
-    {
-        return unlockedLevels.Contains(levelNumber);
-    }
-
-    public void OnCompleteLevel(int levelNumber)
-    {
-        if (!IsLevelUnlocked(levelNumber))
-        {
-            UnlockLevel(levelNumber);
-        }
-
-        if (levelNumber < MaxLevelNumber)
-        {
-            UnlockLevel(levelNumber + 1);
-        }
-
-        SaveGame();
-    }
-
-
-
-
-    public void SetLastCheckpoint(Vector3 position)
-    {
-        lastCheckpointPosition = position;
-    }
-
-    public Vector3 GetLastCheckpointPosition()
-    {
-        return lastCheckpointPosition;
-    }
 }

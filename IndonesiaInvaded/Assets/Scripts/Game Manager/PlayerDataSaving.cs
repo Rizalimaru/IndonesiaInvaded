@@ -6,21 +6,21 @@ using UnityEngine.SceneManagement;
 public class PlayerDataSaving : MonoBehaviour
 {    
     public static PlayerDataSaving instance;
-    Vector2 look;
-    internal Vector3 velocity;
-    private Transform playerTransform;
+
+    [Header("Player Component")]
+    public GameObject player;
+    public GameObject playerCamera;
 
     [Header("Animator ReSpawn")]
     public Animator animatorReSpawn;
+    Vector2 look;
+    internal Vector3 velocity;
     
 
     private void Awake(){
         instance = this;
     }
-    private void Start() 
-    {
-        playerTransform = transform;
-    }
+
     private void Update() 
     {
         if (InputManager.instance.GetExitPressed()) 
@@ -40,11 +40,38 @@ public class PlayerDataSaving : MonoBehaviour
         velocity = Vector3.zero;
     }
 
-    public void ReSpawn()
+    public void Teleports(Vector3 position)
     {
-        Vector3 reSpawnPosition = GameManager.instance.GetLastCheckpointPosition();
-        playerTransform.position = reSpawnPosition;
+        transform.position = position;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+    }
 
-        Debug.Log("Player reSpawned at checkpoint position.");
+    public void Die()
+    {
+        StartCoroutine(DieAnim());
+    }
+
+    IEnumerator DieAnim(){
+        animatorReSpawn.SetTrigger("End");
+        DisablePlayer();
+        yield return new WaitForSeconds(1);
+
+        CheckPointManager.instance.Respawn();
+
+        EnablePlayer();
+
+        animatorReSpawn.SetTrigger("Start");
+        GameManager.instance.SaveGame();
+
+    }
+
+    private void DisablePlayer(){
+        player.gameObject.SetActive(false);
+        playerCamera.SetActive(false);
+    }
+
+    private void EnablePlayer(){
+        player.gameObject.SetActive(true);
+        playerCamera.SetActive(true);
     }
 }
