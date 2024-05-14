@@ -85,6 +85,7 @@ public class Scene_Loading : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         loadingScreen.SetActive(false);
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Game",0, 1f);
     }
     IEnumerator LoadLevel2()
     {
@@ -115,6 +116,8 @@ public class Scene_Loading : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         loadingScreen.SetActive(false);
+
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Game",1, 1f);
     }
     IEnumerator LoadLevel3()
     {
@@ -145,6 +148,8 @@ public class Scene_Loading : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         loadingScreen.SetActive(false);
+
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Game",2, 1f);
     }
     IEnumerator MainMenu()
     {

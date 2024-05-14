@@ -27,9 +27,27 @@ public class MainMenuV2 : MonoBehaviour
         CheckLevel1Completion();
     }
     public void NewGame(){
-        DisableMenuAndAnimationButton();
+        StartCoroutine(DelayNewGame());
+        
+
+    }
+
+    IEnumerator DelayNewGame()
+    {
+        
         AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
+        DisableMenuAndAnimationButton();
+        UI_ControlMainMenu.Instance.HideUI();
+        yield return new WaitForSeconds(1f);
+        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1f);
+
+        
+        
+
         Scene_Loading.instance.LoadScenes();
+        yield return new WaitForSeconds(0.9f);
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Game",0, 1f);
     }
 
     public void LoadGame(){
@@ -38,6 +56,7 @@ public class MainMenuV2 : MonoBehaviour
 
     IEnumerator DelayLoadGame()
     {
+        DisableMenuAndAnimationButton();
         UI_ControlMainMenu.Instance.HideUI();
         yield return new WaitForSeconds(0.9f);
         titleGameAnimator.SetTrigger("hide");

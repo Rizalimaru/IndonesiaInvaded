@@ -74,6 +74,7 @@ public class SceneManagers : MonoBehaviour
 
     public void RestartLevel1(){
         GameManager.instance.NewGame();
+        UI_PauseGame.instance.ResetGameOver();
         SceneManager.LoadSceneAsync("Gameplay1");
         SceneManager.LoadSceneAsync("Level1", LoadSceneMode.Additive);
     }

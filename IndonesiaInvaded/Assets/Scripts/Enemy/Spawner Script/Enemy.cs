@@ -1,18 +1,20 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : PoolableObject
+public class Enemy : MonoBehaviour
 {
     // Main Declaration
     public EnemyStateManager stateManager;
     public EnemyScriptableObject enemyType;
     public NavMeshAgent Agent;
     private ObjectiveManager objectiveManager;
+    public EnemyScriptableObject enemyConfiguration;
 
     // Offensive Attribute Declaration
     public Transform target;
     public GameObject attackType;
     public Transform spawnPoint;
+    public Animator playerAnimator;
 
     // Attribute Declaration
     [System.NonSerialized] public float health;
@@ -25,32 +27,80 @@ public class Enemy : PoolableObject
     [System.NonSerialized] public float viewAngle;
     [System.NonSerialized] public float animDelay;
     [System.NonSerialized] public EnemyScriptableObject.title enemyTitle;
+    [System.NonSerialized] public bool isKnockedBack = false;
+    [System.NonSerialized] public float knockbackForce;
+    [System.NonSerialized] public float knockbackGuard;
+    [System.NonSerialized] public float knockbackDelay;
+
+    private bool isAttacking = false;
+    
 
     public void Awake()
     {
+        playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
         objectiveManager = FindObjectOfType<ObjectiveManager>();
     }
 
     public void Update()
     {
+        bool hit1 = playerAnimator.GetBool("hit1");
+        bool hit2 = playerAnimator.GetBool("hit2");
+        bool hit3 = playerAnimator.GetBool("hit3");
+
+        if (hit1 || hit2 || hit3)
+        {
+            isAttacking = true;
+        }
+        else
+        {
+            isAttacking = false;
+        }
+
         if (health <= 0)
         {
             stateManager.SwitchState(stateManager.deadState);
-            //Debug.Log("Enemy is defeated");
-            //Destroy(gameObject);
+            
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Sword"))
+        if (other.CompareTag("Sword") && isAttacking == true && health > 0)
         {
-            health -= 200;
+            Debug.Log("Damaged");
+            health -= 50;
+            knockbackForce = 25f;
+
+            if (enemyTitle == EnemyScriptableObject.title.Basic)
+            {
+                knockbackDelay = 0.2f;
+            }
+            else
+            {
+                knockbackDelay = 1.5f;
+            }
+
+            if (isKnockedBack == false)
+            {
+                stateManager.SwitchState(stateManager.knockbackState);
+                isKnockedBack = true;
+            }
             if (health <= 0)
             {
-                objectiveManager.EnemyKilled();
-                ScoreManager.instance.AddScore(1000);
+                objectiveManager.UpdateObjective();
+            }
+        }
+
+        if (other.CompareTag("SkillRoarCollider"))
+        {
+            knockbackForce = 100f;
+            knockbackDelay = 2f;
+
+            if (isKnockedBack == false)
+            {
+                stateManager.SwitchState(stateManager.knockbackState);
+                isKnockedBack = true;
             }
         }
     }
@@ -78,6 +128,12 @@ public class Enemy : PoolableObject
         }
     }
 
+    private void OnDestroy()
+    {
+        Debug.Log("Enemy Object is Destroyed");
+
+    }
+
     public void SetupAgent()
     {
         health = enemyType.Health;
@@ -88,6 +144,7 @@ public class Enemy : PoolableObject
         attackForce = enemyType.attackForce;
         attackDecay = enemyType.attackDecay;
         viewAngle = enemyType.viewingAngle;
+        knockbackGuard = enemyType.knockbackGuard;
 
         Agent.speed = enemyType.Speed;
         Agent.angularSpeed = enemyType.AngularSpeed;
@@ -106,10 +163,4 @@ public class Enemy : PoolableObject
         animDelay = enemyType.animationDelay;
     }
 
-    public override void OnDisable()
-    {
-        base.OnDisable();
-
-        Agent.enabled = false;
-    }
 }

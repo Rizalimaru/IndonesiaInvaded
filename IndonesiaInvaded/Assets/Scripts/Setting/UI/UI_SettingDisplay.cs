@@ -4,6 +4,8 @@ public class UI_SettingDisplay : MonoBehaviour
 {
     public GameObject[] settingPanels;
 
+    public GameObject settingMenu;
+
 
     private void ShowPanel(int index)
     {
@@ -15,29 +17,14 @@ public class UI_SettingDisplay : MonoBehaviour
     private void Update(){
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (settingPanels[0].activeSelf)
+            if (settingMenu.activeSelf)
             {
+                UI_ControlMainMenu.Instance.ButtonNoClick();
                 UI_ControlMainMenu.Instance.ShowMenu();
-
             }
-            if (settingPanels[1].activeSelf)
-            {
-                UI_ControlMainMenu.Instance.ShowMenu();
-
-            }
-            if (settingPanels[2].activeSelf)
-            {
-                UI_ControlMainMenu.Instance.ShowMenu();
-
-            }
-            if (settingPanels[3].activeSelf)
-            {
-                UI_ControlMainMenu.Instance.ShowMenu();
-
-            }
-
         }
     }
+
 
     
 

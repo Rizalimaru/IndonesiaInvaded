@@ -149,10 +149,4 @@ public class ScoreManager : MonoBehaviour
         bossDefeats += amount;
         Debug.Log("Boss Defeats: " + bossDefeats);
     }
-
-    public void ResetScore(){
-        score = 0;
-        enemyDefeats = 0;
-        bossDefeats = 0;
-    }
 }

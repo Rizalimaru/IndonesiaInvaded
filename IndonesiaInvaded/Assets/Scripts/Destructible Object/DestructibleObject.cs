@@ -3,7 +3,7 @@ using UnityEngine;
 public class DestructibleObject : MonoBehaviour
 {
     public GameObject destroyed;
-    //private ObjectiveManager objectiveManager;
+    private Combat combat;
     public GameObject hpOrbPrefab;
     public GameObject spOrbPrefab;
     [SerializeField] private float explosionForce = 500f;
@@ -16,17 +16,18 @@ public class DestructibleObject : MonoBehaviour
     [SerializeField] private int spOrbChance = 25;
 
 
-    //private void Start()
-    //{
-    //    objectiveManager = FindObjectOfType<ObjectiveManager>();
-    //}
-
-    private void OnCollisionEnter(Collision collision)
+    private void Start()
     {
-        if (collision.gameObject.CompareTag("Player"))
+       combat= Combat.instance;
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("Sword")&&combat.isAttacking)
         {
             // Add score when player destroys the object
             ScoreManager.instance.AddScore(500);
+            AudioManager._instance.PlaySFX("DestructibleObject", 0);
 
             DestroyObject();
         }

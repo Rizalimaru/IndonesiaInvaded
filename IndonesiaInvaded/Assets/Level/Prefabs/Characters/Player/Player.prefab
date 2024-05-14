@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 5907773204926507305}
   - component: {fileID: 8078761931949095257}
   - component: {fileID: 4250335120195895467}
-  - component: {fileID: 8256567148742708587}
   - component: {fileID: 2631689077824012360}
   - component: {fileID: 4149217423386793282}
   - component: {fileID: 5891494012393991014}
@@ -52,6 +51,7 @@ GameObject:
   - component: {fileID: 6484667871350195624}
   - component: {fileID: 2987648104949693347}
   - component: {fileID: 4900809783995673873}
+  - component: {fileID: 8256567148742708587}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -74,6 +74,7 @@ Transform:
   m_Children:
   - {fileID: 8964449387861791797}
   - {fileID: 1553329004054554991}
+  - {fileID: 5952208658467081399}
   - {fileID: 7835744536218457098}
   - {fileID: 3457766325533606494}
   m_Father: {fileID: 0}
@@ -144,7 +145,7 @@ MonoBehaviour:
   sprintSpeed: 10
   groundDrag: 2
   jumpForce: 20
-  jumpCooldown: 1.3
+  jumpCooldown: 1
   airMultiplier: 0.4
   dodgeCurve:
     serializedVersion: 2
@@ -182,21 +183,9 @@ MonoBehaviour:
     m_Bits: 4194304
   maxSlopeAngle: 0
   orientation: {fileID: 1553329004054554991}
-  orientationForAtk: {fileID: 8964449387861791797}
+  orientationForAtk: {fileID: 5952208658467081399}
   state: 0
   gravity: 20
---- !u!114 &8256567148742708587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093167237751254063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63a9027fe70caa54c9c3980d57d97187, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &2631689077824012360
 Animator:
   serializedVersion: 5
@@ -250,6 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownTime: 1
+  hitResetTime: 0.1
   isAttacking: 0
 --- !u!114 &7153151500934823563
 MonoBehaviour:
@@ -332,6 +322,63 @@ MonoBehaviour:
   skill2Key: 113
   player: {fileID: 1501732846235728247}
   nearestEnemy: {fileID: 0}
+--- !u!114 &8256567148742708587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093167237751254063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63a9027fe70caa54c9c3980d57d97187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2184944646211712588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5952208658467081399}
+  - component: {fileID: 1255407421441157970}
+  m_Layer: 6
+  m_Name: PlayerCombatLookPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5952208658467081399
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2184944646211712588}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.441, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1501732846235728247}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1255407421441157970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2184944646211712588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2513e6c342433b040b9dc2e4ad569233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8964449387861791797}
 --- !u!1 &4029081902527982358
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,10 +634,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.050000004
-  m_Height: 1.5277855
+  m_Radius: 0.082545735
+  m_Height: 1.5505213
   m_Direction: 2
-  m_Center: {x: -0.010000081, y: 0.38999802, z: 0.17040028}
+  m_Center: {x: -0.002686155, y: 0.3846171, z: 0.18176761}
 --- !u!114 &5209925973139027628
 MonoBehaviour:
   m_ObjectHideFlags: 0
