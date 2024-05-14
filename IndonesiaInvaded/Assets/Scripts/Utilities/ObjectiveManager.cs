@@ -94,6 +94,8 @@ public class ObjectiveManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         objectiveUIPanel.SetActive(false);
         objectiveCompleted = true; 
+
+        SpawningManager.instance.HideWall();
     }
 
 
