@@ -20,7 +20,6 @@ public class SkillManager : MonoBehaviour
     public float cooldown1 = 5;
     private bool isCooldown1 = false;
     public KeyCode skill1Key;
-    public CameraShake cameraShake;
     public float shakeDuration = 0.5f;
     public float shakeMagnitude = 0.1f;
     public float SkillDetectionRadius = 10f;
@@ -85,6 +84,7 @@ public class SkillManager : MonoBehaviour
         if (player != null && !isCooldown1 && player.currentSP >= 30 && animator.GetBool("isGrounded"))
         {   
             animator.SetBool("RoarSkill", true);
+            CameraShaker.instance.CameraShake(5f, 1f);
             SpawnRoarCollider();
             AudioManager._instance.PlaySFX("Skillplayer",0);
             StartCoroutine(DelayToCharge(1.5f));

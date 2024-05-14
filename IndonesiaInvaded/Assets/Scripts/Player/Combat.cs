@@ -24,6 +24,7 @@ public class Combat : MonoBehaviour
     [HideInInspector] public bool isAttacking = false;
     private Coroutine hitResetCoroutine = null;
 
+
     private void Awake()
     {
         if (instance == null)
@@ -49,7 +50,7 @@ public class Combat : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && animator.GetBool("isGrounded"))
-        {
+        {   
             PerformHit();
         }
         ResetCombo();
@@ -135,7 +136,7 @@ public class Combat : MonoBehaviour
             animator.SetBool("hit2", false);
             currentHit=0;
         }
-        else if(isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit3"))
+        else if(isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit3"))
         {   
             animator.SetBool("hit1", false);
             animator.SetBool("hit2", false);
