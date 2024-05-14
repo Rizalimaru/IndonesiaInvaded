@@ -44,7 +44,7 @@ public class SkillManager : MonoBehaviour
 
     [Header("Skill Detection")]
     public Transform player;
-    public Transform nearestEnemy;
+    [HideInInspector]public Transform nearestEnemy;
 
     private void Awake()
     {   
@@ -75,6 +75,8 @@ public class SkillManager : MonoBehaviour
             distanceToMove = 10f;
         }
     }
+
+    
 
 #region UsableSkill Function
     public void UseSkill1()

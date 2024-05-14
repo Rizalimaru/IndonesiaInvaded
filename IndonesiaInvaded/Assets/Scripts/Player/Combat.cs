@@ -23,6 +23,19 @@ public class Combat : MonoBehaviour
     [HideInInspector] public bool isAttacking = false;
     private Coroutine hitResetCoroutine = null;
 
+    public static Combat instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy duplicate instances
+        }
+    }
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -136,60 +149,6 @@ public class Combat : MonoBehaviour
             animator.SetBool("hit3", false);
             animator.SetBool("hit4", false);
             currentHit=0;
-        }
-    }
-    void OnClick()
-    {
-        float currentTime = Time.time;
-
-        if (currentTime - lastClickedTime > maxComboDelay)
-        {
-            noOfClicks = 0;
-        }
-
-        lastClickedTime = currentTime;
-        noOfClicks++;
-        if (noOfClicks == 1)
-        {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("hit1"))
-            {
-                animator.SetBool("hit1", true);
-                StartCoroutine(PlaySoundWithDelay(0.1f, "AttackPlayer", 0));
-                Debug.Log("Hit 1");
-            }
-        }
-        noOfClicks = Mathf.Clamp(noOfClicks, 0, 4);
-
-        if (noOfClicks >= 2 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit1"))
-        {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("hit2"))
-            {
-                animator.SetBool("hit1", false);
-                animator.SetBool("hit2", true);
-                StartCoroutine(PlaySoundWithDelay(0.2f, "AttackPlayer", 0));
-                Debug.Log("Hit 2");
-            }
-        }
-        if (noOfClicks >= 3 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit2"))
-        {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("hit3"))
-            {
-                animator.SetBool("hit2", false);
-                animator.SetBool("hit3", true);
-                StartCoroutine(PlaySoundWithDelay(1f, "AttackPlayer", 1));
-                Debug.Log("Hit 3");
-            }
-        }
-        if (noOfClicks >= 4 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit3"))
-        {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("hit4"))
-            {
-                animator.SetBool("hit3", false);
-                animator.SetBool("hit4", true);
-                StartCoroutine(PlaySoundWithDelay(1f, "AttackPlayer", 2));
-                Debug.Log("Hit 4");
-                SuccessfulCombo();
-            }
         }
     }
 

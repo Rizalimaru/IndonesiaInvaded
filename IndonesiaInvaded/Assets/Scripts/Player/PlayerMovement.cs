@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {   
     private Animator animator;
+    private Combat combat;
     public static PlayerMovement instance;
     
     [Header("Movement")]
@@ -73,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void Start()
     {   
+        combat = Combat.instance;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -129,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
+        if(Input.GetKey(jumpKey) && readyToJump && grounded && combat.isAttacking == false)
         {
             readyToJump = false;
 
