@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            CheckPointManager.instance.AddCheckpoint(this.transform.position);
-            Destroy(other.gameObject);
-            Debug.Log("Checkpoint : " + this.transform.position);
+            CheckPointManager.instance.SetCheckPoint(transform.position);
+            Destroy(gameObject);
+            Debug.Log("Checkpoint " + transform.position);
         }
     }
 }
