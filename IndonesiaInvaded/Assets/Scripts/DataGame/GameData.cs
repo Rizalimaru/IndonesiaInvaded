@@ -8,6 +8,8 @@ public class GameData
     public long lastUpdated;
     public Dictionary<string, bool> enemyCollected;
     public List<int> unlockedLevels = new List<int>();
+    public List<int> highScores = new List<int>();
+    public List<string> ranks = new List<string>();
     public int score;
     public int enemyDefeats;
     public int bossDefeats;
@@ -21,6 +23,8 @@ public class GameData
     {
         enemyCollected = new Dictionary<string, bool>();
         this.unlockedLevels = new List<int>();
+        this.highScores = new List<int>();
+        this.ranks = new List<string>();
     }
 
     public int CalculateTotalScore()
