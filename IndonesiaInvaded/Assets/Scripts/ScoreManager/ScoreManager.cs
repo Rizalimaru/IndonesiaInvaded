@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : MonoBehaviour, IDataPersistence
 {
     public static ScoreManager instance;
 
@@ -43,19 +43,45 @@ public class ScoreManager : MonoBehaviour
         scoreTextInGame.gameObject.SetActive(false);
     }
 
+    public void SaveData(GameData data){
+        data.score = score;
+        data.enemyDefeats = enemyDefeats;
+        data.bossDefeats = bossDefeats;
+        data.time = time;
+        data.bonus = bonus;
+    }
+
+    public void LoadData(GameData data){
+        score = data.score;
+        enemyDefeats = data.enemyDefeats;
+        bossDefeats = data.bossDefeats;
+        time = data.time;
+        bonus = data.bonus;
+    }
+
     private void Update()
     {
         // Update waktu
-        time += Time.deltaTime;
+        UpdateTime();
 
         //Update score
-        scoreTextPaused.text = score.ToString();
+        UpdateScoreText();
 
         // Tampilkan waktu di pause menu
         DisplayTime(time);
 
         // Hitung bonus berdasarkan waktu
         DetermineBonus();
+    }
+
+    private void UpdateTime()
+    {
+        time += Time.deltaTime;
+    }
+
+    private void UpdateScoreText()
+    {
+        scoreTextPaused.text = score.ToString();
     }
     void DisplayTime(float timeToDisplay)
     {
@@ -65,15 +91,6 @@ public class ScoreManager : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 
         timeTextInPaused.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-    }
-
-    // Restart Semua Nilai
-    public void ResetAllValues()
-    {
-        score = 0;
-        enemyDefeats = 0;
-        bossDefeats = 0;
-        time = 0;
     }
     
     private void DetermineBonus()
@@ -95,6 +112,13 @@ public class ScoreManager : MonoBehaviour
             bonus = 5000;
         }
     }
+
+    public void ResetAllValues()
+    {
+        score = enemyDefeats = bossDefeats = 0;
+        time = 0;
+    }
+
     public void AddScore(int amount)
     {
         score += amount;
