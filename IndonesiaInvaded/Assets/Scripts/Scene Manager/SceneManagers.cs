@@ -55,39 +55,11 @@ public class SceneManagers : MonoBehaviour
         
     }
 
-    public void Level3(){
-
-        GameManager.instance.SaveGame();
-        UI_PauseGame.instance.HideResult();
-        SceneManager.LoadSceneAsync("Gameplay3");
-        SceneManager.LoadSceneAsync("Level3", LoadSceneMode.Additive);
-        GameManager.instance.SaveGame();
-    }
-
     public void LoadMainMenu()
     {
         GameManager.instance.SaveGame();
         UI_PauseGame.instance.HideResult();
         SceneManager.LoadSceneAsync(menus[(int)Type.Main_Menu].sceneName);
         GameManager.instance.SaveGame();
-    }
-
-    public void RestartLevel1(){
-        GameManager.instance.NewGame();
-        UI_PauseGame.instance.ResetGameOver();
-        SceneManager.LoadSceneAsync("Gameplay1");
-        SceneManager.LoadSceneAsync("Level1", LoadSceneMode.Additive);
-    }
-
-    public void RestartLevel2(){
-        GameManager.instance.NewGame();
-        SceneManager.LoadSceneAsync("Gameplay2");
-        SceneManager.LoadSceneAsync("Level2", LoadSceneMode.Additive);
-    }
-
-    public void RestartLevel3(){
-        GameManager.instance.NewGame();
-        SceneManager.LoadSceneAsync("Gameplay3");
-        SceneManager.LoadSceneAsync("Level3", LoadSceneMode.Additive);
     }
 }
