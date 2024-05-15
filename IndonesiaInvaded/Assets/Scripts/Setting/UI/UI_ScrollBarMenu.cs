@@ -21,13 +21,7 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler
         {
             gameData = new GameData();
         }
-        if (gameData.levelData.Count == 0)
-        {
-            gameData.AddLevelData(1);
-            gameData.AddLevelData(2);
-            gameData.AddLevelData(3);
-            
-        }
+
         pos = new float[buttons.Length];
         distance = 1f / (pos.Length - 1f);
         for (int i = 0; i < pos.Length; i++)
@@ -67,8 +61,8 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler
 
     void UpdateTexts(int index)
     {
-        scoreText.text = gameData.GetHighScore(index + 1).ToString();
-        rankText.text = gameData.GetRank(index + 1);
+        scoreText.text = gameData.GetHighScore().ToString();
+        rankText.text = gameData.GetRank();
     }
 
 }
