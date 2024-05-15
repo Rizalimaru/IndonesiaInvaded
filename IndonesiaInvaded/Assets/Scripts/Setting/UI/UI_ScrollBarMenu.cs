@@ -1,62 +1,82 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-
-public class UI_ScrollBarMenu : MonoBehaviour
+public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler
 {
     public Scrollbar scrollBar;
     public TMP_Text scoreText;
     public TMP_Text rankText;
+    public Button[] buttons;
     float[] pos;
     float distance;
+    int hoveredIndex = -1;
 
     void Start()
     {
-        pos = new float[transform.childCount];
+        pos = new float[buttons.Length];
         distance = 1f / (pos.Length - 1f);
         for (int i = 0; i < pos.Length; i++)
         {
             pos[i] = distance * i;
         }
 
-        // Inisialisasi nilai teks dan skor untuk posisi awal scroll
         UpdateTexts(0);
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (hoveredIndex >= 0)
         {
-            // Hitung indeks posisi scroll saat ini
             float normalizedScrollPos = scrollBar.value;
             int currentIndex = Mathf.RoundToInt(normalizedScrollPos / distance);
 
-            // Update teks dan skor berdasarkan indeks saat ini
-            UpdateTexts(currentIndex);
+            if (currentIndex != hoveredIndex)
+            {
+                UpdateTexts(hoveredIndex);
+            }
         }
     }
 
-    // Fungsi untuk memperbarui teks dan skor berdasarkan indeks
-    void UpdateTexts(int index)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        // Contoh implementasi: Tampilkan teks dan skor berdasarkan indeks
-        scoreText.text =  GetScore(index).ToString();
-        rankText.text = GetRank(index).ToString();
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            if (buttons[i] == eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>())
+            {
+                hoveredIndex = i;
+                UpdateTexts(i);
+                break;
+            }
+        }
     }
 
-    // Fungsi untuk mendapatkan skor berdasarkan indeks
+    void UpdateTexts(int index)
+    {
+        scoreText.text = GetScore(index).ToString();
+        rankText.text = GetRank(index);
+    }
+
     int GetScore(int index)
     {
-
-        // Contoh implementasi: Mendapatkan skor berdasarkan indeks
         return index * 100;
     }
 
-    // Fungsi untuk mendapatkan peringkat berdasarkan indeks
     string GetRank(int index)
     {
-        // Contoh implementasi: Mendapatkan peringkat berdasarkan indeks
-        return "A+";
+        switch (index)
+        {
+            case 0:
+                return "A+";
+            case 1:
+                return "A";
+            case 2:
+                return "B";
+            case 3:
+                return "C";
+            default:
+                return "D";
+        }
     }
 }
