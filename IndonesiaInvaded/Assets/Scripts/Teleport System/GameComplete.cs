@@ -39,13 +39,12 @@ public class GameComplete : MonoBehaviour
         playerCamera.SetActive(false);
         yield return new WaitForSeconds(1);
 
-        ScoreManager.instance.ResetAllValues();
         UI_ResultGame.instance.ShowResult();
         UI_PauseGame.instance.ShowResult();
 
         player.gameObject.SetActive(true);
         playerCamera.SetActive(true);
-        
+
         animator.SetTrigger("Start");
         GameManager.instance.SaveGame();
     }
