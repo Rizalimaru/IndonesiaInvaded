@@ -18,7 +18,7 @@ public class EnemyKnockbackState : EnemyBaseState
             force = 5f;
         }
 
-        delay = enemy.enemyObject.animDelay;
+        delay = enemy.enemyObject.knockbackDelay;
 
         Debug.Log("Enemy got knockbacked");
 

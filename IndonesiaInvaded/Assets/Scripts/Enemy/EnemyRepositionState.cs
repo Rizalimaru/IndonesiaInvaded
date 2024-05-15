@@ -31,7 +31,7 @@ public class EnemyRepositionState : EnemyBaseState
         {
             enemy.SwitchState(enemy.attackState);
         }
-        else if (canSeePlayer && enemyPlayerDistance <= enemy.enemyObject.triggerDistance && enemyPlayerDistance > enemy.enemyObject.attackDistance + 1)
+        else if (canSeePlayer && enemyPlayerDistance <= enemy.enemyObject.triggerDistance || enemyPlayerDistance >= enemy.enemyObject.attackDistance + 1)
         {
             enemy.SwitchState(enemy.movingState);
         }

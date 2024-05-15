@@ -42,8 +42,13 @@ public class PlayerAttribut : MonoBehaviour
         //}
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
+
+        Debug.Log("Collision");
+
+        Collider other = collision.collider;
+
         if (other.CompareTag("EnemyMeleeCollider"))
         {
             Debug.Log("Damaged by melee");
@@ -57,7 +62,7 @@ public class PlayerAttribut : MonoBehaviour
             StopRegenerateHealth();
         }
     }
-
+    
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;

@@ -19,7 +19,8 @@ public class EnemyAttackState : EnemyBaseState
 
         delay = enemy.enemyObject.animDelay;
 
-        enemy.enemyObject.enableAttack();
+        enemy.enemyObject.Attack();
+
     }
 
     public override void UpdateState(EnemyStateManager enemy)
@@ -30,11 +31,6 @@ public class EnemyAttackState : EnemyBaseState
         }
         else
         {
-            if (enemy.enemyObject.enemyTitle == EnemyScriptableObject.title.Basic_Melee || enemy.enemyObject.enemyTitle == EnemyScriptableObject.title.Boss)
-            {
-                enemy.enemyObject.disableAttack();
-            }
-
             enemy.SwitchState(enemy.restState);
         }
     }

@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
 
     // Offensive Attribute Declaration
     public Transform target;
-    public GameObject rangedBullet;
+    public GameObject attackPrefab;
     public Transform spawnPoint;
     public Animator playerAnimator;
 
@@ -31,12 +31,9 @@ public class Enemy : MonoBehaviour
     [System.NonSerialized] public float knockbackGuard;
     [System.NonSerialized] public float knockbackDelay;
 
-    // Whatever this is
+    // Private Stuff
     private bool isAttacking = false;
-    public GameObject meleeCollider;
-    public GameObject bossMeleeCollider;
-
-
+    private GameObject attackObject;
 
     public void Awake()
     {
@@ -68,14 +65,7 @@ public class Enemy : MonoBehaviour
 
         if (isKnockedBack == true)
         {
-            if (enemyTitle == EnemyScriptableObject.title.Basic_Melee || enemyTitle == EnemyScriptableObject.title.Basic_Ranged)
-            {
-                Invoke("knockbackDelayCounter", knockbackDelay);
-            }
-            else
-            {
-                Invoke("knockbackDelayCounter", 5f);
-            }
+            Invoke("knockbackDelayCounter", knockbackDelay);
         }
     }
 
@@ -85,7 +75,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Damaged");
             health -= 5;
-            knockbackForce = 35f;
+            knockbackForce = 25f;
             knockbackDelay = 0.2f;
 
             if (isKnockedBack == false)
@@ -102,7 +92,7 @@ public class Enemy : MonoBehaviour
 
         if (other.CompareTag("SkillRoarCollider") && health > 0)
         {
-            knockbackForce = 100f;
+            knockbackForce = 55f;
             knockbackDelay = 3f;
 
             if (isKnockedBack == false)
@@ -118,32 +108,9 @@ public class Enemy : MonoBehaviour
         isKnockedBack = false; 
     }
 
-    public void enableAttack()
+    public void Attack()
     {
-        if (enemyTitle == EnemyScriptableObject.title.Basic_Melee)
-        {
-            meleeCollider.GetComponent<Collider>().enabled = true;
-        }
-        else if (enemyTitle == EnemyScriptableObject.title.Basic_Ranged)
-        {
-            GameObject attackObj = GameObject.Instantiate(rangedBullet, spawnPoint.transform.position, spawnPoint.rotation) as GameObject;
-        }
-        else if (enemyTitle == EnemyScriptableObject.title.Boss)
-        {
-            bossMeleeCollider.GetComponent<Collider>().enabled = true;
-        }
-    }
-
-    public void disableAttack()
-    {
-        if (enemyTitle == EnemyScriptableObject.title.Basic_Melee)
-        {
-            meleeCollider.GetComponent<Collider>().enabled = false;
-        }
-        else if (enemyTitle == EnemyScriptableObject.title.Boss)
-        {
-            bossMeleeCollider.GetComponent<Collider>().enabled = false;
-        }
+        attackObject = GameObject.Instantiate(attackPrefab, spawnPoint.transform.position, spawnPoint.rotation) as GameObject;
     }
 
     public bool checkIfSeeTarget()
