@@ -37,7 +37,6 @@ public class Scene_Loading : MonoBehaviour
         loadingScreen.SetActive(true);
 
         loadingBarFill.value = 0;
-        GameManager.instance.NewGame();
         StartCoroutine(LoadScenesAsync());
     } 
     public void LoadScenes2()
@@ -45,7 +44,6 @@ public class Scene_Loading : MonoBehaviour
         loadingScreen.SetActive(true);
 
         loadingBarFill.value = 0;
-        GameManager.instance.NewGame();
         StartCoroutine(LoadLevel2());
     } 
     public void LoadScenes3()
@@ -53,7 +51,6 @@ public class Scene_Loading : MonoBehaviour
         loadingScreen.SetActive(true);
 
         loadingBarFill.value = 0;
-        GameManager.instance.NewGame();
         StartCoroutine(LoadLevel3());
     } 
     IEnumerator LoadScenesAsync()
