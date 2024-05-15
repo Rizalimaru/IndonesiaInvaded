@@ -15,6 +15,7 @@ public class GameData
     public float time;
     public int totalScore;
     public int highScore;
+    public string rank;
 
     public GameData()
     {
@@ -28,5 +29,69 @@ public class GameData
         return totalScore;
     }
 
+    public int GetHighScore(){
+        return highScore;
+    }
 
+    public void UpdateHighScore()
+    {
+        totalScore = CalculateTotalScore(score, enemyDefeats, bossDefeats, bonus);
+        if (totalScore > highScore)
+        {
+            highScore = totalScore;
+        }
+        else{
+            GetHighScore();
+        }
+    }
+
+    public string GetRank()
+    {
+        if (highScore >= 44000)
+        {
+            return "S"; // S Rank
+        }
+        else if (highScore >= 30000)
+        {
+            return "A"; // A Rank
+        }
+        else if (highScore >= 20000)
+        {
+            return "B"; // B Rank
+        }
+        else if (highScore >= 10000)
+        {
+            return "C"; // C Rank
+        }
+        else
+        {
+            return "D"; // D Rank
+        }
+    }
+
+    public void UpdateRank()
+    {
+        rank = GetRank();
+    }
+}
+
+
+public class GameDataList
+{
+    public List<GameData> dataList;
+
+    public GameDataList()
+    {
+        dataList = new List<GameData>();
+    }
+
+    public void AddData(GameData data)
+    {
+        dataList.Add(data);
+    }
+
+    public void RemoveData(GameData data)
+    {
+        dataList.Remove(data);
+    }
 }

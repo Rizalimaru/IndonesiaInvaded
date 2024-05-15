@@ -1,9 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-using System.Collections.Generic;
-
 
 public class ScoreManager : MonoBehaviour, IDataPersistence
 {
@@ -16,42 +13,46 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
     public float time;
 
     [Header("UI Text")]
-    public TMP_Text timeTextInPaused; 
-    public TMP_Text scoreTextInGame; 
-    public TMP_Text scoreTextPaused; 
-    
+    public TMP_Text timeTextInPaused;
+    public TMP_Text scoreTextInGame;
+    public TMP_Text scoreTextPaused;
+
     [Header("Animation")]
     private Animator scoreAnimator;
 
-    [Header("Private Variable and Haven't been used yet")]
     private Coroutine hideScoreTextCoroutine;
-    private float hideDelay = 10f; // Delay sebelum teks skor di game di hide
+    private float hideDelay = 10f;
     public int bonus { get; private set; }
+    public GameDataList gameDataList;
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        instance = this;
+        gameDataList = new GameDataList();
     }
+
     private void Start()
     {
-        // Ambil komponen Animator dari UI Text skor di game
         scoreAnimator = scoreTextInGame.GetComponent<Animator>();
-        // Sembunyikan teks skor di game saat memulai permainan
         scoreTextInGame.gameObject.SetActive(false);
     }
 
-    public void SaveData(GameData data){
+    public void SaveData(GameData data)
+    {
         data.score = score;
         data.enemyDefeats = enemyDefeats;
         data.bossDefeats = bossDefeats;
         data.time = time;
         data.bonus = bonus;
+        data.totalScore = data.CalculateTotalScore(score, enemyDefeats, bossDefeats, bonus);
+        data.UpdateHighScore();
+        data.UpdateRank();
+
+        gameDataList.AddData(data);
     }
 
-    public void LoadData(GameData data){
+    public void LoadData(GameData data)
+    {
         score = data.score;
         enemyDefeats = data.enemyDefeats;
         bossDefeats = data.bossDefeats;
@@ -61,16 +62,9 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
-        // Update waktu
         UpdateTime();
-
-        //Update score
         UpdateScoreText();
-
-        // Tampilkan waktu di pause menu
         DisplayTime(time);
-
-        // Hitung bonus berdasarkan waktu
         DetermineBonus();
     }
 
@@ -83,31 +77,32 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
     {
         scoreTextPaused.text = score.ToString();
     }
+
     void DisplayTime(float timeToDisplay)
     {
-        timeToDisplay +=1;
+        timeToDisplay += 1;
 
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 
         timeTextInPaused.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-    
+
     private void DetermineBonus()
     {
-        if (time < 240) // Kurang dari 4 menit (240 detik)
+        if (time < 240)
         {
             bonus = 10000;
         }
-        else if (time < 300) // Kurang dari 5 menit (300 detik)
+        else if (time < 300)
         {
             bonus = 8000;
         }
-        else if (time < 360) // Kurang dari 6 menit (360 detik)
+        else if (time < 360)
         {
             bonus = 7000;
         }
-        else // Lebih dari 7 menit (420 detik)
+        else
         {
             bonus = 5000;
         }
@@ -122,19 +117,16 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
     public void AddScore(int amount)
     {
         score += amount;
-        Debug.Log("Score: " + score);
-        
-        // Perbarui tampilan skor setelah menambah skor
         UpdateScoreTextInGame();
         UpdateScoreTextPaused();
 
-        // Reset delay untuk hide teks skor di game
         if (hideScoreTextCoroutine != null)
         {
             StopCoroutine(hideScoreTextCoroutine);
         }
         hideScoreTextCoroutine = StartCoroutine(HideScoreTextAfterDelay());
     }
+
     private IEnumerator HideScoreTextAfterDelay()
     {
         yield return new WaitForSeconds(hideDelay);
@@ -142,41 +134,39 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
         scoreAnimator.SetTrigger("hide");
 
         yield return new WaitForSeconds(1);
-        // Hide teks skor di game setelah delay
         scoreTextInGame.gameObject.SetActive(false);
-        
     }
 
     private void UpdateScoreTextInGame()
     {
-        // Perbarui teks UI Text di game dengan nilai skor yang baru
         scoreTextInGame.text = score.ToString();
-
-        // Tampilkan kembali teks skor di game
         scoreTextInGame.gameObject.SetActive(true);
     }
 
     private void UpdateScoreTextPaused()
     {
-        // Perbarui teks UI Text di pause menu dengan nilai skor yang baru
         scoreTextPaused.text = score.ToString();
     }
 
     public void AddEnemyDefeats(int amount)
     {
         enemyDefeats += amount;
-        Debug.Log("Enemy Defeats: " + enemyDefeats);
     }
 
     public void AddBossDefeats(int amount)
     {
         bossDefeats += amount;
-        Debug.Log("Boss Defeats: " + bossDefeats);
     }
 
-    public void ResetScore(){
+    public void ResetScore()
+    {
         score = 0;
         enemyDefeats = 0;
         bossDefeats = 0;
+    }
+
+    public GameDataList GetGameDataList()
+    {
+        return gameDataList;
     }
 }
