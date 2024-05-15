@@ -47,10 +47,18 @@ public class EnemyKnockbackState : EnemyBaseState
         }
         else
         {
-            if (enemy.enemyObject.knockbackForce > 90f)
+
+            if (enemy.enemyObject.knockbackForce > 50)
             {
-                enemy.enemyObject.knockbackForce = 25f;
+                enemy.enemyObject.knockbackForce = 35f;
             }
+
+            enemy.enemyObject.transform.LookAt(enemy.enemyObject.target.position);
+            enemy.enemyObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            enemy.enemyObject.GetComponent<Rigidbody>().useGravity = false;
+            enemy.enemyObject.GetComponent<Rigidbody>().isKinematic = true;
+            enemy.enemyObject.Agent.Warp(enemy.enemyObject.transform.position);
+            enemy.GetComponent<NavMeshAgent>().enabled = true;
 
             enemy.SwitchState(enemy.restState);
         }

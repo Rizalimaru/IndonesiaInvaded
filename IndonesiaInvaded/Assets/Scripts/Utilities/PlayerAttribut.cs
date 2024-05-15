@@ -46,12 +46,14 @@ public class PlayerAttribut : MonoBehaviour
     {
         if (other.CompareTag("EnemyMeleeCollider"))
         {
-            TakeDamage(40);
+            Debug.Log("Damaged by melee");
+            TakeDamage(100);
             StopRegenerateHealth();
         }
         else if (other.CompareTag("EnemyRangedCollider"))
         {
-            TakeDamage(20);
+            Debug.Log("Damaged by ranged");
+            TakeDamage(50);
             StopRegenerateHealth();
         }
     }
@@ -63,7 +65,7 @@ public class PlayerAttribut : MonoBehaviour
     }
     IEnumerator RegenerateHealth()
     {
-        float regenRate = 0.1f; // Laju regenerasi HP per detik
+        float regenRate = 0.01f; // Laju regenerasi HP per detik
         while (true)
         {
             if (currentHealth < maxHealth)
