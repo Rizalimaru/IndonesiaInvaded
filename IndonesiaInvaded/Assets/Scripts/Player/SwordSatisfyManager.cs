@@ -21,7 +21,7 @@ public class SwordSatisfyManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Periksa apakah objek yang masuk trigger memiliki tag "Enemy"
-        if (other.CompareTag("Enemy") && combat.isAttacking == true)
+        if (other.CompareTag("Enemy"))
         {   
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
             StartCoroutine(slowMotionStart());
