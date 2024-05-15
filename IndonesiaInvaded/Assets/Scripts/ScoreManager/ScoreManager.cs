@@ -6,6 +6,9 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
 {
     public static ScoreManager instance;
 
+    [Header("Level")]
+    public int levelIndex;
+
     [Header("Value")]
     public int score;
     public int enemyDefeats;
@@ -42,10 +45,9 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
         data.bossDefeats = bossDefeats;
         data.time = time;
         data.bonus = bonus;
-        data.totalScore = data.CalculateTotalScore(score, enemyDefeats, bossDefeats, bonus);
+        data.totalScore = data.CalculateTotalScore();
         data.UpdateHighScore();
         data.UpdateRank();
-
     }
 
     public void LoadData(GameData data)

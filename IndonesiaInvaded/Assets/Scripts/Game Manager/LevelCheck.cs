@@ -5,10 +5,16 @@ using UnityEngine.UI;
 
 public class LevelCheck : MonoBehaviour
 {
+    [Header("Profile")]
+
+    [SerializeField] private string profileId = "";
     [Header("Level")]
     public int levelNumber;
     public GameObject levelLocked;
     public GameObject levelUnlock;
+    public GameObject score;
+    public GameObject rank;
+    public bool hasData { get; private set; } = false;
 
     private void Start()
     {
@@ -17,6 +23,7 @@ public class LevelCheck : MonoBehaviour
         {
             if (!levelManager.IsLevelUnlocked(levelNumber))
             {
+
                 LockLevel();
             }
             else
@@ -27,6 +34,23 @@ public class LevelCheck : MonoBehaviour
         else
         {
             Debug.LogError("levelManager instance is null. Cannot load level data.");
+        }
+    }
+
+    public void SetData(GameData data) 
+    {
+        // there's no data for this profileId
+        if (data == null) 
+        {
+            hasData = false;
+            LockLevel();
+        }
+        // there is data for this profileId
+        else 
+        {
+            hasData = true;
+            LoadLevel();
+
         }
     }
 
@@ -42,6 +66,11 @@ public class LevelCheck : MonoBehaviour
         levelLocked.SetActive(false);
         levelUnlock.SetActive(true);
         GetComponent<Button>().interactable = true;
+    }
+
+    public string GetProfileId() 
+    {
+        return this.profileId;
     }
 
 }
