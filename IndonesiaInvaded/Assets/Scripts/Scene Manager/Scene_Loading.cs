@@ -35,6 +35,8 @@ public class Scene_Loading : MonoBehaviour
     public void LoadScenes()
     {
         loadingScreen.SetActive(true);
+        // Stop audio bgm mainmenu sebelum play game 
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",1f);
 
         loadingBarFill.value = 0;
         StartCoroutine(LoadScenesAsync());
@@ -42,6 +44,8 @@ public class Scene_Loading : MonoBehaviour
     public void LoadScenes2()
     {
         loadingScreen.SetActive(true);
+        // Stop audio bgm mainmenu sebelum play game 
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",1f);
 
         loadingBarFill.value = 0;
         StartCoroutine(LoadLevel2());
@@ -49,6 +53,8 @@ public class Scene_Loading : MonoBehaviour
     public void LoadScenes3()
     {
         loadingScreen.SetActive(true);
+        // Stop audio bgm mainmenu sebelum play game 
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",1f);
 
         loadingBarFill.value = 0;
         StartCoroutine(LoadLevel3());
