@@ -1,8 +1,8 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
 public class HitDrag : MonoBehaviour
-{
+{   
     public enum TagEnemyOptions
     {
         Enemy,
@@ -14,7 +14,6 @@ public class HitDrag : MonoBehaviour
 
     public float movementSpeed = 5f; // Kecepatan gerak player
     public float detectionRadius = 5f; // Jarak deteksi musuh terdekat
-    public float stopDistance = 2f; // Jarak untuk berhenti mendekati musuh
 
     private bool isMoving = false; // Status gerakan player
     public Transform nearestEnemy; // Referensi ke musuh terdekat
@@ -35,14 +34,7 @@ public class HitDrag : MonoBehaviour
         // Memeriksa apakah parameter hit1 true dan musuh berada dalam jarak deteksi
         if (animator.GetBool("hit1") && nearestEnemy != null && Vector3.Distance(player.position, nearestEnemy.position) <= detectionRadius)
         {
-            if (Vector3.Distance(player.position, nearestEnemy.position) > stopDistance)
-            {
-                MoveToEnemy(); // Memanggil fungsi untuk bergerak ke enemy
-            }
-            else
-            {
-                StopMoving(); // Memanggil fungsi untuk menghentikan gerakan jika sudah dalam jarak 2 unit dari musuh
-            }
+            MoveToEnemy(); // Memanggil fungsi untuk bergerak ke enemy
         }
         else
         {
@@ -78,45 +70,17 @@ public class HitDrag : MonoBehaviour
         if (!isMoving && nearestEnemy != null) // Memastikan player tidak sedang dalam proses gerakan dan terdapat musuh terdekat
         {
             isMoving = true; // Menandai player sedang dalam proses gerakan
-            StartCoroutine(MoveToEnemyCoroutine()); // Memulai proses gerakan player ke musuh
+
+            Vector3 direction = (nearestEnemy.position - player.position).normalized; // Menghitung arah menuju enemy
+            Vector3 targetPosition = nearestEnemy.position - direction * 1.5f; // Menentukan posisi target player
+
+            // Mengatur posisi target dengan nilai y tetap dari posisi player
+            targetPosition.y = player.position.y;
+
+            StartCoroutine(MovePlayer(targetPosition)); // Memulai proses gerakan player ke posisi target
         }
     }
 
-    private IEnumerator MoveToEnemyCoroutine()
-    {
-        LookAtEnemy(); // Menghadap ke arah musuh
-
-        Vector3 startPosition = player.position; // Simpan posisi awal player
-        Vector3 moveDirection = (nearestEnemy.position - startPosition).normalized; // Hitung arah pergerakan ke musuh
-        Vector3 targetPosition = nearestEnemy.position - moveDirection * 1.5f; // Hitung posisi target berdasarkan jarak yang ditentukan
-
-        targetPosition.y = player.position.y; // Memastikan target posisi tetap pada level y yang sama
-        float distanceToMove = Vector3.Distance(startPosition, targetPosition); // Hitung jarak yang harus ditempuh
-        float duration = distanceToMove / movementSpeed; // Hitung durasi pergerakan berdasarkan jarak dan kecepatan
-
-        float timeElapsed = 0f;
-        while (timeElapsed < duration && Vector3.Distance(player.position, nearestEnemy.position) > stopDistance) // Tambahkan kondisi jarak
-        {
-            // Interpolasi pergerakan
-            player.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        player.position = targetPosition; // Pastikan posisi player benar-benar mencapai posisi target
-        isMoving = false; // Menandai player tidak lagi dalam proses gerakan
-    }
-
-    public void LookAtEnemy()
-    {
-        if (nearestEnemy != null)
-        {
-            Vector3 targetDirection = nearestEnemy.position - player.position;
-            targetDirection.y = 0f; // Keep the rotation in the horizontal plane
-            Quaternion rotation = Quaternion.LookRotation(targetDirection);
-            player.rotation = Quaternion.Slerp(player.rotation, rotation, movementSpeed * Time.deltaTime);
-        }
-    }
 
     void StopMoving()
     {
@@ -125,5 +89,18 @@ public class HitDrag : MonoBehaviour
             StopAllCoroutines(); // Menghentikan semua proses gerakan player
             isMoving = false; // Menandai player tidak lagi dalam proses gerakan
         }
+    }
+
+    IEnumerator MovePlayer(Vector3 targetPosition)
+    {
+        while (Vector3.Distance(player.position, targetPosition) > 1f) // Selama player belum mencapai posisi target
+        {
+            // Menggerakkan player ke arah target
+            player.position = Vector3.MoveTowards(player.position, targetPosition, movementSpeed * Time.deltaTime);
+
+            yield return null;
+        }
+
+        isMoving = false; // Menandai player telah mencapai posisi target dan tidak lagi dalam proses gerakan
     }
 }

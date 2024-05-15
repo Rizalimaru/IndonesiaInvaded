@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float walkSpeed;
     public float sprintSpeed;
     public float groundDrag;
+    private bool isStopping = false;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -109,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isGrounded", false);
         }
+        
     }
 
     private void FixedUpdate()
@@ -122,7 +124,6 @@ public class PlayerMovement : MonoBehaviour
         }
         
     }
-
 
     private void MyInput()
     {   
@@ -158,25 +159,19 @@ public class PlayerMovement : MonoBehaviour
         {
             if(moveDirection.magnitude !=0)
             {
-                StartCoroutine(Dodge());
+                Dodge();
             }
         }
     }
 
-    IEnumerator Dodge()
+    void Dodge()
     {
         isDodging = true;
-        float timer = 0;
         animator.SetTrigger("Dodge");
-        while(timer < dodgeTimer)
-        {
-            float speed = dodgeCurve.Evaluate(timer);
-            Vector3 dir = (transform.forward * speed) + (Vector3.up * rb.velocity.y); // Menggunakan rb.velocity
-            // Mengganti pemanggilan CharacterController.Move() dengan pemanggilan transform.Translate() atau rb.MovePosition() jika tidak menggunakan CharacterController
-            transform.Translate(dir * Time.deltaTime); // atau rb.MovePosition(transform.position + dir * Time.deltaTime) jika tidak menggunakan CharacterController
-            timer += Time.deltaTime;
-            yield return null;
-        }
+        moveDirection = orientationForAtk.forward * verticalInput + orientationForAtk.right * horizontalInput;
+        //moveDirection += orientationForAtk.forward;
+        Vector3 targetVelocity = moveDirection.normalized * 5f * 2f;
+        rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * 10f); // 
         isDodging = false;
     }
 
@@ -227,6 +222,11 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
+
+        if(verticalInput == 0 && animator.GetFloat("movement") < 1)
+        {
+            animator.SetTrigger("isStop");
+        }
     
         // Stop player movement if hit animation is active
         if (RoarSkill)
@@ -271,11 +271,11 @@ public class PlayerMovement : MonoBehaviour
         float forwardSpeed = 0f;
         if(hit1)
         {
-            forwardSpeed = 1f;
+            forwardSpeed = .5f;
         }
         else if(hit2)
         {
-            forwardSpeed = 1f;
+            forwardSpeed = .5f;
         }
         else if(hit3)
         {
