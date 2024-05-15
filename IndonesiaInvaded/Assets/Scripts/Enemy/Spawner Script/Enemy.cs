@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -62,6 +63,18 @@ public class Enemy : MonoBehaviour
             stateManager.SwitchState(stateManager.deadState);
             
         }
+
+        if (isKnockedBack == true)
+        {
+            if (enemyTitle == EnemyScriptableObject.title.Basic)
+            {
+                Invoke("knockbackDelayCounter", 0.2f);
+            }
+            else
+            {
+                Invoke("knockbackDelayCounter", 5f);
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -72,27 +85,19 @@ public class Enemy : MonoBehaviour
             health -= 50;
             knockbackForce = 25f;
 
-            if (enemyTitle == EnemyScriptableObject.title.Basic)
-            {
-                knockbackDelay = 0.2f;
-            }
-            else
-            {
-                knockbackDelay = 1.5f;
-            }
-
             if (isKnockedBack == false)
             {
-                stateManager.SwitchState(stateManager.knockbackState);
                 isKnockedBack = true;
+                stateManager.SwitchState(stateManager.knockbackState);
             }
+
             if (health <= 0)
             {
                 objectiveManager.UpdateObjective();
             }
         }
 
-        if (other.CompareTag("SkillRoarCollider"))
+        if (other.CompareTag("SkillRoarCollider") && health > 0)
         {
             knockbackForce = 100f;
             knockbackDelay = 2f;
@@ -103,6 +108,11 @@ public class Enemy : MonoBehaviour
                 isKnockedBack = true;
             }
         }
+    }
+
+    public void knockbackDelayCounter()
+    {
+        isKnockedBack = false; 
     }
 
     public void Attack()

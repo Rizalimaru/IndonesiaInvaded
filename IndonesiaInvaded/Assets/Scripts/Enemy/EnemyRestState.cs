@@ -11,6 +11,7 @@ public class EnemyRestState : EnemyBaseState
         if (enemy.enemyObject.enemyTitle == EnemyScriptableObject.title.Boss) Debug.Log("Boss is Resting");
         else Debug.Log("Enemy is Resting");
 
+        enemy.GetComponent<NavMeshAgent>().enabled = true;
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
         
         enemy.animator.SetBool("isWalking", false);
@@ -19,7 +20,6 @@ public class EnemyRestState : EnemyBaseState
         enemy.animator.SetBool("isDead", false);
         enemy.animator.SetBool("isStunned", false);
         enemy.animator.SetBool("repositioning", false);
-        enemy.animator.SetBool("confused", false);
 
         attackDelay = enemy.enemyObject.attackSpeed;
     }

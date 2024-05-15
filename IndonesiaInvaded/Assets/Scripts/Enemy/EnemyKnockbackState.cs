@@ -18,7 +18,7 @@ public class EnemyKnockbackState : EnemyBaseState
             force = 5f;
         }
 
-        delay = 1f;
+        delay = enemy.enemyObject.animDelay;
 
         Debug.Log("Enemy got knockbacked");
 
@@ -28,7 +28,6 @@ public class EnemyKnockbackState : EnemyBaseState
         enemy.animator.SetBool("isDead", false);
         enemy.animator.SetBool("isStunned", true);
         enemy.animator.SetBool("repositioning", false);
-        enemy.animator.SetBool("confused", false);
 
         enemy.GetComponent<NavMeshAgent>().enabled = false;
 
@@ -53,7 +52,7 @@ public class EnemyKnockbackState : EnemyBaseState
                 enemy.enemyObject.knockbackForce = 25f;
             }
 
-            enemy.SwitchState(enemy.confusedState);
+            enemy.SwitchState(enemy.restState);
         }
     }
 
