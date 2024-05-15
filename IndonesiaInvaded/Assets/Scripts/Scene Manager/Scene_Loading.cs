@@ -36,7 +36,6 @@ public class Scene_Loading : MonoBehaviour
     {
         loadingScreen.SetActive(true);
         // Stop audio bgm mainmenu sebelum play game 
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",1f);
 
         loadingBarFill.value = 0;
         StartCoroutine(LoadScenesAsync());
@@ -45,7 +44,6 @@ public class Scene_Loading : MonoBehaviour
     {
         loadingScreen.SetActive(true);
         // Stop audio bgm mainmenu sebelum play game 
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",1f);
 
         loadingBarFill.value = 0;
         StartCoroutine(LoadLevel2());
@@ -54,18 +52,19 @@ public class Scene_Loading : MonoBehaviour
     {
         loadingScreen.SetActive(true);
         // Stop audio bgm mainmenu sebelum play game 
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",1f);
 
         loadingBarFill.value = 0;
         StartCoroutine(LoadLevel3());
     } 
     IEnumerator LoadScenesAsync()
     {
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 0.6f);
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
-        scenes.Add(SceneManager.LoadSceneAsync("Gameplay1"));
-        scenes.Add(SceneManager.LoadSceneAsync("Level1", LoadSceneMode.Additive));
+        
+        scenes.Add(SceneManager.LoadSceneAsync("Level1" ));
+        scenes.Add(SceneManager.LoadSceneAsync("Gameplay1",LoadSceneMode.Additive));
 
 
         // Tunggu hingga semua scene dimuat
@@ -92,6 +91,8 @@ public class Scene_Loading : MonoBehaviour
     }
     IEnumerator LoadLevel2()
     {
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",  0.6f);
+
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
@@ -124,6 +125,7 @@ public class Scene_Loading : MonoBehaviour
     }
     IEnumerator LoadLevel3()
     {
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",  0.6f);
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
