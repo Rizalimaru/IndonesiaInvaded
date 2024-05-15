@@ -16,7 +16,7 @@ public class PlayerAnimator : MonoBehaviour
     Rigidbody rb;
 
     [Header("Movement")]
-    public float acceleration = 3f; // Acceleration rate
+    public float acceleration =10f; // Acceleration rate
     public float maxMovement = 1.5f; // Maximum movement value
     float currentMovement = 0f; // Current movement value
 

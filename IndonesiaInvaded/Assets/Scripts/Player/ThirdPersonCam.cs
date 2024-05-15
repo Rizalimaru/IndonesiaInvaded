@@ -39,9 +39,11 @@ public class ThirdPersonCam : MonoBehaviour
     private void Start()
     {   
         animator = player.GetComponent<Animator>();
+        skillManager = SkillManager.instance; // Tambahkan inisialisasi instance SkillManager
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+
 
     private void Update()
     {   
@@ -127,7 +129,7 @@ public class ThirdPersonCam : MonoBehaviour
         if(hitDrag.nearestEnemy != null)
         {
             yield return new WaitForSeconds(1f);
-            Vector3 targetDirection = hitDrag.nearestEnemy.position - player.position;
+            Vector3 targetDirection = skillManager.nearestEnemy.position - player.position;
             targetDirection.y = 0f; // Keep the rotation in the horizontal plane
             Quaternion rotation = Quaternion.LookRotation(targetDirection);
             playerObj.rotation = Quaternion.Slerp(playerObj.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
