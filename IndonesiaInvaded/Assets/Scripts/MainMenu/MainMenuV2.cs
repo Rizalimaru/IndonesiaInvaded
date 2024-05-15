@@ -27,7 +27,6 @@ public class MainMenuV2 : MonoBehaviour
         CheckLevel1Completion();
     }
     public void NewGame(){
-        GameManager.instance.NewGame();
         StartCoroutine(DelayNewGame());
         
 
