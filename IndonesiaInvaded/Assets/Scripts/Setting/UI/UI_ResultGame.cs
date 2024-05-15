@@ -19,32 +19,27 @@ public class UI_ResultGame : MonoBehaviour
     public TMP_Text bonusText;
     public TMP_Text totalScoreText; // Teks untuk menampilkan total skor
     private ScoreManager scoreManager;
-    private GameData data;
-    public int totalScore;
+
     private void Start()
     {
         scoreManager = ScoreManager.instance;
 
         if (instance == null)
         {
-
             instance = this;
-            data = new GameData();
         }
     }
 
     private void Update()
     {
-
         // Ambil nilai skor, jumlah musuh yang dikalahkan, jumlah boss yang dikalahkan, dan bonus dari ScoreManager
-        int score = data.score;
-        int enemyDefeats = data.enemyDefeats;
-        int bossDefeats = data.bossDefeats;
-        int bonus = data.bonus;
-        totalScore = data.totalScore;
+        int score = scoreManager.score;
+        int enemyDefeats = scoreManager.enemyDefeats;
+        int bossDefeats = scoreManager.bossDefeats;
+        int bonus = scoreManager.bonus;
 
         // Hitung total skor berdasarkan skor, jumlah musuh yang dikalahkan, jumlah boss yang dikalahkan, dan bonus
-        totalScore = data.CalculateTotalScore(score, enemyDefeats, bossDefeats, 0);
+        int totalScore = CalculateTotalScore(score, enemyDefeats, bossDefeats, 0);
 
         // Ubah sprite score berdasarkan nilai total skor
         if (totalScore >= 44000)      // S
@@ -79,6 +74,12 @@ public class UI_ResultGame : MonoBehaviour
         scoreImage.gameObject.SetActive(false);
     }
     // Metode untuk menghitung total skor berdasarkan skor, jumlah musuh yang dikalahkan, jumlah boss yang dikalahkan, dan bonus
+    private int CalculateTotalScore(int score, int enemyDefeats, int bossDefeats, int bonus)
+    {
+        // Contoh: total skor dihitung berdasarkan skor, jumlah musuh yang dikalahkan, jumlah boss yang dikalahkan, dan bonus
+        int totalScore = score + (enemyDefeats * 1000) + (bossDefeats * 5000) + bonus;
+        return totalScore;
+    }
 
     public void ShowResult()
     {
@@ -126,7 +127,7 @@ public class UI_ResultGame : MonoBehaviour
             bossDefeatsText.text = currentBossDefeats.ToString();
 
             yield return null; // Tunggu satu frame
-        }
+        }   
 
         int currentBonus = 0;
         while (currentBonus < scoreManager.bonus)
@@ -143,11 +144,11 @@ public class UI_ResultGame : MonoBehaviour
         int currentTotalScore = 0;
 
         // Animasi perhitungan total skor
-        while (currentTotalScore < data.CalculateTotalScore(scoreManager.score, scoreManager.enemyDefeats, scoreManager.bossDefeats, scoreManager.bonus))
+        while (currentTotalScore < CalculateTotalScore(scoreManager.score, scoreManager.enemyDefeats,scoreManager.bossDefeats , scoreManager.bonus))
         {
             currentTotalScore += 5000; // Penambahan total skor per frame (sesuaikan dengan kebutuhan)
-            if (currentTotalScore > data.CalculateTotalScore(scoreManager.score, scoreManager.enemyDefeats, scoreManager.bossDefeats, scoreManager.bonus))
-                currentTotalScore = data.CalculateTotalScore(scoreManager.score, scoreManager.enemyDefeats, scoreManager.bossDefeats, scoreManager.bonus); // Pastikan nilai total skor tidak melampaui nilai aktual
+            if (currentTotalScore > CalculateTotalScore(scoreManager.score, scoreManager.enemyDefeats, scoreManager.bossDefeats, scoreManager.bonus))
+                currentTotalScore = CalculateTotalScore(scoreManager.score, scoreManager.enemyDefeats, scoreManager.bossDefeats, scoreManager.bonus); // Pastikan nilai total skor tidak melampaui nilai aktual
 
             totalScoreText.text = currentTotalScore.ToString();
 
@@ -157,8 +158,7 @@ public class UI_ResultGame : MonoBehaviour
         scoreImage.gameObject.SetActive(true);
     }
 
-    public string GetTotalScore()
-    {
+    public string GetTotalScore(){
         return totalScoreText.text;
     }
 }
