@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class HitDrag : MonoBehaviour
 {   
@@ -90,9 +91,9 @@ public class HitDrag : MonoBehaviour
         }
     }
 
-    System.Collections.IEnumerator MovePlayer(Vector3 targetPosition)
+    IEnumerator MovePlayer(Vector3 targetPosition)
     {
-        while (Vector3.Distance(player.position, targetPosition) > 0.1f) // Selama player belum mencapai posisi target
+        while (Vector3.Distance(player.position, targetPosition) > 1f) // Selama player belum mencapai posisi target
         {
             // Menggerakkan player ke arah target
             player.position = Vector3.MoveTowards(player.position, targetPosition, movementSpeed * Time.deltaTime);
