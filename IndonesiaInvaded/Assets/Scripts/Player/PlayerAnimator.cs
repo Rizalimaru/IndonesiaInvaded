@@ -11,6 +11,7 @@ public class PlayerAnimator : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
+    public LayerMask whatIsGround2;
     bool grounded;
 
     Rigidbody rb;
@@ -42,7 +43,7 @@ public class PlayerAnimator : MonoBehaviour
     private void FixedUpdate()
     {
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround | whatIsGround2);
 
         UpdateAnimator();
     }
