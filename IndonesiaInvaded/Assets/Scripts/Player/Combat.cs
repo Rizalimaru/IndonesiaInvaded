@@ -82,10 +82,15 @@ public class Combat : MonoBehaviour
         {
             isAttacking = false;
         }
+        if(animator.GetBool("RoarSkill"))
+        {   
+            currentHit = 0;
+        }
     }
 
     void PerformHit()
-    {
+    {   
+
         // Mengecek apakah hit terakhir sudah mencapai hit ke-4, jika ya, maka reset ke hit pertama
         if (currentHit >= 9)
         {

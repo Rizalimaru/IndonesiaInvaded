@@ -11,6 +11,7 @@ public class SwordSatisfyManager : MonoBehaviour
 
     private void Awake()
     {   
+
         combat = Combat.instance;
     }
     void Update()
