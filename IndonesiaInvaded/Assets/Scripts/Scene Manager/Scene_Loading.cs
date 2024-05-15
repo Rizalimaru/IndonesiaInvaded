@@ -37,6 +37,7 @@ public class Scene_Loading : MonoBehaviour
         loadingScreen.SetActive(true);
 
         loadingBarFill.value = 0;
+        
         StartCoroutine(LoadScenesAsync());
     } 
     public void LoadScenes2()

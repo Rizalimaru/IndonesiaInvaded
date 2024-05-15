@@ -12,13 +12,13 @@ public class SpawningManager : MonoBehaviour
     public Transform[] spawnPoint;
 
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.P))
-    //    {
-    //        SpawnEnemy(enemyType[0], spawnPoint[0].position);
-    //    }
-    //}
+    private void Update()
+    {
+       if (Input.GetKeyDown(KeyCode.P))
+       {
+           SpawnEnemy(enemyType[0], spawnPoint[0].position);
+       }
+    }
 
     private void Awake()
     {
