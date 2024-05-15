@@ -74,24 +74,3 @@ public class GameData
         rank = GetRank();
     }
 }
-
-
-public class GameDataList
-{
-    public List<GameData> dataList;
-
-    public GameDataList()
-    {
-        dataList = new List<GameData>();
-    }
-
-    public void AddData(GameData data)
-    {
-        dataList.Add(data);
-    }
-
-    public void RemoveData(GameData data)
-    {
-        dataList.Remove(data);
-    }
-}
