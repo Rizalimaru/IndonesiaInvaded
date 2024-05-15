@@ -4,44 +4,68 @@ using UnityEngine;
 
 public class CheckPointManager : MonoBehaviour
 {
-    public static CheckPointManager instance;
-    private List<Vector3> checkpointPositions = new List<Vector3>();
+    public static CheckPointManager instance { get; private set; }
+    [SerializeField] Animator animator;
+    [SerializeField] GameObject playerCamera;
+    [SerializeField] GameObject player;
+
+    [SerializeField] Vector3 checkpointPosition;
+
     private void Awake()
     {
         instance = this;
     }
 
-    public void AddCheckpoint(Vector3 position)
+    public void SetCheckPoint(Vector3 position)
     {
-        checkpointPositions.Add(position);
-    }
-    public Vector3 GetLastCheckpointPosition()
-    {
-        if (checkpointPositions.Count > 0)
-        {
-            return checkpointPositions[checkpointPositions.Count - 1];
-        }
-        else
-        {
-            return Vector3.zero;
-        }
-    }
-
-    public void ClearCheckpoints()
-    {
-        checkpointPositions.Clear();
+        // vectorPoint = position;
+        checkpointPosition = new Vector3(position.x, 0, position.z);
     }
 
     public void Respawn()
     {
-        if (checkpointPositions.Count > 0)
-        {
-            Vector3 lastCheckpointPosition = GetLastCheckpointPosition();
-            PlayerDataSaving.instance.Teleports(lastCheckpointPosition);
-        }
-        else
-        {
-            Debug.LogError("No checkpoints found!");
-        }
+        StartCoroutine(RespawnFade());
+
     }
+
+    public Vector3 GetCheckPoint()
+    {
+        // return vectorPoint;
+        return checkpointPosition;
+    }
+
+    public void ResetCheckPoint()
+    {
+        // vectorPoint = Vector3.zero;
+        checkpointPosition = new Vector3(0, 0, 0);
+    }
+
+    IEnumerator RespawnFade()
+    {
+        animator.SetTrigger("End");
+
+        DeactiveObject();
+
+        yield return new WaitForSeconds(1);
+
+        ScoreManager.instance.ResetScore();
+        PlayerDataSaving.instance.Teleport(GetCheckPoint(), Quaternion.identity);
+
+        ActiveObject();
+
+        animator.SetTrigger("Start");
+    }
+
+    private void ActiveObject()
+    {
+        player.gameObject.SetActive(true);
+        playerCamera.SetActive(true);
+    }
+
+    private void DeactiveObject()
+    {
+        player.gameObject.SetActive(false);
+        playerCamera.SetActive(false);
+    }
+
 }
