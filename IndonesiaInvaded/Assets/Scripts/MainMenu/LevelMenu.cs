@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 public class LevelMenu : MonoBehaviour
 {
+    [Header("Scene")]
     public SceneField[] scene;
+
     [Space(2)]
     [Header("Menu Navigation")]
     [SerializeField] private MainMenu mainMenu;
@@ -14,17 +16,78 @@ public class LevelMenu : MonoBehaviour
     [Header("Menu Button")]
     [SerializeField] private Button backButton;
 
-    public void LoadLevel1()
-    {
-        Scene_Loading.instance.LoadScenes();
+    private LevelCheck[] levelChecks;
+    private bool isLoadingGame = false;
+    
+
+    private void Awake(){
+        levelChecks = this.GetComponentsInChildren<LevelCheck>();
     }
-    public void LoadLevel2()
+    public void LoadLevel1(LevelCheck levelCheck)
     {
-        Scene_Loading.instance.LoadScenes2();
+        if (isLoadingGame)
+        {
+            GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
+            GameManager.instance.SaveGame();
+            Scene_Loading.instance.LoadScenes();
+        }
+        else if (levelCheck.hasData)
+        {
+            GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
+            GameManager.instance.NewGame();
+            GameManager.instance.SaveGame();
+            Scene_Loading.instance.LoadScenes();
+        }
+        else{
+            GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
+            GameManager.instance.NewGame();
+            GameManager.instance.SaveGame();
+            Scene_Loading.instance.LoadScenes();
+        }
     }
-    public void LoadLevel3()
+    public void LoadLevel2(LevelCheck levelCheck)
     {
-        Scene_Loading.instance.LoadScenes3();
+        if (isLoadingGame)
+        {
+            GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
+            GameManager.instance.SaveGame();
+            Scene_Loading.instance.LoadScenes2();
+        }
+        else if (levelCheck.hasData)
+        {
+            GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
+            GameManager.instance.NewGame();
+            GameManager.instance.SaveGame();
+            Scene_Loading.instance.LoadScenes2();
+        }
+        else{
+            GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
+            GameManager.instance.NewGame();
+            GameManager.instance.SaveGame();
+            Scene_Loading.instance.LoadScenes2();
+        }
+    }
+    public void LoadLevel3(LevelCheck levelCheck)
+    {
+        if (isLoadingGame)
+        {
+            GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
+            GameManager.instance.SaveGame();
+            Scene_Loading.instance.LoadScenes3();
+        }
+        else if (levelCheck.hasData)
+        {
+            GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
+            GameManager.instance.NewGame();
+            GameManager.instance.SaveGame();
+            Scene_Loading.instance.LoadScenes3();
+        }
+        else{
+            GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
+            GameManager.instance.NewGame();
+            GameManager.instance.SaveGame();
+            Scene_Loading.instance.LoadScenes3();
+        }
     }
 
     public void OnBackClicked()

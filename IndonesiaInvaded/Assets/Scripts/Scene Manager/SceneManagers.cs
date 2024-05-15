@@ -46,6 +46,7 @@ public class SceneManagers : MonoBehaviour
         UI_PauseGame.instance.HideResult();
         CurrentLevelIndex++;
         LoadLevelWithIndex(CurrentLevelIndex);
+        ScoreManager.instance.ResetAllValues();
         GameManager.instance.SaveGame();
     }
     public void RestartLevel()

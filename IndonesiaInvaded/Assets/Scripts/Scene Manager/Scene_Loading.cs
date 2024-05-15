@@ -38,6 +38,7 @@ public class Scene_Loading : MonoBehaviour
         // Stop audio bgm mainmenu sebelum play game 
 
         loadingBarFill.value = 0;
+        
         StartCoroutine(LoadScenesAsync());
     } 
     public void LoadScenes2()
