@@ -6,6 +6,9 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
 {
     public static ScoreManager instance;
 
+    [Header("Level")]
+    public int levelIndex;
+
     [Header("Value")]
     public int score;
     public int enemyDefeats;
@@ -37,24 +40,50 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
 
     public void SaveData(GameData data)
     {
-        data.score = score;
-        data.enemyDefeats = enemyDefeats;
-        data.bossDefeats = bossDefeats;
-        data.time = time;
-        data.bonus = bonus;
-        data.totalScore = data.CalculateTotalScore(score, enemyDefeats, bossDefeats, bonus);
-        data.UpdateHighScore();
-        data.UpdateRank();
+        // data.score = score;
+        // data.enemyDefeats = enemyDefeats;
+        // data.bossDefeats = bossDefeats;
+        // data.time = time;
+        // data.bonus = bonus;
+        // data.totalScore = data.CalculateTotalScore();
+        // data.UpdateHighScore();
+        // data.UpdateRank();
+
+        LevelData levelData = data.levelData.Find(x => x.levelNumber == levelIndex);
+        if (levelData != null)
+        {
+            // Menyimpan nilai dari ScoreManager ke dalam data level
+            levelData.score = score;
+            levelData.enemyDefeats = enemyDefeats;
+            levelData.bossDefeats = bossDefeats;
+            levelData.time = time;
+            levelData.bonus = bonus;
+            // Mengupdate totalScore, highScore, dan rank
+            levelData.totalScore = levelData.CalculateTotalScore();
+            levelData.UpdateHighScore();
+            levelData.UpdateRank();
+        }
 
     }
 
     public void LoadData(GameData data)
     {
-        score = data.score;
-        enemyDefeats = data.enemyDefeats;
-        bossDefeats = data.bossDefeats;
-        time = data.time;
-        bonus = data.bonus;
+        // score = data.score;
+        // enemyDefeats = data.enemyDefeats;
+        // bossDefeats = data.bossDefeats;
+        // time = data.time;
+        // bonus = data.bonus;
+
+        LevelData levelData = data.levelData.Find(x => x.levelNumber == levelIndex);
+        if (levelData != null)
+        {
+            // Memuat nilai dari data level ke dalam ScoreManager
+            score = levelData.score;
+            enemyDefeats = levelData.enemyDefeats;
+            bossDefeats = levelData.bossDefeats;
+            time = levelData.time;
+            bonus = levelData.bonus;
+        }
     }
 
     private void Update()

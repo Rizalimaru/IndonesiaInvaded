@@ -9,13 +9,25 @@ public class GameComplete : MonoBehaviour
 
     [Header("Level Number")]
     [SerializeField] int levelNumber;
+
     [Header("Game Object To Disable")]
     [SerializeField] PlayerDataSaving player;
     [SerializeField] GameObject playerCamera;
+
+    private GameData gameData;
+
+    private void Start()
+    {
+        if (gameData == null)
+        {
+            gameData = new GameData();
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
+            gameData.AddLevelData(levelNumber);
             LevelManager.instance.OnCompleteLevel(levelNumber);
             StartCoroutine(NextLevel());
         }
@@ -35,5 +47,5 @@ public class GameComplete : MonoBehaviour
         GameManager.instance.SaveGame();
     }
 
-    
+
 }
