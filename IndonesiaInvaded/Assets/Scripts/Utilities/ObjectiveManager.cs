@@ -12,16 +12,15 @@ public class ObjectiveManager : MonoBehaviour
     private int enemyCount = 0;
     private bool objectiveCompleted = false;
 
+    private float delay;
+
     private void Awake()
     {
+        delay = 1f;
 
         if (instance == null)
         {
             instance = this;
-        }
-        else
-        {
-            
         }
     }
 
@@ -47,12 +46,6 @@ public class ObjectiveManager : MonoBehaviour
         
     }
 
-    // Menyembunyikan UI objektif
-    public void HideObjective()
-    {
-        objectiveUIPanel.SetActive(false);
-    }
-
     // Memulai objektif dan spawning musuh
     public void StartObjective()
     {   
@@ -76,25 +69,33 @@ public class ObjectiveManager : MonoBehaviour
         {
             objectiveCompleted = true;
 
-            StartCoroutine(HideObjectiveAfterDelay(5f));
+            HideObjectiveWithDelay();
+
+            //StartCoroutine(HideObjectiveAfterDelay(1f));
             objectiveUIText.text = "All Enemy Killed";
         }
     }
 
-    // Mengakhiri objektif dan menyembunyikan UI objektif
-    public void EndObjective()
+    public void ResetObjective()
     {
-        HideObjective();
+        killedEnemyCount = 0;
+        objectiveCompleted = false;
+
     }
+
+    private void HideObjectiveWithDelay()
+    {
+        objectiveUIPanel.SetActive(false);
+        ResetObjective();
+
+    }
+
 
     // Menyembunyikan UI objektif setelah penundaan
     private IEnumerator HideObjectiveAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         objectiveUIPanel.SetActive(false);
-        objectiveCompleted = true; 
-
-        SpawningManager.instance.HideWall();
     }
 
 
