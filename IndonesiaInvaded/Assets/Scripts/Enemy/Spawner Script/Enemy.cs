@@ -69,13 +69,19 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter (Collision collision)
     {
+
+        Collider other = collision.collider;
+
         if (other.CompareTag("Sword") && isAttacking == true && health > 0)
         {
+
+            CameraShaker.instance.CameraShake(0.5f, 0.1f);
+
             Debug.Log("Damaged");
             health -= 5;
-            knockbackForce = 25f;
+            knockbackForce = 30f;
             knockbackDelay = 0.2f;
 
             if (isKnockedBack == false)
@@ -89,11 +95,17 @@ public class Enemy : MonoBehaviour
                 objectiveManager.UpdateObjective();
             }
         }
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
         if (other.CompareTag("SkillRoarCollider") && health > 0)
         {
-            knockbackForce = 55f;
-            knockbackDelay = 3f;
+
+            Debug.Log("get roar");
+
+            knockbackForce = 65f;
+            knockbackDelay = 5f;
 
             if (isKnockedBack == false)
             {

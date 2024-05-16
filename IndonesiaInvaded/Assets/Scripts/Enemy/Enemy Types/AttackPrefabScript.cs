@@ -8,8 +8,17 @@ public class AttackPrefabScript : MonoBehaviour
     public Rigidbody rb;
     public Collider col;
 
+    public objectTag tagOption;
+
+    public enum objectTag
+    {
+        Enemy,
+        Player
+    }
+
     void Awake()
     {
+
         rb = GetComponent<Rigidbody>();
         col = col.GetComponent<Collider>();
 
@@ -23,15 +32,12 @@ public class AttackPrefabScript : MonoBehaviour
     {
         Collider other = collision.collider;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(tag.ToString()))
         {
             GameObject.Destroy(gameObject);
         }
         
     }
 
-    void Update()
-    {
-        
-    }
+    
 }
