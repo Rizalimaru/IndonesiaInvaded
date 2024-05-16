@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuV2 : MonoBehaviour
+public class MainMenuV2 : MonoBehaviour, IDataPersistence
 {
     public static MainMenuV2 instance;
     [Header("Button UI")]
@@ -22,11 +22,13 @@ public class MainMenuV2 : MonoBehaviour
     [Header("Menu Navigation")]
     [SerializeField] private LevelMenu levelMenu;
     private LevelCheck[] levelChecks;
+    private GameData data;
 
 
     private void Awake()
     {
         instance = this;
+        data = new GameData();
         levelChecks = this.GetComponentsInChildren<LevelCheck>();
     }
 
@@ -36,6 +38,7 @@ public class MainMenuV2 : MonoBehaviour
     }
     public void NewGame(LevelCheck levelCheck)
     {
+        GameManager.instance.SavePlayerData(levelCheck.GetProfileId(), data);
         GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
         GameManager.instance.NewGame();
         GameManager.instance.SaveGame();
@@ -123,4 +126,13 @@ public class MainMenuV2 : MonoBehaviour
         }
     }
 
+    public void SaveData(GameData data)
+    {
+        
+    }
+
+    public void LoadData(GameData data)
+    {
+
+    }
 }

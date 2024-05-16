@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDataPersistence
 {
@@ -19,9 +20,13 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public int highScore;
     public string rank;
     public string selectedProfileId = "";
+    private LevelCheck[] levelCheck;
     private GameData data;
 
-
+    private void Awake()
+    {
+        levelCheck = this.GetComponentsInChildren<LevelCheck>();
+    }
     private void Start()
     {
         data = new GameData();
@@ -52,14 +57,34 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
     }
     private void InitializeSelectedProfileId()
     {
-        if (data.playerData.Count > 0)
+        string selectedProfileId = "";
+        int highestScoreIndex = -1;
+
+        for (int i = 0; i < levelCheck.Length; i++)
         {
-            this.selectedProfileId = data.playerData.Keys.First();
+            string profileId = levelCheck[i].GetProfileId();
+            GameData profileData = data.playerData[profileId];
+
+            if (int.TryParse(profileData.highScore.ToString(), out int score) && int.TryParse(data.highScore.ToString(), out int currentScore))
+            {
+                if (score > currentScore)
+                {
+                    highestScoreIndex = i;
+                }
+            }
+
+            if (selectedProfileId == "")
+            {
+                selectedProfileId = profileId;
+            }
         }
-        else
+
+        if (highestScoreIndex >= 0)
         {
-            GameManager.instance.ChangeSelectedProfileId(selectedProfileId);
+            selectedProfileId = levelCheck[highestScoreIndex].GetProfileId();
         }
+
+        GameManager.instance.ChangeSelectedProfileId(selectedProfileId);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -85,15 +110,15 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
         // scoreText.text = highScore.ToString();
         // rankText.text = rank;
-
-        GetProfileId(selectedProfileId);
+        if (scoreAndRank.TryGetValue(selectedProfileId, out GameData playerData))
         {
-            scoreText.text = data.GetHighScore(selectedProfileId);
-            rankText.text = data.GetPlayerRank(selectedProfileId);
+            scoreText.text = playerData.highScore.ToString();
+            rankText.text = playerData.rank;
         }
     }
 
-    private void GetProfileId(string profileId){
+    private void GetProfileId(string profileId)
+    {
         GameManager.instance.ChangeSelectedProfileId(profileId);
     }
 

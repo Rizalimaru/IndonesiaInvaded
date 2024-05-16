@@ -86,10 +86,33 @@ public class GameData
         return data != null ? data.highScore.ToString() : "N/A";
     }
 
+    public string GetHighScores(string profileId)
+{
+    if (playerData.ContainsKey(profileId) && playerData[profileId].highScore != null)
+    {
+        return playerData[profileId].highScore.ToString();
+    }
+    else
+    {
+        return "0";
+    }
+}
+
     public string GetPlayerRank(string profileId)
     {
         GameData data = GetPlayerData(profileId);
         return data != null ? data.rank : "N/A";
     }
 
+    public string GetPlayerRanks(string profileId)
+{
+    if (playerData.ContainsKey(profileId) && playerData[profileId].rank != null)
+    {
+        return playerData[profileId].rank;
+    }
+    else
+    {
+        return "N/A";
+    }
+}
 }

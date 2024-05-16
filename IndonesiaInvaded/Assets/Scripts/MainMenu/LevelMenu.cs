@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LevelMenu : MonoBehaviour
+public class LevelMenu : MonoBehaviour, IDataPersistence
 {
     [Header("Scene")]
     public SceneField[] scene;
@@ -18,9 +18,14 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private Button backButton;
 
     public Button[] buttons;
+    private GameData data;
+    private void Awake(){
+        data = new GameData();
+    }
 
     public void LoadLevel1(LevelCheck levelCheck)
     {
+        GameManager.instance.SavePlayerData(levelCheck.GetProfileId(), data);
         GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
         GameManager.instance.NewGame();
         GameManager.instance.SaveGame();
@@ -28,6 +33,7 @@ public class LevelMenu : MonoBehaviour
     }
     public void LoadLevel2(LevelCheck levelCheck)
     {
+        GameManager.instance.SavePlayerData(levelCheck.GetProfileId(), data);
         GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
         GameManager.instance.NewGame();
         GameManager.instance.SaveGame();
@@ -35,6 +41,7 @@ public class LevelMenu : MonoBehaviour
     }
     public void LoadLevel3(LevelCheck levelCheck)
     {
+        GameManager.instance.SavePlayerData(levelCheck.GetProfileId(), data);
         GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
         GameManager.instance.NewGame();
         GameManager.instance.SaveGame();
@@ -62,6 +69,16 @@ public class LevelMenu : MonoBehaviour
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
 
         this.DeactivateMenu();
+    }
+
+    public void SaveData(GameData data)
+    {
+        
+    }
+
+    public void LoadData(GameData data)
+    {
+
     }
 
 }
