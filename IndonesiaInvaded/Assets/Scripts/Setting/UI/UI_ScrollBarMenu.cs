@@ -2,8 +2,10 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
+using System.Linq;
 
-public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler
+public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDataPersistence
 {
     public Scrollbar scrollBar;
     public TMP_Text scoreText;
@@ -13,26 +15,29 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler
     float distance;
     int hoveredIndex = -1;
 
-    private GameData gameData;
+    public Dictionary<string, GameData> scoreAndRank;
+    public int highScore;
+    public string rank;
+    public string selectedProfileId = "";
+    private GameData data;
 
-    void Start()
+
+    private void Start()
     {
-        if (gameData == null)
-        {
-            gameData = new GameData();
-        }
-
+        data = new GameData();
+        scoreAndRank = new Dictionary<string, GameData>();
         pos = new float[buttons.Length];
         distance = 1f / (pos.Length - 1f);
         for (int i = 0; i < pos.Length; i++)
         {
             pos[i] = distance * i;
         }
-
-        UpdateTexts(0);
+        InitializeSelectedProfileId();
+        GameManager.instance.LoadGame();
+        Debug.Log(selectedProfileId);
     }
 
-    void Update()
+    private void Update()
     {
         if (hoveredIndex >= 0)
         {
@@ -41,8 +46,19 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler
 
             if (currentIndex != hoveredIndex)
             {
-                UpdateTexts(hoveredIndex);
+                UpdateTexts();
             }
+        }
+    }
+    private void InitializeSelectedProfileId()
+    {
+        if (data.playerData.Count > 0)
+        {
+            this.selectedProfileId = data.playerData.Keys.First();
+        }
+        else
+        {
+            GameManager.instance.ChangeSelectedProfileId(selectedProfileId);
         }
     }
 
@@ -53,16 +69,48 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler
             if (buttons[i] == eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>())
             {
                 hoveredIndex = i;
-                UpdateTexts(i);
+                UpdateTexts();
                 break;
             }
         }
     }
-
-    void UpdateTexts(int index)
+    public void OnPointerExit(PointerEventData eventData)
     {
-        scoreText.text = gameData.GetHighScore().ToString();
-        rankText.text = gameData.GetRank();
+        // Reset hoveredIndex when pointer exits
+        hoveredIndex = -1;
     }
 
+    public void UpdateTexts()
+    {
+
+        // scoreText.text = highScore.ToString();
+        // rankText.text = rank;
+
+        GetProfileId(selectedProfileId);
+        {
+            scoreText.text = data.GetHighScore(selectedProfileId);
+            rankText.text = data.GetPlayerRank(selectedProfileId);
+        }
+    }
+
+    private void GetProfileId(string profileId){
+        GameManager.instance.ChangeSelectedProfileId(profileId);
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.playerData[selectedProfileId] = new GameData { highScore = highScore, rank = rank };
+    }
+
+    public void LoadData(GameData data)
+    {
+        highScore = data.highScore;
+        rank = data.rank;
+
+        if (data.playerData.TryGetValue(selectedProfileId, out GameData profile))
+        {
+            highScore = profile.highScore;
+            rank = profile.rank;
+        }
+    }
 }

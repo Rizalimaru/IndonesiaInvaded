@@ -14,7 +14,6 @@ public class EnemyRepositionState : EnemyBaseState
         enemy.animator.SetBool("isDead", false);
         enemy.animator.SetBool("isStunned", false);
         enemy.animator.SetBool("repositioning", true);
-        enemy.animator.SetBool("confused", false);
     }
 
     public override void UpdateState(EnemyStateManager enemy)
@@ -28,15 +27,15 @@ public class EnemyRepositionState : EnemyBaseState
         Vector3 facingDirection = Vector3.RotateTowards(enemy.enemyObject.Agent.transform.forward, direction, step, 0.0f);
         enemy.enemyObject.Agent.transform.rotation = Quaternion.LookRotation(facingDirection);
 
-        if (canSeePlayer && enemyPlayerDistance <= enemy.enemyObject.attackDistance + 1)
+        if (canSeePlayer && enemyPlayerDistance <= enemy.enemyObject.attackDistance)
         {
             enemy.SwitchState(enemy.attackState);
         }
-        else if (canSeePlayer && enemyPlayerDistance <= enemy.enemyObject.triggerDistance && enemyPlayerDistance > enemy.enemyObject.attackDistance)
+        else if (canSeePlayer && enemyPlayerDistance <= enemy.enemyObject.triggerDistance || enemyPlayerDistance >= enemy.enemyObject.attackDistance + 1)
         {
             enemy.SwitchState(enemy.movingState);
         }
-        else if (canSeePlayer && enemyPlayerDistance > enemy.enemyObject.attackDistance)
+        else if (canSeePlayer && enemyPlayerDistance > enemy.enemyObject.triggerDistance)
         {
             enemy.SwitchState(enemy.idleState);
         }

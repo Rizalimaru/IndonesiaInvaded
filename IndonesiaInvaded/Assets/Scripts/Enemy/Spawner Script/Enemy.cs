@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,7 +13,7 @@ public class Enemy : MonoBehaviour
 
     // Offensive Attribute Declaration
     public Transform target;
-    public GameObject attackType;
+    public GameObject attackPrefab;
     public Transform spawnPoint;
     public Animator playerAnimator;
 
@@ -22,8 +23,6 @@ public class Enemy : MonoBehaviour
     [System.NonSerialized] public float attackSpeed;
     [System.NonSerialized] public float triggerDistance;
     [System.NonSerialized] public float attackDistance;
-    [System.NonSerialized] public float attackForce;
-    [System.NonSerialized] public float attackDecay;
     [System.NonSerialized] public float viewAngle;
     [System.NonSerialized] public float animDelay;
     [System.NonSerialized] public EnemyScriptableObject.title enemyTitle;
@@ -32,8 +31,9 @@ public class Enemy : MonoBehaviour
     [System.NonSerialized] public float knockbackGuard;
     [System.NonSerialized] public float knockbackDelay;
 
+    // Private Stuff
     private bool isAttacking = false;
-    
+    private GameObject attackObject;
 
     public void Awake()
     {
@@ -62,40 +62,50 @@ public class Enemy : MonoBehaviour
             stateManager.SwitchState(stateManager.deadState);
             
         }
+
+        if (isKnockedBack == true)
+        {
+            Invoke("knockbackDelayCounter", knockbackDelay);
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter (Collision collision)
     {
+
+        Collider other = collision.collider;
+
         if (other.CompareTag("Sword") && isAttacking == true && health > 0)
         {
-            Debug.Log("Damaged");
-            health -= 50;
-            knockbackForce = 25f;
 
-            if (enemyTitle == EnemyScriptableObject.title.Basic)
-            {
-                knockbackDelay = 0.2f;
-            }
-            else
-            {
-                knockbackDelay = 1.5f;
-            }
+            CameraShaker.instance.CameraShake(0.5f, 0.1f);
+
+            Debug.Log("Damaged");
+            health -= 5;
+            knockbackForce = 30f;
+            knockbackDelay = 0.2f;
 
             if (isKnockedBack == false)
             {
-                stateManager.SwitchState(stateManager.knockbackState);
                 isKnockedBack = true;
+                stateManager.SwitchState(stateManager.knockbackState);
             }
+
             if (health <= 0)
             {
                 objectiveManager.UpdateObjective();
             }
         }
+    }
 
-        if (other.CompareTag("SkillRoarCollider"))
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("SkillRoarCollider") && health > 0)
         {
-            knockbackForce = 100f;
-            knockbackDelay = 2f;
+
+            Debug.Log("get roar");
+
+            knockbackForce = 65f;
+            knockbackDelay = 5f;
 
             if (isKnockedBack == false)
             {
@@ -105,12 +115,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void knockbackDelayCounter()
+    {
+        isKnockedBack = false; 
+    }
+
     public void Attack()
     {
-        GameObject attackObj = GameObject.Instantiate(attackType, spawnPoint.transform.position, spawnPoint.rotation) as GameObject;
-        Rigidbody attackRigidBody = attackObj.GetComponent<Rigidbody>();
-        attackRigidBody.AddForce(attackRigidBody.transform.forward * attackForce);
-        GameObject.Destroy(attackObj, attackDecay);
+        attackObject = GameObject.Instantiate(attackPrefab, spawnPoint.transform.position, spawnPoint.rotation) as GameObject;
     }
 
     public bool checkIfSeeTarget()
@@ -141,8 +153,6 @@ public class Enemy : MonoBehaviour
         attackSpeed = enemyType.attackSpeed;
         triggerDistance = enemyType.triggerDistance;
         attackDistance = enemyType.attackDistance;
-        attackForce = enemyType.attackForce;
-        attackDecay = enemyType.attackDecay;
         viewAngle = enemyType.viewingAngle;
         knockbackGuard = enemyType.knockbackGuard;
 
