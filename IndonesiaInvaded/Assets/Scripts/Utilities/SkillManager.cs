@@ -14,6 +14,7 @@ public class SkillManager : MonoBehaviour
     private Animator animator;
     public static SkillManager instance;
     public Transform playerObj;
+    private Collider colid;
 
     [Header("Skill 1")]
     public Image skillImage1;
@@ -55,6 +56,7 @@ public class SkillManager : MonoBehaviour
 
     private void Start()
     {   
+        colid = GetComponent<Collider>();
         animator = GetComponent<Animator>();
         skillImage1.fillAmount = 0;
         skillImage2.fillAmount = 0;
