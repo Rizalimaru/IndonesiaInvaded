@@ -17,21 +17,20 @@ public class PlayerAttribut : MonoBehaviour
 
     private Coroutine regenCoroutine;
 
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
-        currentHealth = (maxHealth);
-        healthBar.SetMaxHealth(maxHealth);
-        healthBar.SetHealth(currentHealth);
+        // currentHealth = (maxHealth);
+        // healthBar.SetMaxHealth(maxHealth);
+        // healthBar.SetHealth(currentHealth);
 
-        skillBar.SetMaxSkill(maxSP);
-        skillBar.SetSkill(currentSP);
+        // skillBar.SetMaxSkill(maxSP);
+        // skillBar.SetSkill(currentSP);
 
         Combat.SuccessfulComboEvent += RegenerateSP;
-
-        if(instance == null)
-        {
-            instance = this;
-        }
     }
 
     private void Update()
@@ -62,7 +61,7 @@ public class PlayerAttribut : MonoBehaviour
             StopRegenerateHealth();
         }
     }
-    
+
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -124,6 +123,16 @@ public class PlayerAttribut : MonoBehaviour
         int regenAmount = 10; // Jumlah SP yang akan ditambahkan
         currentSP = Mathf.Min(currentSP + regenAmount, maxSP); // Pastikan SP tidak melebihi maksimum
         skillBar.SetSkill(currentSP); // Update tampilan bar skill
+    }
+
+    public void ResetTotal()
+    {
+        currentHealth = (maxHealth);
+        healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetHealth(currentHealth);
+
+        skillBar.SetMaxSkill(maxSP);
+        skillBar.SetSkill(currentSP);
     }
 
 }

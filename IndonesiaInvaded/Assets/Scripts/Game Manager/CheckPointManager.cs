@@ -43,29 +43,10 @@ public class CheckPointManager : MonoBehaviour
     IEnumerator RespawnFade()
     {
         animator.SetTrigger("End");
-
-        DeactiveObject();
-
         yield return new WaitForSeconds(1);
-
+        PlayerAttribut.instance.ResetTotal();
         ScoreManager.instance.ResetScore();
         PlayerDataSaving.instance.Teleport(GetCheckPoint(), Quaternion.identity);
-
-        ActiveObject();
-
         animator.SetTrigger("Start");
     }
-
-    private void ActiveObject()
-    {
-        player.gameObject.SetActive(true);
-        playerCamera.SetActive(true);
-    }
-
-    private void DeactiveObject()
-    {
-        player.gameObject.SetActive(false);
-        playerCamera.SetActive(false);
-    }
-
 }
