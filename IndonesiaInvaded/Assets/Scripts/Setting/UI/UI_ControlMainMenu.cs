@@ -130,13 +130,11 @@ public class UI_ControlMainMenu: MonoBehaviour
         {
             if (gameObjectPressAnyKey.activeSelf)
             {
-                ShowPressAnyKey();
                 if (titleGameAnimationPlayed == true)
-
-                AudioManager._instance.PlaySFX("Button",3);
                 {
+                    AudioManager._instance.PlaySFX("Button",3);
+                    ShowPressAnyKey();
                     titleGameAnimator.SetTrigger("showbackground");
-                    
                     titleGameAnimationPlayed = false;
                 }
             }

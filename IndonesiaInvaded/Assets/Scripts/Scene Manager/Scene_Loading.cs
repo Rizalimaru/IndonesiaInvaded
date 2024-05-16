@@ -35,34 +35,37 @@ public class Scene_Loading : MonoBehaviour
     public void LoadScenes()
     {
         loadingScreen.SetActive(true);
+        // Stop audio bgm mainmenu sebelum play game 
 
         loadingBarFill.value = 0;
-        GameManager.instance.NewGame();
+        
         StartCoroutine(LoadScenesAsync());
     } 
     public void LoadScenes2()
     {
         loadingScreen.SetActive(true);
+        // Stop audio bgm mainmenu sebelum play game 
 
         loadingBarFill.value = 0;
-        GameManager.instance.NewGame();
         StartCoroutine(LoadLevel2());
     } 
     public void LoadScenes3()
     {
         loadingScreen.SetActive(true);
+        // Stop audio bgm mainmenu sebelum play game 
 
         loadingBarFill.value = 0;
-        GameManager.instance.NewGame();
         StartCoroutine(LoadLevel3());
     } 
     IEnumerator LoadScenesAsync()
     {
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 0.6f);
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
-        scenes.Add(SceneManager.LoadSceneAsync("Gameplay1"));
-        scenes.Add(SceneManager.LoadSceneAsync("Level1", LoadSceneMode.Additive));
+        
+        scenes.Add(SceneManager.LoadSceneAsync("Level1" ));
+        scenes.Add(SceneManager.LoadSceneAsync("Gameplay1",LoadSceneMode.Additive));
 
 
         // Tunggu hingga semua scene dimuat
@@ -89,6 +92,8 @@ public class Scene_Loading : MonoBehaviour
     }
     IEnumerator LoadLevel2()
     {
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",  0.6f);
+
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
@@ -121,6 +126,7 @@ public class Scene_Loading : MonoBehaviour
     }
     IEnumerator LoadLevel3()
     {
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",  0.6f);
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat

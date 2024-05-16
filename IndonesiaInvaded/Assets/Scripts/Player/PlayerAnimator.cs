@@ -11,12 +11,13 @@ public class PlayerAnimator : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
+    public LayerMask whatIsGround2;
     bool grounded;
 
     Rigidbody rb;
 
     [Header("Movement")]
-    public float acceleration = 3f; // Acceleration rate
+    public float acceleration =10f; // Acceleration rate
     public float maxMovement = 1.5f; // Maximum movement value
     float currentMovement = 0f; // Current movement value
 
@@ -42,7 +43,7 @@ public class PlayerAnimator : MonoBehaviour
     private void FixedUpdate()
     {
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround | whatIsGround2);
 
         UpdateAnimator();
     }
