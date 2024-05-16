@@ -6,6 +6,9 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
 {
     public static ScoreManager instance;
 
+    [Header("Level")]
+    public int levelIndex;
+
     [Header("Value")]
     public int score;
     public int enemyDefeats;
@@ -23,12 +26,10 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
     private Coroutine hideScoreTextCoroutine;
     private float hideDelay = 10f;
     public int bonus { get; private set; }
-    public GameDataList gameDataList;
 
     private void Awake()
     {
         instance = this;
-        gameDataList = new GameDataList();
     }
 
     private void Start()
@@ -44,11 +45,9 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
         data.bossDefeats = bossDefeats;
         data.time = time;
         data.bonus = bonus;
-        data.totalScore = data.CalculateTotalScore(score, enemyDefeats, bossDefeats, bonus);
+        data.totalScore = data.CalculateTotalScore();
         data.UpdateHighScore();
         data.UpdateRank();
-
-        gameDataList.AddData(data);
     }
 
     public void LoadData(GameData data)
@@ -165,8 +164,4 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
         bossDefeats = 0;
     }
 
-    public GameDataList GetGameDataList()
-    {
-        return gameDataList;
-    }
 }

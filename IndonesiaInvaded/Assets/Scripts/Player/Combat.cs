@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 using UnityEngine.InputSystem;
+using System.Data.Common;
 
 public class Combat : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class Combat : MonoBehaviour
     private bool isPerformingHit = false;
     [HideInInspector] public bool isAttacking = false;
     private Coroutine hitResetCoroutine = null;
+
 
     private void Awake()
     {
@@ -47,9 +49,10 @@ public class Combat : MonoBehaviour
 
     }
     void Update()
-    {
+    {   
+        //timingHit();
         if (Input.GetMouseButtonDown(0) && animator.GetBool("isGrounded"))
-        {
+        {   
             PerformHit();
         }
         ResetCombo();
@@ -79,10 +82,15 @@ public class Combat : MonoBehaviour
         {
             isAttacking = false;
         }
+        if(animator.GetBool("RoarSkill"))
+        {   
+            currentHit = 0;
+        }
     }
 
     void PerformHit()
-    {
+    {   
+
         // Mengecek apakah hit terakhir sudah mencapai hit ke-4, jika ya, maka reset ke hit pertama
         if (currentHit >= 9)
         {
@@ -111,16 +119,30 @@ public class Combat : MonoBehaviour
         // Menambah hit saat ini untuk persiapan hit berikutnya
         currentHit++;
     }
-
-    // IEnumerator ResetCombo()
-    // {
-    //     yield return new WaitForSeconds(hitResetTime);
-    //     animator.SetBool("hit1", false);
-    //     animator.SetBool("hit2", false);
-    //     animator.SetBool("hit3", false);
-    //     animator.SetBool("hit4", false);
-    //     currentHit = 0;
-    // }
+#region HitTiming
+    IEnumerator slowMotionStart(float tungguawal, float scaleawal, float tunggukedua)
+    {
+        yield return new WaitForSeconds(tungguawal);
+        Time.timeScale = scaleawal;
+        yield return new WaitForSeconds(tunggukedua);
+        Time.timeScale = 1f;
+    }
+    void StartSlowMotion()
+    {
+        StartCoroutine(slowMotionStart(0f, 0.5f, 0.3f));
+    }
+    void timingHit()
+    {   
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if(isAttacking == true && stateInfo.normalizedTime > 0f && stateInfo.normalizedTime < 0.3f && stateInfo.IsName("hit1"))
+        {
+            if (!IsInvoking("StartSlowMotion"))
+            {
+                Invoke("StartSlowMotion", 0);
+            }
+        }
+    }
+#endregion
     
     void ResetCombo()
     {
@@ -135,7 +157,7 @@ public class Combat : MonoBehaviour
             animator.SetBool("hit2", false);
             currentHit=0;
         }
-        else if(isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit3"))
+        else if(isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit3"))
         {   
             animator.SetBool("hit1", false);
             animator.SetBool("hit2", false);
