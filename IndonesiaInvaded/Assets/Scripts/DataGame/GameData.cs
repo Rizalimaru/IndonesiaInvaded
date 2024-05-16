@@ -6,10 +6,6 @@ using UnityEngine;
 public class GameData
 {
     public long lastUpdated;
-    public Dictionary<string, bool> enemyCollected;
-    public List<int> unlockedLevels = new List<int>();
-    public List<int> highScores = new List<int>();
-    public List<string> ranks = new List<string>();
     public int score;
     public int enemyDefeats;
     public int bossDefeats;
@@ -18,27 +14,31 @@ public class GameData
     public int totalScore;
     public int highScore;
     public string rank;
-
+    public List<int> unlockedLevels = new List<int>();
+    public Dictionary<string, GameData> playerData;
+    public Dictionary<string, bool> enemyCollected;
     public GameData()
     {
         enemyCollected = new Dictionary<string, bool>();
         this.unlockedLevels = new List<int>();
-        this.highScores = new List<int>();
-        this.ranks = new List<string>();
+        playerData = new Dictionary<string, GameData>();
+
     }
 
     public int CalculateTotalScore()
     {
         return score + (enemyDefeats * 1000) + (bossDefeats * 5000) + bonus;
     }
-    public void UpdateHighScore()
+    public int UpdateHighScore()
     {
         totalScore = CalculateTotalScore();
         if (totalScore > highScore)
         {
             highScore = totalScore;
         }
+        return highScore;
     }
+
     public string GetRank()
     {
         if (totalScore >= 44000)
@@ -62,20 +62,57 @@ public class GameData
             return "D"; // D Rank
         }
     }
-    public void UpdateRank()
+    public string UpdateRank()
     {
         rank = GetRank();
+
+        return rank;
     }
 
-    public int GetHighScore()
+
+    public void SavePlayerData(string profileId)
+    {
+        playerData[profileId] = this;
+    }
+    public GameData GetPlayerData(string profileId)
+    {
+        return playerData.ContainsKey(profileId) ? playerData[profileId] : null;
+    }
+
+
+    public string GetHighScore(string profileId)
+    {
+        GameData data = GetPlayerData(profileId);
+        return data != null ? data.highScore.ToString() : "N/A";
+    }
+
+    public string GetHighScores(string profileId)
 {
-    return highScore;
+    if (playerData.ContainsKey(profileId) && playerData[profileId].highScore != null)
+    {
+        return playerData[profileId].highScore.ToString();
+    }
+    else
+    {
+        return "0";
+    }
 }
 
-public string GetPlayerRank()
+    public string GetPlayerRank(string profileId)
+    {
+        GameData data = GetPlayerData(profileId);
+        return data != null ? data.rank : "N/A";
+    }
+
+    public string GetPlayerRanks(string profileId)
 {
-    return rank;
+    if (playerData.ContainsKey(profileId) && playerData[profileId].rank != null)
+    {
+        return playerData[profileId].rank;
+    }
+    else
+    {
+        return "N/A";
+    }
 }
-
-
 }
