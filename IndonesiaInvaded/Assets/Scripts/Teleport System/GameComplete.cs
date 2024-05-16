@@ -29,7 +29,6 @@ public class GameComplete : MonoBehaviour
         {
             LevelManager.instance.OnCompleteLevel(levelNumber);
             StartCoroutine(NextLevel());
-            
         }
     }
 
@@ -48,8 +47,6 @@ public class GameComplete : MonoBehaviour
 
         animator.SetTrigger("Start");
         GameManager.instance.SaveGame();
-
-        
     }
 
 
