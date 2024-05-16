@@ -87,9 +87,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &5970063871979080980
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -109,8 +109,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.67953026, y: 2.0195298, z: 0.5372009}
-  m_Center: {x: -0.005168855, y: 0.9879339, z: -0.026763916}
+  m_Size: {x: 0.55322266, y: 1.8260072, z: 0.5088959}
+  m_Center: {x: -0.0051727295, y: 0.8911726, z: -0.0072250366}
 --- !u!114 &1672179526895879005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,9 +161,9 @@ MonoBehaviour:
   stateManager: {fileID: 1672179526895879005}
   enemyType: {fileID: 11400000, guid: 452109eec27feed4aa32774aacaa81df, type: 2}
   Agent: {fileID: 3538684814105915976}
-  enemyConfiguration: {fileID: 0}
+  enemyConfiguration: {fileID: 11400000, guid: 452109eec27feed4aa32774aacaa81df, type: 2}
   target: {fileID: 0}
-  attackType: {fileID: 6535422420660446745, guid: 93c26a8a35897bf48894990d35c264a1, type: 3}
+  attackPrefab: {fileID: 1198390280963720507, guid: 585ebc2babc2a4b46b4aa8c811dd8be6, type: 3}
   spawnPoint: {fileID: 5054064272348271330}
   playerAnimator: {fileID: 0}
 --- !u!82 &6834412334276563063
@@ -300,7 +300,7 @@ Transform:
   m_GameObject: {fileID: 6780319217199083067}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.123, z: 0.34}
+  m_LocalPosition: {x: 0, y: 1.123, z: 0.144}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -382,6 +382,14 @@ PrefabInstance:
     - target: {fileID: 7389507112651452681, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919196358131396253, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8103067124237306251, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
+      propertyPath: m_TagString
+      value: EnemyMeleeCollider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
