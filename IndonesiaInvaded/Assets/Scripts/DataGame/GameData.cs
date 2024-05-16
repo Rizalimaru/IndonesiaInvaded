@@ -1,15 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [System.Serializable]
 public class GameData
 {
     public long lastUpdated;
-    public Dictionary<string, bool> enemyCollected;
-    public List<int> unlockedLevels = new List<int>();
-    public List<int> highScores = new List<int>();
-    public List<string> ranks = new List<string>();
     public int score;
     public int enemyDefeats;
     public int bossDefeats;
@@ -18,27 +12,26 @@ public class GameData
     public int totalScore;
     public int highScore;
     public string rank;
-
+    public List<int> unlockedLevels = new List<int>();
     public GameData()
     {
-        enemyCollected = new Dictionary<string, bool>();
         this.unlockedLevels = new List<int>();
-        this.highScores = new List<int>();
-        this.ranks = new List<string>();
     }
 
     public int CalculateTotalScore()
     {
         return score + (enemyDefeats * 1000) + (bossDefeats * 5000) + bonus;
     }
-    public void UpdateHighScore()
+    public int UpdateHighScore()
     {
         totalScore = CalculateTotalScore();
         if (totalScore > highScore)
         {
             highScore = totalScore;
         }
+        return highScore;
     }
+
     public string GetRank()
     {
         if (totalScore >= 44000)
@@ -62,20 +55,11 @@ public class GameData
             return "D"; // D Rank
         }
     }
-    public void UpdateRank()
+    public string UpdateRank()
     {
         rank = GetRank();
+
+        return rank;
     }
-
-    public int GetHighScore()
-{
-    return highScore;
-}
-
-public string GetPlayerRank()
-{
-    return rank;
-}
-
 
 }

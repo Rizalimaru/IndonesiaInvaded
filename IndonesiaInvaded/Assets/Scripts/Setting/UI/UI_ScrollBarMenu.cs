@@ -2,8 +2,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
-public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler
+public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDataPersistence
 {
     public Scrollbar scrollBar;
     public TMP_Text scoreText;
@@ -12,40 +13,34 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler
     float[] pos;
     float distance;
     int hoveredIndex = -1;
+    private Dictionary<string, GameData> allProfilesData;
+    private string currentProfileId;
 
-    private GameData gameData;
+    private int highScore;
+    private string rank;
+    private string selectedProfileId;
 
-    void Start()
+
+    private void Start()
     {
-        if (gameData == null)
-        {
-            gameData = new GameData();
-        }
-
         pos = new float[buttons.Length];
         distance = 1f / (pos.Length - 1f);
         for (int i = 0; i < pos.Length; i++)
         {
             pos[i] = distance * i;
         }
-
-        UpdateTexts(0);
+        GameManager.instance.UpdateAllProfilesData();
     }
 
-    void Update()
+    private void Update()
     {
+        UpdateProfileData(selectedProfileId);
         if (hoveredIndex >= 0)
         {
             float normalizedScrollPos = scrollBar.value;
-            int currentIndex = Mathf.RoundToInt(normalizedScrollPos / distance);
-
-            if (currentIndex != hoveredIndex)
-            {
-                UpdateTexts(hoveredIndex);
-            }
+            Mathf.RoundToInt(normalizedScrollPos / distance);
         }
     }
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         for (int i = 0; i < buttons.Length; i++)
@@ -53,16 +48,57 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler
             if (buttons[i] == eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>())
             {
                 hoveredIndex = i;
-                UpdateTexts(i);
+                string newProfileId = buttons[i].GetComponent<LevelCheck>().GetProfileId();
+                GameManager.instance.UpdateProfileData(newProfileId);
+                UpdateTexts(hoveredIndex);
                 break;
             }
         }
     }
-
-    void UpdateTexts(int index)
+    public void OnPointerExit(PointerEventData eventData)
     {
-        scoreText.text = gameData.GetHighScore().ToString();
-        rankText.text = gameData.GetRank();
+        hoveredIndex = -1;
     }
 
+    public void UpdateTexts(int hoveredIndex)
+    {
+
+        // scoreText.text = highScore.ToString();
+        // rankText.text = rank;
+            string profileId = buttons[hoveredIndex].GetComponent<LevelCheck>().GetProfileId();
+            if (allProfilesData.ContainsKey(profileId))
+            {
+                scoreText.text = allProfilesData[profileId].highScore.ToString();
+                rankText.text = allProfilesData[profileId].rank;
+            }
+            else
+            {
+                // Jika data profil tidak ada, kosongkan teks
+                scoreText.text = "";
+                rankText.text = "";
+            }
+    }
+
+    public void SaveData(GameData data)
+    {
+
+    }
+
+    public void LoadData(GameData data)
+    {
+        // highScore = data.highScore;
+        // rank = data.rank;
+    }
+    public void UpdateProfileData(string newProfileId)
+    {
+        selectedProfileId = newProfileId;
+        GameManager.instance.LoadGame(); // Memuat kembali data game dengan profil yang baru
+        // Panggil UpdateTexts untuk menampilkan data baru
+        UpdateTexts(hoveredIndex);
+    }
+    public void UpdateProfileData(Dictionary<string, GameData> allProfilesData, string currentProfileId)
+    {
+        this.allProfilesData = allProfilesData;
+        this.currentProfileId = currentProfileId;
+    }
 }

@@ -5,15 +5,16 @@ using System.Collections;
 public class ScoreManager : MonoBehaviour, IDataPersistence
 {
     public static ScoreManager instance;
-
-    [Header("Level")]
-    public int levelIndex;
+    private string profileId = "";
 
     [Header("Value")]
     public int score;
     public int enemyDefeats;
     public int bossDefeats;
     public float time;
+    public int totalScore;
+    public int highScore;
+    public string rank;
 
     [Header("UI Text")]
     public TMP_Text timeTextInPaused;
@@ -26,10 +27,15 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
     private Coroutine hideScoreTextCoroutine;
     private float hideDelay = 10f;
     public int bonus { get; private set; }
-
     private void Awake()
     {
-        instance = this;
+        if(instance == null){
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else{
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -46,8 +52,8 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
         data.time = time;
         data.bonus = bonus;
         data.totalScore = data.CalculateTotalScore();
-        data.UpdateHighScore();
-        data.UpdateRank();
+        data.highScore = data.UpdateHighScore();
+        data.rank = data.UpdateRank();
     }
 
     public void LoadData(GameData data)
@@ -57,6 +63,10 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
         bossDefeats = data.bossDefeats;
         time = data.time;
         bonus = data.bonus;
+        totalScore = data.totalScore;
+        highScore = data.highScore;
+        rank = data.rank;
+
     }
 
     private void Update()
@@ -162,6 +172,11 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
         score = 0;
         enemyDefeats = 0;
         bossDefeats = 0;
+    }
+
+    public void SetProfileId(string id)
+    {
+        profileId = id;
     }
 
 }

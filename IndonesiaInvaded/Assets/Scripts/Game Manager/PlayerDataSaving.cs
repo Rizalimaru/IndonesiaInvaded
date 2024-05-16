@@ -21,6 +21,11 @@ public class PlayerDataSaving : MonoBehaviour
         {
             CheckPointManager.instance.Respawn();
         }
+        if (transform.position.y < -1)
+        {
+            CheckPointManager.instance.Respawn();
+            ScoreManager.instance.ResetAllValues();
+        }
     }
 
     public void Teleport(Vector3 position, Quaternion rotation)

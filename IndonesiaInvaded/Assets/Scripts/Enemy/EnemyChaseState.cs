@@ -17,7 +17,6 @@ public class EnemyChaseState : EnemyBaseState
         enemy.animator.SetBool("isDead", false);
         enemy.animator.SetBool("isStunned", false);
         enemy.animator.SetBool("repositioning", false);
-        enemy.animator.SetBool("confused", false);
     }
 
     public override void UpdateState(EnemyStateManager enemy)

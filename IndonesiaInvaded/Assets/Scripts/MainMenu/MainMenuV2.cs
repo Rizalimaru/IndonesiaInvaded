@@ -18,13 +18,17 @@ public class MainMenuV2 : MonoBehaviour
     [Header("UI Menu")]
     public GameObject mission;
     public GameObject ui;
+
+    [Header("Menu Navigation")]
+    [SerializeField] private LevelMenu levelMenu;
     private LevelCheck[] levelChecks;
-    private bool isLoadingGame = false;
+    private GameData data;
 
 
     private void Awake()
     {
         instance = this;
+        data = new GameData();
         levelChecks = this.GetComponentsInChildren<LevelCheck>();
     }
 
@@ -34,25 +38,10 @@ public class MainMenuV2 : MonoBehaviour
     }
     public void NewGame(LevelCheck levelCheck)
     {
-        if (isLoadingGame)
-        {
-            GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
-            GameManager.instance.SaveGame();
-            StartCoroutine(DelayNewGame());
-        }
-        else if (levelCheck.hasData)
-        {
-            GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
-            GameManager.instance.NewGame();
-            GameManager.instance.SaveGame();
-            StartCoroutine(DelayNewGame());
-        }
-        else{
-            GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
-            GameManager.instance.NewGame();
-            GameManager.instance.SaveGame();
-            StartCoroutine(DelayNewGame());
-        }
+        GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
+        GameManager.instance.NewGame();
+        GameManager.instance.SaveGame();
+        StartCoroutine(DelayNewGame());
 
     }
 
@@ -107,12 +96,10 @@ public class MainMenuV2 : MonoBehaviour
     {
         this.gameObject.SetActive(false);
     }
-
     public void BackButton()
     {
         StartCoroutine(DelayBack());
     }
-
     IEnumerator DelayBack()
     {
         UI_ControlMainMenu.Instance.HideMissionSelected();
@@ -137,5 +124,4 @@ public class MainMenuV2 : MonoBehaviour
             loadButton.interactable = false;
         }
     }
-
 }
