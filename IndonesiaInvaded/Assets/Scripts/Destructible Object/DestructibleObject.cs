@@ -21,9 +21,12 @@ public class DestructibleObject : MonoBehaviour
        combat= Combat.instance;
     }
 
-    private void OnTriggerEnter(Collider collider)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (collider.gameObject.CompareTag("Sword")&&combat.isAttacking)
+
+        Collider other = collision.collider;
+
+        if (other.gameObject.CompareTag("Sword")&&combat.isAttacking)
         {
             // Add score when player destroys the object
             ScoreManager.instance.AddScore(500);
