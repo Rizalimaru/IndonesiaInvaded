@@ -3,8 +3,6 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 
 public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDataPersistence
 {
@@ -15,78 +13,34 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
     float[] pos;
     float distance;
     int hoveredIndex = -1;
+    private Dictionary<string, GameData> allProfilesData;
+    private string currentProfileId;
 
-    public Dictionary<string, GameData> scoreAndRank;
-    public int highScore;
-    public string rank;
-    public string selectedProfileId = "";
-    private LevelCheck[] levelCheck;
-    private GameData data;
+    private int highScore;
+    private string rank;
+    private string selectedProfileId;
 
-    private void Awake()
-    {
-        levelCheck = this.GetComponentsInChildren<LevelCheck>();
-    }
+
     private void Start()
     {
-        data = new GameData();
-        scoreAndRank = new Dictionary<string, GameData>();
         pos = new float[buttons.Length];
         distance = 1f / (pos.Length - 1f);
         for (int i = 0; i < pos.Length; i++)
         {
             pos[i] = distance * i;
         }
-        InitializeSelectedProfileId();
-        GameManager.instance.LoadGame();
-        Debug.Log(selectedProfileId);
+        GameManager.instance.UpdateAllProfilesData();
     }
 
     private void Update()
     {
+        UpdateProfileData(selectedProfileId);
         if (hoveredIndex >= 0)
         {
             float normalizedScrollPos = scrollBar.value;
-            int currentIndex = Mathf.RoundToInt(normalizedScrollPos / distance);
-
-            if (currentIndex != hoveredIndex)
-            {
-                UpdateTexts();
-            }
+            Mathf.RoundToInt(normalizedScrollPos / distance);
         }
     }
-    private void InitializeSelectedProfileId()
-    {
-        string selectedProfileId = "";
-        int highestScoreIndex = -1;
-
-        for (int i = 0; i < levelCheck.Length; i++)
-        {
-            string profileId = levelCheck[i].GetProfileId();
-            GameData profileData = data.playerData[profileId];
-
-            if (int.TryParse(profileData.highScore.ToString(), out int score) && int.TryParse(data.highScore.ToString(), out int currentScore))
-            {
-                if (score > currentScore)
-                {
-                    highestScoreIndex = i;
-                }
-            }
-
-            if (selectedProfileId == "")
-            {
-                selectedProfileId = profileId;
-            }
-        }
-
-        if (highestScoreIndex >= 0)
-        {
-            selectedProfileId = levelCheck[highestScoreIndex].GetProfileId();
-        }
-
-        GameManager.instance.ChangeSelectedProfileId(selectedProfileId);
-    }
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         for (int i = 0; i < buttons.Length; i++)
@@ -94,48 +48,57 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
             if (buttons[i] == eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>())
             {
                 hoveredIndex = i;
-                UpdateTexts();
+                string newProfileId = buttons[i].GetComponent<LevelCheck>().GetProfileId();
+                GameManager.instance.UpdateProfileData(newProfileId);
+                UpdateTexts(hoveredIndex);
                 break;
             }
         }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        // Reset hoveredIndex when pointer exits
         hoveredIndex = -1;
     }
 
-    public void UpdateTexts()
+    public void UpdateTexts(int hoveredIndex)
     {
 
         // scoreText.text = highScore.ToString();
         // rankText.text = rank;
-        if (scoreAndRank.TryGetValue(selectedProfileId, out GameData playerData))
-        {
-            scoreText.text = playerData.highScore.ToString();
-            rankText.text = playerData.rank;
-        }
-    }
-
-    private void GetProfileId(string profileId)
-    {
-        GameManager.instance.ChangeSelectedProfileId(profileId);
+            string profileId = buttons[hoveredIndex].GetComponent<LevelCheck>().GetProfileId();
+            if (allProfilesData.ContainsKey(profileId))
+            {
+                scoreText.text = allProfilesData[profileId].highScore.ToString();
+                rankText.text = allProfilesData[profileId].rank;
+            }
+            else
+            {
+                // Jika data profil tidak ada, kosongkan teks
+                scoreText.text = "";
+                rankText.text = "";
+            }
     }
 
     public void SaveData(GameData data)
     {
-        data.playerData[selectedProfileId] = new GameData { highScore = highScore, rank = rank };
+
     }
 
     public void LoadData(GameData data)
     {
-        highScore = data.highScore;
-        rank = data.rank;
-
-        if (data.playerData.TryGetValue(selectedProfileId, out GameData profile))
-        {
-            highScore = profile.highScore;
-            rank = profile.rank;
-        }
+        // highScore = data.highScore;
+        // rank = data.rank;
+    }
+    public void UpdateProfileData(string newProfileId)
+    {
+        selectedProfileId = newProfileId;
+        GameManager.instance.LoadGame(); // Memuat kembali data game dengan profil yang baru
+        // Panggil UpdateTexts untuk menampilkan data baru
+        UpdateTexts(hoveredIndex);
+    }
+    public void UpdateProfileData(Dictionary<string, GameData> allProfilesData, string currentProfileId)
+    {
+        this.allProfilesData = allProfilesData;
+        this.currentProfileId = currentProfileId;
     }
 }
