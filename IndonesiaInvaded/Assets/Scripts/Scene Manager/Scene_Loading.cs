@@ -64,8 +64,8 @@ public class Scene_Loading : MonoBehaviour
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
         
-        scenes.Add(SceneManager.LoadSceneAsync("Level1" ));
-        scenes.Add(SceneManager.LoadSceneAsync("Gameplay1",LoadSceneMode.Additive));
+        scenes.Add(SceneManager.LoadSceneAsync("Gameplay1" ));
+        scenes.Add(SceneManager.LoadSceneAsync("Level1",LoadSceneMode.Additive));
 
 
         // Tunggu hingga semua scene dimuat
