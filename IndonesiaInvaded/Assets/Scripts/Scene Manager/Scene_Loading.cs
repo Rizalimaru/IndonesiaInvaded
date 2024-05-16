@@ -30,6 +30,9 @@ public class Scene_Loading : MonoBehaviour
     public void LoadMainMenu()
     {
         GameManager.instance.SaveGame();
+
+   
+
         StartCoroutine(MainMenu());
     }
     public void LoadScenes()
@@ -85,7 +88,6 @@ public class Scene_Loading : MonoBehaviour
         }
 
         // Tunggu sedikit waktu tambahan sebelum menonaktifkan layar loading
-        yield return new WaitForSeconds(1f);
 
         loadingScreen.SetActive(false);
         AudioManager.Instance.PlayBackgroundMusicWithTransition("Game",0, 1f);
@@ -159,9 +161,30 @@ public class Scene_Loading : MonoBehaviour
     }
     IEnumerator MainMenu()
     {
+        List<AsyncOperation> scenes = new List<AsyncOperation>();
         animator.SetTrigger("End");
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadSceneAsync(0);
+        yield return new WaitForSeconds(1f);
+        loadingScreen.SetActive(true);
+
+        loadingBarFill.value = 0;
+        scenes.Add(SceneManager.LoadSceneAsync(0));
+
+        foreach (var scene in scenes)
+        {
+            while (!scene.isDone)
+            {
+                float progress = 0;
+                foreach (var s in scenes)
+                {
+                    progress += s.progress;
+                }
+                progress /= scenes.Count;
+                loadingBarFill.value = progress;
+                yield return null;
+            }
+        }
+
+        loadingScreen.SetActive(false);
         animator.SetTrigger("Start");
     }
 }
