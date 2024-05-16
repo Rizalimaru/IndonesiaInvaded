@@ -94,7 +94,7 @@ public class UI_ResultGame : MonoBehaviour
         // Animasi perhitungan skor
         while (currentScore < scoreManager.score)
         {
-            currentScore += 10; // Penambahan skor per frame (sesuaikan dengan kebutuhan)
+            currentScore += 100; // Penambahan skor per frame (sesuaikan dengan kebutuhan)
             if (currentScore > scoreManager.score)
                 currentScore = scoreManager.score; // Pastikan nilai skor tidak melampaui nilai aktual
 
@@ -132,7 +132,7 @@ public class UI_ResultGame : MonoBehaviour
         int currentBonus = 0;
         while (currentBonus < scoreManager.bonus)
         {
-            currentBonus += 10; // Penambahan bonus per frame (sesuaikan dengan kebutuhan)
+            currentBonus += 500; // Penambahan bonus per frame (sesuaikan dengan kebutuhan)
             if (currentBonus > scoreManager.bonus)
                 currentBonus = scoreManager.bonus; // Pastikan nilai bonus tidak melampaui nilai aktual
 
