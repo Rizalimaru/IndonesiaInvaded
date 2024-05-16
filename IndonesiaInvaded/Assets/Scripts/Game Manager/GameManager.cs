@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -16,12 +15,10 @@ public class GameManager : MonoBehaviour
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
     [SerializeField] private bool useEncryption;
-
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
     private string selectedProfileId = "";
-
     public static GameManager instance { get; private set; }
 
     private void Awake()
@@ -162,9 +159,18 @@ public class GameManager : MonoBehaviour
         return dataHandler.LoadAllProfiles();
     }
 
-    public void SavePlayerData(string profileId, GameData data)
+    public void UpdateAllProfilesData()
     {
-        data = new GameData();
-        data.SavePlayerData(profileId);
+        Dictionary<string, GameData> allProfilesData = GetAllProfilesGameData();
+        UI_ScrollBarMenu scrollbarMenu = FindObjectOfType<UI_ScrollBarMenu>(); // Pastikan UI_ScrollBarMenu ditemukan di scene
+        if (scrollbarMenu != null)
+        {
+            scrollbarMenu.UpdateProfileData(allProfilesData, selectedProfileId);
+        }
+    }
+    public void UpdateProfileData(string newProfileId)
+    {
+        selectedProfileId = newProfileId;
+        LoadGame();
     }
 }
