@@ -23,12 +23,12 @@ public class PlayerAttribut : MonoBehaviour
     }
     private void Start()
     {
-        // currentHealth = (maxHealth);
-        // healthBar.SetMaxHealth(maxHealth);
-        // healthBar.SetHealth(currentHealth);
+        currentHealth = (maxHealth);
+        healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetHealth(currentHealth);
 
-        // skillBar.SetMaxSkill(maxSP);
-        // skillBar.SetSkill(currentSP);
+        skillBar.SetMaxSkill(maxSP);
+        skillBar.SetSkill(currentSP);
 
         Combat.SuccessfulComboEvent += RegenerateSP;
     }
