@@ -7,7 +7,7 @@ public class MainMenuV2 : MonoBehaviour
     public static MainMenuV2 instance;
     [Header("Button UI")]
     public Button newGameButton;
-    public Button loadButton;
+    public GameObject loadButton;
     public Button optionsButton;
     public Button exitButton;
 
@@ -77,14 +77,14 @@ public class MainMenuV2 : MonoBehaviour
     public void DisableMenuAndAnimationButton()
     {
         newGameButton.interactable = false;
-        loadButton.interactable = false;
+        // loadButton.interactable = false;
         optionsButton.interactable = false;
         exitButton.interactable = false;
     }
     public void EnableMenuAndAnimationButton()
     {
         newGameButton.interactable = true;
-        loadButton.interactable = true;
+        // loadButton.interactable = true;
         optionsButton.interactable = true;
         exitButton.interactable = true;
     }
@@ -117,11 +117,13 @@ public class MainMenuV2 : MonoBehaviour
     {
         if (LevelManager.instance.IsLevelUnlocked(1))
         {
-            loadButton.interactable = true;
+            // loadButton.interactable = true;
+            loadButton.SetActive(true);
         }
         else
         {
-            loadButton.interactable = false;
+            // loadButton.interactable = false;
+            loadButton.SetActive(false);
         }
     }
 }

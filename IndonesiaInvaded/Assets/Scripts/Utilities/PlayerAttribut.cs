@@ -23,12 +23,12 @@ public class PlayerAttribut : MonoBehaviour
     }
     private void Start()
     {
-        // currentHealth = (maxHealth);
-        // healthBar.SetMaxHealth(maxHealth);
-        // healthBar.SetHealth(currentHealth);
+        currentHealth = (maxHealth);
+        healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetHealth(currentHealth);
 
-        // skillBar.SetMaxSkill(maxSP);
-        // skillBar.SetSkill(currentSP);
+        skillBar.SetMaxSkill(maxSP);
+        skillBar.SetSkill(currentSP);
 
         Combat.SuccessfulComboEvent += RegenerateSP;
     }
@@ -51,13 +51,13 @@ public class PlayerAttribut : MonoBehaviour
         if (other.CompareTag("EnemyMeleeCollider"))
         {
             Debug.Log("Damaged by melee");
-            TakeDamage(100);
+            TakeDamage(10);
             StopRegenerateHealth();
         }
         else if (other.CompareTag("EnemyRangedCollider"))
         {
             Debug.Log("Damaged by ranged");
-            TakeDamage(50);
+            TakeDamage(5);
             StopRegenerateHealth();
         }
     }
