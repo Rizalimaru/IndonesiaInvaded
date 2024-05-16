@@ -69,8 +69,9 @@ public class MainMenuV2 : MonoBehaviour
     {
         DisableMenuAndAnimationButton();
         UI_ControlMainMenu.Instance.HideUI();
+
         yield return new WaitForSeconds(0.9f);
-        titleGameAnimator.SetTrigger("hide");
+        
         mission.SetActive(true);
         UI_ControlMainMenu.Instance.ShowMissionSelected();
     }
