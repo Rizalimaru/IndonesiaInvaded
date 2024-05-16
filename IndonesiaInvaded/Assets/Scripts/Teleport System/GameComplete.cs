@@ -29,7 +29,7 @@ public class GameComplete : MonoBehaviour
         {
             LevelManager.instance.OnCompleteLevel(levelNumber);
             StartCoroutine(NextLevel());
-            ScoreManager.instance.ResetAllValues();
+            
         }
     }
 
@@ -48,6 +48,8 @@ public class GameComplete : MonoBehaviour
 
         animator.SetTrigger("Start");
         GameManager.instance.SaveGame();
+
+        
     }
 
 
