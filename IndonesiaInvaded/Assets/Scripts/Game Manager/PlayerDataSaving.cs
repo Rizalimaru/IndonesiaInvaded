@@ -15,11 +15,21 @@ public class PlayerDataSaving : MonoBehaviour
         instance = this;
 
     }
+
+    private void Start()
+    {
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
             CheckPointManager.instance.Respawn();
+        }
+
+        if (transform.position.y < -4)
+        {
+            CheckPointManager.instance.Respawn();
+            ScoreManager.instance.ResetAllValues();
         }
     }
 
