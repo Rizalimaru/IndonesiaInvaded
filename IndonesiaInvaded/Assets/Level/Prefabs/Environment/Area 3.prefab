@@ -118,69 +118,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &245356337670828935
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2992066844289825687}
-  - component: {fileID: 591544815355216618}
-  - component: {fileID: 2151769651042557431}
-  m_Layer: 22
-  m_Name: Invisible Bawah
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2992066844289825687
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 245356337670828935}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 16.3, y: 12.03, z: -15.4}
-  m_LocalScale: {x: 2.61, y: 1, z: 18.6}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3373239077719952984}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
---- !u!33 &591544815355216618
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 245356337670828935}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &2151769651042557431
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 245356337670828935}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &259681534936359099
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +573,6 @@ Transform:
   - {fileID: 8140646569657740001}
   - {fileID: 8904076878348143491}
   - {fileID: 9070715373602730408}
-  - {fileID: 3373239077719952984}
   m_Father: {fileID: 6649924296204583545}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &954565995671000631
@@ -3585,7 +3521,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e009764a8922baa49a8a3e323657f365, type: 2}
+  - {fileID: 2100000, guid: 197741a5b1365964e87df00b64420d9a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4936,39 +4872,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &7550388551960812956
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3373239077719952984}
-  m_Layer: 0
-  m_Name: Invisible Wall (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3373239077719952984
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7550388551960812956}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: -72.2, y: -7.6291313, z: 25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2992066844289825687}
-  - {fileID: 6346292069511894483}
-  m_Father: {fileID: 3761149683899615397}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7585207811255337862
 GameObject:
   m_ObjectHideFlags: 0
@@ -5794,69 +5697,6 @@ Transform:
   - {fileID: 7122497844548102730}
   m_Father: {fileID: 5328580068046865540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &9006516022648234109
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6346292069511894483}
-  - component: {fileID: 5538219792882296929}
-  - component: {fileID: 6804824329498070463}
-  m_Layer: 22
-  m_Name: Invisible Atas
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6346292069511894483
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9006516022648234109}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 22.6, y: 12.03, z: 12.8}
-  m_LocalScale: {x: 2.61, y: 1, z: 17.3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3373239077719952984}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
---- !u!33 &5538219792882296929
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9006516022648234109}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &6804824329498070463
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9006516022648234109}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &9101162753626585400
 GameObject:
   m_ObjectHideFlags: 0
@@ -6363,7 +6203,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5371574775534002176, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
 --- !u!1001 &178515207051184157
@@ -7051,7 +6891,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -7333,7 +7173,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -8024,7 +7864,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -9213,7 +9053,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5371574775534002176, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
 --- !u!1001 &1433270284340488311
@@ -10729,7 +10569,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -10923,7 +10763,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -11841,8 +11681,38 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2367905551785907183}
   m_SourcePrefab: {fileID: 100100000, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
+--- !u!1 &1336235954102060485 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
+  m_PrefabInstance: {fileID: 2182603512370100372}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &2367905551785907183
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336235954102060485}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5371574775534002176, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
 --- !u!4 &1855644854519570303 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
@@ -13440,7 +13310,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -14614,7 +14484,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -14960,7 +14830,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -17288,7 +17158,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -19801,7 +19671,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -20798,7 +20668,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -21026,7 +20896,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5371574775534002176, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
 --- !u!1001 &4925075273352984602
@@ -22242,8 +22112,38 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6631309904423637816}
   m_SourcePrefab: {fileID: 100100000, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
+--- !u!1 &5071598867387924106 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
+  m_PrefabInstance: {fileID: 5377466855774684123}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &6631309904423637816
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5071598867387924106}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5371574775534002176, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
 --- !u!4 &5560292837450212400 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
@@ -22382,7 +22282,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -23469,7 +23369,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -25527,7 +25427,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -30364,7 +30264,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 3780671244086486322, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
+      objectReference: {fileID: 2100000, guid: 84aab9b1d15188d4681860e092d70fac, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fd64e2daee065143b013eafb865e9cb, type: 3}
       propertyPath: m_Name
       value: P_GARDEN LAMP 3
@@ -32885,7 +32785,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5371574775534002176, guid: af64c7eecde254745b008cd902f2f2a1, type: 3}
 --- !u!4 &8701906675778144089 stripped
