@@ -16,7 +16,6 @@ public class EnemyIdleState : EnemyBaseState
         enemy.animator.SetBool("isDead", false);
         enemy.animator.SetBool("isStunned", false);
         enemy.animator.SetBool("repositioning", false);
-        enemy.animator.SetBool("confused", false);
 
         delay = 1f;
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
