@@ -11,19 +11,22 @@ public class SwordSatisfyManager : MonoBehaviour
 
     private void Awake()
     {   
-
         combat = Combat.instance;
     }
     void Update()
     {
 
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Kamera Goyang");
+
+        Collider other = collision.collider;
+
         // Periksa apakah objek yang masuk trigger memiliki tag "Enemy"
         if (other.CompareTag("Enemy"))
-        {   
-            CameraShaker.instance.CameraShake(0.5f, 0.1f);
+        {
+            CameraShaker.instance.CameraShake(5f, 0.1f);
             StartCoroutine(slowMotionStart());
         }
     }
