@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [System.Serializable]
 public class GameData
@@ -15,14 +13,9 @@ public class GameData
     public int highScore;
     public string rank;
     public List<int> unlockedLevels = new List<int>();
-    public Dictionary<string, GameData> playerData;
-    public Dictionary<string, bool> enemyCollected;
     public GameData()
     {
-        enemyCollected = new Dictionary<string, bool>();
         this.unlockedLevels = new List<int>();
-        playerData = new Dictionary<string, GameData>();
-
     }
 
     public int CalculateTotalScore()
@@ -67,29 +60,6 @@ public class GameData
         rank = GetRank();
 
         return rank;
-    }
-
-
-    public void SavePlayerData(string profileId)
-    {
-        playerData[profileId] = this;
-    }
-    public GameData GetPlayerData(string profileId)
-    {
-        return playerData.ContainsKey(profileId) ? playerData[profileId] : null;
-    }
-
-
-    public string GetHighScore(string profileId)
-    {
-        GameData data = GetPlayerData(profileId);
-        return data != null ? data.highScore.ToString() : "N/A";
-    }
-
-    public string GetPlayerRank(string profileId)
-    {
-        GameData data = GetPlayerData(profileId);
-        return data != null ? data.rank : "N/A";
     }
 
 }

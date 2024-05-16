@@ -22,11 +22,13 @@ public class MainMenuV2 : MonoBehaviour
     [Header("Menu Navigation")]
     [SerializeField] private LevelMenu levelMenu;
     private LevelCheck[] levelChecks;
+    private GameData data;
 
 
     private void Awake()
     {
         instance = this;
+        data = new GameData();
         levelChecks = this.GetComponentsInChildren<LevelCheck>();
     }
 
@@ -122,5 +124,4 @@ public class MainMenuV2 : MonoBehaviour
             loadButton.interactable = false;
         }
     }
-
 }

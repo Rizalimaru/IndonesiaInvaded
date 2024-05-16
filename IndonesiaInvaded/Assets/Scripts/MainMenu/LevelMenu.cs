@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelMenu : MonoBehaviour
@@ -16,9 +13,6 @@ public class LevelMenu : MonoBehaviour
 
     [Header("Menu Button")]
     [SerializeField] private Button backButton;
-
-    public Button[] buttons;
-
     public void LoadLevel1(LevelCheck levelCheck)
     {
         GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
@@ -63,5 +57,4 @@ public class LevelMenu : MonoBehaviour
 
         this.DeactivateMenu();
     }
-
 }
