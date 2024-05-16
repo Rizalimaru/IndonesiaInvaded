@@ -262,6 +262,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveForwardWhileAtk()
     {   
+
+        if (animator.GetBool("RoarSkill"))
+        {   
+            return;
+        }
         // Mengecek apakah sedang melakukan animasi hit1, hit2, atau hit3
         bool hit1 = animator.GetBool("hit1");
         bool hit2 = animator.GetBool("hit2");

@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using UnityEngine.InputSystem;
 using System.Data.Common;
+using Unity.VisualScripting;
 
 public class Combat : MonoBehaviour
 {
@@ -60,10 +61,7 @@ public class Combat : MonoBehaviour
         if (Input.GetMouseButton(0) && currentHit >= 9)
         {
             // Kembali ke hit pertama
-            animator.SetBool("hit1", false);
-            animator.SetBool("hit2", false);
-            animator.SetBool("hit3", false);
-            animator.SetBool("hit4", false);
+            stopHit();
         }
 
         skillCast();
@@ -88,8 +86,21 @@ public class Combat : MonoBehaviour
         }
     }
 
+    void stopHit()
+    {
+        animator.SetBool("hit1", false);
+        animator.SetBool("hit2", false);
+        animator.SetBool("hit3", false);
+        animator.SetBool("hit4", false);
+    }
+
     void PerformHit()
-    {   
+    {
+        // Memeriksa apakah RoarSkill aktif, jika ya, keluar dari metode
+        if (animator.GetBool("RoarSkill"))
+        {   
+            return;
+        }
 
         // Mengecek apakah hit terakhir sudah mencapai hit ke-4, jika ya, maka reset ke hit pertama
         if (currentHit >= 9)
@@ -119,6 +130,7 @@ public class Combat : MonoBehaviour
         // Menambah hit saat ini untuk persiapan hit berikutnya
         currentHit++;
     }
+
 #region HitTiming
     IEnumerator slowMotionStart(float tungguawal, float scaleawal, float tunggukedua)
     {
