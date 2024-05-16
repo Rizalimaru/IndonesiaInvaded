@@ -10,22 +10,23 @@ public class SpawningManager : MonoBehaviour
     public Transform targetPlayer;
     public List<Enemy> enemyType = new List<Enemy>();
     public Transform[] spawnPoint;
+    public GameObject objectSelf;
 
+    private Collider col;
+    private bool isFinished = false;
 
     private void Update()
     {
-       if (Input.GetKeyDown(KeyCode.P))
-       {
-           SpawnEnemy(enemyType[0], spawnPoint[0].position);
-       }
+        int enemyNum = GetCurrentEnemy();
+        if(enemyNum == 0 && isFinished == true)
+        {
+            Destroy(objectSelf);
+        }
     }
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        col = GetComponent<Collider>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,7 +39,7 @@ public class SpawningManager : MonoBehaviour
             {
                 SpawnEnemy(enemyType[i], spawnPoint[i].position);
             }
-            ObjectiveManager.instance.StartObjective();
+            
 
             // Sekaligus mengaktifkan wall tanpa harus menyebutkan satu per satu
             for (int i = 0; i < wall.Length; i++)
@@ -46,9 +47,9 @@ public class SpawningManager : MonoBehaviour
                 wall[i].SetActive(true);
             }
 
+            ObjectiveManager.instance.StartObjective();
 
-
-           
+            Invoke("isFinishedEnabler", 2f);
         }
     }
 
@@ -56,7 +57,7 @@ public class SpawningManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            col.enabled = false;
         }
     }
 
@@ -70,13 +71,14 @@ public class SpawningManager : MonoBehaviour
 
     }
 
-    //hide the wall
-    public void HideWall()
+    private void isFinishedEnabler()
     {
-        for (int i = 0; i < wall.Length; i++)
-        {
-            wall[i].SetActive(false);
-        }
+        isFinished = true;
     }
-    
+
+    private int GetCurrentEnemy()
+    {
+        int enemy = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        return enemy;
+    }
 }

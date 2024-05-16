@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
 
             Debug.Log("Damaged");
-            health -= 5;
+            health -= 100;
             knockbackForce = 30f;
             knockbackDelay = 0.2f;
 
