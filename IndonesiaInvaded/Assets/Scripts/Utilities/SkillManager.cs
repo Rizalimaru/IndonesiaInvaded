@@ -304,7 +304,7 @@ public class SkillManager : MonoBehaviour
     void SpawnSmashExplosion()
     {
         GameObject smash = Instantiate(smashExplosion, player.position, player.rotation) as GameObject;
-        Destroy(smash, 1.5f);
+        Destroy(smash, 2f);
     }
 #endregion
 
