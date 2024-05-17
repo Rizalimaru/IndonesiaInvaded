@@ -260,7 +260,7 @@ public class UI_PauseGame : MonoBehaviour
         playerCamera.SetActive(true);
         gameResult.SetActive(false);
         gameOver.SetActive(false);
-        GameIsPaused = false;
+        //GameIsPaused = false;
         isLoadMainMenu = true; // Set isLoadMainMenu to true after calling LoadMenu()
         audioManagerInstance.StopAllBackgroundMusic();
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");

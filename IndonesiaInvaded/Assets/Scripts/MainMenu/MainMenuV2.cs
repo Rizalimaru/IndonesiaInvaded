@@ -7,7 +7,7 @@ public class MainMenuV2 : MonoBehaviour
     public static MainMenuV2 instance;
     [Header("Button UI")]
     public Button newGameButton;
-    public Button loadButton;
+    public GameObject loadButton;
     public Button optionsButton;
     public Button exitButton;
 
@@ -69,22 +69,23 @@ public class MainMenuV2 : MonoBehaviour
     {
         DisableMenuAndAnimationButton();
         UI_ControlMainMenu.Instance.HideUI();
+
         yield return new WaitForSeconds(0.9f);
-        titleGameAnimator.SetTrigger("hide");
+        
         mission.SetActive(true);
         UI_ControlMainMenu.Instance.ShowMissionSelected();
     }
     public void DisableMenuAndAnimationButton()
     {
         newGameButton.interactable = false;
-        loadButton.interactable = false;
+        // loadButton.interactable = false;
         optionsButton.interactable = false;
         exitButton.interactable = false;
     }
     public void EnableMenuAndAnimationButton()
     {
         newGameButton.interactable = true;
-        loadButton.interactable = true;
+        // loadButton.interactable = true;
         optionsButton.interactable = true;
         exitButton.interactable = true;
     }
@@ -117,11 +118,13 @@ public class MainMenuV2 : MonoBehaviour
     {
         if (LevelManager.instance.IsLevelUnlocked(1))
         {
-            loadButton.interactable = true;
+            // loadButton.interactable = true;
+            loadButton.SetActive(true);
         }
         else
         {
-            loadButton.interactable = false;
+            // loadButton.interactable = false;
+            loadButton.SetActive(false);
         }
     }
 }

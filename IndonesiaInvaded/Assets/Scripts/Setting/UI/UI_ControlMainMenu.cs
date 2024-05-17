@@ -48,7 +48,7 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     [SerializeField] private bool fadeOutMissionSelected = false;
 
-    [SerializeField] private MainMenu mainMenu;
+    [SerializeField] private MainMenuV2 mainMenu;
 
     private bool anyKeyDownHandled = false;
 
@@ -64,7 +64,7 @@ public class UI_ControlMainMenu: MonoBehaviour
             // Destroy(gameObject);
         }
 
-        mainMenu.EnableMenuandAnimationButton();
+        mainMenu.EnableMenuAndAnimationButton();
 
         
     }
@@ -224,7 +224,7 @@ public class UI_ControlMainMenu: MonoBehaviour
 
         optionsAnimator.SetTrigger("FadeInOptions");
 
-        mainMenu.DisableMenuandAnimationButton();
+        mainMenu.DisableMenuAndAnimationButton();
         HideUI();
         
         yield return new WaitForSeconds(0.5f);
@@ -253,7 +253,7 @@ public class UI_ControlMainMenu: MonoBehaviour
 
         optionsAnimator.SetTrigger("FadeOutOptions");
 
-        mainMenu.EnableMenuandAnimationButton();
+        mainMenu.EnableMenuAndAnimationButton();
         
         yield return new WaitForSeconds(0.5f);
         
@@ -276,8 +276,10 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     IEnumerator DelayMissionSelected()
     {
-        HideUI();
-        yield return new WaitForSeconds(0.1f);
+        //HideUI();
+        titleGameAnimator.SetTrigger("hidebackground");
+        
+        yield return new WaitForSeconds(0.5f);
         fadeInMissionSelected = true;
 
         
@@ -303,7 +305,7 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     IEnumerator DelayExitGame()
     {
-        mainMenu.DisableMenuandAnimationButton();
+        mainMenu.DisableMenuAndAnimationButton();
         yield return new WaitForSeconds(0.8f);
         Application.Quit();
     }
