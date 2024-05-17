@@ -96,7 +96,8 @@ public class ThirdPersonCam : MonoBehaviour
             LookAtEnemyForHitdrag();
         }else if (animator.GetBool("RoarSkill"))
         {
-            StartCoroutine(LookAtEnemyForSkill());
+            //StartCoroutine(LookAtEnemyForSkill());
+            LookAtEnemy();
         }
     }
 
@@ -124,10 +125,17 @@ public class ThirdPersonCam : MonoBehaviour
         playerObj.rotation = Quaternion.Slerp(playerObj.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
     }
 
+    void LookAtEnemy()
+    {
+        Vector3 targetDirection = skillManager.nearestEnemy.position - player.position;
+        targetDirection.y = 0f; // Keep the rotation in the horizontal plane
+        Quaternion rotation = Quaternion.LookRotation(targetDirection);
+        playerObj.rotation = Quaternion.Slerp(playerObj.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
+    }
     public IEnumerator LookAtEnemyForSkill()
     {   
         if(hitDrag.nearestEnemy != null)
-        {
+        {   
             yield return new WaitForSeconds(1f);
             Vector3 targetDirection = skillManager.nearestEnemy.position - player.position;
             targetDirection.y = 0f; // Keep the rotation in the horizontal plane
