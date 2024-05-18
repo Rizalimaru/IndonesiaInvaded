@@ -23,6 +23,9 @@ public class MainMenuV2 : MonoBehaviour
     [SerializeField] private LevelMenu levelMenu;
     private LevelCheck[] levelChecks;
     private GameData data;
+    [Header("Cutscene")]
+    public string newGameCutSceneName = "NewGameCutscene";
+    public GameObject[] uiMainMenu;
 
 
     private void Awake()
@@ -35,6 +38,7 @@ public class MainMenuV2 : MonoBehaviour
     private void Start()
     {
         CheckLevel1Completion();
+        CutSceneManager.Instance.OnCutSceneFinished += OnCutSceneFinished;
     }
     public void NewGame(LevelCheck levelCheck)
     {
@@ -51,12 +55,18 @@ public class MainMenuV2 : MonoBehaviour
         AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
         DisableMenuAndAnimationButton();
         UI_ControlMainMenu.Instance.HideUI();
-        yield return new WaitForSeconds(1f);
+
+        CutSceneManager.Instance.PlayCutScene(newGameCutSceneName);
+        for (int i = 0; i < uiMainMenu.Length; i++)
+        {
+            Destroy(uiMainMenu[i]);
+        }
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("FadeOut");
         yield return new WaitForSeconds(1f);
-
+    }
+    private void OnCutSceneFinished()
+    {
         Scene_Loading.instance.LoadScenes();
-        yield return new WaitForSeconds(0.9f);
         AudioManager.Instance.PlayBackgroundMusicWithTransition("Game", 0, 1f);
     }
 
@@ -71,21 +81,19 @@ public class MainMenuV2 : MonoBehaviour
         UI_ControlMainMenu.Instance.HideUI();
 
         yield return new WaitForSeconds(0.9f);
-        
+
         mission.SetActive(true);
         UI_ControlMainMenu.Instance.ShowMissionSelected();
     }
     public void DisableMenuAndAnimationButton()
     {
         newGameButton.interactable = false;
-        // loadButton.interactable = false;
         optionsButton.interactable = false;
         exitButton.interactable = false;
     }
     public void EnableMenuAndAnimationButton()
     {
         newGameButton.interactable = true;
-        // loadButton.interactable = true;
         optionsButton.interactable = true;
         exitButton.interactable = true;
     }
@@ -118,12 +126,10 @@ public class MainMenuV2 : MonoBehaviour
     {
         if (LevelManager.instance.IsLevelUnlocked(1))
         {
-            // loadButton.interactable = true;
             loadButton.SetActive(true);
         }
         else
         {
-            // loadButton.interactable = false;
             loadButton.SetActive(false);
         }
     }
