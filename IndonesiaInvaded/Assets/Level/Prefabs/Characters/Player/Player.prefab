@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 500
-  currentHealth: 0
+  currentHealth: 500
   maxSP: 100
   currentSP: 1000
   healthBar: {fileID: 0}
@@ -316,13 +316,14 @@ MonoBehaviour:
   skillImage1: {fileID: 0}
   cooldown1: 5
   skill1Key: 101
-  cameraShake: {fileID: 0}
   shakeDuration: 0.5
   shakeMagnitude: 0.1
   SkillDetectionRadius: 20
   movementSpeed: 15
   rotationToEnemySpeed: 5
-  SkillRoarCollider: {fileID: 0}
+  SkillRoarCollider: {fileID: 270514221111701641, guid: 1a7ed4150b54b4e408fb9b7590242530, type: 3}
+  destroyTimeColliderRoar: 1.5
+  smashExplosion: {fileID: 4970396060751120987, guid: ef7fb884e4a68114e8a70809a4e19650, type: 3}
   slowMotionDuration: 1
   slowMotionTimeScale: 0.5
   waitBeforeSlowMotion: 0.5
@@ -631,7 +632,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6380587300963034910}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 327f0934d87b9be4199a3ffbac36bdb3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -639,14 +640,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.082545735
-  m_Height: 1.5505213
+  m_Radius: 0.103203095
+  m_Height: 1.5669128
   m_Direction: 2
-  m_Center: {x: -0.002686155, y: 0.3846171, z: 0.18176761}
+  m_Center: {x: 0.021121668, y: 0.3877731, z: 0.18993002}
 --- !u!114 &5209925973139027628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -659,7 +660,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 178f5e6401461524390f921aeb949a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 8444245378235595083}
 --- !u!1001 &5457475530153931977
 PrefabInstance:
   m_ObjectHideFlags: 0
