@@ -244,6 +244,9 @@ public class SkillManager : MonoBehaviour
 
         float duration = distanceToMove / movementSpeed; // Hitung durasi pergerakan berdasarkan jarak dan kecepatan
 
+        //play audio jump
+        AudioManager._instance.PlaySFX("Skillplayer",1);
+        
         float timeElapsed = 0f;
         while (timeElapsed < duration) // Pergerakan berdasarkan durasi
         {
@@ -303,6 +306,9 @@ public class SkillManager : MonoBehaviour
 
     void SpawnSmashExplosion()
     {
+        //play audio smash
+        AudioManager._instance.PlaySFX("Skillplayer",2);
+
         GameObject smash = Instantiate(smashExplosion, player.position, player.rotation) as GameObject;
         Destroy(smash, 2f);
     }

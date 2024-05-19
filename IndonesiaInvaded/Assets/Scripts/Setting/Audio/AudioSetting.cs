@@ -88,6 +88,11 @@ public class AudioSetting : MonoBehaviour
         audioManagerInstance.PlaySFX("Button", 1);
     }
 
+    public void PlaySFXButtonClicked2()
+    {
+        audioManagerInstance.PlaySFX("Button", 2);
+    }
+
     public void PlayPauseSoundEffect()
     {
         audioManagerInstance.PlaySFX("Pause", 0);
@@ -97,6 +102,17 @@ public class AudioSetting : MonoBehaviour
     {
         audioManagerInstance.PlaySFX("Collision", 0);
     }
+
+    public void PlaySFXRoarJump()
+    {
+        audioManagerInstance.PlaySFX("Skillplayer", 1);
+    }
+
+    public void PlaySFXRoarCollisionWithEnemy()
+    {
+        audioManagerInstance.PlaySFX("Skillplayer", 2);
+    }
+
 
     // Stop Background Music
 
