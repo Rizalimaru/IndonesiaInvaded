@@ -3,8 +3,11 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed = 10f;
+    public float detectionRadius = 50f; // Define the detection radius
     public bool isShooting = false;
     private Vector3 targetDirection;
+    private Transform spawnerTransform;
+    private bool followSpawner = false;
 
     void Update()
     {
@@ -12,6 +15,17 @@ public class Projectile : MonoBehaviour
         {
             transform.position += targetDirection * speed * Time.deltaTime;
         }
+        else if (followSpawner && spawnerTransform != null)
+        {
+            transform.position = spawnerTransform.position;
+            FaceClosestEnemy();
+        }
+    }
+
+    public void FollowSpawner(Transform spawner)
+    {
+        spawnerTransform = spawner;
+        followSpawner = true;
     }
 
     public void Shoot()
@@ -20,7 +34,9 @@ public class Projectile : MonoBehaviour
         if (enemy != null)
         {
             targetDirection = (enemy.transform.position - transform.position).normalized;
+            RotateTowardsEnemy(targetDirection);
             isShooting = true;
+            followSpawner = false; // Stop following the spawner when shooting
         }
     }
 
@@ -28,7 +44,7 @@ public class Projectile : MonoBehaviour
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         GameObject closest = null;
-        float minDistance = Mathf.Infinity;
+        float minDistance = detectionRadius;
         Vector3 currentPos = transform.position;
         foreach (GameObject enemy in enemies)
         {
@@ -40,6 +56,22 @@ public class Projectile : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    void FaceClosestEnemy()
+    {
+        GameObject closestEnemy = FindClosestEnemy();
+        if (closestEnemy != null)
+        {
+            Vector3 directionToEnemy = (closestEnemy.transform.position - transform.position).normalized;
+            RotateTowardsEnemy(directionToEnemy);
+        }
+    }
+
+    void RotateTowardsEnemy(Vector3 directionToEnemy)
+    {
+        float angle = Mathf.Atan2(directionToEnemy.y, directionToEnemy.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     void OnCollisionEnter(Collision collision)

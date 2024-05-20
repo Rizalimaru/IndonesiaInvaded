@@ -154,7 +154,7 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
 
     private void UpdateScoreTextPaused()
     {
-        scoreTextPaused.text = totalScore.ToString();
+        scoreTextPaused.text = score.ToString();
     }
 
     public void AddEnemyDefeats(int amount)
