@@ -25,7 +25,7 @@ public class BossStateManager : MonoBehaviour
     // Dukun Skill State
 
     // Combo Counter
-    public int comboCounter = 0;
+    [HideInInspector] public int comboCounter = 0;
 
     // Boss Declaration
     public Boss bossObject;
