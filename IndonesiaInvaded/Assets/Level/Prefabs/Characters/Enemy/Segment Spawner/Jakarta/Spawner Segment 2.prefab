@@ -124,7 +124,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7f532568ccab72d4f97ed2d3f75f84d4, type: 2}
+  - {fileID: 2100000, guid: 82581776154a5344ca950084e0de2b78, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -229,7 +229,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7f532568ccab72d4f97ed2d3f75f84d4, type: 2}
+  - {fileID: 2100000, guid: 82581776154a5344ca950084e0de2b78, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -323,6 +323,7 @@ GameObject:
   - component: {fileID: 6118778137330092242}
   - component: {fileID: 6540352996669353408}
   - component: {fileID: 8569681227117044667}
+  - component: {fileID: 4320216461818161592}
   m_Layer: 0
   m_Name: S2 - COL
   m_TagString: Segment1
@@ -395,6 +396,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 55.838364, y: 9.381275, z: 1}
   m_Center: {x: 0.4520712, y: 4.1906357, z: 0}
+--- !u!114 &4320216461818161592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5620578742026083286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ca326a339dfce41b8c0ef09e2f27a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dissolveDuration: 3
+  dissolveMaterial: {fileID: 2100000, guid: 82581776154a5344ca950084e0de2b78, type: 2}
 --- !u!1 &6595151231486531681
 GameObject:
   m_ObjectHideFlags: 0

@@ -1078,11 +1078,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1680356790506007452, guid: c38b80268dc84c74ca943c04425f0993, type: 3}
   m_PrefabInstance: {fileID: 742253185508071631}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &775084129 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9168060221330683261, guid: 05cb7f86cdda0c247b4e0bb9ed011921, type: 3}
-  m_PrefabInstance: {fileID: 4694373632959774322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &813262627 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8443772845591525818, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
@@ -1302,10 +1297,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AdjustmentBrightnessGame
       objectReference: {fileID: 0}
-    - target: {fileID: 6278621079810484192, guid: 453a6451219fe1a4ab5af2f645f41212, type: 3}
-      propertyPath: volumeProfile
-      value: 
-      objectReference: {fileID: 11400000, guid: 9b5ae452452026c4da6286e9a517408a, type: 2}
     - target: {fileID: 6278621079810484192, guid: 453a6451219fe1a4ab5af2f645f41212, type: 3}
       propertyPath: brightnessSlider
       value: 
@@ -2301,20 +2292,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 871605567193979450, guid: 05cb7f86cdda0c247b4e0bb9ed011921, type: 3}
   m_PrefabInstance: {fileID: 4694373632959774322}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1442162625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 775084129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ca326a339dfce41b8c0ef09e2f27a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dissolveDuration: 3
-  dissolveMaterial: {fileID: 2100000, guid: 82581776154a5344ca950084e0de2b78, type: 2}
 --- !u!1 &1450548237
 GameObject:
   m_ObjectHideFlags: 0
@@ -4571,10 +4548,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9168060221330683261, guid: 05cb7f86cdda0c247b4e0bb9ed011921, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1442162625}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05cb7f86cdda0c247b4e0bb9ed011921, type: 3}
 --- !u!1001 &4878916578911076692
 PrefabInstance:
@@ -4600,30 +4574,6 @@ PrefabInstance:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 2001562138}
-    - target: {fileID: 2858514567260791918, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
-      propertyPath: playerTransform
-      value: 
-      objectReference: {fileID: 626572546}
-    - target: {fileID: 2858514567260791918, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
-      propertyPath: checkpoints.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2858514567260791918, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
-      propertyPath: checkpoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2858514567260791918, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
-      propertyPath: checkpoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2858514567260791918, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
-      propertyPath: checkpoints.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2858514567260791918, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
-      propertyPath: checkpoints.Array.data[3]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8443772845591525818, guid: 897583ddecc53464d9cda9cdd406563c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4763,10 +4713,6 @@ PrefabInstance:
     - target: {fileID: 1613171377210709720, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
       propertyPath: m_Name
       value: ScoreManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 8382876916541632608, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
-      propertyPath: levelIndex
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8382876916541632608, guid: e8bb7eb1346e0724192c45050f740d92, type: 3}
       propertyPath: scoreTextInGame
