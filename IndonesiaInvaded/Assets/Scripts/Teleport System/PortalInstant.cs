@@ -8,24 +8,26 @@ public class PortalInstant : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] PlayerDataSaving player;
     public GameObject playerCamera;
-    public GameObject mainCamera;
-    public GameObject cutSceneCamera;
-    public GameObject uiGame;
-    public bool hasCutScenePlayed = false;
+    // public GameObject mainCamera;
+    // public GameObject cutSceneCamera;
+    // public GameObject uiGame;
+    // public bool hasCutScenePlayed = false;
 
-    private void Start()
-    {
-        mainCamera.SetActive(true);
-        playerCamera.SetActive(true);
-        player.gameObject.SetActive(true);
-        uiGame.SetActive(true);
-        cutSceneCamera.SetActive(false);
-    }
+    // private void Start()
+    // {
+    //     mainCamera.SetActive(true);
+    //     playerCamera.SetActive(true);
+    //     player.gameObject.SetActive(true);
+    //     uiGame.SetActive(true);
+    //     cutSceneCamera.SetActive(false);
+    // }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && hasCutScenePlayed == false)
+        if(other.CompareTag("Player"))
         {
+        // if (other.CompareTag("Player") && hasCutScenePlayed == false)
+        // {
             // hasCutScenePlayed = true;
             // playerCamera.SetActive(false);
             // mainCamera.SetActive(false);
@@ -41,7 +43,7 @@ public class PortalInstant : MonoBehaviour
     IEnumerator LoadLevel()
     {
         animator.SetTrigger("End");
-        hasCutScenePlayed = true;
+        // hasCutScenePlayed = true;
         ObjectDisable();
 
         AudioManager.Instance.StopBackgroundMusicWithTransition("Game", 1f);
@@ -50,12 +52,12 @@ public class PortalInstant : MonoBehaviour
 
         player.Teleport(destination.position, destination.rotation);
 
-        cutSceneCamera.SetActive(true);
+        // cutSceneCamera.SetActive(true);
 
         animator.SetTrigger("Start");
 
-        mainCamera.SetActive(false);
-        Invoke("SwitchCam", 5);
+        // mainCamera.SetActive(false);
+        // Invoke("SwitchCam", 5);
         
         GameManager.instance.SaveGame();
         AudioManager.Instance.PlayBackgroundMusicWithTransition("GameJakarta", 0, 1f);
@@ -65,14 +67,14 @@ public class PortalInstant : MonoBehaviour
     {
         player.gameObject.SetActive(false);
         playerCamera.SetActive(false);
-        uiGame.SetActive(false);
+        // uiGame.SetActive(false);
     }
-    void SwitchCam()
-    {
-        mainCamera.SetActive(true);
-        playerCamera.SetActive(true);
-        player.gameObject.SetActive(true);
-        uiGame.SetActive(true);
-        cutSceneCamera.SetActive(false);
-    }
+    // void SwitchCam()
+    // {
+    //     mainCamera.SetActive(true);
+    //     playerCamera.SetActive(true);
+    //     player.gameObject.SetActive(true);
+    //     uiGame.SetActive(true);
+    //     cutSceneCamera.SetActive(false);
+    // }
 }
