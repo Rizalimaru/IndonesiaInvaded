@@ -152,6 +152,7 @@ public class UI_PauseGame : MonoBehaviour
         GamePaused.Invoke(); // Invoke pause event
 
         audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
+        audioManagerInstance.PauseSoundEffectGroup("Skillplayer");
 
         Debug.Log("Game paused");
     }
@@ -173,6 +174,7 @@ public class UI_PauseGame : MonoBehaviour
         GamePaused.Invoke();
 
         audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
+        audioManagerInstance.PauseSoundEffectGroup("Skillplayer");
 
 
 
@@ -212,6 +214,7 @@ public class UI_PauseGame : MonoBehaviour
 
 
         audioManagerInstance.PauseSoundEffectGroup("AttackPlayer"); 
+        audioManagerInstance.PauseSoundEffectGroup("Skillplayer");
 
 
     }
@@ -247,6 +250,7 @@ public class UI_PauseGame : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+        audioManagerInstance.ResumeSoundEffectGroup("Skillplayer");
 
         GameResumed.Invoke(); // Invoke resume event
     }

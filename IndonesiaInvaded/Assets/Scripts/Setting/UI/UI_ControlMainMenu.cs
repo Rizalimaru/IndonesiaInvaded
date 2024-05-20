@@ -277,7 +277,7 @@ public class UI_ControlMainMenu: MonoBehaviour
     IEnumerator DelayMissionSelected()
     {
         //HideUI();
-        titleGameAnimator.SetTrigger("hidebackground");
+        
         
         yield return new WaitForSeconds(0.5f);
         fadeInMissionSelected = true;
