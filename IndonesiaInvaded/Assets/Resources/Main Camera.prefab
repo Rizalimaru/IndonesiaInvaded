@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2735223633611509015}
   - component: {fileID: 7363346795766329095}
   - component: {fileID: 6836982183752973297}
+  - component: {fileID: 1788508450033720835}
   - component: {fileID: 473967207693842209}
   m_Layer: 0
   m_Name: Main Camera
@@ -137,7 +138,21 @@ Skybox:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6573419733476898397}
   m_Enabled: 1
-  m_CustomSkybox: {fileID: 2100000, guid: 20d4f77b9022eab48b4d94599ed4bf82, type: 2}
+  m_CustomSkybox: {fileID: 2100000, guid: 6abe918ee1229b34f8557fc2a5a39825, type: 2}
+--- !u!114 &1788508450033720835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6573419733476898397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd508900692cb9b4ba7c5cd9caf2229a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skyboxMaterial: {fileID: 2100000, guid: 6abe918ee1229b34f8557fc2a5a39825, type: 2}
+  rotationSpeed: 1
 --- !u!114 &473967207693842209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,4 +196,4 @@ MonoBehaviour:
     jitterScale: 1
     mipBias: 0
     varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    contrastAdaptiveSharpening: 0.288
