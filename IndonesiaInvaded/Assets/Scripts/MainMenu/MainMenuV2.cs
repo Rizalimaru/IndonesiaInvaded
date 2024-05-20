@@ -7,7 +7,7 @@ public class MainMenuV2 : MonoBehaviour
     public static MainMenuV2 instance;
     [Header("Button UI")]
     public Button newGameButton;
-    public GameObject loadButton;
+    public Button loadButton;
     public Button optionsButton;
     public Button exitButton;
 
@@ -56,12 +56,15 @@ public class MainMenuV2 : MonoBehaviour
         DisableMenuAndAnimationButton();
         UI_ControlMainMenu.Instance.HideUI();
 
+        yield return new WaitForSeconds(1f);
+        
         CutSceneManager.Instance.PlayCutScene(newGameCutSceneName);
         for (int i = 0; i < uiMainMenu.Length; i++)
         {
             Destroy(uiMainMenu[i]);
         }
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("FadeOut");
+        
         yield return new WaitForSeconds(1f);
     }
     private void OnCutSceneFinished()
@@ -126,11 +129,11 @@ public class MainMenuV2 : MonoBehaviour
     {
         if (LevelManager.instance.IsLevelUnlocked(1))
         {
-            loadButton.SetActive(true);
+            loadButton.interactable = true;
         }
         else
         {
-            loadButton.SetActive(false);
+            loadButton.interactable = false;
         }
     }
 }

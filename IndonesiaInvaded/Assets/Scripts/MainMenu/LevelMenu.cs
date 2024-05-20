@@ -15,11 +15,10 @@ public class LevelMenu : MonoBehaviour
 
     [Header("Menu Button")]
     [SerializeField] private Button backButton;
+    
     [Header("CutScene Name")]
-    [SerializeField] private string targetSceneName;
     [SerializeField] List<string> cutSceneName;
     [SerializeField] GameObject[] uiMainMenu;
-    [SerializeField] GameObject[] gamePlay;
     private int nextSceneIndex;
 
     private void Start()
@@ -29,22 +28,22 @@ public class LevelMenu : MonoBehaviour
 
     public void LoadLevel1(LevelCheck levelCheck)
     {
-        SetupGameForLevel(levelCheck);
         nextSceneIndex = 1;
+        SetupGameForLevel(levelCheck);
         PlayCutSceneBeforeLevel(cutSceneName[0]);
     }
 
     public void LoadLevel2(LevelCheck levelCheck)
     {
-        SetupGameForLevel(levelCheck);
         nextSceneIndex = 2;
+        SetupGameForLevel(levelCheck);
         PlayCutSceneBeforeLevel(cutSceneName[1]);
     }
 
     public void LoadLevel3(LevelCheck levelCheck)
     {
-        SetupGameForLevel(levelCheck);
         nextSceneIndex = 3;
+        SetupGameForLevel(levelCheck);
         PlayCutSceneBeforeLevel(cutSceneName[2]);
     }
 
@@ -58,16 +57,10 @@ public class LevelMenu : MonoBehaviour
     private void PlayCutSceneBeforeLevel(string cutSceneName)
     {
         CutSceneManager.Instance.PlayCutScene(cutSceneName);
-        SceneManager.UnloadSceneAsync(targetSceneName);
         for (int i = 0; i < uiMainMenu.Length; i++)
         {
             Destroy(uiMainMenu[i]);
         }
-        for (int i = 0; i < gamePlay.Length; i++)
-        {
-           Destroy(gamePlay[i]);
-        }
-
     }
 
     private void OnCutSceneFinished()

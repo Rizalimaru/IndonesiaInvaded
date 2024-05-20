@@ -21,6 +21,10 @@ public class CutSceneManager : MonoBehaviour
     public delegate void CutSceneFinishedHandler();
     public event CutSceneFinishedHandler OnCutSceneFinished;
 
+    private bool canSkipCutScene;
+    private float holdTime;
+    public float requiredHoldTime = 2.0f;
+
     private void Awake()
     {
         Instance = this;
@@ -40,6 +44,25 @@ public class CutSceneManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (IsCutScenePlaying && canSkipCutScene)
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                holdTime += Time.deltaTime;
+                if (holdTime >= requiredHoldTime)
+                {
+                    SkipCutScene();
+                }
+            }
+            else
+            {
+                holdTime = 0;
+            }
+        }
+    }
+
     public void PlayCutScene(string cutSceneName)
     {
         CutScene cutScene = cutScenes.Find(cs => cs.name == cutSceneName);
@@ -51,12 +74,19 @@ public class CutSceneManager : MonoBehaviour
             }
             videoPlayer.clip = cutScene.videoClip;
             IsCutScenePlaying = true;
+            canSkipCutScene = true;
+            Cursor.visible = false;
             videoPlayer.Play();
         }
         else
         {
             Debug.LogError("Cutcene not found: " + cutSceneName);
         }
+    }
+    private void SkipCutScene()
+    {
+        videoPlayer.Stop();
+        OnVideoFinished(videoPlayer);  // Manually call the end method
     }
 
     private void OnVideoFinished(VideoPlayer vp)
@@ -77,6 +107,8 @@ public class CutSceneManager : MonoBehaviour
             cutSceneCamera.enabled = false;
         }
         IsCutScenePlaying = false;
+        canSkipCutScene = false;
+        Cursor.visible = true;
         OnCutSceneFinished?.Invoke();
     }
 }
