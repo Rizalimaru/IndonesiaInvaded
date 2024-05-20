@@ -4,17 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
-{   
+{
     private Animator animator;
     private Combat combat;
     public static PlayerMovement instance;
-    
+
     [Header("Movement")]
     private float moveSpeed;
     public float walkSpeed;
+    public float rangedAtkMoveSpeed = 5f;
     public float sprintSpeed;
     public float groundDrag;
     private bool isStopping = false;
+    
 
     [Header("Jumping")]
     public float jumpForce;
@@ -37,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
+    KeyCode rangedAtkKey = KeyCode.Mouse1;
+
     [Header("KnockBack")]
     public float knockShield = 100f;
     public float knockBackForce;
@@ -61,21 +65,22 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
-
+    
     public MovementState state;
     public enum MovementState
     {
         walking,
         sprinting,
+        rangedAtk,
         crouching,
         air
     }
 
     [Header("Gravity")]
     public float gravity = 9.81f; // Default gravity value
-    
+
     private void Start()
-    {   
+    {
         combat = Combat.instance;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -88,9 +93,9 @@ public class PlayerMovement : MonoBehaviour
         Keyframe dodge_lastFrame = dodgeCurve[dodgeCurve.length - 1];
         dodgeTimer = dodge_lastFrame.time;
     }
-    
+
     private void Update()
-    {   
+    {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround2 | whatIsGround);
 
@@ -98,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
         SpeedControl();
         StateHandler();
 
-        if(InputManager.instance.GetExitPressed())
+        if (InputManager.instance.GetExitPressed())
         {
             GameManager.instance.SaveGame();
             SceneManager.LoadSceneAsync("MainMenu");
@@ -107,33 +112,35 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
         {
             animator.SetBool("isGrounded", true);
-        }else
+        }
+        else
         {
             animator.SetBool("isGrounded", false);
         }
-        
+
     }
 
     private void FixedUpdate()
     {   
-        if(animator.GetBool("hit1") || animator.GetBool("hit2") || animator.GetBool("hit3"))
+        bool rangeAtkAktif = Input.GetKey(rangedAtkKey);
+        if (animator.GetBool("hit1") || animator.GetBool("hit2") || animator.GetBool("hit3") && !rangeAtkAktif)
         {
             MoveForwardWhileAtk();
-        }else
+        }
+        else
         {
             MovePlayer();
         }
-        
+
     }
 
     private void MyInput()
-    {   
-
+    {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded && combat.isAttacking == false)
+        if (Input.GetKey(jumpKey) && readyToJump && grounded && combat.isAttacking == false)
         {
             readyToJump = false;
 
@@ -155,14 +162,15 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
 
-         // start dodge
-        if(Input.GetKeyDown(dodgeKey))
+        // start dodge
+        if (Input.GetKeyDown(dodgeKey))
         {
-            if(moveDirection.magnitude !=0)
+            if (moveDirection.magnitude != 0)
             {
                 Dodge();
             }
         }
+
     }
 
     void Dodge()
@@ -186,10 +194,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Mode - Sprinting
-        else if(grounded && Input.GetKey(sprintKey))
+        else if (grounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
+        }
+
+        // Mode - Ranged Attack
+        else if (grounded && Input.GetKey(rangedAtkKey))
+        {
+            state = MovementState.rangedAtk;
+            moveSpeed = rangedAtkMoveSpeed;
         }
 
         // Mode - Walking
@@ -206,29 +221,30 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+#region basic player movement
     private void MovePlayer()
-    {   
+    {
         // Check if any hit animation is active
         bool hit1 = animator.GetBool("hit1");
         bool hit2 = animator.GetBool("hit2");
         bool hit3 = animator.GetBool("hit3");
         bool RoarSkill = animator.GetBool("RoarSkill");
 
-        if(hit1)
+        if (hit1)
         {
             return;
         }
 
-        if(isDodging)
+        if (isDodging)
         {
             return;
         }
 
-        if(verticalInput == 0 && animator.GetFloat("movement") < 1)
+        if (verticalInput == 0 && animator.GetFloat("movement") < 1)
         {
             animator.SetTrigger("isStop");
         }
-    
+
         // Stop player movement if hit animation is active
         if (RoarSkill)
         {
@@ -259,12 +275,13 @@ public class PlayerMovement : MonoBehaviour
         // Apply gravity
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
     }
+#endregion
 
+#region skill player movement
     private void MoveForwardWhileAtk()
-    {   
-
+    {
         if (animator.GetBool("RoarSkill"))
-        {   
+        {
             return;
         }
         // Mengecek apakah sedang melakukan animasi hit1, hit2, atau hit3
@@ -275,25 +292,25 @@ public class PlayerMovement : MonoBehaviour
 
         // Mengatur kecepatan berdasarkan animasi yang sedang aktif
         float forwardSpeed = 0f;
-        if(hit1)
+        if (hit1)
         {
             forwardSpeed = .5f;
         }
-        else if(hit2)
+        else if (hit2)
         {
             forwardSpeed = .5f;
         }
-        else if(hit3)
+        else if (hit3)
         {
             forwardSpeed = 2f;
         }
-        else if(hit4)
+        else if (hit4)
         {
             forwardSpeed = 1f;
         }
 
         // Hanya melakukan pergerakan maju jika karakter berada di tanah dan tidak ada input dari pengguna
-        if(grounded)
+        if (grounded)
         {
             // Menentukan arah gerakan berdasarkan orientasi karakter
             moveDirection = orientationForAtk.forward * verticalInput + orientationForAtk.right * horizontalInput;
@@ -309,13 +326,15 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * 10f); // Menggunakan lerp untuk menginterpolasi kecepatan
         }
     }
+#endregion
 
     private void OnTriggerEnter(Collider other)
-    {   
+    {
         if (other.CompareTag("EnemyMeleeCollider"))
         {
             knockShield -= 5f;
-        }else if (other.CompareTag("EnemyRangedCollider"))
+        }
+        else if (other.CompareTag("EnemyRangedCollider"))
         {
             knockShield -= 5f;
         }
@@ -325,7 +344,6 @@ public class PlayerMovement : MonoBehaviour
             playerKnockBack();
         }
     }
-    
 
     void playerKnockBack()
     {
@@ -335,7 +353,6 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(moveDirection.normalized * 10f, ForceMode.Impulse);
         knockShield = 100f;
     }
-
 
     public void StopMovement()
     {
@@ -375,6 +392,7 @@ public class PlayerMovement : MonoBehaviour
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
+
     private void ResetJump()
     {
         readyToJump = true;
@@ -384,7 +402,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool OnSlope()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
@@ -396,5 +414,5 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
-    } 
+    }
 }
