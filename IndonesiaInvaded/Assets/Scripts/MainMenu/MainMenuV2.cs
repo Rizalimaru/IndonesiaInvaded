@@ -83,6 +83,8 @@ public class MainMenuV2 : MonoBehaviour
         DisableMenuAndAnimationButton();
         UI_ControlMainMenu.Instance.HideUI();
 
+        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("hidebackground");
+
         yield return new WaitForSeconds(0.9f);
 
         mission.SetActive(true);
