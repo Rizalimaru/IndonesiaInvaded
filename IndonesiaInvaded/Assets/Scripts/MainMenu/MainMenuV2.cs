@@ -24,7 +24,7 @@ public class MainMenuV2 : MonoBehaviour
     private LevelCheck[] levelChecks;
     private GameData data;
     [Header("Cutscene")]
-    public string newGameCutSceneName = "NewGameCutscene";
+    public string newGameCutSceneName = "";
     public GameObject[] uiMainMenu;
 
 
@@ -61,7 +61,7 @@ public class MainMenuV2 : MonoBehaviour
         CutSceneManager.Instance.PlayCutScene(newGameCutSceneName);
         for (int i = 0; i < uiMainMenu.Length; i++)
         {
-            Destroy(uiMainMenu[i]);
+            uiMainMenu[i].SetActive(false);
         }
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("FadeOut");
         

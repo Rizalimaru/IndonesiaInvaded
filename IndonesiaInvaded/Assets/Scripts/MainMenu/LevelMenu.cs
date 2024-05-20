@@ -59,7 +59,7 @@ public class LevelMenu : MonoBehaviour
         CutSceneManager.Instance.PlayCutScene(cutSceneName);
         for (int i = 0; i < uiMainMenu.Length; i++)
         {
-            Destroy(uiMainMenu[i]);
+            uiMainMenu[i].SetActive(false);
         }
     }
 
