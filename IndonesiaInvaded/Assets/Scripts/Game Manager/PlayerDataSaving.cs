@@ -15,17 +15,9 @@ public class PlayerDataSaving : MonoBehaviour
         instance = this;
 
     }
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            CheckPointManager.instance.Respawn();
-        }
-        if (transform.position.y < -1)
-        {
-            CheckPointManager.instance.Respawn();
-            ScoreManager.instance.ResetAllValues();
-        }
+        PlayerCrash();
     }
 
     public void Teleport(Vector3 position, Quaternion rotation)
@@ -35,6 +27,15 @@ public class PlayerDataSaving : MonoBehaviour
         look.x = rotation.eulerAngles.y;
         look.y = rotation.eulerAngles.z;
         velocity = Vector3.zero;
+    }
+
+    private void PlayerCrash()
+    {
+        if (transform.position.y < -1)
+        {
+            CheckPointManager.instance.Respawn();
+            ScoreManager.instance.ResetAllValues();
+        }
     }
 
 }
