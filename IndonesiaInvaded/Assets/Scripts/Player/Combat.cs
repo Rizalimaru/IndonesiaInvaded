@@ -25,7 +25,7 @@ public class Combat : MonoBehaviour
     private bool isPerformingHit = false;
     [HideInInspector] public bool isAttacking = false;
     private Coroutine hitResetCoroutine = null;
-
+    KeyCode rangedAtkKey = KeyCode.Mouse1;
 
     private void Awake()
     {
@@ -51,8 +51,9 @@ public class Combat : MonoBehaviour
     }
     void Update()
     {   
+        bool rangeAtkAktif = Input.GetKey(rangedAtkKey);
         //timingHit();
-        if (Input.GetMouseButtonDown(0) && animator.GetBool("isGrounded"))
+        if (Input.GetMouseButtonDown(0) && animator.GetBool("isGrounded") && !rangeAtkAktif)
         {   
             PerformHit();
         }

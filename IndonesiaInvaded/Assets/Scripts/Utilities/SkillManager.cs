@@ -29,6 +29,7 @@ public class SkillManager : MonoBehaviour
     public float rotationToEnemySpeed = 5.0f;
     public Object SkillRoarCollider;
     public float destroyTimeColliderRoar = 1.5f;
+    public GameObject smashExplosion;
     
     [Header("Slow Motion Effect")]
     private bool isSlowMotionActive = false;
@@ -44,7 +45,7 @@ public class SkillManager : MonoBehaviour
 
     [Header("Skill Detection")]
     public Transform player;
-    [HideInInspector]public Transform nearestEnemy;
+    [HideInInspector] public Transform nearestEnemy;
 
     private void Awake()
     {   
@@ -90,7 +91,7 @@ public class SkillManager : MonoBehaviour
             AudioManager._instance.PlaySFX("Skillplayer",0);
             StartCoroutine(DelayToCharge(1.5f));
             player.currentSP -= 30;
-            StartCoroutine(StartSlowMotion());
+            //StartCoroutine(StartSlowMotion());
             Debug.Log("Skill 1 activated!");
             player.skillBar.SetSkill(player.currentSP);
             // Start cooldown
@@ -239,11 +240,13 @@ public class SkillManager : MonoBehaviour
         Vector3 startPosition = player.position; // Simpan posisi awal player
         Vector3 moveDirection = (nearestEnemy.position - startPosition).normalized; // Hitung arah pergerakan ke musuh
 
-        // Jarak yang ingin dijelajahi (misalnya 5 meter)
         Vector3 targetPosition = startPosition + moveDirection * distanceToMove; // Hitung posisi target berdasarkan jarak yang ditentukan
 
         float duration = distanceToMove / movementSpeed; // Hitung durasi pergerakan berdasarkan jarak dan kecepatan
 
+        //play audio jump
+        AudioManager._instance.PlaySFX("Skillplayer",1);
+        
         float timeElapsed = 0f;
         while (timeElapsed < duration) // Pergerakan berdasarkan durasi
         {
@@ -255,7 +258,8 @@ public class SkillManager : MonoBehaviour
         // Pastikan posisi player benar-benar mencapai posisi target
         player.position = targetPosition;
         if(player.position == targetPosition)
-        {
+        {   
+            SpawnSmashExplosion();
             SpawnRoarCollider();
         }
         
@@ -276,7 +280,7 @@ public class SkillManager : MonoBehaviour
 
             DetectNearestEnemyForSkill(); // Deteksi musuh terdekat
             StartCoroutine(MoveToEnemyAfterCharge()); // Mulai pergerakan ke musuh setelah ChargeAtk
-            StartCoroutine(StartSlowMotion());
+            //StartCoroutine(StartSlowMotion());
         }
     }
     
@@ -298,6 +302,15 @@ public class SkillManager : MonoBehaviour
     {
         GameObject roarCollider = Instantiate(SkillRoarCollider, player.position, player.rotation) as GameObject;
         Destroy(roarCollider, destroyTimeColliderRoar); 
+    }
+
+    void SpawnSmashExplosion()
+    {
+        //play audio smash
+        AudioManager._instance.PlaySFX("Skillplayer",2);
+
+        GameObject smash = Instantiate(smashExplosion, player.position, player.rotation) as GameObject;
+        Destroy(smash, 2f);
     }
 #endregion
 
