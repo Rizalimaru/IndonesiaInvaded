@@ -12,7 +12,7 @@ public class BossHealthBar : MonoBehaviour
     private void Start()
     {
         // Dapatkan referensi ke EnemyScriptableObject dari boss GameObject
-        enemyConfig = GetComponent<Enemy>().enemyConfiguration;
+        enemyConfig = GetComponent<Enemy>().enemyType;
 
         // Atur nilai maksimum HP sesuai dengan nilai yang ada di EnemyScriptableObject
         maxHealth = enemyConfig.Health;
