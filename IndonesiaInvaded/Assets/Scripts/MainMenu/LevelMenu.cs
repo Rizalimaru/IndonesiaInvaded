@@ -6,16 +6,12 @@ using UnityEngine.UI;
 
 public class LevelMenu : MonoBehaviour
 {
-    [Header("Scene")]
-    public SceneField[] scene;
-
-    [Space(2)]
     [Header("Menu Navigation")]
     [SerializeField] private MainMenuV2 mainMenu;
 
     [Header("Menu Button")]
     [SerializeField] private Button backButton;
-    
+
     [Header("CutScene Name")]
     [SerializeField] List<string> cutSceneName;
     [SerializeField] GameObject[] uiMainMenu;
@@ -23,35 +19,37 @@ public class LevelMenu : MonoBehaviour
 
     private void Start()
     {
-        CutSceneManager.Instance.OnCutSceneFinished += OnCutSceneFinished;
+        // CutSceneManager.Instance.OnCutSceneFinished += OnCutSceneFinished;
     }
 
     public void LoadLevel1(LevelCheck levelCheck)
     {
-        nextSceneIndex = 1;
-        SetupGameForLevel(levelCheck);
-        PlayCutSceneBeforeLevel(cutSceneName[0]);
+        // nextSceneIndex = 1;
+        GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
+        GameManager.instance.NewGame();
+        GameManager.instance.SaveGame();
+        Scene_Loading.instance.LoadScenes();
+        // PlayCutSceneBeforeLevel(cutSceneName[0]);
     }
 
     public void LoadLevel2(LevelCheck levelCheck)
     {
-        nextSceneIndex = 2;
-        SetupGameForLevel(levelCheck);
-        PlayCutSceneBeforeLevel(cutSceneName[1]);
+        // nextSceneIndex = 2;
+        GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
+        GameManager.instance.NewGame();
+        GameManager.instance.SaveGame();
+        Scene_Loading.instance.LoadScenes2();
+        // PlayCutSceneBeforeLevel(cutSceneName[1]);
     }
 
     public void LoadLevel3(LevelCheck levelCheck)
     {
-        nextSceneIndex = 3;
-        SetupGameForLevel(levelCheck);
-        PlayCutSceneBeforeLevel(cutSceneName[2]);
-    }
-
-    private void SetupGameForLevel(LevelCheck levelCheck)
-    {
+        // nextSceneIndex = 3;
         GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
         GameManager.instance.NewGame();
         GameManager.instance.SaveGame();
+        Scene_Loading.instance.LoadScenes3();
+        // PlayCutSceneBeforeLevel(cutSceneName[2]);
     }
 
     private void PlayCutSceneBeforeLevel(string cutSceneName)
@@ -100,8 +98,11 @@ public class LevelMenu : MonoBehaviour
 
         mainMenu.ActivateMenu();
         mainMenu.EnableMenuAndAnimationButton();
+
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("showbackground");
+
         yield return new WaitForSeconds(0.5f);
+        
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
 
         this.DeactivateMenu();
