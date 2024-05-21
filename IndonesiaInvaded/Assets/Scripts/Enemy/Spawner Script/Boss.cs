@@ -7,7 +7,6 @@ public class Boss : MonoBehaviour
     public BossStateManager stateManager;
     public BossScriptableObject bossName;
     public NavMeshAgent agent;
-    public BossHealthBar bossHealthBar;
 
     // Offensive Attribute Declaration
     public Transform target;
@@ -47,20 +46,12 @@ public class Boss : MonoBehaviour
     {
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
+        
     }
     private void Start()
     {
         SetupAgent();
-
-        if (bossHealthBar != null)
-        {
-            Debug.Log("Boss: Menginisialisasi health bar");
-            bossHealthBar.Initialize(health);
-        }
-        else
-        {
-            Debug.LogError("Boss: BossHealthBar tidak ditemukan");
-        }
+        BossHealthBar.instance.Initialize(health);
     }
 
     // Update is called once per frame
@@ -109,11 +100,7 @@ public class Boss : MonoBehaviour
             health -= 20;
             Debug.Log("Health after damage: " + health);
 
-            if (bossHealthBar != null)
-            {
-                Debug.Log("Boss: Memperbarui health bar");
-                bossHealthBar.UpdateHealthBar(health);
-            }
+            BossHealthBar.instance.UpdateHealthBar(health);
 
             knockbackForce = 30f;
             knockbackDelay = 7f;
@@ -134,11 +121,8 @@ public class Boss : MonoBehaviour
             health -= 50;
             Debug.Log("Health after damage: " + health);
 
-            if (bossHealthBar != null)
-            {
-                Debug.Log("Boss: Memperbarui health bar");
-                bossHealthBar.UpdateHealthBar(health);
-            }
+            BossHealthBar.instance.UpdateHealthBar(health);
+
 
             knockbackForce = 65f;
             knockbackDelay = 15f;
