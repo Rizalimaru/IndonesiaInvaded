@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dodge")]
     [SerializeField] AnimationCurve dodgeCurve;
     bool isDodging;
-    float dodgeTimer;
+    public float dodgeTimer;
     public KeyCode dodgeKey = KeyCode.LeftControl;
 
     [Header("Crouching")]
@@ -175,31 +175,37 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isDodging)
         {
-            if (moveDirection.magnitude != 0)
-            {
-                isDodging = true;
-                animator.SetTrigger("Dodge");
+            // Start the dodge if a dodge is not already in progress
+            isDodging = true;
+            animator.SetTrigger("Dodge");
 
-                // Calculate dodge direction
-                Vector3 dodgeDirection = orientationForAtk.forward * verticalInput + orientationForAtk.right * horizontalInput;
-                Vector3 targetVelocity = dodgeDirection.normalized * moveSpeed * 5f;
+            // Fixed dodge distance and speed
+            float dodgeDistance = 5f; // Adjust this value as needed
+            float dodgeDuration = 0.5f; // Adjust this value as needed
+            float dodgeSpeed = dodgeDistance / dodgeDuration;
 
-                // Apply dodge velocity
-                rb.velocity = targetVelocity;
+            // Calculate dodge direction
+            Vector3 dodgeDirection = orientationForAtk.forward;
+            Vector3 targetVelocity = dodgeDirection.normalized * dodgeSpeed;
 
-                // Disable collisions temporarily to prevent getting hit during dodge
-                Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
+            // Apply dodge velocity
+            rb.velocity = targetVelocity;
 
-                // Wait for the dodge duration
-                yield return new WaitForSeconds(dodgeTimer);
+            // Disable collisions temporarily to prevent getting hit during dodge
+            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
 
-                // Enable collisions after dodge
-                Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
+            // Wait for the dodge duration
+            yield return new WaitForSeconds(dodgeDuration);
 
-                isDodging = false;
-            }
+            // Enable collisions after dodge
+            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
+
+            // Stop the dodge
+            rb.velocity = Vector3.zero;
+            isDodging = false;
         }
     }
+
 
     private void StateHandler()
     {

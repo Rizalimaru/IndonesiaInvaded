@@ -73,13 +73,35 @@ public class Enemy : MonoBehaviour
 
         Collider other = collision.collider;
 
-        if (other.CompareTag("Sword") && isAttacking == true && health > 0)
+        if (other.CompareTag("Sword") | other.CompareTag("RangedCollider") && isAttacking == true && health > 0)
         {
 
             CameraShaker.instance.CameraShake(5f, 0.1f);
 
             Debug.Log("Damaged");
-            health -= 20;
+            health -= 100;
+            knockbackForce = 30f;
+            knockbackDelay = 0.2f;
+
+            if (isKnockedBack == false)
+            {
+                isKnockedBack = true;
+                stateManager.SwitchState(stateManager.knockbackState);
+            }
+
+            if (health <= 0)
+            {
+                objectiveManager.UpdateObjective();
+            }
+        }
+
+        if (other.CompareTag("RangedCollider") && health > 0)
+        {
+
+            CameraShaker.instance.CameraShake(5f, 0.1f);
+
+            Debug.Log("Damaged");
+            health -= 100;
             knockbackForce = 30f;
             knockbackDelay = 0.2f;
 
