@@ -60,6 +60,10 @@ public class PlayerAttribut : MonoBehaviour
             TakeDamage(5);
             StopRegenerateHealth();
         }
+        else if (other.CompareTag("BossMeleeCollider"))
+        {
+            Debug.Log("Colliding with boss's hand");
+        }
     }
 
     public void TakeDamage(int damage)

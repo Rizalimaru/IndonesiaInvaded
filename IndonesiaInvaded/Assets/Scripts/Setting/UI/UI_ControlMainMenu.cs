@@ -224,7 +224,8 @@ public class UI_ControlMainMenu: MonoBehaviour
 
         optionsAnimator.SetTrigger("FadeInOptions");
 
-        mainMenu.DisableMenuAndAnimationButton();
+        //mainMenu.DisableMenuAndAnimationButton();
+        MainMenuV2.instance.DisableMenuAndAnimationButton();
         HideUI();
         
         yield return new WaitForSeconds(0.5f);

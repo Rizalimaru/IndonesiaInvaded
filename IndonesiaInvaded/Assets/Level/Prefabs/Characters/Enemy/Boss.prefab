@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3204808521129369661}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,8 +85,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.8594475, y: 5.00801, z: 2.0679328}
-  m_Center: {x: -0.05439186, y: 2.4877543, z: 0.009692073}
+  m_Size: {x: 2.8594475, y: 6.559647, z: 2.0679328}
+  m_Center: {x: -0.054391794, y: 3.263573, z: 0.009692056}
 --- !u!195 &1073414049936348716
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -167,6 +167,7 @@ MonoBehaviour:
   secondSkillCounter: 0
   firstSkillAnimDelay: 0
   secondSkillAnimDelay: 0
+  skill2Prefab: {fileID: 2758741312045260975, guid: afa9959c7c9f77a4e9f27159e2fcaf3f, type: 3}
 --- !u!114 &3204808521129369661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +337,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5606637045338468370}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d711d320cf45aa74cb6e53f28b5de464, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -344,11 +345,11 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.0042622164
-  m_Height: 0.028063862
+  m_Radius: 0.020658897
+  m_Height: 0.05350759
   m_Direction: 1
-  m_Center: {x: 0.00023267382, y: 0.007401502, z: 0.000000002292397}
+  m_Center: {x: -0.0020379017, y: 0.012038435, z: 0.008534066}
