@@ -164,25 +164,38 @@ public class PlayerMovement : MonoBehaviour
 
         // start dodge
         if (Input.GetKeyDown(dodgeKey))
-        {
-            if (moveDirection.magnitude != 0)
-            {
-                Dodge();
-            }
+        {   
+            StartCoroutine(Dodge());
         }
 
     }
 
-    void Dodge()
-    {
-        isDodging = true;
-        animator.SetTrigger("Dodge");
-        moveDirection = orientationForAtk.forward * verticalInput + orientationForAtk.right * horizontalInput;
-        //moveDirection += orientationForAtk.forward;
-        Vector3 targetVelocity = moveDirection.normalized * 5f * 2f;
-        rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * 10f); // 
-        isDodging = false;
+    IEnumerator Dodge()
+    {   
+        if (moveDirection.magnitude != 0)
+        {
+            isDodging = true;
+            animator.SetTrigger("Dodge");
+            moveDirection = orientationForAtk.forward * verticalInput + orientationForAtk.right * horizontalInput;
+            Vector3 targetVelocity = moveDirection.normalized * 5f * 2f;
+            rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * 10f);
+            isDodging = false;
+        }
+        else if (moveDirection.magnitude == 0)
+        {   
+            isDodging = true;
+            animator.SetTrigger("Backflip");
+
+            // Move backward a fixed distance
+            float backwardDistance = 1000f; // Adjust this value for desired distance
+            yield return new WaitForSeconds(.5f);
+            Vector3 backwardDirection = -orientationForAtk.forward;
+            rb.AddForce(backwardDirection.normalized * backwardDistance, ForceMode.Impulse);
+
+            isDodging = false;
+        }
     }
+
 
     private void StateHandler()
     {
