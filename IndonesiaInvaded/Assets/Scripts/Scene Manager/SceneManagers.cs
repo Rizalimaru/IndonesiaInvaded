@@ -10,7 +10,7 @@ public class SceneManagers : MonoBehaviour
 
     public List<Level> levels = new List<Level>();
     public List<Menus> menus = new List<Menus>();
-    public int CurrentLevelIndex=1;
+    public int CurrentLevelIndex = 1;
     private void Awake()
     {
         if (instance == null)
@@ -26,7 +26,7 @@ public class SceneManagers : MonoBehaviour
 
     public void LoadLevelWithIndex(int index)
     {
-        
+
         if (index <= levels.Count)
         {
             //Load Gameplay scene for the level
@@ -36,7 +36,7 @@ public class SceneManagers : MonoBehaviour
             GameManager.instance.SaveGame();
         }
         //reset the index if we have no more levels
-        else CurrentLevelIndex =1;
+        else CurrentLevelIndex = 1;
     }
 
 
@@ -53,7 +53,7 @@ public class SceneManagers : MonoBehaviour
     {
         GameManager.instance.LoadGame();
         LoadLevelWithIndex(CurrentLevelIndex);
-        
+
     }
 
     public void LoadMainMenu()
@@ -61,6 +61,15 @@ public class SceneManagers : MonoBehaviour
         GameManager.instance.SaveGame();
         UI_PauseGame.instance.HideResult();
         SceneManager.LoadSceneAsync(menus[(int)Type.Main_Menu].sceneName);
+        GameManager.instance.SaveGame();
+    }
+
+    public void Creditscene()
+    {
+        GameManager.instance.SaveGame();
+        UI_PauseGame.instance.HideResult();
+        SceneManager.LoadScene("CreditScene");
+        ScoreManager.instance.ResetAllValues();
         GameManager.instance.SaveGame();
     }
 }
