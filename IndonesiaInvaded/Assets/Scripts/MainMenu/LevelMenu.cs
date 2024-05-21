@@ -52,33 +52,33 @@ public class LevelMenu : MonoBehaviour
         // PlayCutSceneBeforeLevel(cutSceneName[2]);
     }
 
-    private void PlayCutSceneBeforeLevel(string cutSceneName)
-    {
-        CutSceneManager.Instance.PlayCutScene(cutSceneName);
-        for (int i = 0; i < uiMainMenu.Length; i++)
-        {
-            uiMainMenu[i].SetActive(false);
-        }
-    }
+    // private void PlayCutSceneBeforeLevel(string cutSceneName)
+    // {
+    //     CutSceneManager.Instance.PlayCutScene(cutSceneName);
+    //     for (int i = 0; i < uiMainMenu.Length; i++)
+    //     {
+    //         uiMainMenu[i].SetActive(false);
+    //     }
+    // }
 
-    private void OnCutSceneFinished()
-    {
-        switch (nextSceneIndex)
-        {
-            case 1:
-                Scene_Loading.instance.LoadScenes();
-                break;
-            case 2:
-                Scene_Loading.instance.LoadScenes2();
-                break;
-            case 3:
-                Scene_Loading.instance.LoadScenes3();
-                break;
-            default:
-                Debug.LogError("Invalid scene index");
-                break;
-        }
-    }
+    // private void OnCutSceneFinished()
+    // {
+    //     switch (nextSceneIndex)
+    //     {
+    //         case 1:
+    //             Scene_Loading.instance.LoadScenes();
+    //             break;
+    //         case 2:
+    //             Scene_Loading.instance.LoadScenes2();
+    //             break;
+    //         case 3:
+    //             Scene_Loading.instance.LoadScenes3();
+    //             break;
+    //         default:
+    //             Debug.LogError("Invalid scene index");
+    //             break;
+    //     }
+    // }
 
     public void OnBackClicked()
     {

@@ -20,7 +20,8 @@ public class SpawningManager : MonoBehaviour
         int enemyNum = GetCurrentEnemy();
         if(enemyNum == 0 && isFinished == true)
         {
-            Destroy(objectSelf);
+            DissolveWall.instance.DissolveWallFunction();
+            Destroy(objectSelf,2f);
         }
     }
 
@@ -33,6 +34,8 @@ public class SpawningManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+
+            DissolveWall.instance.UnDissolveWallFunction();
             
             Debug.Log("Spawning Enemy");
             for (int i = 0; i < enemyType.Count; i++)
