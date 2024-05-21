@@ -102,7 +102,7 @@ public class Enemy : MonoBehaviour
         {
 
             Debug.Log("get roar");
-            health -= 50;
+            health -= 5;
             knockbackForce = 65f;
             knockbackDelay = 5f;
 

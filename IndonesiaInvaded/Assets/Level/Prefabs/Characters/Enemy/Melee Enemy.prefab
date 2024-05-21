@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3538684814105915976}
   - component: {fileID: 2076042863817578166}
   - component: {fileID: 5970063871979080980}
-  - component: {fileID: 1672179526895879005}
   - component: {fileID: 1216154163867354785}
+  - component: {fileID: 1672179526895879005}
   - component: {fileID: 3150260632144247062}
   - component: {fileID: 6834412334276563063}
   - component: {fileID: 4393842900390374669}
@@ -111,20 +111,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.55322266, y: 1.8260072, z: 0.5088959}
   m_Center: {x: -0.0051727295, y: 0.8911726, z: -0.0072250366}
---- !u!114 &1672179526895879005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4768682672980297416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff0ffba53ebb4b34b94e0d14ca0c09c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyObject: {fileID: 3150260632144247062}
-  animator: {fileID: 1216154163867354785}
 --- !u!95 &1216154163867354785
 Animator:
   serializedVersion: 5
@@ -146,6 +132,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1672179526895879005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4768682672980297416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0ffba53ebb4b34b94e0d14ca0c09c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyObject: {fileID: 3150260632144247062}
+  animator: {fileID: 1216154163867354785}
 --- !u!114 &3150260632144247062
 MonoBehaviour:
   m_ObjectHideFlags: 0
