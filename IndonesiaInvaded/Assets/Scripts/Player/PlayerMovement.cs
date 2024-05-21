@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     public float sprintSpeed;
     public float groundDrag;
     private bool isStopping = false;
-    
 
     [Header("Jumping")]
     public float jumpForce;
@@ -65,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
-    
+
     public MovementState state;
     public enum MovementState
     {
@@ -117,7 +116,6 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isGrounded", false);
         }
-
     }
 
     private void FixedUpdate()
@@ -132,6 +130,10 @@ public class PlayerMovement : MonoBehaviour
             MovePlayer();
         }
 
+        if (isDodging)
+        {
+            rb.velocity = Vector3.zero;
+        }
     }
 
     private void MyInput()
@@ -164,24 +166,39 @@ public class PlayerMovement : MonoBehaviour
 
         // start dodge
         if (Input.GetKeyDown(dodgeKey))
+        {   
+            StartCoroutine(Dodge());
+        }
+    }
+
+    IEnumerator Dodge()
+    {
+        if (!isDodging)
         {
             if (moveDirection.magnitude != 0)
             {
-                Dodge();
+                isDodging = true;
+                animator.SetTrigger("Dodge");
+
+                // Calculate dodge direction
+                Vector3 dodgeDirection = orientationForAtk.forward * verticalInput + orientationForAtk.right * horizontalInput;
+                Vector3 targetVelocity = dodgeDirection.normalized * moveSpeed * 5f;
+
+                // Apply dodge velocity
+                rb.velocity = targetVelocity;
+
+                // Disable collisions temporarily to prevent getting hit during dodge
+                Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
+
+                // Wait for the dodge duration
+                yield return new WaitForSeconds(dodgeTimer);
+
+                // Enable collisions after dodge
+                Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
+
+                isDodging = false;
             }
         }
-
-    }
-
-    void Dodge()
-    {
-        isDodging = true;
-        animator.SetTrigger("Dodge");
-        moveDirection = orientationForAtk.forward * verticalInput + orientationForAtk.right * horizontalInput;
-        //moveDirection += orientationForAtk.forward;
-        Vector3 targetVelocity = moveDirection.normalized * 5f * 2f;
-        rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * 10f); // 
-        isDodging = false;
     }
 
     private void StateHandler()
@@ -221,7 +238,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-#region basic player movement
+    #region basic player movement
     private void MovePlayer()
     {
         // Check if any hit animation is active
@@ -230,54 +247,45 @@ public class PlayerMovement : MonoBehaviour
         bool hit3 = animator.GetBool("hit3");
         bool RoarSkill = animator.GetBool("RoarSkill");
 
-        if (hit1)
+        if (hit1 || hit2 || hit3 || RoarSkill || isDodging)
         {
-            return;
+            return; // Exit if any animation that interrupts movement is playing
         }
 
-        if (isDodging)
+        // Calculate movement direction
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection.Normalize();
+
+        // Smoothly update the animator movement parameter
+        float currentSpeed = moveDirection.magnitude * moveSpeed;
+        animator.SetFloat("movement", currentSpeed, 0.1f, Time.deltaTime); // Smooth transition
+
+        if (grounded)
         {
-            return;
+            rb.drag = 5f; // Higher drag for better stopping and control on ground
+            rb.AddForce(moveDirection * moveSpeed, ForceMode.Acceleration);
+        }
+        else
+        {
+            rb.drag = 0f; // No drag in the air
+            rb.AddForce(moveDirection * moveSpeed * airMultiplier, ForceMode.Acceleration);
         }
 
-        if (verticalInput == 0 && animator.GetFloat("movement") < 1)
+        // Handle stopping animation
+        if (verticalInput == 0 && horizontalInput == 0 && currentSpeed < 0.1f)
         {
             animator.SetTrigger("isStop");
         }
 
-        // Stop player movement if hit animation is active
-        if (RoarSkill)
-        {
-            StopMovement(); // Stop player movement
-            return; // Exit the method early
-        }
-
-        // calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
-        // on slope
-        if (OnSlope() && !exitingSlope)
-        {
-            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
-
-            if (rb.velocity.y > 0)
-                rb.AddForce(Vector3.down * 80f, ForceMode.Force);
-        }
-
-        // on ground
-        else if (grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-
-        // in air
-        else if (!grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
-
         // Apply gravity
-        rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+        if (!grounded)
+        {
+            rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+        }
     }
-#endregion
+    #endregion
 
-#region skill player movement
+    #region skill player movement
     private void MoveForwardWhileAtk()
     {
         if (animator.GetBool("RoarSkill"))
@@ -326,7 +334,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * 10f); // Menggunakan lerp untuk menginterpolasi kecepatan
         }
     }
-#endregion
+    #endregion
 
     private void OnTriggerEnter(Collider other)
     {

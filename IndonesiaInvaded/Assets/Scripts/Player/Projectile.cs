@@ -9,11 +9,14 @@ public class Projectile : MonoBehaviour
     private Transform spawnerTransform;
     private bool followSpawner = false;
 
+    public float spinSpeed = 360f; // Degrees per second
+
     void Update()
     {
         if (isShooting)
         {
             transform.position += targetDirection * speed * Time.deltaTime;
+            transform.Rotate(Vector3.forward, spinSpeed * Time.deltaTime); // Spin the projectile
         }
         else if (followSpawner && spawnerTransform != null)
         {
@@ -34,7 +37,6 @@ public class Projectile : MonoBehaviour
         if (enemy != null)
         {
             targetDirection = (enemy.transform.position - transform.position).normalized;
-            RotateTowardsEnemy(targetDirection);
             isShooting = true;
             followSpawner = false; // Stop following the spawner when shooting
         }
@@ -70,6 +72,7 @@ public class Projectile : MonoBehaviour
 
     void RotateTowardsEnemy(Vector3 directionToEnemy)
     {
+        // Calculate the angle to rotate the projectile's x-axis towards the enemy
         float angle = Mathf.Atan2(directionToEnemy.y, directionToEnemy.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
