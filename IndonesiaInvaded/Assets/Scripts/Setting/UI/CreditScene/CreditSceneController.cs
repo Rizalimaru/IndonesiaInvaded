@@ -1,9 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+
 
 public class CreditSceneController : MonoBehaviour
 {
     public Button backmainmenu;
+
+    public Animator creditAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +34,14 @@ public class CreditSceneController : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        // Kembali ke main menu
+        creditAnimator.SetTrigger("hidecredit");
+        StartCoroutine(DelayHideCredit());
+       // Kembali ke main menu
+    }
+
+    IEnumerator DelayHideCredit()
+    {
+        yield return new WaitForSeconds(2f);
         Scene_Loading.instance.LoadMainMenu();
     }
 }
