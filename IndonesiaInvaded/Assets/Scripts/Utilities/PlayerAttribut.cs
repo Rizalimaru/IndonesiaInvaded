@@ -43,9 +43,6 @@ public class PlayerAttribut : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
-        Debug.Log("Collision");
-
         Collider other = collision.collider;
 
         if (other.CompareTag("EnemyMeleeCollider"))
@@ -59,6 +56,10 @@ public class PlayerAttribut : MonoBehaviour
             Debug.Log("Damaged by ranged");
             TakeDamage(5);
             StopRegenerateHealth();
+        }
+        else if (other.CompareTag("BossMeleeCollider"))
+        {
+            Debug.Log("Colliding with boss's hand");
         }
     }
 

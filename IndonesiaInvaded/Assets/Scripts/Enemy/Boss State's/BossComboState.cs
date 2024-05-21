@@ -22,7 +22,7 @@ public class BossComboState : BossBaseState
 
         delay = boss.bossObject.animDelay;
 
-        // boss.bossObject.Attack();
+        boss.bossObject.Attack();
 
     }
 
@@ -34,6 +34,10 @@ public class BossComboState : BossBaseState
         }
         else
         {
+            if (boss.bossObject.bossTitle == BossScriptableObject.title.OndelOndel)
+            {
+                boss.bossObject.DisableMeleeAttack();
+            }
             boss.SwitchState(boss.restState);
         }
     }

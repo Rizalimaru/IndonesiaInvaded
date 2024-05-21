@@ -7,7 +7,6 @@ public class SpawningManager : MonoBehaviour
     public static SpawningManager instance;
 
     public GameObject[] wall;
-    public Transform targetPlayer;
     public List<Enemy> enemyType = new List<Enemy>();
     public Transform[] spawnPoint;
     public GameObject objectSelf;
