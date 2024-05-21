@@ -7,6 +7,7 @@ public class Boss : MonoBehaviour
     public BossStateManager stateManager;
     public BossScriptableObject bossName;
     public NavMeshAgent agent;
+    public BossHealthBar bossHealthBar;
 
     // Offensive Attribute Declaration
     public Transform target;
@@ -46,6 +47,20 @@ public class Boss : MonoBehaviour
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
     }
+    private void Start()
+    {
+        SetupAgent();
+
+        if (bossHealthBar != null)
+        {
+            Debug.Log("Boss: Menginisialisasi health bar");
+            bossHealthBar.Initialize(health);
+        }
+        else
+        {
+            Debug.LogError("Boss: BossHealthBar tidak ditemukan");
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -81,22 +96,28 @@ public class Boss : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+   private void OnCollisionEnter(Collision collision)
     {
-
         Collider other = collision.collider;
 
-        if (other.CompareTag("Sword") && isAttacking == true && health > 0)
+        if (other.CompareTag("Sword") && isAttacking && health > 0)
         {
-
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
 
-            Debug.Log("Damaged");
+            Debug.Log("Damaged by Sword. Current health: " + health);
             health -= 20;
+            Debug.Log("Health after damage: " + health);
+
+            if (bossHealthBar != null)
+            {
+                Debug.Log("Boss: Memperbarui health bar");
+                bossHealthBar.UpdateHealthBar(health);
+            }
+
             knockbackForce = 30f;
             knockbackDelay = 7f;
 
-            if (isKnockedBack == false)
+            if (!isKnockedBack)
             {
                 isKnockedBack = true;
                 stateManager.SwitchState(stateManager.knockbackState);
@@ -108,19 +129,27 @@ public class Boss : MonoBehaviour
     {
         if (other.CompareTag("SkillRoarCollider") && health > 0)
         {
-
-            Debug.Log("get roar");
+            Debug.Log("Damaged by Roar. Current health: " + health);
             health -= 50;
+            Debug.Log("Health after damage: " + health);
+
+            if (bossHealthBar != null)
+            {
+                Debug.Log("Boss: Memperbarui health bar");
+                bossHealthBar.UpdateHealthBar(health);
+            }
+
             knockbackForce = 65f;
             knockbackDelay = 15f;
 
-            if (isKnockedBack == false)
+            if (!isKnockedBack)
             {
                 stateManager.SwitchState(stateManager.knockbackState);
                 isKnockedBack = true;
             }
         }
     }
+
 
     public void knockbackDelayCounter()
     {

@@ -5,37 +5,34 @@ public class BossHealthBar : MonoBehaviour
 {
     public Slider healthSlider;
     public Image fillImage;
-
-    private EnemyScriptableObject enemyConfig;
-    private float maxHealth;
+    public Boss boss; // Referensi ke Boss
 
     private void Start()
     {
-        // Dapatkan referensi ke EnemyScriptableObject dari boss GameObject
-        enemyConfig = GetComponent<Enemy>().enemyType;
-
-        // Atur nilai maksimum HP sesuai dengan nilai yang ada di EnemyScriptableObject
-        maxHealth = enemyConfig.Health;
-
-        // Atur nilai maksimum slider HP
-        healthSlider.maxValue = maxHealth;
-
-        // Perbarui UI HP bar untuk pertama kalinya
-        UpdateHealthBar();
+        if (boss != null)
+        {
+            Debug.Log("BossHealthBar: Boss ditemukan");
+            Initialize(boss.health);
+        }
+        else
+        {
+            Debug.LogError("BossHealthBar: Boss tidak ditemukan");
+        }
     }
 
-    public void UpdateHealthBar()
+    public void Initialize(float maxHealth)
     {
-        // Dapatkan nilai kesehatan saat ini dari EnemyScriptableObject
-        float currentHealth = enemyConfig.Health;
+        Debug.Log("Initializing health bar with max health: " + maxHealth);
+        healthSlider.maxValue = maxHealth;
+        healthSlider.value = maxHealth;
+        Debug.Log("Slider max value set to: " + healthSlider.maxValue);
+        Debug.Log("Slider current value set to: " + healthSlider.value);
+    }
 
-        // Atur nilai slider sesuai dengan kesehatan saat ini
+    public void UpdateHealthBar(float currentHealth)
+    {
+        Debug.Log("Updating health bar with current health: " + currentHealth);
         healthSlider.value = currentHealth;
-
-        // Hitung persentase kesehatan saat ini
-        float healthPercentage = currentHealth / maxHealth;
-
-        // Atur ukuran fill image sesuai dengan persentase kesehatan
-        fillImage.fillAmount = healthPercentage;
+        Debug.Log("Slider value is now: " + healthSlider.value);
     }
 }
