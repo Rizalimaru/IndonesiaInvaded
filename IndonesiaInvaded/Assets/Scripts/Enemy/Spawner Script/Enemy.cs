@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
         if (other.CompareTag("Sword") && isAttacking == true && health > 0)
         {
 
-            CameraShaker.instance.CameraShake(0.5f, 0.1f);
+            CameraShaker.instance.CameraShake(5f, 0.1f);
 
             Debug.Log("Damaged");
             health -= 20;
