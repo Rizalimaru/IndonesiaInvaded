@@ -34,6 +34,7 @@ public class MainMenuV2 : MonoBehaviour
         data = new GameData();
         levelChecks = this.GetComponentsInChildren<LevelCheck>();
     }
+    
 
     private void Start()
     {
@@ -95,12 +96,14 @@ public class MainMenuV2 : MonoBehaviour
         newGameButton.interactable = false;
         optionsButton.interactable = false;
         exitButton.interactable = false;
+        loadButton.interactable = false;
     }
     public void EnableMenuAndAnimationButton()
     {
         newGameButton.interactable = true;
         optionsButton.interactable = true;
         exitButton.interactable = true;
+        CheckLevel1Completion();
     }
     public void ActivateMenu()
     {
@@ -117,13 +120,14 @@ public class MainMenuV2 : MonoBehaviour
     IEnumerator DelayBack()
     {
         UI_ControlMainMenu.Instance.HideMissionSelected();
+        EnableMenuAndAnimationButton();
 
         yield return new WaitForSeconds(0.9f);
 
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("showbackground");
         yield return new WaitForSeconds(0.5f);
         ActivateMenu();
-        EnableMenuAndAnimationButton();
+        
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
         mission.SetActive(false);
     }
@@ -135,12 +139,7 @@ public class MainMenuV2 : MonoBehaviour
         }
         else
         {
-            loadButton.interactable = false;
-            // merubah warna button
-            ColorBlock colors = loadButton.colors;
-            colors.normalColor = Color.gray;
-            loadButton.colors = colors;
-            
+            loadButton.interactable = false;           
         }
     }
 

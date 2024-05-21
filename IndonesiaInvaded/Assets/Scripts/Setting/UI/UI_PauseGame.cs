@@ -33,7 +33,11 @@ public class UI_PauseGame : MonoBehaviour
     public GameObject gameObjectUI;
     public GameObject gameObjectOptions;
     public GameObject gameResult;
+
+    [Header("-----------------------GameOver-----------------------")]
     public GameObject gameOver;
+
+    public GameObject player;
 
     [Header("-----------------------Player-----------------------")]
     public GameObject playerCamera;
@@ -156,6 +160,8 @@ public class UI_PauseGame : MonoBehaviour
     public void GameOver()
     {
 
+        player.SetActive(false);
+
         GameIsPaused = true;
         Time.timeScale = 0f;
         isCursorLocked = false; // Unlock cursor when paused
@@ -177,6 +183,9 @@ public class UI_PauseGame : MonoBehaviour
 
     public void ResetGameOver()
     {
+
+
+        isGameOver = false;
         GameIsPaused = false;
         Time.timeScale = 1f;
         isCursorLocked = true; // Lock cursor when unpaused
@@ -282,21 +291,6 @@ public class UI_PauseGame : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.5f);
         gameObjectOptions.SetActive(false);
     }
-
-    // Update cursor state based on pause status
-    // private void LateUpdate()
-    // {
-    //     if (GameIsPaused && !isCursorLocked)
-    //     {
-    //         Cursor.lockState = CursorLockMode.None;
-    //         Cursor.visible = true; // Show cursor during pause
-    //     }
-    //     else if (!GameIsPaused && isCursorLocked)
-    //     {
-    //         Cursor.lockState = CursorLockMode.Locked;
-    //         Cursor.visible = false;
-    //     }
-    // }
 
     public void EndGame()
     {
