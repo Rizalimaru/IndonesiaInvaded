@@ -381,7 +381,7 @@ Transform:
   m_GameObject: {fileID: 2807203674705541883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.6, y: 12.2, z: -62.2}
+  m_LocalPosition: {x: 35.37, y: 12.2, z: -29.21}
   m_LocalScale: {x: 15.08, y: 15.08, z: 15.08}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -607,7 +607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8102591572832684814}
   - component: {fileID: 7771201335362748714}
-  - component: {fileID: 127657507095277726}
+  - component: {fileID: 8931358691282063623}
   m_Layer: 0
   m_Name: JB - COL
   m_TagString: Untagged
@@ -651,7 +651,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &127657507095277726
+--- !u!114 &8931358691282063623
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -660,7 +660,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5102844113831510898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6e33c242862ed647bfcd91b24a7fb85, type: 3}
+  m_Script: {fileID: 11500000, guid: fa7899b451ffe2c46b4fb81cd054df60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wall:
@@ -672,11 +672,8 @@ MonoBehaviour:
   - {fileID: 7108230320652771541}
   - {fileID: 1008031055405789691}
   - {fileID: 3888126057660468251}
-  targetPlayer: {fileID: 0}
-  enemyType:
-  - {fileID: 5740982810606183585, guid: ed0a39a60a29e0448b9a6a9c8e0ee5f4, type: 3}
-  spawnPoint:
-  - {fileID: 6892847640777530499}
+  bossObject: {fileID: 7550197529966654154, guid: ed0a39a60a29e0448b9a6a9c8e0ee5f4, type: 3}
+  spawnPoint: {fileID: 6892847640777530499}
   objectSelf: {fileID: 654263297944559448}
 --- !u!1 &7108230320652771541
 GameObject:
