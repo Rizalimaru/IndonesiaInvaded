@@ -35,8 +35,9 @@ public class Boss : MonoBehaviour
     [HideInInspector] public int secondSkillCounter = 0;
     [HideInInspector] public float firstSkillAnimDelay;
     [HideInInspector] public float secondSkillAnimDelay;
-
-
+    // public GameObject skill1Prefab;
+    public GameObject skill2Prefab;
+    
     // Private Stuff
     private bool isAttacking = false;
     private GameObject attackObject;
@@ -76,8 +77,8 @@ public class Boss : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            Debug.Log("Ada 5");
-            secondSkillCounter = 5;
+            Debug.Log("Ada 2");
+            firstSkillCounter = 2;
         }
     }
 
@@ -129,7 +130,43 @@ public class Boss : MonoBehaviour
 
     public void Attack()
     {
-        attackObject = GameObject.Instantiate(attackPrefab, spawnPoint.transform.position, spawnPoint.rotation) as GameObject;
+        if (bossTitle == BossScriptableObject.title.OndelOndel)
+        {
+            Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
+            meleeCollider.enabled = true;
+        }
+        else
+        {
+            attackObject = GameObject.Instantiate(attackPrefab, spawnPoint.transform.position, spawnPoint.rotation) as GameObject;
+        }
+    }
+
+    public void DisableMeleeAttack()
+    {
+        Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
+        meleeCollider.enabled = false;
+    }
+
+    public void Skill1()
+    {
+        Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
+        meleeCollider.enabled = true;
+    }
+
+    private void Skill2()
+    {
+        attackObject = GameObject.Instantiate(skill2Prefab, transform.position, transform.rotation) as GameObject;
+    }
+
+    public void StopSkill1()
+    {
+        Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
+        meleeCollider.enabled = false;
+    }
+
+    public void CastSkill2()
+    {
+        Invoke("Skill2", 1.8f);
     }
 
     public bool checkIfSeeTarget()
