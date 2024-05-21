@@ -54,7 +54,7 @@ public class BrightnessV2 : MonoBehaviour
     void SetBrightness(float value)
     {
         // Konversi nilai slider ke dalam rentang [-1, 1]
-        float adjustedValue = Remap(value, brightnessSlider.minValue, brightnessSlider.maxValue, -1f, 0.5f);
+        float adjustedValue = Remap(value, brightnessSlider.minValue, brightnessSlider.maxValue, -1.5f, 0.5f);
 
         // Atur nilai kecerahan
         colorAdjustments.postExposure.value = adjustedValue;

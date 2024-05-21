@@ -134,6 +134,13 @@ public class MainMenuV2 : MonoBehaviour
         else
         {
             loadButton.interactable = false;
+            // merubah warna button
+            ColorBlock colors = loadButton.colors;
+            colors.normalColor = Color.gray;
+            loadButton.colors = colors;
+            
         }
     }
+
+   
 }
