@@ -9,7 +9,7 @@ public class UI_PauseGame : MonoBehaviour
 
     // Singleton instance
     public static UI_PauseGame instance;
-    
+
     private AudioManager audioManagerInstance;
 
     public static bool GameIsPaused = false;
@@ -48,7 +48,7 @@ public class UI_PauseGame : MonoBehaviour
 
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Debug.LogWarning("More than one instance of UI_PauseGame found!");
             // Destroy(gameObject);
@@ -95,11 +95,7 @@ public class UI_PauseGame : MonoBehaviour
                 }
             }
 
-            if (PlayerAttribut.instance.currentHealth <= 0)
-            {
-                GameOver();
-                isGameOver = true; // Set isGameOver to true after calling GameOver()
-            }
+        EndGame();
         }
     }
 
@@ -160,18 +156,17 @@ public class UI_PauseGame : MonoBehaviour
     public void GameOver()
     {
 
-        gameOver.SetActive(true);
-        gameObjectUI.SetActive(false);
-        playerCamera.SetActive(false);
-        gameResult.SetActive(false);
-
-        Time.timeScale = 0f;
         GameIsPaused = true;
+        Time.timeScale = 0f;
         isCursorLocked = false; // Unlock cursor when paused
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        
+        gameOver.SetActive(true);
+        playerCamera.SetActive(false);
 
-        GamePaused.Invoke();
+
+        // GamePaused.Invoke();
 
         audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
         audioManagerInstance.PauseSoundEffectGroup("Skillplayer");
@@ -180,19 +175,18 @@ public class UI_PauseGame : MonoBehaviour
 
     }
 
-    public void ResetGameOver(){
-        gameOver.SetActive(false);
-        gameObjectUI.SetActive(true);
-        playerCamera.SetActive(true);
-        gameResult.SetActive(false);
-        Time.timeScale = 1f;
+    public void ResetGameOver()
+    {
         GameIsPaused = false;
+        Time.timeScale = 1f;
         isCursorLocked = true; // Lock cursor when unpaused
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        GameResumed.Invoke(); // Invoke resume event
+        gameOver.SetActive(false);
+        playerCamera.SetActive(true);
 
+        // GameResumed.Invoke(); // Invoke resume event
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
     }
 
@@ -213,7 +207,7 @@ public class UI_PauseGame : MonoBehaviour
         GamePaused.Invoke();
 
 
-        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer"); 
+        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
         audioManagerInstance.PauseSoundEffectGroup("Skillplayer");
 
 
@@ -284,7 +278,7 @@ public class UI_PauseGame : MonoBehaviour
     }
 
     private IEnumerator HideOptionsCoroutine()
-    {   
+    {
         yield return new WaitForSecondsRealtime(0.5f);
         gameObjectOptions.SetActive(false);
     }
@@ -303,4 +297,14 @@ public class UI_PauseGame : MonoBehaviour
     //         Cursor.visible = false;
     //     }
     // }
+
+    public void EndGame()
+    {
+        if (PlayerAttribut.instance.currentHealth <= 0)
+        {
+            GameOver();
+            isGameOver = true;
+
+        }
+    }
 }
