@@ -46,6 +46,7 @@ public class CheckPointManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         PlayerAttribut.instance.ResetTotal();
         ScoreManager.instance.ResetScore();
+        UI_PauseGame.instance.player.SetActive(true);
         PlayerDataSaving.instance.Teleport(GetCheckPoint(), Quaternion.identity);
         animator.SetTrigger("Start");
     }

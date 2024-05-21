@@ -1,0 +1,47 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+public class EnemyIdleState : EnemyBaseState
+{
+    float delay;
+
+    public override void EnterState(EnemyStateManager enemy)
+    {
+        Debug.Log("Enemy is Idle");
+
+        enemy.animator.SetBool("isWalking", false);
+        enemy.animator.SetBool("isAttacking", false);
+        enemy.animator.SetBool("isResting", false);
+        enemy.animator.SetBool("isDead", false);
+        enemy.animator.SetBool("isStunned", false);
+        enemy.animator.SetBool("repositioning", false);
+
+        delay = 1f;
+        enemy.GetComponent<NavMeshAgent>().isStopped = true;
+    }
+
+    public override void UpdateState(EnemyStateManager enemy)
+    {
+        if (delay > 0)
+        {
+            delay -= Time.deltaTime;
+        }
+        else
+        {
+            if (Vector3.Distance(enemy.enemyObject.spawnPoint.transform.position, enemy.enemyObject.target.transform.position) <= enemy.enemyObject.triggerDistance)
+            {
+                enemy.SwitchState(enemy.movingState);
+            }
+        }
+    }
+
+    public override void OnCollisionEnter(EnemyStateManager enemy, Collision collision)
+    {
+        
+    }
+
+    public override void OnCollisionExit(EnemyStateManager enemy, Collision collision)
+    {
+
+    }
+}

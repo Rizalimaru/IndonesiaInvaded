@@ -3262,9 +3262,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1319249930}
-        m_TargetAssemblyTypeName: AudioSettingMainMenu, Assembly-CSharp
-        m_MethodName: PlaySFXButtonClicked
+      - m_Target: {fileID: 1112979059}
+        m_TargetAssemblyTypeName: MainMenuV2, Assembly-CSharp
+        m_MethodName: DisableMenuAndAnimationButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3756,7 +3756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newGameButton: {fileID: 51881100}
-  loadButton: {fileID: 1493873574}
+  loadButton: {fileID: 1493873577}
   optionsButton: {fileID: 1289589191}
   exitButton: {fileID: 774709398}
   titleGameAnimator: {fileID: 140075504}
@@ -3764,6 +3764,10 @@ MonoBehaviour:
   mission: {fileID: 2117533410}
   ui: {fileID: 1112979054}
   levelMenu: {fileID: 2117533414}
+  newGameCutSceneName: NewGame
+  uiMainMenu:
+  - {fileID: 1997242883}
+  - {fileID: 140075495}
 --- !u!1 &1153295841
 GameObject:
   m_ObjectHideFlags: 0
@@ -4819,6 +4823,75 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 06a1b43d6b660b94aa1ac422fd3ccff1, type: 3}
   - {fileID: 21300000, guid: 58117da8705c0dd4f8e5b48328069b4c, type: 3}
   buttonMute: {fileID: 2019733742}
+--- !u!1001 &1334382213
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1586466275984932813, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: m_Name
+      value: CutSceneManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945109434456429360, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 432.29382
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945109434456429360, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 183.67589
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945109434456429360, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.3384938
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945109434456429360, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945109434456429360, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945109434456429360, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945109434456429360, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945109434456429360, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945109434456429360, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945109434456429360, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8487148480070035568, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: requiredHoldTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8487148480070035568, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: cutScenes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8487148480070035568, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
+      propertyPath: cutScenes.Array.data[1].name
+      value: Level3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a21bb1cc1d2cd944bb3849e075c42b58, type: 3}
 --- !u!1 &1362501841
 GameObject:
   m_ObjectHideFlags: 0
@@ -5635,8 +5708,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4283716702
+  m_fontColor: {r: 0.3679245, g: 0.32800817, b: 0.32800817, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 1
   m_fontColorGradient:
@@ -6303,6 +6376,22 @@ PrefabInstance:
       propertyPath: mainMenu
       value: 
       objectReference: {fileID: 1112979059}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: cutSceneNames.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: uiMainMenu.Array.data[0]
+      value: 
+      objectReference: {fileID: 1997242883}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: uiMainMenu.Array.data[1]
+      value: 
+      objectReference: {fileID: 140075495}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: cutSceneNames.Array.data[0]
+      value: NewGame
+      objectReference: {fileID: 0}
     - target: {fileID: 3248174855412901172, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -6660,3 +6749,4 @@ SceneRoots:
   - {fileID: 1319249928}
   - {fileID: 200038146}
   - {fileID: 2050694529}
+  - {fileID: 1334382213}

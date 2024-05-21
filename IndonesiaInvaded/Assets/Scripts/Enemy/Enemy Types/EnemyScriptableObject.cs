@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "Enemy Configuration", menuName = "ScriptableObject/Enemy Configuration")]
 public class EnemyScriptableObject : ScriptableObject
@@ -20,15 +19,6 @@ public class EnemyScriptableObject : ScriptableObject
     public float StoppingDistance = 0;
     public bool Braking = true;
 
-    // NavMesh Config = Obstacle Avoidance
-    public ObstacleAvoidanceType ObstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
-    public float Radius = 0.5f;
-    public float Height = 2;
-    public int AvoidancePriority = 50;
-
-    // NavMesh Config = Path Finding
-    public int AreaMask = -1; // -1 means everything
-
     // Enemy Type (Boss, Basic)
     public title enemyTitle = title.Basic_Melee;
 
@@ -39,6 +29,5 @@ public class EnemyScriptableObject : ScriptableObject
     {
         Basic_Melee,
         Basic_Ranged,
-        Boss
     }
 }

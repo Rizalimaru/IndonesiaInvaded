@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
     public EnemyScriptableObject enemyType;
     public NavMeshAgent Agent;
     private ObjectiveManager objectiveManager;
-    public EnemyScriptableObject enemyConfiguration;
 
     // Offensive Attribute Declaration
     public Transform target;
@@ -18,18 +17,18 @@ public class Enemy : MonoBehaviour
     public Animator playerAnimator;
 
     // Attribute Declaration
-    [System.NonSerialized] public float health;
-    [System.NonSerialized] public float attackPower;
-    [System.NonSerialized] public float attackSpeed;
-    [System.NonSerialized] public float triggerDistance;
-    [System.NonSerialized] public float attackDistance;
-    [System.NonSerialized] public float viewAngle;
-    [System.NonSerialized] public float animDelay;
-    [System.NonSerialized] public EnemyScriptableObject.title enemyTitle;
-    [System.NonSerialized] public bool isKnockedBack = false;
-    [System.NonSerialized] public float knockbackForce;
-    [System.NonSerialized] public float knockbackGuard;
-    [System.NonSerialized] public float knockbackDelay;
+    [HideInInspector] public float health;
+    [HideInInspector] public float attackPower;
+    [HideInInspector] public float attackSpeed;
+    [HideInInspector] public float triggerDistance;
+    [HideInInspector] public float attackDistance;
+    [HideInInspector] public float viewAngle;
+    [HideInInspector] public float animDelay;
+    [HideInInspector] public EnemyScriptableObject.title enemyTitle;
+    [HideInInspector] public bool isKnockedBack = false;
+    [HideInInspector] public float knockbackForce;
+    [HideInInspector] public float knockbackGuard;
+    [HideInInspector] public float knockbackDelay;
 
     // Private Stuff
     private bool isAttacking = false;
@@ -77,7 +76,7 @@ public class Enemy : MonoBehaviour
         if (other.CompareTag("Sword") && isAttacking == true && health > 0)
         {
 
-            CameraShaker.instance.CameraShake(0.5f, 0.1f);
+            CameraShaker.instance.CameraShake(5f, 0.1f);
 
             Debug.Log("Damaged");
             health -= 20;
@@ -103,7 +102,7 @@ public class Enemy : MonoBehaviour
         {
 
             Debug.Log("get roar");
-            health -= 100;
+            health -= 5;
             knockbackForce = 65f;
             knockbackDelay = 5f;
 
@@ -161,13 +160,6 @@ public class Enemy : MonoBehaviour
         Agent.acceleration = enemyType.Acceleration;
         Agent.stoppingDistance = enemyType.StoppingDistance;
         Agent.autoBraking = enemyType.Braking;
-
-        Agent.obstacleAvoidanceType = enemyType.ObstacleAvoidanceType;
-        Agent.radius = enemyType.Radius;
-        Agent.height = enemyType.Height;
-        Agent.avoidancePriority = enemyType.AvoidancePriority;
-
-        Agent.areaMask = enemyType.AreaMask;
 
         enemyTitle = enemyType.enemyTitle;
         animDelay = enemyType.animationDelay;

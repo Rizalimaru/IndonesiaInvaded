@@ -7,7 +7,7 @@ public class MainMenuV2 : MonoBehaviour
     public static MainMenuV2 instance;
     [Header("Button UI")]
     public Button newGameButton;
-    public GameObject loadButton;
+    public Button loadButton;
     public Button optionsButton;
     public Button exitButton;
 
@@ -23,6 +23,9 @@ public class MainMenuV2 : MonoBehaviour
     [SerializeField] private LevelMenu levelMenu;
     private LevelCheck[] levelChecks;
     private GameData data;
+    [Header("Cutscene")]
+    public string newGameCutSceneName = "";
+    public GameObject[] uiMainMenu;
 
 
     private void Awake()
@@ -31,10 +34,12 @@ public class MainMenuV2 : MonoBehaviour
         data = new GameData();
         levelChecks = this.GetComponentsInChildren<LevelCheck>();
     }
+    
 
     private void Start()
     {
         CheckLevel1Completion();
+        CutSceneManager.Instance.OnCutSceneFinished += OnCutSceneFinished;
     }
     public void NewGame(LevelCheck levelCheck)
     {
@@ -51,12 +56,21 @@ public class MainMenuV2 : MonoBehaviour
         AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
         DisableMenuAndAnimationButton();
         UI_ControlMainMenu.Instance.HideUI();
-        yield return new WaitForSeconds(1f);
-        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("FadeOut");
-        yield return new WaitForSeconds(1f);
 
+        yield return new WaitForSeconds(1f);
+        
+        CutSceneManager.Instance.PlayCutScene(newGameCutSceneName);
+        for (int i = 0; i < uiMainMenu.Length; i++)
+        {
+            uiMainMenu[i].SetActive(false);
+        }
+        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("FadeOut");
+        
+        yield return new WaitForSeconds(1f);
+    }
+    private void OnCutSceneFinished()
+    {
         Scene_Loading.instance.LoadScenes();
-        yield return new WaitForSeconds(0.9f);
         AudioManager.Instance.PlayBackgroundMusicWithTransition("Game", 0, 1f);
     }
 
@@ -70,24 +84,26 @@ public class MainMenuV2 : MonoBehaviour
         DisableMenuAndAnimationButton();
         UI_ControlMainMenu.Instance.HideUI();
 
+        UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("hidebackground");
+
         yield return new WaitForSeconds(0.9f);
-        
+
         mission.SetActive(true);
         UI_ControlMainMenu.Instance.ShowMissionSelected();
     }
     public void DisableMenuAndAnimationButton()
     {
         newGameButton.interactable = false;
-        // loadButton.interactable = false;
         optionsButton.interactable = false;
         exitButton.interactable = false;
+        loadButton.interactable = false;
     }
     public void EnableMenuAndAnimationButton()
     {
         newGameButton.interactable = true;
-        // loadButton.interactable = true;
         optionsButton.interactable = true;
         exitButton.interactable = true;
+        CheckLevel1Completion();
     }
     public void ActivateMenu()
     {
@@ -104,13 +120,14 @@ public class MainMenuV2 : MonoBehaviour
     IEnumerator DelayBack()
     {
         UI_ControlMainMenu.Instance.HideMissionSelected();
+        EnableMenuAndAnimationButton();
 
         yield return new WaitForSeconds(0.9f);
 
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("showbackground");
         yield return new WaitForSeconds(0.5f);
         ActivateMenu();
-        EnableMenuAndAnimationButton();
+        
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
         mission.SetActive(false);
     }
@@ -118,13 +135,13 @@ public class MainMenuV2 : MonoBehaviour
     {
         if (LevelManager.instance.IsLevelUnlocked(1))
         {
-            // loadButton.interactable = true;
-            loadButton.SetActive(true);
+            loadButton.interactable = true;
         }
         else
         {
-            // loadButton.interactable = false;
-            loadButton.SetActive(false);
+            loadButton.interactable = false;           
         }
     }
+
+   
 }
