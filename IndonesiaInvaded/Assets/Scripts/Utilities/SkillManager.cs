@@ -249,7 +249,7 @@ public class SkillManager : MonoBehaviour
         
         float timeElapsed = 0f;
         while (timeElapsed < duration) // Pergerakan berdasarkan durasi
-        {
+        {   
             // Interpolasi pergerakan
             player.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
             timeElapsed += Time.deltaTime;
