@@ -20,7 +20,7 @@ public class SpawningManager : MonoBehaviour
         if(enemyNum == 0 && isFinished == true)
         {
             DissolveWall.instance.DissolveWallFunction();
-            Destroy(objectSelf,2f);
+            Destroy(objectSelf,3f);
         }
     }
 
