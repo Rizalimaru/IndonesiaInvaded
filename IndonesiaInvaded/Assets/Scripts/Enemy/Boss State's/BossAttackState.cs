@@ -19,7 +19,7 @@ public class BossAttackState : BossBaseState
 
         delay = boss.bossObject.animDelay;
 
-        // boss.bossObject.Attack();
+        boss.bossObject.Attack();
 
     }
 
@@ -31,6 +31,10 @@ public class BossAttackState : BossBaseState
         }
         else
         {
+            if (boss.bossObject.bossTitle == BossScriptableObject.title.OndelOndel)
+            {
+                boss.bossObject.DisableMeleeAttack();
+            }
             boss.SwitchState(boss.restState);
         }
     }

@@ -240,6 +240,21 @@ public class UI_PauseGame : MonoBehaviour
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
     }
 
+    public void CreditScene()
+    {
+        gameResult.SetActive(false);
+        gameObjectUI.SetActive(true);
+        playerCamera.SetActive(true);
+        gameOver.SetActive(false);
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+        isResultScreenShown = false; // Set isResultScreenShown to true when showing the result screen
+        //isCursorLocked = true; // Lock cursor when unpaused
+        GameResumed.Invoke(); // Invoke resume event
+
+        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+    }
+
     public void Resume()
     {
         pauseAnimator.SetTrigger("pauseout");

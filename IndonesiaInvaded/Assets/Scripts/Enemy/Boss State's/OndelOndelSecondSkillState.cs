@@ -20,6 +20,7 @@ public class OndelOndelSecondSkillState : BossBaseState
         boss.animator.SetBool("secondSkill", true);
 
         delay = boss.bossObject.secondSkillAnimDelay;
+        boss.bossObject.CastSkill2();
     }
 
     public override void UpdateState(BossStateManager boss)
@@ -29,7 +30,7 @@ public class OndelOndelSecondSkillState : BossBaseState
             delay -= Time.deltaTime;
         }
         else
-        {
+        {          
             boss.bossObject.secondSkillCounter = 0;
             boss.SwitchState(boss.restState);
         }
