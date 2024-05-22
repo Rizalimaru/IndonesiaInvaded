@@ -218,7 +218,7 @@ public class SkillManager : MonoBehaviour
 
         foreach (Collider collider in colliders)
         {
-            if (collider.CompareTag("Enemy"))
+            if (collider.CompareTag("Enemy")|collider.CompareTag("Boss"))
             {
                 float distance = Vector3.Distance(player.position, collider.transform.position);
                 if (distance < shortestDistance)
