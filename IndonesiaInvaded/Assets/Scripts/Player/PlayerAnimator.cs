@@ -166,7 +166,17 @@ public class PlayerAnimator : MonoBehaviour
             }
             else
             {
-                currentMovementZ = Mathf.MoveTowards(currentMovementZ, Mathf.Max(Mathf.Abs(horizontalInput), Mathf.Abs(verticalInput)), acceleration * Time.deltaTime); // Increase movement gradually based on input
+                currentMovementZ = Mathf.MoveTowards(currentMovementZ, Mathf.Max(Mathf.Abs(horizontalInput), Mathf.Abs(verticalInput)), acceleration * Time.deltaTime);
+            }
+
+            // Menambahkan efek horizontal ke movementZ
+            if (horizontalLeft)
+            {
+                currentMovementZ = Mathf.MoveTowards(currentMovementZ, maxMovement, acceleration * Time.deltaTime);
+            }
+            if (horizontalRight)
+            {
+                currentMovementZ = Mathf.MoveTowards(currentMovementZ, maxMovement, acceleration * Time.deltaTime);
             }
 
             // Deceleration for stopping smoothly
