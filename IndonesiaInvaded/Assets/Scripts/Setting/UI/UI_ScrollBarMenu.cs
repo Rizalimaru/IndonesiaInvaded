@@ -13,13 +13,12 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
     float[] pos;
     float distance;
     int hoveredIndex = -1;
-    private Dictionary<string, GameData> allProfilesData;
+    private Dictionary<string, GameData> allProfilesData = new Dictionary<string, GameData>();
     private string currentProfileId;
 
     private int highScore;
     private string rank;
     private string selectedProfileId;
-
 
     private void Start()
     {
@@ -35,12 +34,13 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private void Update()
     {
         UpdateProfileData(selectedProfileId);
-        if (hoveredIndex >= 0)
+        if (hoveredIndex >= 0 && hoveredIndex < buttons.Length)
         {
             float normalizedScrollPos = scrollBar.value;
             Mathf.RoundToInt(normalizedScrollPos / distance);
         }
     }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         for (int i = 0; i < buttons.Length; i++)
@@ -55,6 +55,7 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
             }
         }
     }
+
     public void OnPointerExit(PointerEventData eventData)
     {
         hoveredIndex = -1;
@@ -62,9 +63,8 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void UpdateTexts(int hoveredIndex)
     {
-
-        // scoreText.text = highScore.ToString();
-        // rankText.text = rank;
+        if (hoveredIndex >= 0 && hoveredIndex < buttons.Length)
+        {
             string profileId = buttons[hoveredIndex].GetComponent<LevelCheck>().GetProfileId();
             if (allProfilesData.ContainsKey(profileId))
             {
@@ -77,25 +77,30 @@ public class UI_ScrollBarMenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 scoreText.text = "";
                 rankText.text = "";
             }
+        }
     }
 
     public void SaveData(GameData data)
     {
-
+        // Implementasi logika penyimpanan jika diperlukan
     }
 
     public void LoadData(GameData data)
     {
-        // highScore = data.highScore;
-        // rank = data.rank;
+        // Implementasi logika pemuatan jika diperlukan
     }
+
     public void UpdateProfileData(string newProfileId)
     {
         selectedProfileId = newProfileId;
         GameManager.instance.LoadGame(); // Memuat kembali data game dengan profil yang baru
         // Panggil UpdateTexts untuk menampilkan data baru
-        UpdateTexts(hoveredIndex);
+        if (hoveredIndex >= 0 && hoveredIndex < buttons.Length)
+        {
+            UpdateTexts(hoveredIndex);
+        }
     }
+
     public void UpdateProfileData(Dictionary<string, GameData> allProfilesData, string currentProfileId)
     {
         this.allProfilesData = allProfilesData;

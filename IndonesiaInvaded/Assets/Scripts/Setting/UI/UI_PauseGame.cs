@@ -71,6 +71,8 @@ public class UI_PauseGame : MonoBehaviour
         Cursor.visible = false;
 
         audioManagerInstance = AudioManager.Instance;
+
+        ScoreManager.instance.ResetAllValues();
     }
 
     // Update is called once per frame
@@ -89,8 +91,6 @@ public class UI_PauseGame : MonoBehaviour
                     else
                     {
                         Resume(); // Resume the game if options are not active
-
-                        Debug.Log("Game resumed");
                     }
                 }
                 else
@@ -154,7 +154,6 @@ public class UI_PauseGame : MonoBehaviour
         audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
         audioManagerInstance.PauseSoundEffectGroup("Skillplayer");
 
-        Debug.Log("Game paused");
     }
 
     public void GameOver()
