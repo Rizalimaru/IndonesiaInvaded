@@ -70,11 +70,6 @@ public class Boss : MonoBehaviour
 
         }
 
-        if (isKnockedBack == true)
-        {
-            Invoke("knockbackDelayCounter", knockbackDelay);
-        }
-
         if (Input.GetKeyDown(KeyCode.M))
         {
             Debug.Log("Ada 2");
@@ -93,13 +88,16 @@ public class Boss : MonoBehaviour
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
 
             Debug.Log("Damaged");
-            health -= 20;
+            health -= 15;
             knockbackForce = 30f;
-            knockbackDelay = 7f;
+            knockbackDelay = 45f;
 
             if (isKnockedBack == false)
             {
                 isKnockedBack = true;
+
+                Invoke("knockbackDelayCounter", knockbackDelay);
+
                 stateManager.SwitchState(stateManager.knockbackState);
             }
         }
@@ -111,14 +109,17 @@ public class Boss : MonoBehaviour
         {
 
             Debug.Log("get roar");
-            health -= 50;
+            health -= 25;
             knockbackForce = 65f;
-            knockbackDelay = 15f;
+            knockbackDelay = 60f;
 
             if (isKnockedBack == false)
             {
-                stateManager.SwitchState(stateManager.knockbackState);
                 isKnockedBack = true;
+
+                Invoke("knockbackDelayCounter", knockbackDelay);
+
+                stateManager.SwitchState(stateManager.knockbackState);
             }
         }
     }
