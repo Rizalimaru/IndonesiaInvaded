@@ -62,7 +62,7 @@ public class Scene_Loading : MonoBehaviour
     } 
     IEnumerator LoadScenesAsync()
     {
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 0.6f);
+        AudioManager.Instance.StopAllBackgroundMusic();
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
@@ -90,11 +90,15 @@ public class Scene_Loading : MonoBehaviour
         // Tunggu sedikit waktu tambahan sebelum menonaktifkan layar loading
 
         loadingScreen.SetActive(false);
-        AudioManager.Instance.PlayBackgroundMusicWithTransition("Game",0, 1f);
+
+
+        ScoreManager.instance.ResetAllValues();
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("GameJakarta",0, 1f);
     }
     IEnumerator LoadLevel2()
     {
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",  0.6f);
+
+        AudioManager.Instance.StopAllBackgroundMusic();
 
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
@@ -123,12 +127,13 @@ public class Scene_Loading : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         loadingScreen.SetActive(false);
+        ScoreManager.instance.ResetAllValues();
 
-        AudioManager.Instance.PlayBackgroundMusicWithTransition("Game",1, 1f);
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("GameInvert",0, 1f);
     }
     IEnumerator LoadLevel3()
     {
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",  0.6f);
+        AudioManager.Instance.StopAllBackgroundMusic();
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
         // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
@@ -157,10 +162,15 @@ public class Scene_Loading : MonoBehaviour
 
         loadingScreen.SetActive(false);
 
-        AudioManager.Instance.PlayBackgroundMusicWithTransition("Game",2, 1f);
+
+        ScoreManager.instance.ResetAllValues();
+
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("GameBandung",0, 1f);
     }
     IEnumerator MainMenu()
     {
+
+        AudioManager.Instance.StopAllBackgroundMusic();
         List<AsyncOperation> scenes = new List<AsyncOperation>();
         animator.SetTrigger("End");
         yield return new WaitForSeconds(1f);
