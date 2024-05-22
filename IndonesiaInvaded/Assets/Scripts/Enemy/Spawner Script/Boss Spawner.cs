@@ -1,14 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawningManager : MonoBehaviour
+public class BossSpawner : MonoBehaviour
 {
     public static SpawningManager instance;
 
     public GameObject[] wall;
-    public List<Enemy> enemyType = new List<Enemy>();
-    public Transform[] spawnPoint;
+    public Boss bossObject;
+    public Transform spawnPoint;
     public GameObject objectSelf;
 
     private Collider col;
@@ -16,11 +15,11 @@ public class SpawningManager : MonoBehaviour
 
     private void Update()
     {
-        int enemyNum = GetCurrentEnemy();
-        if(enemyNum == 0 && isFinished == true)
+        bool isBossDead= CheckIfBossDead();
+        if (isBossDead == true && isFinished == true)
         {
             DissolveWall.instance.DissolveWallFunction();
-            Destroy(objectSelf,2f);
+            Destroy(objectSelf, 2f);
         }
     }
 
@@ -35,13 +34,10 @@ public class SpawningManager : MonoBehaviour
         {
 
             DissolveWall.instance.UnDissolveWallFunction();
-            
+
             Debug.Log("Spawning Enemy");
-            for (int i = 0; i < enemyType.Count; i++)
-            {
-                SpawnEnemy(enemyType[i], spawnPoint[i].position);
-            }
-            
+
+            SpawnEnemy(bossObject, spawnPoint.position);
 
             // Sekaligus mengaktifkan wall tanpa harus menyebutkan satu per satu
             for (int i = 0; i < wall.Length; i++)
@@ -49,7 +45,7 @@ public class SpawningManager : MonoBehaviour
                 wall[i].SetActive(true);
             }
 
-            ObjectiveManager.instance.StartObjective();
+            // ObjectiveManager.instance.StartObjective() --> Ganti yang ini mas Vikrie
 
             Invoke("isFinishedEnabler", 2f);
         }
@@ -63,13 +59,13 @@ public class SpawningManager : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy(Enemy enemyToSpawn, Vector3 spawnPos)
+    private void SpawnEnemy(Boss bossToSpawn, Vector3 spawnPos)
     {
-        Enemy enemy = enemyToSpawn.GetComponent<Enemy>();
+        Boss boss = bossToSpawn.GetComponent<Boss>();
 
-        Instantiate(enemy, spawnPos, Quaternion.identity);
+        Instantiate(boss, spawnPos, Quaternion.identity);
 
-        enemy.Agent.enabled = true;
+        boss.agent.enabled = true;
 
     }
 
@@ -78,9 +74,16 @@ public class SpawningManager : MonoBehaviour
         isFinished = true;
     }
 
-    private int GetCurrentEnemy()
+    private bool CheckIfBossDead()
     {
-        int enemy = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        return enemy;
+        int numCheck = GameObject.FindGameObjectsWithTag("Boss").Length;
+        if(numCheck == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
