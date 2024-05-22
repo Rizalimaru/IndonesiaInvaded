@@ -218,34 +218,50 @@ public class PlayerMovement : MonoBehaviour
         {
             get { return canDodge; }
         }
-        private IEnumerator Dodge()
+    private IEnumerator Dodge()
+    {
+        isDodging = true;
+        canDodge = false;
+
+        // Menyimpan arah dodge berdasarkan input pemain pada awal dodge
+        Vector3 initialDodgeDirection = orientationForAtk.forward;
+
+        if (moveDirection.magnitude == 0) // Jika tidak ada input, dodge ke belakang
         {
-            isDodging = true;
-            canDodge = false;
-
-            // Mengambil arah dodge berdasarkan input pemain
-            dodgeDirection = orientationForAtk.forward;
-
-            if (moveDirection.magnitude == 0) // Jika tidak ada input, dodge ke belakang
-            {
-                dodgeDirection = -orientationForAtk.forward;
-            }
-
-            float startTime = Time.time;
-            Vector3 startPosition = transform.position;
-            Vector3 targetPosition = startPosition + dodgeDirection * dodgeDistance;
-
-            animator.SetTrigger("Dodge");
-            while (Time.time < startTime + (dodgeDistance / dodgeSpeed))
-            {
-                rb.MovePosition(Vector3.Lerp(startPosition, targetPosition, (Time.time - startTime) * dodgeSpeed / dodgeDistance));
-                yield return null;
-            }
-
-            isDodging = false;
-            yield return new WaitForSeconds(dodgeCooldown);
-            canDodge = true;
+            initialDodgeDirection = -orientationForAtk.forward;
         }
+
+        if (moveDirection.magnitude == 0)
+        {
+            animator.SetTrigger("Backflip");
+        }
+        else
+        {
+            animator.SetTrigger("Dodge");
+        }
+
+        float startTime = Time.time;
+        Vector3 startPosition = transform.position;
+
+        // Variabel untuk menentukan durasi dodge berdasarkan kecepatan dan jarak dodge
+        float dodgeDuration = dodgeDistance / dodgeSpeed;
+
+        while (Time.time < startTime + dodgeDuration)
+        {
+            // Update arah dodge setiap frame
+            Vector3 currentDodgeDirection = moveDirection.magnitude == 0 ? -orientationForAtk.forward : orientationForAtk.forward;
+            Vector3 targetPosition = startPosition + currentDodgeDirection * dodgeDistance;
+
+            rb.MovePosition(Vector3.Lerp(startPosition, targetPosition, (Time.time - startTime) / dodgeDuration));
+            yield return null;
+        }
+
+        isDodging = false;
+        yield return new WaitForSeconds(dodgeCooldown);
+        canDodge = true;
+    }
+
+
 
 
 

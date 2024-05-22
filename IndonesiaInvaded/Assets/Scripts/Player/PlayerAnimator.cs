@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
-{
+{   
+    private PlayerMovement playerMovement;
     public static PlayerAnimator instance;
     public Animator anim;
 
@@ -24,12 +25,12 @@ public class PlayerAnimator : MonoBehaviour
     float velocityX = 0.0f; // Current velocity on X axis
     float velocityZ = 0.0f; // Current velocity on Z axis
     // New variables for tracking movement changes
-    bool wasMoving = false;
-    bool isStopping = false;
+    private bool hasExecute = false;
     private KeyCode rangedAttackKey = KeyCode.Mouse1;
 
     private void Start()
-    {
+    {   
+        playerMovement = FindAnyObjectByType<PlayerMovement>();
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
 
@@ -44,12 +45,27 @@ public class PlayerAnimator : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
+    {   
+        float currentValue = anim.GetFloat("movementZ");
         // Ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround | whatIsGround2);
 
         //TwoDimentionalMovement();
         UpdateAnimator();
+
+        if (currentValue == 0f && !hasExecute)
+        {
+            // Panggil fungsi untuk men-trigger animasi stop
+            TriggerStopAnimation();
+
+            // Set variabel hasExecuted menjadi true agar tidak dieksekusi lagi
+            hasExecute = true;
+        }
+        else if (currentValue != 0f)
+        {
+            // Reset hasExecuted jika nilai float tidak sama dengan 0
+            hasExecute = false;
+        }
     }
 
 #region TwoDimentionalMovement (Not Use)
@@ -121,6 +137,11 @@ public class PlayerAnimator : MonoBehaviour
     }
 #endregion
 
+    void TriggerStopAnimation()
+    {
+        // Men-trigger animasi stop dengan parameter trigger
+        anim.SetTrigger("Stopping");
+    }
     private void UpdateAnimator()
     {
         // Update animator parameters based on movement
@@ -204,6 +225,15 @@ public class PlayerAnimator : MonoBehaviour
         {
             // If grounded, ensure the jump animation is not playing
             anim.SetBool("isJump", false);
+        }
+
+        if(playerMovement.IsDodging == true)
+        {
+            anim.SetBool("isDodge", true);
+        }
+        else
+        {
+            anim.SetBool("isDodge", false);
         }
     }
 }
