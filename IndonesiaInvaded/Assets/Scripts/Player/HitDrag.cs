@@ -20,9 +20,10 @@ public class HitDrag : MonoBehaviour
 
     public Transform combatLookAt; // Referensi ke titik yang harus dilihat oleh player saat berada dalam mode combat
     KeyCode rangedAtkKey = KeyCode.Mouse1;
-
+    private PlayerMovement playerMovement;
     void Start()
-    {
+    {   
+        playerMovement = FindObjectOfType<PlayerMovement>();
         // Mengambil komponen Animator dari objek player
         animator = player.GetComponent<Animator>();
     }
@@ -34,7 +35,7 @@ public class HitDrag : MonoBehaviour
         DetectNearestEnemy();
 
         // Memeriksa apakah parameter hit1 true dan musuh berada dalam jarak deteksi
-        if (animator.GetBool("hit1") && nearestEnemy != null && Vector3.Distance(player.position, nearestEnemy.position) <= detectionRadius && !rangeAtkAktif)
+        if (animator.GetBool("hit1") && nearestEnemy != null && Vector3.Distance(player.position, nearestEnemy.position) <= detectionRadius && !rangeAtkAktif && playerMovement.CanDodge)
         {
             MoveToEnemy(); // Memanggil fungsi untuk bergerak ke enemy
         }

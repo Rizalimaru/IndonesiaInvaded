@@ -10,6 +10,7 @@ public class Combat : MonoBehaviour
 {
     public static event Action SuccessfulComboEvent; // Event untuk mengirim sinyal bahwa combo berhasil
 
+    private PlayerMovement playerMovement;
     private AudioManager audioManagerInstance;
     public static Combat instance;
 
@@ -28,7 +29,8 @@ public class Combat : MonoBehaviour
     KeyCode rangedAtkKey = KeyCode.Mouse1;
 
     private void Awake()
-    {
+    {   
+        playerMovement = FindObjectOfType<PlayerMovement>();
         if (instance == null)
         {
             instance = this;
@@ -85,6 +87,12 @@ public class Combat : MonoBehaviour
         {   
             currentHit = 0;
         }
+
+        if(playerMovement.IsDodging)
+        {
+            stopHit();
+            currentHit = 0;
+        }
     }
 
     void stopHit()
@@ -98,7 +106,7 @@ public class Combat : MonoBehaviour
     void PerformHit()
     {
         // Memeriksa apakah RoarSkill aktif, jika ya, keluar dari metode
-        if (animator.GetBool("RoarSkill"))
+        if (animator.GetBool("RoarSkill") | playerMovement.IsDodging)
         {   
             return;
         }

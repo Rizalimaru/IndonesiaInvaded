@@ -26,7 +26,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dodge")]
     [SerializeField] AnimationCurve dodgeCurve;
     bool isDodging;
+    bool canDodge;
+    public float dodgeDistance = 5f; // Jarak dodge
+    public float dodgeSpeed = 10f;   // Kecepatan dodge
+    public float dodgeCooldown = 1f; // Waktu cooldown setelah dodge
     public float dodgeTimer;
+    private Vector3 dodgeDirection;
     public KeyCode dodgeKey = KeyCode.LeftControl;
 
     [Header("Crouching")]
@@ -171,40 +176,78 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    IEnumerator Dodge()
-    {
-        if (!isDodging)
+    // IEnumerator Dodge()
+    // {
+    //     if (!isDodging)
+    //     {
+    //         // Start the dodge if a dodge is not already in progress
+    //         isDodging = true;
+    //         animator.SetTrigger("Dodge");
+
+    //         // Fixed dodge distance and speed
+    //         float dodgeDistance = 5f; // Adjust this value as needed
+    //         float dodgeDuration = 0.5f; // Adjust this value as needed
+    //         float dodgeSpeed = dodgeDistance / dodgeDuration;
+
+    //         // Calculate dodge direction
+    //         Vector3 dodgeDirection = orientationForAtk.forward;
+    //         Vector3 targetVelocity = dodgeDirection.normalized * dodgeSpeed;
+
+    //         // Apply dodge velocity
+    //         rb.velocity = targetVelocity;
+
+    //         // Disable collisions temporarily to prevent getting hit during dodge
+    //         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
+
+    //         // Wait for the dodge duration
+    //         yield return new WaitForSeconds(dodgeDuration);
+
+    //         // Enable collisions after dodge
+    //         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
+
+    //         // Stop the dodge
+    //         rb.velocity = Vector3.zero;
+    //         isDodging = false;
+    //     }
+    // }
+        public bool IsDodging
         {
-            // Start the dodge if a dodge is not already in progress
-            isDodging = true;
-            animator.SetTrigger("Dodge");
-
-            // Fixed dodge distance and speed
-            float dodgeDistance = 5f; // Adjust this value as needed
-            float dodgeDuration = 0.5f; // Adjust this value as needed
-            float dodgeSpeed = dodgeDistance / dodgeDuration;
-
-            // Calculate dodge direction
-            Vector3 dodgeDirection = orientationForAtk.forward;
-            Vector3 targetVelocity = dodgeDirection.normalized * dodgeSpeed;
-
-            // Apply dodge velocity
-            rb.velocity = targetVelocity;
-
-            // Disable collisions temporarily to prevent getting hit during dodge
-            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
-
-            // Wait for the dodge duration
-            yield return new WaitForSeconds(dodgeDuration);
-
-            // Enable collisions after dodge
-            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
-
-            // Stop the dodge
-            rb.velocity = Vector3.zero;
-            isDodging = false;
+            get { return isDodging; }
         }
-    }
+        public bool CanDodge
+        {
+            get { return canDodge; }
+        }
+        private IEnumerator Dodge()
+        {
+            isDodging = true;
+            canDodge = false;
+
+            // Mengambil arah dodge berdasarkan input pemain
+            dodgeDirection = orientationForAtk.forward;
+
+            if (moveDirection.magnitude == 0) // Jika tidak ada input, dodge ke belakang
+            {
+                dodgeDirection = -orientationForAtk.forward;
+            }
+
+            float startTime = Time.time;
+            Vector3 startPosition = transform.position;
+            Vector3 targetPosition = startPosition + dodgeDirection * dodgeDistance;
+
+            animator.SetTrigger("Dodge");
+            while (Time.time < startTime + (dodgeDistance / dodgeSpeed))
+            {
+                rb.MovePosition(Vector3.Lerp(startPosition, targetPosition, (Time.time - startTime) * dodgeSpeed / dodgeDistance));
+                yield return null;
+            }
+
+            isDodging = false;
+            yield return new WaitForSeconds(dodgeCooldown);
+            canDodge = true;
+        }
+
+
 
 
     private void StateHandler()
