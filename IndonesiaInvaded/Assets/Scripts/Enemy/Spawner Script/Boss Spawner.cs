@@ -45,7 +45,7 @@ public class BossSpawner : MonoBehaviour
                 wall[i].SetActive(true);
             }
 
-            // ObjectiveManager.instance.StartObjective() --> Ganti yang ini mas Vikrie
+            UI_PauseGame.instance.HPBarOndelOndel.SetActive(true);
 
             Invoke("isFinishedEnabler", 2f);
         }
@@ -79,6 +79,7 @@ public class BossSpawner : MonoBehaviour
         int numCheck = GameObject.FindGameObjectsWithTag("Boss").Length;
         if(numCheck == 0)
         {
+            UI_PauseGame.instance.HPBarOndelOndel.SetActive(false);
             return true;
         }
         else
