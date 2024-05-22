@@ -70,6 +70,7 @@ public class MainMenuV2 : MonoBehaviour
     }
     private void OnCutSceneFinished()
     {
+        DeactivateMenu();
         Scene_Loading.instance.LoadScenes();
         AudioManager.Instance.PlayBackgroundMusicWithTransition("Game", 0, 1f);
     }

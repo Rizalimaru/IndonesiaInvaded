@@ -46,7 +46,7 @@ public class GameData
         {
             return "B"; // B Rank
         }
-        else if (totalScore >= 10000 && totalScore <= 19999)
+        else if (totalScore > 10000 && totalScore <= 19999)
         {
             return "C"; // C Rank
         }
