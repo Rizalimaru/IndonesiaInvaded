@@ -218,6 +218,10 @@ public class PlayerMovement : MonoBehaviour
         {
             get { return canDodge; }
         }
+        public float magnitude
+        {
+            get { return moveDirection.magnitude; }
+        }
     private IEnumerator Dodge()
     {
         isDodging = true;
@@ -260,11 +264,6 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dodgeCooldown);
         canDodge = true;
     }
-
-
-
-
-
 
     private void StateHandler()
     {

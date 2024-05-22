@@ -46,7 +46,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void FixedUpdate()
     {   
-        float currentValue = anim.GetFloat("movementZ");
+        float currentValue = playerMovement.magnitude;
         // Ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround | whatIsGround2);
 
