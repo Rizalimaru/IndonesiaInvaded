@@ -7,7 +7,6 @@ public class DissolveWall : MonoBehaviour
     public float dissolveDuration = 3f; 
     public Material[] dissolveMaterials;
 
-    private Coroutine currentCoroutine;
 
     private void Awake()
     {
@@ -24,20 +23,13 @@ public class DissolveWall : MonoBehaviour
 
     public void DissolveWallFunction()
     {
-        if (currentCoroutine != null)
-        {
-            StopCoroutine(currentCoroutine);
-        }
-        currentCoroutine = StartCoroutine(Dissolve());
+        StartCoroutine(Dissolve());
     }
 
     public void UnDissolveWallFunction()
     {
-        if (currentCoroutine != null)
-        {
-            StopCoroutine(currentCoroutine);
-        }
-        currentCoroutine = StartCoroutine(UnDissolve());
+
+        StartCoroutine(UnDissolve());
     }
 
     private IEnumerator Dissolve()
@@ -51,7 +43,7 @@ public class DissolveWall : MonoBehaviour
         }
 
         // Wait for 4 seconds then reset the dissolve material to 0
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(5f);
         SetDissolveAmount(0);
     }
 
@@ -64,6 +56,7 @@ public class DissolveWall : MonoBehaviour
             SetDissolveAmount(t);
             yield return null;
         }
+
     }
 
     private void SetDissolveAmount(float amount)
