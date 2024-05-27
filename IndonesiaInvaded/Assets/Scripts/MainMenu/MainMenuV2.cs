@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuV2 : MonoBehaviour
@@ -26,8 +27,7 @@ public class MainMenuV2 : MonoBehaviour
     [Header("Cutscene")]
     public string newGameCutSceneName = "";
     public GameObject[] uiMainMenu;
-
-
+    
     private void Awake()
     {
         instance = this;
@@ -67,11 +67,12 @@ public class MainMenuV2 : MonoBehaviour
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("FadeOut");
         
         yield return new WaitForSeconds(1f);
+        SceneManager.UnloadSceneAsync("Mainmenu");
     }
     private void OnCutSceneFinished()
     {
         DeactivateMenu();
-        Scene_Loading.instance.LoadScenes();
+        Scene_Loading.instance.LoadSceneByName("Gameplay1", "Level1", "GameJakarta");
         AudioManager.Instance.PlayBackgroundMusicWithTransition("GameJakarta", 0, 1f);
     }
 
