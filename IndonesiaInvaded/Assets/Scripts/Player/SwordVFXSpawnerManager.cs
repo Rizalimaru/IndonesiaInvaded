@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SwordVFXSpawnerManager : MonoBehaviour
@@ -9,7 +6,7 @@ public class SwordVFXSpawnerManager : MonoBehaviour
 
     private void OnCollisionEnter (Collision collision)
     {
-        if (collision.collider.CompareTag("Enemy"))
+        if (collision.collider.CompareTag("Sword"))
         {
             spawnVfxhit();
         }

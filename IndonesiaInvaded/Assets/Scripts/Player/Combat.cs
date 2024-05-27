@@ -10,7 +10,7 @@ public class Combat : MonoBehaviour
     private AudioManager audioManagerInstance;
     public static Combat instance;
 
-    [Header("Hit")]
+    [Header("Combat Settings")]
     private Animator animator;
     public float cooldownTime = 2f;
     private float nextFireTime = 0f;
@@ -23,6 +23,7 @@ public class Combat : MonoBehaviour
     [HideInInspector] public bool isAttacking = false;
     private Coroutine hitResetCoroutine = null;
     KeyCode rangedAtkKey = KeyCode.Mouse1;
+    String hitSekarang = "";
 
     private void Awake()
     {   
@@ -114,57 +115,54 @@ public class Combat : MonoBehaviour
 
         PerformHit();
 
-        if (noOfClicks >= 4 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f)
-        {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("hit4"))
-            {
-                Debug.Log("Hit 4");
-                SuccessfulCombo();
-            }
-        }
     }
 
     void PerformHit()
     {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (animator.GetBool("RoarSkill") || playerMovement.IsDodging)
         {
             return;
-        }
-
-        if (currentHit >= 4)
-        {
-            currentHit = 0;
         }
 
         switch (currentHit)
         {
             case 0:
                 animator.SetBool("hit1", true);
-                //StartCoroutine(PlaySoundWithDelay(0.1f, "AttackPlayer", 0));
+                hitSekarang = "hit1";
                 Debug.Log("Hit 1");
+                currentHit++;
                 break;
             case 1:
                 animator.SetBool("hit2", true);
-                //StartCoroutine(PlaySoundWithDelay(0.2f, "AttackPlayer", 0));
+                hitSekarang = "hit2";
                 Debug.Log("Hit 2");
+                currentHit++;
                 break;
             case 2:
                 animator.SetBool("hit3", true);
-                //StartCoroutine(PlaySoundWithDelay(1f, "AttackPlayer", 1));
+                hitSekarang = "hit3";
                 Debug.Log("Hit 3");
+                currentHit++;
                 break;
             case 3:
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("hit3") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
+                // Check if the current animation is "hit3" and its normalized time is >= 0.5
+                if (stateInfo.IsName("hit3") && stateInfo.normalizedTime >= 0.8f)
                 {
                     animator.SetBool("hit4", true);
-                    //StartCoroutine(PlaySoundWithDelay(1f, "AttackPlayer", 2));
+                    hitSekarang = "hit4";
                     Debug.Log("Hit 4");
+                    currentHit++;
+                }
+                else
+                {
+                    // If the condition is not met, don't transition to hit4 and don't increment currentHit
+                    Debug.Log("Hit 3 has not reached 50% yet.");
                 }
                 break;
         }
-        
-        currentHit++;
     }
+
 
 #region HitTiming
     IEnumerator slowMotionStart(float tungguawal, float scaleawal, float tunggukedua)
@@ -200,20 +198,20 @@ public class Combat : MonoBehaviour
             animator.SetBool("hit1", false);
             currentHit = 0;
         }
-        else if (isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit2"))
+        else if (isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit2"))
         {   
             animator.SetBool("hit1", false);
             animator.SetBool("hit2", false);
             currentHit = 0;
         }
-        else if (isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit3"))
+        else if (isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit3"))
         {   
             animator.SetBool("hit1", false);
             animator.SetBool("hit2", false);
             animator.SetBool("hit3", false);
             currentHit = 0;
         }
-        else if (isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit4"))
+        else if (isAttacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit4"))
         {   
             animator.SetBool("hit1", false);
             animator.SetBool("hit2", false);

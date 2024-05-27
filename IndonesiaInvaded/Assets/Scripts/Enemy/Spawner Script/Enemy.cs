@@ -34,6 +34,9 @@ public class Enemy : MonoBehaviour
     private bool isAttacking = false;
     private GameObject attackObject;
 
+    //Add some object
+    public GameObject hitVFX;
+
     public void Awake()
     {
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
@@ -77,7 +80,7 @@ public class Enemy : MonoBehaviour
         {
 
             CameraShaker.instance.CameraShake(5f, 0.1f);
-
+            spawnVfxhit();
             Debug.Log("Damaged");
             health -= 20;
             knockbackForce = 30f;
@@ -99,7 +102,7 @@ public class Enemy : MonoBehaviour
         {
 
             CameraShaker.instance.CameraShake(5f, 0.1f);
-
+            spawnVfxhit();
             Debug.Log("Damaged");
             health -= 10;
             knockbackForce = 30f;
@@ -135,6 +138,13 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+
+    void spawnVfxhit()
+    {
+        GameObject vfx = Instantiate(hitVFX, transform.position, Quaternion.identity);
+        Destroy(vfx, .5f);
+    }
+
 
     public void knockbackDelayCounter()
     {

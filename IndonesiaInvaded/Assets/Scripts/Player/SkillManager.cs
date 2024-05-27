@@ -1,21 +1,14 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
-using IndonesiaInvaded;
-using System.ComponentModel;
 
 public class SkillManager : MonoBehaviour
 {
-    // Singleton instance
-    private ThirdPersonCam thirdPersonCam;
-    private HitDrag hitDrag;
-    private PlayerMovement playerMovement;
-    private CameraZoom cameraZoom;
-    private Animator animator;
     public static SkillManager instance;
-    public Transform playerObj;
+    private Animator animator;
     private Collider colid;
-
+    
     [Header("Skill 1")]
     public Image skillImage1;
     public float cooldown1 = 5;
@@ -33,22 +26,30 @@ public class SkillManager : MonoBehaviour
     
     [Header("Slow Motion Effect")]
     private bool isSlowMotionActive = false;
-    public float slowMotionDuration = 1f; // Durasi slow motion dalam detik
-    public float slowMotionTimeScale = 0.5f; // Skala waktu selama slow motion
-    public float waitBeforeSlowMotion = 0.5f; // Waktu tunggu sebelum slow motion aktif
-
+    public float slowMotionDuration = 1f;
+    public float slowMotionTimeScale = 0.5f;
+    public float waitBeforeSlowMotion = 0.5f;
+    
     [Header("Skill 2")]
     public Image skillImage2;
-    public float cooldown2 = 8; // Cooldown for Skill 2
+    public float cooldown2 = 8;
     private bool isCooldown2 = false;
     public KeyCode skill2Key;
+    public GameObject ruler;
+    private int spawnedRulerCount = 0;
+    private float lastSpawnTime = 0f;
+    private const float timeBetweenSpawns = 0.5f;
+    private const int maxRulerCount = 5;
+    private bool skill2Active = false;
+    private float skill2Duration = 5f;
+    private float skill2Timer = 0f;
 
     [Header("Skill Detection")]
     public Transform player;
     [HideInInspector] public Transform nearestEnemy;
 
     private void Awake()
-    {   
+    {
         if (instance == null)
         {
             instance = this;
@@ -56,7 +57,7 @@ public class SkillManager : MonoBehaviour
     }
 
     private void Start()
-    {   
+    {
         colid = GetComponent<Collider>();
         animator = GetComponent<Animator>();
         skillImage1.fillAmount = 0;
@@ -64,40 +65,52 @@ public class SkillManager : MonoBehaviour
     }
 
     private void Update()
-    {   
+    {
         DetectNearestEnemyForSkill();
         Skill1();
-        Skill2(); // Call Skill2 method in the Update loop
-        if(nearestEnemy != null)
+        Skill2();
+
+        if (nearestEnemy != null)
         {
-            distanceToMove = Mathf.Sqrt(Mathf.Pow((player.position.x - nearestEnemy.position.x),2) + Mathf.Pow((player.position.z - nearestEnemy.position.z),2) );
-        }else
+            distanceToMove = Vector3.Distance(player.position, nearestEnemy.position);
+        }
+        else
         {
             distanceToMove = 10f;
         }
+
+        if (skill2Active)
+        {
+            skill2Timer += Time.deltaTime;
+            if (skill2Timer >= skill2Duration)
+            {
+                skill2Active = false;
+                skill2Timer = 0f;
+                ResetRulerSpawn();
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                SpawnRuler();
+            }
+        }
     }
 
-    
-
-#region UsableSkill Function
+    #region UsableSkill Function
     public void UseSkill1()
     {
         PlayerAttribut player = PlayerAttribut.instance;
         if (player != null && !isCooldown1 && player.currentSP >= 30 && animator.GetBool("isGrounded"))
-        {   
+        {
             animator.SetBool("RoarSkill", true);
             CameraShaker.instance.CameraShake(5f, 1f);
             SpawnRoarCollider();
-            AudioManager._instance.PlaySFX("Skillplayer",0);
+            AudioManager._instance.PlaySFX("Skillplayer", 0);
             StartCoroutine(DelayToCharge(1.5f));
             player.currentSP -= 30;
-            //StartCoroutine(StartSlowMotion());
             Debug.Log("Skill 1 activated!");
             player.skillBar.SetSkill(player.currentSP);
-            // Start cooldown
             StartCoroutine(CooldownSkill1());
-            // Zoom camera in
-            //StartCoroutine(DelayZoomSkill1());
         }
         else if (player.currentSP < 30)
         {
@@ -108,12 +121,13 @@ public class SkillManager : MonoBehaviour
     public void UseSkill2()
     {
         PlayerAttribut player = PlayerAttribut.instance;
-        if (player != null && !isCooldown2 && player.currentSP >= 50) // Check if enough SP and skill is not on cooldown
+        if (player != null && !isCooldown2 && player.currentSP >= 50)
         {
+            skill2Active = true;
+            skill2Timer = 0f; // Reset the skill timer
             player.currentSP -= 50;
             Debug.Log("Skill 2 activated!");
             player.skillBar.SetSkill(player.currentSP);
-            // Start cooldown
             StartCoroutine(CooldownSkill2());
         }
         else if (player.currentSP < 50)
@@ -121,24 +135,7 @@ public class SkillManager : MonoBehaviour
             Debug.Log("Not enough SP for Skill 2!");
         }
     }
-
-#endregion
-
-    private IEnumerator DelayZoomSkill1()
-    {
-        CameraZoom cameraZoom = FindObjectOfType<CameraZoom>(); // Mendapatkan instance dari CameraZoom
-        if(cameraZoom != null)
-        {
-            cameraZoom.ZoomIn(1.5f); // Mengatur durasi zoom in ke 1.5 detik
-        }
-
-        yield return new WaitForSeconds(5.0f); // Menunggu selama 2 detik sebelum melakukan zoom out
-
-        if(cameraZoom != null)
-        {
-            cameraZoom.ZoomOut(1.5f); // Mengatur durasi zoom out ke 1.5 detik
-        }
-    }
+    #endregion
 
     private IEnumerator CooldownSkill1()
     {
@@ -178,47 +175,39 @@ public class SkillManager : MonoBehaviour
 
     private void Skill2()
     {
-        if (Input.GetKeyDown(skill2Key) && !isCooldown2) // Check for key press and skill cooldown
+        if (Input.GetKeyDown(skill2Key) && !isCooldown2)
         {
             UseSkill2();
         }
     }
 
-#region Region function for skill Roar
-
-    //Fungsi untuk membuat effect Slow Motion
+    #region Region function for skill Roar
     public IEnumerator StartSlowMotion()
     {
         if (!isSlowMotionActive)
-        {   
+        {
             yield return new WaitForSeconds(waitBeforeSlowMotion);
-            // Mengaktifkan slow motion
             Time.timeScale = slowMotionTimeScale;
             isSlowMotionActive = true;
-
-            // Membatalkan slow motion setelah beberapa detik
             Invoke("StopSlowMotion", slowMotionDuration);
         }
     }
 
     public void StopSlowMotion()
     {
-        // Menonaktifkan slow motion
         Time.timeScale = 1f;
         isSlowMotionActive = false;
     }
 
-    //Fungsi untuk mendeteksi musuh terdekat dalam radius tertentu
     public void DetectNearestEnemyForSkill()
     {
-        Collider[] colliders = Physics.OverlapSphere(player.position, SkillDetectionRadius); // Mendeteksi semua collider dalam radius
-
+        Collider[] colliders = Physics.OverlapSphere(player.position, SkillDetectionRadius);
         float shortestDistance = Mathf.Infinity;
         Transform nearest = null;
 
         foreach (Collider collider in colliders)
         {
-            if (collider.CompareTag("Enemy") | collider.CompareTag("Boss"))
+            if (collider.CompareTag("Enemy") || collider.CompareTag("Boss"))
             {
                 float distance = Vector3.Distance(player.position, collider.transform.position);
                 if (distance < shortestDistance)
@@ -229,90 +218,97 @@ public class SkillManager : MonoBehaviour
             }
         }
 
-        nearestEnemy = nearest; // Menetapkan musuh terdekat sebagai referensi
+        nearestEnemy = nearest;
     }
 
-    //Fungsi untuk bergerak ke arah musuh setelah melakukan Roar
     private IEnumerator MoveToEnemyAfterCharge()
-    {   
-        yield return new WaitForSeconds(.5f); // Menunggu 1 detik sebelum pergerakan dimulai
-        LookAtEnemy(); // Menghadap ke arah musuh
-        Vector3 startPosition = player.position; // Simpan posisi awal player
-        Vector3 moveDirection = (nearestEnemy.position - startPosition).normalized; // Hitung arah pergerakan ke musuh
+    {
+        yield return new WaitForSeconds(.5f);
+        LookAtEnemy();
+        Vector3 startPosition = player.position;
+        Vector3 moveDirection = (nearestEnemy.position - startPosition).normalized;
+        Vector3 targetPosition = startPosition + moveDirection * distanceToMove;
+        float duration = distanceToMove / movementSpeed;
 
-        Vector3 targetPosition = startPosition + moveDirection * distanceToMove; // Hitung posisi target berdasarkan jarak yang ditentukan
+        AudioManager._instance.PlaySFX("Skillplayer", 1);
 
-        float duration = distanceToMove / movementSpeed; // Hitung durasi pergerakan berdasarkan jarak dan kecepatan
-
-        //play audio jump
-        AudioManager._instance.PlaySFX("Skillplayer",1);
-        
         float timeElapsed = 0f;
-        while (timeElapsed < duration) // Pergerakan berdasarkan durasi
-        {   
-            // Interpolasi pergerakan
+        while (timeElapsed < duration)
+        {
             player.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-        // Pastikan posisi player benar-benar mencapai posisi target
         player.position = targetPosition;
-        if(player.position == targetPosition)
-        {   
+        if (player.position == targetPosition)
+        {
             SpawnSmashExplosion();
             SpawnRoarCollider();
         }
-        
     }
 
-    //Fungsi untuk menunda ChargeAtk setelah Roar
     private IEnumerator DelayToCharge(float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        if(nearestEnemy == null)
+        if (nearestEnemy == null)
         {
             animator.SetBool("RoarSkill", false);
-        }else
+        }
+        else
         {
             animator.SetTrigger("ChargeAtk");
             animator.SetBool("RoarSkill", false);
 
-            DetectNearestEnemyForSkill(); // Deteksi musuh terdekat
-            StartCoroutine(MoveToEnemyAfterCharge()); // Mulai pergerakan ke musuh setelah ChargeAtk
-            //StartCoroutine(StartSlowMotion());
+            DetectNearestEnemyForSkill();
+            StartCoroutine(MoveToEnemyAfterCharge());
         }
     }
-    
-    //Fungsi untuk menghadap musuh
+
     public void LookAtEnemy()
     {
-        if(nearestEnemy != null)
+        if (nearestEnemy != null)
         {
             Vector3 targetDirection = nearestEnemy.position - player.position;
-            targetDirection.y = 0f; // Keep the rotation in the horizontal plane
+            targetDirection.y = 0f;
             Quaternion rotation = Quaternion.LookRotation(targetDirection);
-            playerObj.rotation = Quaternion.Slerp(playerObj.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
-        }else
-        {
-            return;
+            player.rotation = Quaternion.Slerp(player.rotation, rotation, rotationToEnemySpeed * Time.deltaTime);
         }
     }
+
     void SpawnRoarCollider()
     {
         GameObject roarCollider = Instantiate(SkillRoarCollider, player.position, player.rotation) as GameObject;
-        Destroy(roarCollider, destroyTimeColliderRoar); 
+        Destroy(roarCollider, destroyTimeColliderRoar);
     }
 
     void SpawnSmashExplosion()
     {
-        //play audio smash
-        AudioManager._instance.PlaySFX("Skillplayer",2);
+        AudioManager._instance.PlaySFX("Skillplayer", 2);
 
         GameObject smash = Instantiate(smashExplosion, player.position, player.rotation) as GameObject;
         Destroy(smash, 2f);
     }
-#endregion
+    #endregion
 
+    #region Region function for skill Ruler
+    void SpawnRuler()
+    {
+        if (spawnedRulerCount < maxRulerCount && Time.time - lastSpawnTime > timeBetweenSpawns)
+        {
+            quaternion defaultRotation = ruler.transform.rotation;
+            GameObject rulerObj = Instantiate(ruler, player.position, defaultRotation) as GameObject;
+            spawnedRulerCount++;
+            lastSpawnTime = Time.time;
 
+            Destroy(rulerObj, 3f);
+        }
+    }
+
+    void ResetRulerSpawn()
+    {
+        spawnedRulerCount = 0;
+        lastSpawnTime = 0f;
+    }
+    #endregion
 }
