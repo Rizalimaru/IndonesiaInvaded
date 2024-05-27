@@ -20,6 +20,9 @@ public class SpawningManager : MonoBehaviour
         if(enemyNum == 0 && isFinished == true)
         {
             DissolveWall.instance.DissolveWallFunction();
+
+            AudioManager._instance.StopBackgroundMusicWithTransition("Battle", 1f);
+            AudioManager._instance.ResumeBackgroundMusic("GameJakarta");
             Destroy(objectSelf,3f);
         }
     }
@@ -35,6 +38,9 @@ public class SpawningManager : MonoBehaviour
         {
 
             DissolveWall.instance.UnDissolveWallFunction();
+
+            AudioManager._instance.PauseBackgroundMusic("GameJakarta");
+            AudioManager._instance.PlayBackgroundMusicWithTransition("Battle",0, 1f);
             
             Debug.Log("Spawning Enemy");
             for (int i = 0; i < enemyType.Count; i++)
