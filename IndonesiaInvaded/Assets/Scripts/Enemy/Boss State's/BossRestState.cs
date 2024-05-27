@@ -38,17 +38,17 @@ public class BossRestState : BossBaseState
         }
         else
         {
-            if(boss.bossObject.firstSkillCounter >= 2)
+            if(boss.bossObject.firstSkillCounter >= 3)
             {
                 boss.SwitchState(boss.firstSkillState);
             }
-            else if(boss.bossObject.secondSkillCounter >= 5)
+            else if(boss.bossObject.secondSkillCounter >= 4)
             {
                 boss.SwitchState(boss.dashingState);
             }
             else
             {
-                if (!canSeePlayer)
+                if (!canSeePlayer || Vector3.Distance(boss.bossObject.spawnPoint.transform.position, boss.bossObject.target.transform.position) <= boss.bossObject.attackDistance)
                 {
                     boss.SwitchState(boss.repositionState);
                 }

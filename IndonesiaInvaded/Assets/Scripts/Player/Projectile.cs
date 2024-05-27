@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -44,21 +45,33 @@ public class Projectile : MonoBehaviour
 
     GameObject FindClosestEnemy()
     {
+        // Find all game objects with tags "Enemy" and "Boss"
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] bosses = GameObject.FindGameObjectsWithTag("Boss");
+
+        // Combine both arrays into one list
+        List<GameObject> allTargets = new List<GameObject>();
+        allTargets.AddRange(enemies);
+        allTargets.AddRange(bosses);
+
         GameObject closest = null;
         float minDistance = detectionRadius;
         Vector3 currentPos = transform.position;
-        foreach (GameObject enemy in enemies)
+
+        // Iterate through all targets to find the closest one
+        foreach (GameObject target in allTargets)
         {
-            float distance = Vector3.Distance(enemy.transform.position, currentPos);
+            float distance = Vector3.Distance(target.transform.position, currentPos);
             if (distance < minDistance)
             {
-                closest = enemy;
+                closest = target;
                 minDistance = distance;
             }
         }
+
         return closest;
     }
+
 
     void FaceClosestEnemy()
     {
@@ -79,7 +92,7 @@ public class Projectile : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") | collision.gameObject.CompareTag("Boss"))
         {
             Debug.Log("Ranged Kena!!!");
             Destroy(gameObject);

@@ -74,21 +74,20 @@ public class Boss : MonoBehaviour
         {
             stateManager.SwitchState(stateManager.deadState);
 
+            AudioManager._instance.StopBackgroundMusicWithTransition("GameJakarta", 1f);
+
+            AudioManager._instance.PlayBackgroundMusicWithTransition("Win", 0, 1f);
+
+
         }
 
         if (isKnockedBack == true)
         {
             Invoke("knockbackDelayCounter", knockbackDelay);
         }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Debug.Log("Ada 2");
-            firstSkillCounter = 2;
-        }
     }
 
-   private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         Collider other = collision.collider;
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
     public static PlayerAnimator instance;
     public Animator anim;
 
@@ -24,12 +25,12 @@ public class PlayerAnimator : MonoBehaviour
     float velocityX = 0.0f; // Current velocity on X axis
     float velocityZ = 0.0f; // Current velocity on Z axis
     // New variables for tracking movement changes
-    bool wasMoving = false;
-    bool isStopping = false;
+    private bool hasExecute = false;
     private KeyCode rangedAttackKey = KeyCode.Mouse1;
 
     private void Start()
     {
+        playerMovement = FindAnyObjectByType<PlayerMovement>();
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
 
@@ -39,91 +40,23 @@ public class PlayerAnimator : MonoBehaviour
         }
         else
         {
-            // Destroy(gameObject);
+            Destroy(gameObject); // Un-comment this line if you want to enforce singleton pattern strictly
         }
     }
 
     private void FixedUpdate()
     {
-        // Ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround | whatIsGround2);
-
-        //TwoDimentionalMovement();
+        UpdateGroundedStatus();
         UpdateAnimator();
     }
 
-#region TwoDimentionalMovement (Not Use)
-    void TwoDimentionalMovement()
+    private void UpdateGroundedStatus()
     {
-        bool forwardPress = Input.GetKey(KeyCode.W);
-        bool leftPress = Input.GetKey(KeyCode.A);
-        bool rightPress = Input.GetKey(KeyCode.D);
-        bool backwardPress = Input.GetKey(KeyCode.S);
-        bool runPressed = Input.GetKey(KeyCode.LeftShift);
-
-        // Increase velocity based on input
-        if ((forwardPress || leftPress || rightPress || backwardPress) && velocityZ < 0.5f && !runPressed)
-        {
-            velocityZ += acceleration * Time.deltaTime;
-        }
-
-        if (leftPress && velocityX > -0.5f && !runPressed)
-        {
-            velocityX -= acceleration * Time.deltaTime;
-        }
-
-        if (rightPress && velocityX < 0.5f && !runPressed)
-        {
-            velocityX += acceleration * Time.deltaTime;
-        }
-
-        // Deceleration for Z
-        if (!forwardPress && velocityZ > 0.0f)
-        {
-            velocityZ -= deceleration * Time.deltaTime;
-        }
-
-        if (!forwardPress && velocityZ < 0.0f)
-        {
-            velocityZ = 0.0f;
-        }
-
-        // Deceleration for X
-        if (!leftPress && velocityX < 0.0f)
-        {
-            velocityX += deceleration * Time.deltaTime;
-        }
-
-        if (!rightPress && velocityX > 0.0f)
-        {
-            velocityX -= deceleration * Time.deltaTime;
-        }
-
-        if (!leftPress && !rightPress && velocityX != 0.0f && (velocityX > -0.05f && velocityX < 0.05f))
-        {
-            velocityX = 0.0f;
-        }
-
-        // Set animator parameters
-        //anim.SetFloat("movementX", velocityX);
-        anim.SetFloat("movementZ", velocityZ);
-
-        if (!grounded)
-        {
-            // Ensure the jump animation is playing
-            anim.SetBool("isJump", true);
-        }
-        else
-        {
-            // If grounded, ensure the jump animation is not playing
-            anim.SetBool("isJump", false);
-        }
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround | whatIsGround2);
     }
-#endregion
 
     private void UpdateAnimator()
     {
-        // Update animator parameters based on movement
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -132,79 +65,80 @@ public class PlayerAnimator : MonoBehaviour
         bool horizontalLeft = Input.GetKey(KeyCode.A);
         bool horizontalRight = Input.GetKey(KeyCode.D);
 
-        bool ModeRange = Input.GetKey(rangedAttackKey);
+        bool modeRange = Input.GetKey(rangedAttackKey);
 
-        bool isSprinting = Input.GetKey(KeyCode.LeftShift) && currentMovementZ > 0; // Check if player is sprinting
-
-        if (!ModeRange)
-        {   
-            anim.SetBool("RangeAtkAktif", false);
-            if (isSprinting)
-            {   
-                currentMovementZ = Mathf.MoveTowards(currentMovementZ, maxMovement, acceleration * Time.deltaTime); // Increase movement gradually to maxMovement when sprinting
-            }
-            else
-            {
-                currentMovementZ = Mathf.MoveTowards(currentMovementZ, Mathf.Max(Mathf.Abs(horizontalInput), Mathf.Abs(verticalInput)), acceleration * Time.deltaTime); // Increase movement gradually based on input
-            }
-
-            // Deceleration for stopping smoothly
-            if (!verticalUp && !verticalDown)
-            {
-                currentMovementZ = Mathf.MoveTowards(currentMovementZ, 0, deceleration * Time.deltaTime);
-            }
-            if (!horizontalLeft && !horizontalRight)
-            {
-                currentMovementX = Mathf.MoveTowards(currentMovementX, 0, deceleration * Time.deltaTime);
-            }
-        }
-        else if (ModeRange)
-        {   
-            anim.SetBool("RangeAtkAktif", true);
-            if (verticalUp && currentMovementZ < 1)
-            {
-                currentMovementZ += acceleration * Time.deltaTime;
-            }
-            if (verticalDown && currentMovementZ > -1)
-            {
-                currentMovementZ -= acceleration * Time.deltaTime;
-            }
-            if (horizontalLeft && currentMovementX > -1)
-            {
-                currentMovementX -= acceleration * Time.deltaTime;
-            }
-            if (horizontalRight && currentMovementX < 1)
-            {
-                currentMovementX += acceleration * Time.deltaTime;
-            }
-            if (!verticalUp && !verticalDown)
-            {
-                currentMovementZ = Mathf.MoveTowards(currentMovementZ, 0, deceleration * Time.deltaTime);
-            }
-            if (!horizontalLeft && !horizontalRight)
-            {
-                currentMovementX = Mathf.MoveTowards(currentMovementX, 0, deceleration * Time.deltaTime);
-            }
-        }
-
-        // Set animator parameters
-        anim.SetFloat("movementZ", currentMovementZ); // Set movement parameter for blend tree
-        anim.SetFloat("movementX", currentMovementX); // Set movement parameter for blend tree
-        anim.SetBool("isSprint", isSprinting); // Set isSprint parameter
-        anim.SetBool("isRun", currentMovementZ == 1);
-        anim.SetBool("isIdle", currentMovementZ == 0);
-
-        // Check if we're jumping
-        if (!grounded)
+        if (!modeRange)
         {
-            // Ensure the jump animation is playing
-            anim.SetBool("isJump", true);
+            HandleMovement(horizontalInput, verticalInput, verticalUp, verticalDown, horizontalLeft, horizontalRight);
         }
         else
         {
-            // If grounded, ensure the jump animation is not playing
-            anim.SetBool("isJump", false);
+            HandleRangedMovement(verticalUp, verticalDown, horizontalLeft, horizontalRight);
+        }
+
+        anim.SetFloat("movementZ", currentMovementZ);
+        anim.SetFloat("movementX", currentMovementX);
+        anim.SetBool("isJump", !grounded);
+        anim.SetBool("isSprint", IsSprinting());
+        anim.SetBool("isRun", currentMovementZ == maxMovement);
+        anim.SetBool("isIdle", currentMovementZ == 0);
+        anim.SetBool("isDodge", playerMovement.IsDodging);
+    }
+
+    private void HandleMovement(float horizontalInput, float verticalInput, bool verticalUp, bool verticalDown, bool horizontalLeft, bool horizontalRight)
+    {
+        anim.SetBool("RangeAtkAktif", false);
+
+        float targetMovement = Mathf.Clamp01(Mathf.Sqrt(horizontalInput * horizontalInput + verticalInput * verticalInput));
+
+        if (IsSprinting())
+        {
+            currentMovementZ = Mathf.MoveTowards(currentMovementZ, maxMovement, acceleration * Time.deltaTime);
+        }
+        else
+        {
+            currentMovementZ = Mathf.MoveTowards(currentMovementZ, targetMovement, acceleration * Time.deltaTime);
+        }
+
+        if (!verticalUp && !verticalDown && !horizontalLeft && !horizontalRight)
+        {
+            currentMovementZ = Mathf.MoveTowards(currentMovementZ, 0, deceleration * Time.deltaTime);
+            currentMovementX = Mathf.MoveTowards(currentMovementX, 0, deceleration * Time.deltaTime);
         }
     }
-}
 
+    private void HandleRangedMovement(bool verticalUp, bool verticalDown, bool horizontalLeft, bool horizontalRight)
+    {
+        anim.SetBool("RangeAtkAktif", true);
+
+        if (verticalUp && currentMovementZ < 1)
+        {
+            currentMovementZ += acceleration * Time.deltaTime;
+        }
+        if (verticalDown && currentMovementZ > -1)
+        {
+            currentMovementZ -= acceleration * Time.deltaTime;
+        }
+        if (horizontalLeft && currentMovementX > -1)
+        {
+            currentMovementX -= acceleration * Time.deltaTime;
+        }
+        if (horizontalRight && currentMovementX < 1)
+        {
+            currentMovementX += acceleration * Time.deltaTime;
+        }
+        if (!verticalUp && !verticalDown)
+        {
+            currentMovementZ = Mathf.MoveTowards(currentMovementZ, 0, deceleration * Time.deltaTime);
+        }
+        if (!horizontalLeft && !horizontalRight)
+        {
+            currentMovementX = Mathf.MoveTowards(currentMovementX, 0, deceleration * Time.deltaTime);
+        }
+    }
+
+    private bool IsSprinting()
+    {
+        return Input.GetKey(KeyCode.LeftShift) && currentMovementZ > 0;
+    }
+}
