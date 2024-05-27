@@ -32,5 +32,6 @@ public class PortalInstant : MonoBehaviour
         animator.SetTrigger("Start");
         GameManager.instance.SaveGame();
         AudioManager.Instance.PlayBackgroundMusicWithTransition("GameJakarta", 1, 1f);
+        SkillManager.instance.UseSkill1();
     }
 }
