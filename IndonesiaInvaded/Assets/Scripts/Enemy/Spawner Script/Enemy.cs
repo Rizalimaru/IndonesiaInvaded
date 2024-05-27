@@ -34,6 +34,9 @@ public class Enemy : MonoBehaviour
     private bool isAttacking = false;
     private GameObject attackObject;
 
+    //Add some object
+    public GameObject hitVFX;
+
     public void Awake()
     {
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
@@ -73,13 +76,35 @@ public class Enemy : MonoBehaviour
 
         Collider other = collision.collider;
 
-        if (other.CompareTag("Sword") && isAttacking == true && health > 0)
+        if (other.CompareTag("Sword") | other.CompareTag("RangedCollider") && isAttacking == true && health > 0)
         {
 
             CameraShaker.instance.CameraShake(5f, 0.1f);
-
+            spawnVfxhit();
             Debug.Log("Damaged");
             health -= 20;
+            knockbackForce = 30f;
+            knockbackDelay = 0.2f;
+
+            if (isKnockedBack == false)
+            {
+                isKnockedBack = true;
+                stateManager.SwitchState(stateManager.knockbackState);
+            }
+
+            if (health <= 0)
+            {
+                objectiveManager.UpdateObjective();
+            }
+        }
+
+        if (other.CompareTag("RangedCollider") && health > 0)
+        {
+
+            CameraShaker.instance.CameraShake(5f, 0.1f);
+            spawnVfxhit();
+            Debug.Log("Damaged");
+            health -= 10;
             knockbackForce = 30f;
             knockbackDelay = 0.2f;
 
@@ -118,6 +143,13 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+
+    void spawnVfxhit()
+    {
+        GameObject vfx = Instantiate(hitVFX, transform.position, Quaternion.identity);
+        Destroy(vfx, .5f);
+    }
+
 
     public void knockbackDelayCounter()
     {
