@@ -33,6 +33,8 @@ public class AudioManager : MonoBehaviour
     {
         public string groupName;
         public AudioSource[] backgroundMusics;
+
+        [HideInInspector] public float originalVolume;
     }
 
     public BackgroundMusicGroup[] audioBackgroundMusicGroups;
@@ -161,6 +163,80 @@ public class AudioManager : MonoBehaviour
         audioSource.Play();
     }
 
+    //pause background music
+    public void PauseBackgroundMusic(string groupName)
+    {
+        BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);
+        if (group != null)
+        {
+            group.originalVolume = group.backgroundMusics[0].volume;
+            StartCoroutine(FadeOutAndPause(group, 1f));
+        }
+        else
+        {
+            Debug.LogWarning("Background music group not found.");
+        }
+    }
+
+    //resume background music with transition
+    public void ResumeBackgroundMusic(string groupName)
+    {
+        BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);
+        if (group != null)
+        {
+            StartCoroutine(FadeInAndResume(group, 1f));
+        }
+        else
+        {
+            Debug.LogWarning("Background music group not found.");
+        }
+    }
+
+    private IEnumerator FadeOutAndPause(BackgroundMusicGroup group, float duration)
+    {
+        float currentTime = 0;
+        float startVolume = group.backgroundMusics[0].volume;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            foreach (AudioSource audioSource in group.backgroundMusics)
+            {
+                audioSource.volume = Mathf.Lerp(startVolume, 0, currentTime / duration);
+            }
+            yield return null;
+        }
+
+        foreach (AudioSource audioSource in group.backgroundMusics)
+        {
+            audioSource.Pause();
+        }
+    }
+
+    private IEnumerator FadeInAndResume(BackgroundMusicGroup group, float duration)
+    {
+        foreach (AudioSource audioSource in group.backgroundMusics)
+        {
+            audioSource.UnPause();
+        }
+
+        float currentTime = 0;
+        float startVolume = group.originalVolume;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            foreach (AudioSource audioSource in group.backgroundMusics)
+            {
+                audioSource.volume = Mathf.Lerp(0, startVolume, currentTime / duration);
+            }
+            yield return null;
+        }
+    }
+
+
+
+
     public void StopBackgroundMusicWithTransition(string groupName, float fadeOutDuration)
     {
         BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);
@@ -284,6 +360,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+}
+
 
     
-}
+
