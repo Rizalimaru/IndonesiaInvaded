@@ -15,8 +15,7 @@ public class PlayerDataSaving : MonoBehaviour
         instance = this;
 
     }
-    private void Start()
-    {
+    private void Update(){
         PlayerCrash();
     }
 

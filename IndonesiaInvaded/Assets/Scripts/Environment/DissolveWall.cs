@@ -3,10 +3,23 @@ using UnityEngine;
 
 public class DissolveWall : MonoBehaviour
 {
-
     public static DissolveWall instance;
     public float dissolveDuration = 3f; 
-    public Material dissolveMaterial;
+    public Material[] dissolveMaterials;
+
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public void DissolveWallFunction()
     {
@@ -15,19 +28,9 @@ public class DissolveWall : MonoBehaviour
 
     public void UnDissolveWallFunction()
     {
+
         StartCoroutine(UnDissolve());
     }
-
-    private void Awake()
-    {
-        instance = this;
-    }
-
-    private void Update()
-    {
-    }
-
-
 
     private IEnumerator Dissolve()
     {
@@ -35,13 +38,13 @@ public class DissolveWall : MonoBehaviour
         while (t < 1)
         {
             t += Time.deltaTime / dissolveDuration;
-            dissolveMaterial.SetFloat("_DissolveAmount", t);
+            SetDissolveAmount(t);
             yield return null;
         }
 
-        // menunggu 4 detik kemudian set material dissolve ke 0
-        yield return new WaitForSeconds(7f);
-        dissolveMaterial.SetFloat("_DissolveAmount", 0);
+        // Wait for 4 seconds then reset the dissolve material to 0
+        yield return new WaitForSeconds(5f);
+        SetDissolveAmount(0);
     }
 
     private IEnumerator UnDissolve()
@@ -50,8 +53,17 @@ public class DissolveWall : MonoBehaviour
         while (t > 0)
         {
             t -= Time.deltaTime / dissolveDuration;
-            dissolveMaterial.SetFloat("_DissolveAmount", t);
+            SetDissolveAmount(t);
             yield return null;
+        }
+
+    }
+
+    private void SetDissolveAmount(float amount)
+    {
+        foreach (var material in dissolveMaterials)
+        {
+            material.SetFloat("_DissolveAmount", amount);
         }
     }
 }

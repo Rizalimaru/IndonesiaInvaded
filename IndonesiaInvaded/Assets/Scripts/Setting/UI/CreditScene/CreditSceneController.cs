@@ -14,6 +14,9 @@ public class CreditSceneController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         // Pastikan button tidak terlihat di awal
         backmainmenu.gameObject.SetActive(false);
     }
@@ -25,6 +28,7 @@ public class CreditSceneController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             backmainmenu.gameObject.SetActive(true);
+            
         }
     }
     void ShowBackMainMenuButton()
@@ -34,7 +38,9 @@ public class CreditSceneController : MonoBehaviour
 
     public void BackToMainMenu()
     {
+        AudioManager.Instance.StopAllBackgroundMusic();
         creditAnimator.SetTrigger("hidecredit");
+        backmainmenu.interactable = false;        
         StartCoroutine(DelayHideCredit());
        // Kembali ke main menu
     }

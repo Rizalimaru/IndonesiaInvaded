@@ -7,7 +7,6 @@ public class SpawningManager : MonoBehaviour
     public static SpawningManager instance;
 
     public GameObject[] wall;
-    public Transform targetPlayer;
     public List<Enemy> enemyType = new List<Enemy>();
     public Transform[] spawnPoint;
     public GameObject objectSelf;
@@ -21,7 +20,7 @@ public class SpawningManager : MonoBehaviour
         if(enemyNum == 0 && isFinished == true)
         {
             DissolveWall.instance.DissolveWallFunction();
-            Destroy(objectSelf,2f);
+            Destroy(objectSelf,3f);
         }
     }
 

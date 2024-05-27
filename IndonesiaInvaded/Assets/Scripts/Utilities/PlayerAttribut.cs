@@ -43,9 +43,6 @@ public class PlayerAttribut : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
-        Debug.Log("Collision");
-
         Collider other = collision.collider;
 
         if (other.CompareTag("EnemyMeleeCollider"))

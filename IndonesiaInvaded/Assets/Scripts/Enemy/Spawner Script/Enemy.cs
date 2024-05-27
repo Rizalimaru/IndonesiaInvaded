@@ -102,7 +102,7 @@ public class Enemy : MonoBehaviour
         {
 
             Debug.Log("get roar");
-            health -= 5;
+            health -= 30;
             knockbackForce = 65f;
             knockbackDelay = 5f;
 
@@ -110,6 +110,11 @@ public class Enemy : MonoBehaviour
             {
                 stateManager.SwitchState(stateManager.knockbackState);
                 isKnockedBack = true;
+            }
+            
+            if (health <= 0)
+            {
+                objectiveManager.UpdateObjective();
             }
         }
     }

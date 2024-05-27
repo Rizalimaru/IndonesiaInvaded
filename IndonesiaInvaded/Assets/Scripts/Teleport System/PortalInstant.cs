@@ -24,13 +24,14 @@ public class PortalInstant : MonoBehaviour
         animator.SetTrigger("End");
         player.gameObject.SetActive(false);
         playerCamera.SetActive(false);
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Game", 1f);
+        AudioManager.Instance.StopAllBackgroundMusic();
         yield return new WaitForSeconds(0.5f);
         player.Teleport(destination.position, destination.rotation);
         player.gameObject.SetActive(true);
         playerCamera.SetActive(true);
         animator.SetTrigger("Start");
         GameManager.instance.SaveGame();
-        AudioManager.Instance.PlayBackgroundMusicWithTransition("GameJakarta", 0, 1f);
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("GameJakarta", 1, 1f);
+        SkillManager.instance.UseSkill1();
     }
 }

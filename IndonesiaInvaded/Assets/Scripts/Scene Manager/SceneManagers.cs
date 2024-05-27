@@ -66,10 +66,15 @@ public class SceneManagers : MonoBehaviour
 
     public void Creditscene()
     {
+        AudioManager.Instance.StopAllBackgroundMusic();
         GameManager.instance.SaveGame();
         UI_PauseGame.instance.HideResult();
         SceneManager.LoadScene("CreditScene");
         ScoreManager.instance.ResetAllValues();
         GameManager.instance.SaveGame();
+
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("CreditScene",0, 1f);
+
+
     }
 }

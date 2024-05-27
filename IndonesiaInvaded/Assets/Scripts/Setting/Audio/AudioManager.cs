@@ -101,9 +101,23 @@ public class AudioManager : MonoBehaviour
         {
             foreach (AudioSource audioSource in group.backgroundMusics)
             {
-                audioSource.Stop();
+                StartCoroutine(FadeOutAndStop(audioSource, 0.6f));
             }
         }
+    }
+
+    private IEnumerator FadeOutAndStop(AudioSource audioSource, float duration)
+    {
+        float startVolume = audioSource.volume;
+
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            audioSource.volume = Mathf.Lerp(startVolume, 0, t / duration);
+            yield return null;
+        }
+
+        audioSource.Stop();
+        audioSource.volume = startVolume; // Kembalikan volume ke nilai awal jika diinginkan
     }
 
     public void PlayBackgroundMusicWithTransition(string groupName, int index, float fadeInDuration)

@@ -33,6 +33,8 @@ public class UI_PauseGame : MonoBehaviour
     public GameObject gameObjectUI;
     public GameObject gameObjectOptions;
     public GameObject gameResult;
+    public GameObject HPBarOndelOndel;
+    //public GameObject HPBarDukun;
 
     [Header("-----------------------GameOver-----------------------")]
     public GameObject gameOver;
@@ -71,6 +73,8 @@ public class UI_PauseGame : MonoBehaviour
         Cursor.visible = false;
 
         audioManagerInstance = AudioManager.Instance;
+
+        ScoreManager.instance.ResetAllValues();
     }
 
     // Update is called once per frame
@@ -89,8 +93,6 @@ public class UI_PauseGame : MonoBehaviour
                     else
                     {
                         Resume(); // Resume the game if options are not active
-
-                        Debug.Log("Game resumed");
                     }
                 }
                 else
@@ -154,7 +156,6 @@ public class UI_PauseGame : MonoBehaviour
         audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
         audioManagerInstance.PauseSoundEffectGroup("Skillplayer");
 
-        Debug.Log("Game paused");
     }
 
     public void GameOver()
@@ -235,6 +236,21 @@ public class UI_PauseGame : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        GameResumed.Invoke(); // Invoke resume event
+
+        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+    }
+
+    public void CreditScene()
+    {
+        gameResult.SetActive(false);
+        gameObjectUI.SetActive(true);
+        playerCamera.SetActive(true);
+        gameOver.SetActive(false);
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+        isResultScreenShown = false; // Set isResultScreenShown to true when showing the result screen
+        //isCursorLocked = true; // Lock cursor when unpaused
         GameResumed.Invoke(); // Invoke resume event
 
         audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
