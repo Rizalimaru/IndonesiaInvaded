@@ -46,6 +46,12 @@ public class Boss : MonoBehaviour
     {
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
+        
+    }
+    private void Start()
+    {
+        SetupAgent();
+        BossHealthBar.instance.Initialize(health);
     }
 
     // Update is called once per frame
@@ -70,6 +76,11 @@ public class Boss : MonoBehaviour
 
         }
 
+        if (isKnockedBack == true)
+        {
+            Invoke("knockbackDelayCounter", knockbackDelay);
+        }
+
         if (Input.GetKeyDown(KeyCode.M))
         {
             Debug.Log("Ada 2");
@@ -77,27 +88,26 @@ public class Boss : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+   private void OnCollisionEnter(Collision collision)
     {
-
         Collider other = collision.collider;
 
-        if (other.CompareTag("Sword") && isAttacking == true && health > 0)
+        if (other.CompareTag("Sword") && isAttacking && health > 0)
         {
-
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
 
-            Debug.Log("Damaged");
-            health -= 15;
-            knockbackForce = 30f;
-            knockbackDelay = 45f;
+            Debug.Log("Damaged by Sword. Current health: " + health);
+            health -= 20;
+            Debug.Log("Health after damage: " + health);
 
-            if (isKnockedBack == false)
+            BossHealthBar.instance.UpdateHealthBar(health);
+
+            knockbackForce = 30f;
+            knockbackDelay = 7f;
+
+            if (!isKnockedBack)
             {
                 isKnockedBack = true;
-
-                Invoke("knockbackDelayCounter", knockbackDelay);
-
                 stateManager.SwitchState(stateManager.knockbackState);
             }
         }
@@ -107,22 +117,24 @@ public class Boss : MonoBehaviour
     {
         if (other.CompareTag("SkillRoarCollider") && health > 0)
         {
+            Debug.Log("Damaged by Roar. Current health: " + health);
+            health -= 50;
+            Debug.Log("Health after damage: " + health);
 
-            Debug.Log("get roar");
-            health -= 25;
+            BossHealthBar.instance.UpdateHealthBar(health);
+
+
             knockbackForce = 65f;
-            knockbackDelay = 60f;
+            knockbackDelay = 15f;
 
-            if (isKnockedBack == false)
+            if (!isKnockedBack)
             {
-                isKnockedBack = true;
-
-                Invoke("knockbackDelayCounter", knockbackDelay);
-
                 stateManager.SwitchState(stateManager.knockbackState);
+                isKnockedBack = true;
             }
         }
     }
+
 
     public void knockbackDelayCounter()
     {

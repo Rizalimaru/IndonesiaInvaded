@@ -33,6 +33,8 @@ public class UI_PauseGame : MonoBehaviour
     public GameObject gameObjectUI;
     public GameObject gameObjectOptions;
     public GameObject gameResult;
+    public GameObject HPBarOndelOndel;
+    //public GameObject HPBarDukun;
 
     [Header("-----------------------GameOver-----------------------")]
     public GameObject gameOver;
@@ -71,6 +73,8 @@ public class UI_PauseGame : MonoBehaviour
         Cursor.visible = false;
 
         audioManagerInstance = AudioManager.Instance;
+
+        ScoreManager.instance.ResetAllValues();
     }
 
     // Update is called once per frame
@@ -89,8 +93,6 @@ public class UI_PauseGame : MonoBehaviour
                     else
                     {
                         Resume(); // Resume the game if options are not active
-
-                        Debug.Log("Game resumed");
                     }
                 }
                 else
@@ -154,7 +156,6 @@ public class UI_PauseGame : MonoBehaviour
         audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
         audioManagerInstance.PauseSoundEffectGroup("Skillplayer");
 
-        Debug.Log("Game paused");
     }
 
     public void GameOver()
