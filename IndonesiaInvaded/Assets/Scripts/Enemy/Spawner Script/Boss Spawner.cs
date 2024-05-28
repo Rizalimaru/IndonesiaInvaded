@@ -63,7 +63,7 @@ public class BossSpawner : MonoBehaviour
     {
         Boss boss = bossToSpawn.GetComponent<Boss>();
 
-        Instantiate(boss, spawnPos, Quaternion.identity);
+        Instantiate(boss, spawnPos, boss.transform.rotation);
 
         boss.agent.enabled = true;
 
