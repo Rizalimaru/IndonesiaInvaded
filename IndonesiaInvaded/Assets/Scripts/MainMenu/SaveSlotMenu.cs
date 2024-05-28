@@ -70,7 +70,7 @@ public class SaveSlotMenu : MonoBehaviour
     {
         
         GameManager.instance.SaveGame();
-        Scene_Loading.instance.LoadScenes();
+        // Scene_Loading.instance.LoadScenes();
 
     }
 

@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 public class Scene_Loading : MonoBehaviour
 {
     public static Scene_Loading instance;
-    
+
     [Header("Scene Animator")]
     [SerializeField] Animator animator;
-    
+
     [Header("UI Animator")]
     public GameObject loadingScreen;
     public Slider loadingBarFill;
@@ -27,174 +27,90 @@ public class Scene_Loading : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
     }
+
     public void LoadMainMenu()
     {
-        GameManager.instance.SaveGame();
-
-   
-
-        StartCoroutine(MainMenu());
+        StartCoroutine(LoadScene("Mainmenu"));
     }
-    public void LoadScenes()
+    public void LoadSceneByName(string gameplayScene, string levelScene, string bgMusic)
     {
         loadingScreen.SetActive(true);
-        // Stop audio bgm mainmenu sebelum play game 
-
         loadingBarFill.value = 0;
-        
-        StartCoroutine(LoadScenesAsync());
-    } 
-    public void LoadScenes2()
-    {
-        loadingScreen.SetActive(true);
-        // Stop audio bgm mainmenu sebelum play game 
-
-        loadingBarFill.value = 0;
-        StartCoroutine(LoadLevel2());
-    } 
-    public void LoadScenes3()
-    {
-        loadingScreen.SetActive(true);
-        // Stop audio bgm mainmenu sebelum play game 
-
-        loadingBarFill.value = 0;
-        StartCoroutine(LoadLevel3());
-    } 
-    IEnumerator LoadScenesAsync()
+        StartCoroutine(LoadScenesAsync(new List<string> { gameplayScene, levelScene }, bgMusic));
+    }
+    private IEnumerator LoadScenesAsync(List<string> scenesToLoad, string bgMusic)
     {
         AudioManager.Instance.StopAllBackgroundMusic();
         List<AsyncOperation> scenes = new List<AsyncOperation>();
 
-        // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
-        
-        scenes.Add(SceneManager.LoadSceneAsync("Gameplay1" ));
-        scenes.Add(SceneManager.LoadSceneAsync("Level1",LoadSceneMode.Additive));
-
-
-        // Tunggu hingga semua scene dimuat
-        foreach (var scene in scenes)
+        foreach (var sceneName in scenesToLoad)
         {
-            while (!scene.isDone)
-            {
-                float progress = 0;
-                foreach (var s in scenes)
-                {
-                    progress += s.progress;
-                }
-                progress /= scenes.Count;
-                loadingBarFill.value = progress;
-                yield return null;
-            }
+            scenes.Add(SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive));
         }
 
-        // Tunggu sedikit waktu tambahan sebelum menonaktifkan layar loading
-
-        loadingScreen.SetActive(false);
-
-
-        ScoreManager.instance.ResetAllValues();
-        AudioManager.Instance.PlayBackgroundMusicWithTransition("GameJakarta",0, 1f);
-    }
-    IEnumerator LoadLevel2()
-    {
-
-        AudioManager.Instance.StopAllBackgroundMusic();
-
-        List<AsyncOperation> scenes = new List<AsyncOperation>();
-
-        // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
-        scenes.Add(SceneManager.LoadSceneAsync("Gameplay2"));
-        scenes.Add(SceneManager.LoadSceneAsync("Level2", LoadSceneMode.Additive));
-
-
-        // Tunggu hingga semua scene dimuat
-        foreach (var scene in scenes)
+        while (!AllScenesLoaded(scenes))
         {
-            while (!scene.isDone)
-            {
-                float progress = 0;
-                foreach (var s in scenes)
-                {
-                    progress += s.progress;
-                }
-                progress /= scenes.Count;
-                loadingBarFill.value = progress;
-                yield return null;
-            }
+            loadingBarFill.value = CalculateProgress(scenes);
+            yield return null;
         }
 
-        // Tunggu sedikit waktu tambahan sebelum menonaktifkan layar loading
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            SceneManager.UnloadSceneAsync(0);
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            SceneManager.UnloadSceneAsync(2);
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 4)
+        {
+            SceneManager.UnloadSceneAsync(4);
+        }
+
         yield return new WaitForSeconds(1f);
-
         loadingScreen.SetActive(false);
         ScoreManager.instance.ResetAllValues();
-
-        AudioManager.Instance.PlayBackgroundMusicWithTransition("GameInvert",0, 1f);
+        AudioManager.Instance.PlayBackgroundMusicWithTransition(bgMusic, 0, 1f);
     }
-    IEnumerator LoadLevel3()
+
+    private IEnumerator LoadScene(string sceneName)
     {
         AudioManager.Instance.StopAllBackgroundMusic();
-        List<AsyncOperation> scenes = new List<AsyncOperation>();
-
-        // Sesuaikan indeks scene dengan indeks scene yang ingin Anda muat
-        scenes.Add(SceneManager.LoadSceneAsync("Gameplay3"));
-        scenes.Add(SceneManager.LoadSceneAsync("Level3", LoadSceneMode.Additive));
-
-
-        // Tunggu hingga semua scene dimuat
-        foreach (var scene in scenes)
-        {
-            while (!scene.isDone)
-            {
-                float progress = 0;
-                foreach (var s in scenes)
-                {
-                    progress += s.progress;
-                }
-                progress /= scenes.Count;
-                loadingBarFill.value = progress;
-                yield return null;
-            }
-        }
-
-        // Tunggu sedikit waktu tambahan sebelum menonaktifkan layar loading
-        yield return new WaitForSeconds(1f);
-
-        loadingScreen.SetActive(false);
-
-
-        ScoreManager.instance.ResetAllValues();
-
-        AudioManager.Instance.PlayBackgroundMusicWithTransition("GameBandung",0, 1f);
-    }
-    IEnumerator MainMenu()
-    {
-
-        AudioManager.Instance.StopAllBackgroundMusic();
-        List<AsyncOperation> scenes = new List<AsyncOperation>();
         animator.SetTrigger("End");
         yield return new WaitForSeconds(1f);
+
         loadingScreen.SetActive(true);
-
         loadingBarFill.value = 0;
-        scenes.Add(SceneManager.LoadSceneAsync(0));
+        var scene = SceneManager.LoadSceneAsync(sceneName);
 
-        foreach (var scene in scenes)
+        while (!scene.isDone)
         {
-            while (!scene.isDone)
-            {
-                float progress = 0;
-                foreach (var s in scenes)
-                {
-                    progress += s.progress;
-                }
-                progress /= scenes.Count;
-                loadingBarFill.value = progress;
-                yield return null;
-            }
+            loadingBarFill.value = scene.progress;
+            yield return null;
         }
 
         loadingScreen.SetActive(false);
         animator.SetTrigger("Start");
     }
+
+    private bool AllScenesLoaded(List<AsyncOperation> scenes)
+    {
+        foreach (var scene in scenes)
+        {
+            if (!scene.isDone)
+                return false;
+        }
+        return true;
+    }
+
+    private float CalculateProgress(List<AsyncOperation> scenes)
+    {
+        float progress = 0;
+        foreach (var scene in scenes)
+        {
+            progress += scene.progress;
+        }
+        return progress / scenes.Count;
+    }
+
 }

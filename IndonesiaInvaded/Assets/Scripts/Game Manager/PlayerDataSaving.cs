@@ -34,6 +34,7 @@ public class PlayerDataSaving : MonoBehaviour
         {
             CheckPointManager.instance.Respawn();
             ScoreManager.instance.ResetAllValues();
+            Debug.Log("Waduh jatuh");
         }
     }
 

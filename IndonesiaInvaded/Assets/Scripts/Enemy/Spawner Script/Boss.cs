@@ -85,12 +85,6 @@ public class Boss : MonoBehaviour
         {
             Invoke("knockbackDelayCounter", knockbackDelay);
         }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Debug.Log("Ada 2");
-            firstSkillCounter = 2;
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
