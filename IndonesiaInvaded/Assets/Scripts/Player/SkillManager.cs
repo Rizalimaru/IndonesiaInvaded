@@ -8,7 +8,7 @@ public class SkillManager : MonoBehaviour
     public static SkillManager instance;
     private Animator animator;
     private Collider colid;
-    
+
     [Header("Skill 1")]
     public Image skillImage1;
     public float cooldown1 = 5;
@@ -23,13 +23,13 @@ public class SkillManager : MonoBehaviour
     public Object SkillRoarCollider;
     public float destroyTimeColliderRoar = 1.5f;
     public GameObject smashExplosion;
-    
+
     [Header("Slow Motion Effect")]
     private bool isSlowMotionActive = false;
     public float slowMotionDuration = 1f;
     public float slowMotionTimeScale = 0.5f;
     public float waitBeforeSlowMotion = 0.5f;
-    
+
     [Header("Skill 2")]
     public Image skillImage2;
     public float cooldown2 = 8;
@@ -95,6 +95,7 @@ public class SkillManager : MonoBehaviour
             }
         }
     }
+    
 
     #region UsableSkill Function
     public void UseSkill1()
@@ -311,4 +312,22 @@ public class SkillManager : MonoBehaviour
         lastSpawnTime = 0f;
     }
     #endregion
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Portal"))
+        {
+            ResetSkills();
+        }
+    }
+    
+    public void ResetSkills()
+    {
+        StopAllCoroutines();
+        isCooldown1 = false;
+        isCooldown2 = false;
+        skillImage1.fillAmount = 0;
+        skillImage2.fillAmount = 0;
+        Debug.Log("Skills have been reset!");
+    }
 }
