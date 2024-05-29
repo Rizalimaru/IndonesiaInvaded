@@ -43,7 +43,6 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         //Jika sedang play coroutine, jika player menekan tombol maka akan muncul tombol skip
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-
             StopAllCoroutines();
             CameraBack();
         }
@@ -63,6 +62,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     private void CameraTrig()
     {
         animasi.SetTrigger("Cutscene");
+        ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
         cutSceneCamera.SetActive(true);
 
@@ -87,6 +87,8 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         {
             go.SetActive(true);
         }
+        ScoreManager.instance.SetTimeUpdating(true);
+
     }
 
     private void CameraBackPortal()
@@ -113,6 +115,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public void CutScenePortal()
     {
+        ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
         cutSceneCameraPortal.SetActive(true);
         StartCoroutine(PortalDelay());
@@ -130,10 +133,13 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         portal.SetActive(true);
+        yield return new WaitForSeconds(1);
+        ScoreManager.instance.SetTimeUpdating(true);
     }
 
     public void CutSceneMonas()
     {
+        ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
         cutSceneCameraMonas.SetActive(true);
         StartCoroutine(MonasDelay());
@@ -143,13 +149,15 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
             go.SetActive(false);
         }
 
-        Invoke("CameraBackMonas", 2);
+        Invoke("CameraBackMonas", 4);
     }
 
     IEnumerator MonasDelay()
     {
         yield return new WaitForSeconds(2);
         portalMonas.SetActive(true);
+        yield return new WaitForSeconds(2);
+        ScoreManager.instance.SetTimeUpdating(true);
     }
 }
 
