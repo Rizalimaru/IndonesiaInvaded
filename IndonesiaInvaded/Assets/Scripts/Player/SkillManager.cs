@@ -293,7 +293,7 @@ public class SkillManager : MonoBehaviour
     }
     #endregion
 
-    #region Region function for skill Ruler
+    #region Region function for skill RulerOrbit
     void SpawnRuler()
     {
         if (spawnedRulerCount < maxRulerCount && Time.time - lastSpawnTime > timeBetweenSpawns)

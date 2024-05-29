@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6094401513039441542}
   - component: {fileID: 7550197529966654154}
   - component: {fileID: 3204808521129369661}
+  - component: {fileID: -1424729721836203300}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -183,6 +184,23 @@ MonoBehaviour:
   comboCounter: 0
   bossObject: {fileID: 7550197529966654154}
   animator: {fileID: 6094401513039441542}
+--- !u!114 &-1424729721836203300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79662333049342309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411060de4483b5e4c9847cd3cbc18554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetColor: {r: 1, g: 0, b: 0, a: 1}
+  needBoxIndicator: 1
+  needArrowIndicator: 1
+  needDistanceText: 1
+  indicator: {fileID: 0}
 --- !u!1 &4111984932586215796
 GameObject:
   m_ObjectHideFlags: 0
