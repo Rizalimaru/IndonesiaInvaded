@@ -124,6 +124,7 @@ public class SkillManager : MonoBehaviour
         PlayerAttribut player = PlayerAttribut.instance;
         if (player != null && !isCooldown2 && player.currentSP >= 50)
         {
+            AudioManager._instance.PlaySFX("Skillplayer", 3);
             skill2Active = true;
             skill2Timer = 0f; // Reset the skill timer
             player.currentSP -= 50;
@@ -297,13 +298,17 @@ public class SkillManager : MonoBehaviour
     {
         if (spawnedRulerCount < maxRulerCount && Time.time - lastSpawnTime > timeBetweenSpawns)
         {
+            AudioManager._instance.PlaySFX("RangedAttack",1 );
+            
             quaternion defaultRotation = ruler.transform.rotation;
             GameObject rulerObj = Instantiate(ruler, player.position, defaultRotation) as GameObject;
             spawnedRulerCount++;
             lastSpawnTime = Time.time;
-
+            
             Destroy(rulerObj, 3f);
+            
         }
+
     }
 
     void ResetRulerSpawn()
