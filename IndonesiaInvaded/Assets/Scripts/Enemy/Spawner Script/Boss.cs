@@ -104,7 +104,7 @@ public class Boss : MonoBehaviour
             BossHealthBar.instance.UpdateHealthBar(health);
 
             knockbackForce = 30f;
-            knockbackDelay = 7f;
+            knockbackDelay = 60f;
 
             if (!isKnockedBack)
             {
@@ -126,7 +126,7 @@ public class Boss : MonoBehaviour
 
 
             knockbackForce = 65f;
-            knockbackDelay = 15f;
+            knockbackDelay = 75f;
 
             if (!isKnockedBack)
             {
