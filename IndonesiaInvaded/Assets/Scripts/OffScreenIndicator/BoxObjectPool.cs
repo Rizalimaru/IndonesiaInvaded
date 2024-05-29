@@ -24,7 +24,7 @@ public class BoxObjectPool : MonoBehaviour
         pooledObjects = new List<Indicator>();
 
         for (int i = 0; i < pooledAmount; i++)
-        {
+        {   
             Indicator box = Instantiate(pooledObject);
             box.transform.SetParent(transform, false);
             box.Activate(false);

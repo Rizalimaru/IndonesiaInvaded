@@ -39,6 +39,7 @@ public class Projectile : MonoBehaviour
         {
             targetDirection = (enemy.transform.position - transform.position).normalized;
             isShooting = true;
+            AudioManager._instance.PlaySFX("RangedAttack",0);
             followSpawner = false; // Stop following the spawner when shooting
         }
     }

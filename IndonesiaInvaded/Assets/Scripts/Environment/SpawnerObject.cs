@@ -7,6 +7,12 @@ public class SpawnerObject : MonoBehaviour
 
     public GameObject[] container;
 
+    public void Start()
+    {
+        StartCoroutine(EnvironmentCutSceneJakarta.instance.CameraDelay());
+    }
+    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

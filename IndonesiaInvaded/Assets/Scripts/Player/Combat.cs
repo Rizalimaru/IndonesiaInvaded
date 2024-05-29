@@ -128,18 +128,21 @@ public class Combat : MonoBehaviour
         switch (currentHit)
         {
             case 0:
+                AudioManager.Instance.PlaySFX("AttackPlayer", 0);
                 animator.SetBool("hit1", true);
                 hitSekarang = "hit1";
                 Debug.Log("Hit 1");
                 currentHit++;
                 break;
             case 1:
+            AudioManager.Instance.PlaySFX("AttackPlayer", 1);
                 animator.SetBool("hit2", true);
                 hitSekarang = "hit2";
                 Debug.Log("Hit 2");
                 currentHit++;
                 break;
             case 2:
+            AudioManager.Instance.PlaySFX("AttackPlayer", 3);
                 animator.SetBool("hit3", true);
                 hitSekarang = "hit3";
                 Debug.Log("Hit 3");
