@@ -2999,7 +2999,6 @@ GameObject:
   - component: {fileID: 1112979055}
   - component: {fileID: 1112979056}
   - component: {fileID: 1112979057}
-  - component: {fileID: 1112979058}
   - component: {fileID: 1112979059}
   m_Layer: 5
   m_Name: Button Container
@@ -3069,24 +3068,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &1112979058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1112979054}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd20b76f2266e8a4e9ef340b59bde9b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveSlotsMenu: {fileID: 2117533414}
-  newGameButton: {fileID: 51881100}
-  loadButton: {fileID: 1493873577}
-  optionsButton: {fileID: 1289589191}
-  exitButton: {fileID: 774709398}
-  titleGameAnimator: {fileID: 140075504}
 --- !u!114 &1112979059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4626,7 +4607,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 452046147718106469, guid: 3d535f3bce777df4b9f118ee6cd195e8, type: 3}
       propertyPath: useEncryption
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 452046147718106469, guid: 3d535f3bce777df4b9f118ee6cd195e8, type: 3}
       propertyPath: autoSaveTimeSeconds
@@ -5847,8 +5828,44 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1112979059}
     - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: bgMusic.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: bgMusic.Array.data[0]
+      value: GameJakarta
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: bgMusic.Array.data[1]
+      value: GameInvert
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: bgMusic.Array.data[2]
+      value: GameBandung
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: levelScene.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
       propertyPath: cutSceneNames.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: gameplayScene.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: levelScene.Array.data[0]
+      value: Level1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: levelScene.Array.data[1]
+      value: Level2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: levelScene.Array.data[2]
+      value: Level3
       objectReference: {fileID: 0}
     - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
       propertyPath: uiMainMenu.Array.data[0]
@@ -5862,6 +5879,26 @@ PrefabInstance:
       propertyPath: cutSceneNames.Array.data[0]
       value: NewGame
       objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: gameplayScene.Array.data[0]
+      value: Gameplay1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: gameplayScene.Array.data[1]
+      value: Gameplay2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: gameplayScene.Array.data[2]
+      value: Gameplay3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: gameplayScene.Array.data[0].sceneName
+      value: Gameplay1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752591978164490985, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
+      propertyPath: gameplayScene.Array.data[0].sceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: aaa993b40c01aff4aacd03570bda2cf7, type: 3}
     - target: {fileID: 3248174855412901172, guid: 12db960b6c23d0e489ffe38710cc5eae, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
