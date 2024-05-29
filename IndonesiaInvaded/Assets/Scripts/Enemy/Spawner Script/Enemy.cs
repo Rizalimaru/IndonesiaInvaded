@@ -145,8 +145,9 @@ public class Enemy : MonoBehaviour
     }
 
     void spawnVfxhit()
-    {
-        GameObject vfx = Instantiate(hitVFX, transform.position, Quaternion.identity);
+    {   
+        Vector3 newPosition = transform.position + new Vector3(0, 1, 0);
+        GameObject vfx = Instantiate(hitVFX, newPosition, Quaternion.identity);
         Destroy(vfx, .5f);
     }
 
