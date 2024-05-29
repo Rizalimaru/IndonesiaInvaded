@@ -17,16 +17,23 @@ public class SpawningManager : MonoBehaviour
     private bool isCutSceneTriggered = false;
 
 
+    private void Awake()
+    {
+        instance = this;
+        col = GetComponent<Collider>();
+
+    }
+    
     private void Start()
     {
         //mencari gameobject dengan tag Portal 
-        
+
     }
 
     private void Update()
     {
         int enemyNum = GetCurrentEnemy();
-        if(enemyNum == 0 && isFinished == true && !isCutSceneTriggered)
+        if (enemyNum == 0 && isFinished == true && !isCutSceneTriggered)
         {
             DissolveWall.instance.DissolveWallFunction();
 
@@ -34,8 +41,8 @@ public class SpawningManager : MonoBehaviour
 
             AudioManager._instance.TransitionToBackgroundMusic();
 
-            
-            Destroy(objectSelf,3f);
+
+            Destroy(objectSelf, 3f);
 
             isCutSceneTriggered = true;
 
@@ -44,13 +51,13 @@ public class SpawningManager : MonoBehaviour
                 EnvironmentCutSceneJakarta.instance.CutScenePortal();
             }
         }
+        
+        if (PlayerAttribut.instance.currentHealth <= 0)
+        {
+            ResetSpawning();
+        }
     }
 
-    private void Awake()
-    {
-        col = GetComponent<Collider>();
-
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -65,7 +72,7 @@ public class SpawningManager : MonoBehaviour
             {
                 SpawnEnemy(enemyType[i], spawnPoint[i].position);
             }
-            
+
 
             // Sekaligus mengaktifkan wall tanpa harus menyebutkan satu per satu
             for (int i = 0; i < wall.Length; i++)
@@ -106,5 +113,23 @@ public class SpawningManager : MonoBehaviour
     {
         int enemy = GameObject.FindGameObjectsWithTag("Enemy").Length;
         return enemy;
+    }
+
+    public void ResetSpawning()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+
+        for (int i = 0; i < wall.Length; i++)
+        {
+            wall[i].SetActive(false);
+        }
+
+        isFinished = false;
+        isCutSceneTriggered = false;
+        col.enabled = true;
     }
 }
