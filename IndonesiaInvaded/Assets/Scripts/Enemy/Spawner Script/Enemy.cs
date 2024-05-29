@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
 
         Collider other = collision.collider;
 
-        if (other.CompareTag("Sword") | other.CompareTag("RangedCollider") && isAttacking == true && health > 0)
+        if (other.CompareTag("Sword") | other.CompareTag("RangedCollider") | other.CompareTag("FootCollider") && isAttacking == true && health > 0)
         {
 
             CameraShaker.instance.CameraShake(5f, 0.1f);

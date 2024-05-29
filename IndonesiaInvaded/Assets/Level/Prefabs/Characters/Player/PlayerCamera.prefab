@@ -62,7 +62,7 @@ MonoBehaviour:
     FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
-    FarClipPlane: 80
+    FarClipPlane: 500
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CollideAgainst:
     serializedVersion: 2
-    m_Bits: 4194304
+    m_Bits: 20971520
   m_IgnoreTag: Player
   m_TransparentLayers:
     serializedVersion: 2
@@ -135,9 +135,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4597c6ea99d13c8498bde9a027bc4166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDistance: 6
+  defaultDistance: 4
   minimumDistance: 1
-  maximumDistance: 6
+  maximumDistance: 4
   smoothing: 4
   zoomSensitivity: 13
 --- !u!114 &868640218966302434
@@ -161,6 +161,7 @@ MonoBehaviour:
   rotationToEnemySpeed: 20
   hitDrag: {fileID: 0}
   rotationSpeed: 10
+  RangedAtkDetectionRadius: 50
   combatLookAt: {fileID: 0}
   thirdPersonCam: {fileID: 0}
   combatCam: {fileID: 0}
@@ -251,7 +252,7 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
-  m_CameraDistance: 6
+  m_CameraDistance: 4
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
