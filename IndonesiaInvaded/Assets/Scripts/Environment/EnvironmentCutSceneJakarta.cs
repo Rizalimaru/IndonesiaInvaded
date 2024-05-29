@@ -143,7 +143,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
             go.SetActive(false);
         }
 
-        Invoke("CameraBackMonas", 2);
+        Invoke("CameraBackMonas", 4);
     }
 
     IEnumerator MonasDelay()
