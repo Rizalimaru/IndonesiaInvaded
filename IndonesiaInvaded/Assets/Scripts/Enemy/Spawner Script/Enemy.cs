@@ -79,6 +79,8 @@ public class Enemy : MonoBehaviour
         if (other.CompareTag("Sword") | other.CompareTag("RangedCollider") && isAttacking == true && health > 0)
         {
 
+            AudioManager._instance.PlaySFX("EnemyHit", 0);
+
             CameraShaker.instance.CameraShake(5f, 0.1f);
             spawnVfxhit();
             Debug.Log("Damaged");
@@ -100,6 +102,7 @@ public class Enemy : MonoBehaviour
 
         if (other.CompareTag("RangedCollider") && health > 0)
         {
+            AudioManager._instance.PlaySFX("EnemyHit", 1);
 
             CameraShaker.instance.CameraShake(5f, 0.1f);
             spawnVfxhit();

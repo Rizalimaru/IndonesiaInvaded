@@ -3,6 +3,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 
 public class AudioManager : MonoBehaviour
@@ -235,7 +236,40 @@ public class AudioManager : MonoBehaviour
     }
 
 
+    // Fungsi untuk transisi ke musik latar belakang berdasarkan scene
+    public void TransitionToBackgroundMusic()
+    {
+        Debug.Log("Transition to background music");
+        // Implementasi transisi ke musik latar belakang
+        StopBackgroundMusicWithTransition("Battle", 1f);
+        ResumeBackgroundMusic(GetCurrentSceneMusic());
+    }
 
+
+    //fungsi untuk transisi ke musik battle berdasarkan scene
+    public void TransitionToBattleMusic()
+    {
+        Debug.Log("Transition to battle music");
+        // Implementasi transisi ke musik battle
+        PauseBackgroundMusic(GetCurrentSceneMusic());
+        PlayBackgroundMusicWithTransition("Battle", 0, 1f);
+    }
+
+    private string GetCurrentSceneMusic()
+    {
+        // Mengembalikan nama musik yang sesuai dengan scene saat ini
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Gameplay1":
+                return "GameJakarta";
+            case "Gameplay2":
+                return "GameInvert";
+            case "Gameplay3":
+                return "GameBandung";
+            default:
+                return "DefaultMusic"; // Tambahkan nilai default untuk menghindari error
+        }
+    }
 
     public void StopBackgroundMusicWithTransition(string groupName, float fadeOutDuration)
     {
@@ -291,6 +325,18 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void StopSFX(string groupName, int index)
+    {
+        SoundEffectGroup group = System.Array.Find(audioSFXGroups, g => g.groupName == groupName);
+        if (group != null && index >= 0 && index < group.soundEffects.Length)
+        {
+            group.soundEffects[index].Stop();
+        }
+        else
+        {
+            Debug.LogWarning("Sound effect group or index not found.");
+        }
+    }
 
     public void ToggleMasterMute()
     {
