@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
     private bool isAttacking = false;
     private GameObject attackObject;
 
-    //Add some object
+    // VFX Stuff
     public GameObject hitVFX;
 
     public void Awake()
@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour
             Debug.Log("Damaged");
             health -= 10;
             knockbackForce = 30f;
-            knockbackDelay = 0.2f;
+            knockbackDelay = 0.8f;
 
             if (isKnockedBack == false)
             {

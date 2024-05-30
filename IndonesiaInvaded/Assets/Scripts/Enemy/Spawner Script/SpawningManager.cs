@@ -41,7 +41,6 @@ public class SpawningManager : MonoBehaviour
 
             AudioManager._instance.TransitionToBackgroundMusic();
 
-
             Destroy(objectSelf, 3f);
 
             isCutSceneTriggered = true;
