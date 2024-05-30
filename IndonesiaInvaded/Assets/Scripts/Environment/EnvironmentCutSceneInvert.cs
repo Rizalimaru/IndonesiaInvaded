@@ -41,13 +41,17 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
         
     }
 
-    public IEnumerator CameraCutScene()
+    public void CutSceneInvertCount()
     {
-        yield return new WaitForSeconds(0);
+        cutSceneInvert++;
+    }
+
+    public void CameraCutScene()
+    {
 
         CameraTrig();
 
-        Invoke("CameraBack", 20);
+        Invoke("CameraBack", 15);
 
     }
 
@@ -78,15 +82,17 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
     }
 
     public void CutScenePortal(){
-        animasiPortal.SetTrigger("Portal");
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
         cutSceneCameraPortal.SetActive(true);
+        StartCoroutine(ShowPortal());
 
         foreach (GameObject go in gameObjectsOff)
         {
             go.SetActive(false);
         }
+
+        Invoke("CameraBackPortal", 3);
     }
 
     private void CameraBackPortal()
@@ -100,5 +106,11 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
         {
             go.SetActive(true);
         }
+    }
+
+    IEnumerator ShowPortal()
+    {
+        yield return new WaitForSeconds(2);
+        portal.SetActive(true);
     }
 }

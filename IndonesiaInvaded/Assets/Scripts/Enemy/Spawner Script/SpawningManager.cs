@@ -34,7 +34,7 @@ public class SpawningManager : MonoBehaviour
 
             Destroy(objectSelf,3f);
 
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level1")
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Gameplay1")
             {
                 EnvironmentCutSceneJakarta.instance.CutSceneJakartaCount();
 
@@ -44,9 +44,16 @@ public class SpawningManager : MonoBehaviour
                 }
             }
 
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level2")
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Gameplay2")
             {
-                EnvironmentCutSceneInvert.instance.CutScenePortal();
+                Debug.Log("AddCountSceneInvert");
+
+                EnvironmentCutSceneInvert.instance.CutSceneInvertCount();
+                
+                if (EnvironmentCutSceneInvert.instance.cutSceneInvert == 5)
+                {
+                    EnvironmentCutSceneInvert.instance.CutScenePortal();
+                }
             }
 
             isCutSceneTriggered = true;
