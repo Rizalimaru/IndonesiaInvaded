@@ -7,8 +7,10 @@ public class PickUpOrb : MonoBehaviour
     [SerializeField] private int hpAmount = 200; // Jumlah HP yang akan ditambahkan saat orb diambil
     [SerializeField] private int spAmount = 50; // Jumlah SP yang akan ditambahkan saat orb diambil
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
+        Collider other = collision.collider;
+
         if (other.CompareTag("Player")) // Pastikan objek yang bersentuhan memiliki tag "Player"
         {
             PlayerAttribut player = other.GetComponent<PlayerAttribut>(); // Dapatkan komponen PlayerAttribut dari pemain yang menangkap orb
