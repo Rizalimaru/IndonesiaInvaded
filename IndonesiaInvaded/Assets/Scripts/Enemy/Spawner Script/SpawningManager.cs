@@ -30,19 +30,30 @@ public class SpawningManager : MonoBehaviour
         {
             DissolveWall.instance.DissolveWallFunction();
 
-            EnvironmentCutSceneJakarta.instance.CutSceneJakartaCount();
-
             AudioManager._instance.TransitionToBackgroundMusic();
 
-            
             Destroy(objectSelf,3f);
+
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level1")
+            {
+                EnvironmentCutSceneJakarta.instance.CutSceneJakartaCount();
+
+                if (EnvironmentCutSceneJakarta.instance.cutSceneJakarta == 6)
+                {
+                    EnvironmentCutSceneJakarta.instance.CutScenePortal();
+                }
+            }
+
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level2")
+            {
+                EnvironmentCutSceneInvert.instance.CutScenePortal();
+            }
 
             isCutSceneTriggered = true;
 
-            if (EnvironmentCutSceneJakarta.instance.cutSceneJakarta == 6)
-            {
-                EnvironmentCutSceneJakarta.instance.CutScenePortal();
-            }
+  
+            // jika nama scenenya Gameplay2 maka akan memanggil cutscene jakarta
+            
         }
     }
 
