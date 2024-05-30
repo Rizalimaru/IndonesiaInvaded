@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3150260632144247062}
   - component: {fileID: 6834412334276563063}
   - component: {fileID: 4393842900390374669}
+  - component: {fileID: -6250907207470589151}
   m_Layer: 0
   m_Name: Melee Enemy
   m_TagString: Enemy
@@ -177,6 +178,7 @@ MonoBehaviour:
   knockbackForce: 0
   knockbackGuard: 0
   knockbackDelay: 0
+  hitVFX: {fileID: 4002324251745786803, guid: 0ff194761a7a2e540aa0de6cca5257aa, type: 3}
 --- !u!82 &6834412334276563063
 AudioSource:
   m_ObjectHideFlags: 0
@@ -285,6 +287,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92a1d50d737ffb243a0107fbdd76449d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6250907207470589151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4768682672980297416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411060de4483b5e4c9847cd3cbc18554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetColor: {r: 1, g: 0, b: 0, a: 1}
+  needBoxIndicator: 1
+  needArrowIndicator: 1
+  needDistanceText: 1
+  indicator: {fileID: 0}
 --- !u!1 &6780319217199083067
 GameObject:
   m_ObjectHideFlags: 0

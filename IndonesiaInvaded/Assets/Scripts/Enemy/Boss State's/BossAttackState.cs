@@ -35,6 +35,7 @@ public class BossAttackState : BossBaseState
             {
                 boss.bossObject.DisableMeleeAttack();
             }
+
             boss.SwitchState(boss.restState);
         }
     }

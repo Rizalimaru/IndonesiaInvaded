@@ -8,77 +8,46 @@ public class LevelMenu : MonoBehaviour
 {
     [Header("Menu Navigation")]
     [SerializeField] private MainMenuV2 mainMenu;
-
-    [Header("Menu Button")]
-    [SerializeField] private Button backButton;
-
-    [Header("CutScene Name")]
-    [SerializeField] List<string> cutSceneName;
-    [SerializeField] GameObject[] uiMainMenu;
-    private int nextSceneIndex;
-
-    private void Start()
-    {
-        // CutSceneManager.Instance.OnCutSceneFinished += OnCutSceneFinished;
-    }
+    private List<string> scenesToUnload = new List<string>();
 
     public void LoadLevel1(LevelCheck levelCheck)
     {
-        // nextSceneIndex = 1;
         GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
         GameManager.instance.NewGame();
         GameManager.instance.SaveGame();
-        Scene_Loading.instance.LoadScenes();
-        // PlayCutSceneBeforeLevel(cutSceneName[0]);
+        Scene_Loading.instance.LoadSceneByName("Gameplay1", "Level1", "GameJakarta");
     }
 
     public void LoadLevel2(LevelCheck levelCheck)
     {
-        // nextSceneIndex = 2;
         GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
         GameManager.instance.NewGame();
         GameManager.instance.SaveGame();
-        Scene_Loading.instance.LoadScenes2();
-        // PlayCutSceneBeforeLevel(cutSceneName[1]);
+
+        if (SceneManager.GetActiveScene().name == "Gameplay1")
+        {
+            SceneManager.UnloadSceneAsync("Gameplay1");
+        }
+
+        Scene_Loading.instance.LoadSceneByName("Gameplay2", "Level2", "GameInvert");
+
+
     }
 
     public void LoadLevel3(LevelCheck levelCheck)
     {
-        // nextSceneIndex = 3;
         GameManager.instance.ChangeSelectedProfileId(levelCheck.GetProfileId());
         GameManager.instance.NewGame();
         GameManager.instance.SaveGame();
-        Scene_Loading.instance.LoadScenes3();
-        // PlayCutSceneBeforeLevel(cutSceneName[2]);
+
+        if (SceneManager.GetActiveScene().name == "Gameplay2")
+        {
+            SceneManager.UnloadSceneAsync("Gameplay2");
+        }
+
+        Scene_Loading.instance.LoadSceneByName("Gameplay3", "Level3", "GameBandung");
+
     }
-
-    // private void PlayCutSceneBeforeLevel(string cutSceneName)
-    // {
-    //     CutSceneManager.Instance.PlayCutScene(cutSceneName);
-    //     for (int i = 0; i < uiMainMenu.Length; i++)
-    //     {
-    //         uiMainMenu[i].SetActive(false);
-    //     }
-    // }
-
-    // private void OnCutSceneFinished()
-    // {
-    //     switch (nextSceneIndex)
-    //     {
-    //         case 1:
-    //             Scene_Loading.instance.LoadScenes();
-    //             break;
-    //         case 2:
-    //             Scene_Loading.instance.LoadScenes2();
-    //             break;
-    //         case 3:
-    //             Scene_Loading.instance.LoadScenes3();
-    //             break;
-    //         default:
-    //             Debug.LogError("Invalid scene index");
-    //             break;
-    //     }
-    // }
 
     public void OnBackClicked()
     {
@@ -102,7 +71,7 @@ public class LevelMenu : MonoBehaviour
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("showbackground");
 
         yield return new WaitForSeconds(0.5f);
-        
+
         UI_ControlMainMenu.Instance.titleGameAnimator.SetTrigger("show");
 
         this.DeactivateMenu();
