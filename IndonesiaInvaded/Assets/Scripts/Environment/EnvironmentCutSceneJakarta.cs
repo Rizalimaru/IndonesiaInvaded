@@ -49,10 +49,8 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         
     }
 
-    public IEnumerator CameraDelay()
+    public void CameraDelay()
     {
-        yield return new WaitForSeconds(0);
-
         CameraTrig();
 
         Invoke("CameraBack", 20);
