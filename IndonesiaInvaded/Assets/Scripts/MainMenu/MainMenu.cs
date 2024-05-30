@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour
     public void NewGame(){
         DisableMenuandAnimationButton();
         AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
-        Scene_Loading.instance.LoadScenes();
+        // Scene_Loading.instance.LoadSceneByName("Gameplay1", "Level1", "GameJakarta");
     }
     public void OnNewGameClicked()
     {

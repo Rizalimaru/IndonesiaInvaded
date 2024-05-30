@@ -17,7 +17,7 @@ public class BossDeadState : BossBaseState
         boss.animator.SetBool("isStunned", false);
         boss.animator.SetBool("repositioning", false);
 
-        delay = 2.5f;
+        delay = 2.458f;
     }
 
     public override void UpdateState(BossStateManager boss)

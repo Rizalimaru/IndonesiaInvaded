@@ -14,19 +14,53 @@ public class SpawningManager : MonoBehaviour
     private Collider col;
     private bool isFinished = false;
 
+    private bool isCutSceneTriggered = false;
+
+
+    private void Start()
+    {
+        //mencari gameobject dengan tag Portal 
+        
+    }
+
     private void Update()
     {
         int enemyNum = GetCurrentEnemy();
-        if(enemyNum == 0 && isFinished == true)
+        if(enemyNum == 0 && isFinished == true && !isCutSceneTriggered)
         {
             DissolveWall.instance.DissolveWallFunction();
-            Destroy(objectSelf,2f);
+
+            AudioManager._instance.TransitionToBackgroundMusic();
+
+            Destroy(objectSelf,3f);
+
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level1")
+            {
+                EnvironmentCutSceneJakarta.instance.CutSceneJakartaCount();
+
+                if (EnvironmentCutSceneJakarta.instance.cutSceneJakarta == 6)
+                {
+                    EnvironmentCutSceneJakarta.instance.CutScenePortal();
+                }
+            }
+
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level2")
+            {
+                EnvironmentCutSceneInvert.instance.CutScenePortal();
+            }
+
+            isCutSceneTriggered = true;
+
+  
+            // jika nama scenenya Gameplay2 maka akan memanggil cutscene jakarta
+            
         }
     }
 
     private void Awake()
     {
         col = GetComponent<Collider>();
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,8 +69,9 @@ public class SpawningManager : MonoBehaviour
         {
 
             DissolveWall.instance.UnDissolveWallFunction();
-            
-            Debug.Log("Spawning Enemy");
+
+            AudioManager._instance.TransitionToBattleMusic();
+
             for (int i = 0; i < enemyType.Count; i++)
             {
                 SpawnEnemy(enemyType[i], spawnPoint[i].position);

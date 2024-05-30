@@ -26,6 +26,7 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
 
     private Coroutine hideScoreTextCoroutine;
     private float hideDelay = 10f;
+    private bool isTimeUpdating = true;
     public int bonus { get; private set; }
     private void Awake()
     {
@@ -71,7 +72,11 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
-        UpdateTime();
+        if (isTimeUpdating)
+        {
+            UpdateTime();
+        }
+        
         UpdateScoreText();
         DisplayTime(time);
         DetermineBonus();
@@ -81,6 +86,14 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
     {
         time += Time.deltaTime;
     }
+
+    public void SetTimeUpdating(bool value)
+    {
+        isTimeUpdating = value;
+    }
+
+    
+
 
     private void UpdateScoreText()
     {

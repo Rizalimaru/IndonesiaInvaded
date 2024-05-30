@@ -3,6 +3,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 
 public class AudioManager : MonoBehaviour
@@ -33,6 +34,8 @@ public class AudioManager : MonoBehaviour
     {
         public string groupName;
         public AudioSource[] backgroundMusics;
+
+        [HideInInspector] public float originalVolume;
     }
 
     public BackgroundMusicGroup[] audioBackgroundMusicGroups;
@@ -161,6 +164,113 @@ public class AudioManager : MonoBehaviour
         audioSource.Play();
     }
 
+    //pause background music
+    public void PauseBackgroundMusic(string groupName)
+    {
+        BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);
+        if (group != null)
+        {
+            group.originalVolume = group.backgroundMusics[0].volume;
+            StartCoroutine(FadeOutAndPause(group, 1f));
+        }
+        else
+        {
+            Debug.LogWarning("Background music group not found.");
+        }
+    }
+
+    //resume background music with transition
+    public void ResumeBackgroundMusic(string groupName)
+    {
+        BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);
+        if (group != null)
+        {
+            StartCoroutine(FadeInAndResume(group, 1f));
+        }
+        else
+        {
+            Debug.LogWarning("Background music group not found.");
+        }
+    }
+
+    private IEnumerator FadeOutAndPause(BackgroundMusicGroup group, float duration)
+    {
+        float currentTime = 0;
+        float startVolume = group.backgroundMusics[0].volume;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            foreach (AudioSource audioSource in group.backgroundMusics)
+            {
+                audioSource.volume = Mathf.Lerp(startVolume, 0, currentTime / duration);
+            }
+            yield return null;
+        }
+
+        foreach (AudioSource audioSource in group.backgroundMusics)
+        {
+            audioSource.Pause();
+        }
+    }
+
+    private IEnumerator FadeInAndResume(BackgroundMusicGroup group, float duration)
+    {
+        foreach (AudioSource audioSource in group.backgroundMusics)
+        {
+            audioSource.UnPause();
+        }
+
+        float currentTime = 0;
+        float startVolume = group.originalVolume;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            foreach (AudioSource audioSource in group.backgroundMusics)
+            {
+                audioSource.volume = Mathf.Lerp(0, startVolume, currentTime / duration);
+            }
+            yield return null;
+        }
+    }
+
+
+    // Fungsi untuk transisi ke musik latar belakang berdasarkan scene
+    public void TransitionToBackgroundMusic()
+    {
+        Debug.Log("Transition to background music");
+        // Implementasi transisi ke musik latar belakang
+        StopBackgroundMusicWithTransition("Battle", 1f);
+        ResumeBackgroundMusic(GetCurrentSceneMusic());
+    }
+
+
+    //fungsi untuk transisi ke musik battle berdasarkan scene
+    public void TransitionToBattleMusic()
+    {
+        Debug.Log("Transition to battle music");
+        // Implementasi transisi ke musik battle
+        PauseBackgroundMusic(GetCurrentSceneMusic());
+        PlayBackgroundMusicWithTransition("Battle", 0, 1f);
+    }
+
+    private string GetCurrentSceneMusic()
+    {
+        // Mengembalikan nama musik yang sesuai dengan scene saat ini
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Gameplay1":
+                return "GameJakarta";
+            case "Gameplay2":
+                return "GameInvert";
+            case "Gameplay3":
+                return "GameBandung";
+            default:
+                return "DefaultMusic"; // Tambahkan nilai default untuk menghindari error
+        }
+    }
+
     public void StopBackgroundMusicWithTransition(string groupName, float fadeOutDuration)
     {
         BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);
@@ -215,6 +325,18 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void StopSFX(string groupName, int index)
+    {
+        SoundEffectGroup group = System.Array.Find(audioSFXGroups, g => g.groupName == groupName);
+        if (group != null && index >= 0 && index < group.soundEffects.Length)
+        {
+            group.soundEffects[index].Stop();
+        }
+        else
+        {
+            Debug.LogWarning("Sound effect group or index not found.");
+        }
+    }
 
     public void ToggleMasterMute()
     {
@@ -284,6 +406,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+}
+
 
     
-}
+
