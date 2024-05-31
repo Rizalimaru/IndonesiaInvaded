@@ -43,7 +43,7 @@ public class SpawningManager : MonoBehaviour
             Destroy(objectSelf, 3f);
 
             //Jika scene yang aktif adalah scene gameple1
-            if(SceneManager.GetActiveScene().name == "Level1")
+            if(SceneManager.GetActiveScene().name == "Gameplay1")
             {
                 EnvironmentCutSceneJakarta.instance.CutSceneJakartaCount();
                 // Jika jumlah count cutsceneJakarta sama dengan 1 maka akan memanggil cutscene
@@ -54,7 +54,7 @@ public class SpawningManager : MonoBehaviour
             }
 
             //Jika scene yang aktif adalah scene gameple2
-            if (SceneManager.GetActiveScene().name == "Level2")
+            if (SceneManager.GetActiveScene().name == "Gameplay2")
             {
                 EnvironmentCutSceneInvert.instance.CutSceneInvertCount();
                 // Jika jumlah count cutsceneInvert sama dengan 1 maka akan memanggil cutscene

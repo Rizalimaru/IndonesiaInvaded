@@ -175,41 +175,6 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(Dodge());
         }
     }
-
-    // IEnumerator Dodge()
-    // {
-    //     if (!isDodging)
-    //     {
-    //         // Start the dodge if a dodge is not already in progress
-    //         isDodging = true;
-    //         animator.SetTrigger("Dodge");
-
-    //         // Fixed dodge distance and speed
-    //         float dodgeDistance = 5f; // Adjust this value as needed
-    //         float dodgeDuration = 0.5f; // Adjust this value as needed
-    //         float dodgeSpeed = dodgeDistance / dodgeDuration;
-
-    //         // Calculate dodge direction
-    //         Vector3 dodgeDirection = orientationForAtk.forward;
-    //         Vector3 targetVelocity = dodgeDirection.normalized * dodgeSpeed;
-
-    //         // Apply dodge velocity
-    //         rb.velocity = targetVelocity;
-
-    //         // Disable collisions temporarily to prevent getting hit during dodge
-    //         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
-
-    //         // Wait for the dodge duration
-    //         yield return new WaitForSeconds(dodgeDuration);
-
-    //         // Enable collisions after dodge
-    //         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
-
-    //         // Stop the dodge
-    //         rb.velocity = Vector3.zero;
-    //         isDodging = false;
-    //     }
-    // }
         public bool IsDodging
         {
             get { return isDodging; }
@@ -336,10 +301,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Handle stopping animation
-        if (verticalInput == 0 && horizontalInput == 0 && currentSpeed < 0.1f)
-        {
-            animator.SetTrigger("isStop");
-        }
+        // if (verticalInput == 0 && horizontalInput == 0 && currentSpeed < 0.1f)
+        // {
+        //     animator.SetTrigger("isStop");
+        // }
 
         // Apply gravity
         if (!grounded)
