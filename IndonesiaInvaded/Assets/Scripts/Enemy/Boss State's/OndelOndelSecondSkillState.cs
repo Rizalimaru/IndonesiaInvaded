@@ -30,7 +30,8 @@ public class OndelOndelSecondSkillState : BossBaseState
             delay -= Time.deltaTime;
         }
         else
-        {          
+        {
+            boss.bossObject.castingSkill = false;
             boss.bossObject.secondSkillCounter = 0;
             boss.SwitchState(boss.restState);
         }
