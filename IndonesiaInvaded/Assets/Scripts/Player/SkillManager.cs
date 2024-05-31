@@ -25,6 +25,9 @@ public class SkillManager : MonoBehaviour
     public Object SkillRoarCollider;
     public float destroyTimeColliderRoar = 1.5f;
     public GameObject smashExplosion;
+    bool isRoarSkill = false;
+    string playerLayer = "Player";
+    string enemyLayer = "Enemy";
 
     [Header("Slow Motion Effect")]
     private bool isSlowMotionActive = false;
@@ -57,6 +60,7 @@ public class SkillManager : MonoBehaviour
         {
             instance = this;
         }
+
     }
 
     private void Start()
@@ -74,6 +78,17 @@ public class SkillManager : MonoBehaviour
         DetectNearestEnemyForSkill();
         Skill1();
         Skill2();
+
+        int LayerPlayer = LayerMask.NameToLayer(playerLayer);
+        int LayerEnemy = LayerMask.NameToLayer(enemyLayer);
+
+        if(isRoarSkill)
+        {
+            Physics.IgnoreLayerCollision(LayerPlayer, LayerEnemy, true);
+        }else
+        {
+            Physics.IgnoreLayerCollision(LayerPlayer, LayerEnemy, false);
+        }
 
         if (nearestEnemy != null)
         {
@@ -252,10 +267,13 @@ public class SkillManager : MonoBehaviour
         }
         player.position = targetPosition;
         if (player.position == targetPosition)
-        {
+        {   
+            isRoarSkill = true;
             SpawnSmashExplosion();
             SpawnRoarCollider();
         }
+        yield return new WaitForSeconds(2f);
+        isRoarSkill = false;
     }
 
     private IEnumerator DelayToCharge(float delay)

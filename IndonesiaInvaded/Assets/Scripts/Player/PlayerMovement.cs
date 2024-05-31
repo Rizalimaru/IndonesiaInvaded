@@ -219,6 +219,16 @@ public class PlayerMovement : MonoBehaviour
         {
             // Update arah dodge setiap frame
             Vector3 currentDodgeDirection = moveDirection.magnitude == 0 ? -orientationForAtk.forward : orientationForAtk.forward;
+
+            // Lakukan raycast untuk memeriksa apakah ada objek di depan karakter
+            RaycastHit hit;
+            if (Physics.Raycast(startPosition, currentDodgeDirection, out hit, dodgeDistance, LayerMask.GetMask("Property"))) // Ubah layerMask sesuai dengan layer properti yang ingin dihindari
+            {
+                // Jika ada objek di depan, hentikan dodge
+                isDodging = false;
+                yield break;
+            }
+
             Vector3 targetPosition = startPosition + currentDodgeDirection * dodgeDistance;
 
             rb.MovePosition(Vector3.Lerp(startPosition, targetPosition, (Time.time - startTime) / dodgeDuration));
@@ -229,6 +239,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dodgeCooldown);
         canDodge = true;
     }
+
 
     private void StateHandler()
     {
