@@ -35,6 +35,7 @@ public class Boss : MonoBehaviour
     [HideInInspector] public int secondSkillCounter = 0;
     [HideInInspector] public float firstSkillAnimDelay;
     [HideInInspector] public float secondSkillAnimDelay;
+    [HideInInspector] public bool castingSkill = false;
     public GameObject areaSkillPrefab;
 
     // Dukun Spesific Skill Declaration
@@ -44,7 +45,7 @@ public class Boss : MonoBehaviour
     // Private Stuff
     private bool isAttacking = false;
     private GameObject attackObject;
-
+    
     public void Awake()
     {
         if (bossTitle == BossScriptableObject.title.OndelOndel)
@@ -102,7 +103,7 @@ public class Boss : MonoBehaviour
     {
         Collider other = collision.collider;
 
-        if (other.CompareTag("Sword") && isAttacking && health > 0)
+        if (other.CompareTag("Sword") && isAttacking && health > 0 && castingSkill == false)
         {
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
 
@@ -125,7 +126,7 @@ public class Boss : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("SkillRoarCollider") && health > 0)
+        if (other.CompareTag("SkillRoarCollider") && health > 0 && castingSkill == false)
         {
             Debug.Log("Damaged by Roar. Current health: " + health);
             health -= 50;

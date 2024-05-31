@@ -31,6 +31,7 @@ public class DukunSecondSkillState : BossBaseState
         }
         else
         {
+            boss.bossObject.castingSkill = false;
             boss.bossObject.secondSkillCounter = 0;
             boss.SwitchState(boss.restState);
         }

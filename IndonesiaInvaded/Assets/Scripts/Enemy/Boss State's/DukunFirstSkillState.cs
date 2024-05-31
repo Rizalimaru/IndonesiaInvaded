@@ -11,6 +11,8 @@ public class DukunFirstSkillState : BossBaseState
     {
         if (boss.bossObject.bossTitle == BossScriptableObject.title.Dukun) checker = boss.bossObject.CheckIfEnemySpawned();
 
+        boss.bossObject.castingSkill = true;
+
         Debug.Log("Boss is Spawning Enemy!");
 
         spawnPoints = GameObject.FindGameObjectsWithTag("DukunSpawnPoint");
@@ -44,6 +46,7 @@ public class DukunFirstSkillState : BossBaseState
         }
         else
         {
+            boss.bossObject.castingSkill = false;
             boss.bossObject.firstSkillCounter = 0;
             boss.SwitchState(boss.restState);
         }

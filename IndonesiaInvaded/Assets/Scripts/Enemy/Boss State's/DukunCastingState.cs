@@ -7,6 +7,8 @@ public class DukunCastingState : BossBaseState
 
     public override void EnterState(BossStateManager boss)
     {
+        boss.bossObject.castingSkill = true;  
+
         boss.GetComponent<NavMeshAgent>().isStopped = true;
 
         boss.animator.SetBool("isWalking", true);
