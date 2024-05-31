@@ -7,8 +7,6 @@ public class DukunCastingState : BossBaseState
 
     public override void EnterState(BossStateManager boss)
     {
-        GameObject.FindGameObjectWithTag("Boss").gameObject.GetComponent<BoxCollider>().enabled = false;
-
         boss.GetComponent<NavMeshAgent>().isStopped = true;
 
         boss.animator.SetBool("isWalking", true);
@@ -20,6 +18,7 @@ public class DukunCastingState : BossBaseState
 
         delay = 2f;
 
+        boss.bossObject.OndelSkill2();
     }
 
     public override void UpdateState(BossStateManager boss)

@@ -22,7 +22,14 @@ public class BossComboState : BossBaseState
 
         delay = boss.bossObject.animDelay;
 
-        boss.bossObject.Attack();
+        if(boss.bossObject.bossTitle == BossScriptableObject.title.OndelOndel)
+        {
+            boss.bossObject.Attack();
+        }
+        else
+        {
+            boss.bossObject.DukunCombo();
+        }
 
     }
 

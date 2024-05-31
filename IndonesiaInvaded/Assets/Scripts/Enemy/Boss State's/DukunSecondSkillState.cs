@@ -9,8 +9,6 @@ public class DukunSecondSkillState : BossBaseState
     {
         Debug.Log("Overcharge!");
 
-        GameObject.FindGameObjectWithTag("Boss").gameObject.GetComponent<BoxCollider>().enabled = true;
-
         boss.GetComponent<NavMeshAgent>().isStopped = true;
 
         boss.animator.SetBool("isWalking", false);
@@ -28,6 +26,7 @@ public class DukunSecondSkillState : BossBaseState
     {
         if (delay > 0)
         {
+            boss.bossObject.Dukun2ndSkill();
             delay -= Time.deltaTime;
         }
         else

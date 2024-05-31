@@ -53,8 +53,8 @@ public class BossStateManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.V))
         {
-            Debug.Log("Ada 3");
-            bossObject.firstSkillCounter = 3;
+            Debug.Log("Ada 5");
+            bossObject.secondSkillCounter = 5;
         }
     }
 

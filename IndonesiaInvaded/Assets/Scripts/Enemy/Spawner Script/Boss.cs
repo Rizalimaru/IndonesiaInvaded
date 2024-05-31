@@ -39,6 +39,7 @@ public class Boss : MonoBehaviour
 
     // Dukun Spesific Skill Declaration
     public GameObject enemyToSpawn;
+    public GameObject secondAttackPrefab;
     
     // Private Stuff
     private bool isAttacking = false;
@@ -46,8 +47,12 @@ public class Boss : MonoBehaviour
 
     public void Awake()
     {
-        if (bossTitle == BossScriptableObject.title.OndelOndel) enemyToSpawn = null;
-
+        if (bossTitle == BossScriptableObject.title.OndelOndel)
+        {
+            enemyToSpawn = null;
+            secondAttackPrefab = null;
+        }
+        
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
         
@@ -158,7 +163,7 @@ public class Boss : MonoBehaviour
         }
     }
 
-// Ondel-Ondel Skill Logic
+    // Ondel-Ondel Skill Logic
     public void OndelDisableMeleeAttack()
     {
         Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
@@ -171,7 +176,7 @@ public class Boss : MonoBehaviour
         meleeCollider.enabled = true;
     }
 
-    private void OndelSkill2()
+    public void OndelSkill2()
     {
         attackObject = GameObject.Instantiate(areaSkillPrefab, transform.position, transform.rotation) as GameObject;
     }
@@ -194,6 +199,31 @@ public class Boss : MonoBehaviour
         Instantiate(enemyToSpawn, position, Quaternion.identity);
     }
 
+    public bool CheckIfEnemySpawned()
+    {
+        int checkerInt = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        if (checkerInt >= 8)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void DukunCombo()
+    {
+        Instantiate(secondAttackPrefab, target.position, Quaternion.identity);
+    }
+
+    public void Dukun2ndSkill()
+    {
+        GameObject zapObj = Instantiate(secondAttackPrefab);
+        zapObj.transform.SetParent(transform);
+        zapObj.transform.localPosition = new Vector3(Random.Range(-15, 15), 0, Random.Range(-15, 15));
+    }
 
     // Other stuff
 
