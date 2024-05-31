@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7556513063655081565}
   - component: {fileID: 749538746689706203}
   - component: {fileID: 5483123860751548328}
+  - component: {fileID: 3156514120246133244}
+  - component: {fileID: 6611029745462172077}
   m_Layer: 0
   m_Name: CutScenePortalCamera
   m_TagString: Untagged
@@ -27,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5592364143407578354}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.91967976, z: -0, w: 0.3926694}
+  m_LocalRotation: {x: 0, y: 0.91968113, z: 0, w: 0.39266622}
   m_LocalPosition: {x: -512.61, y: 5.3, z: 583.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 133.759, z: 0}
 --- !u!20 &7556513063655081565
 Camera:
   m_ObjectHideFlags: 0
@@ -150,3 +152,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!45 &3156514120246133244
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592364143407578354}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 6abe918ee1229b34f8557fc2a5a39825, type: 2}
+--- !u!114 &6611029745462172077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592364143407578354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd508900692cb9b4ba7c5cd9caf2229a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skyboxMaterial: {fileID: 2100000, guid: 6abe918ee1229b34f8557fc2a5a39825, type: 2}
+  rotationSpeed: 1
