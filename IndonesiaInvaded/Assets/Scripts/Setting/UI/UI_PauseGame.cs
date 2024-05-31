@@ -153,14 +153,11 @@ public class UI_PauseGame : MonoBehaviour
 
         GamePaused.Invoke(); // Invoke pause event
 
-        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
-        audioManagerInstance.PauseSoundEffectGroup("Skillplayer");
-
+        audioManagerInstance.PauseSFX();
     }
 
     public void GameOver()
     {
-
         player.SetActive(false);
 
         GameIsPaused = true;
@@ -172,20 +169,13 @@ public class UI_PauseGame : MonoBehaviour
         gameOver.SetActive(true);
         playerCamera.SetActive(false);
 
-
         // GamePaused.Invoke();
 
-        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
-        audioManagerInstance.PauseSoundEffectGroup("Skillplayer");
-
-
-
+        audioManagerInstance.PauseSFX();
     }
 
     public void ResetGameOver()
     {
-
-
         isGameOver = false;
         GameIsPaused = false;
         Time.timeScale = 1f;
@@ -197,16 +187,16 @@ public class UI_PauseGame : MonoBehaviour
         playerCamera.SetActive(true);
 
         // GameResumed.Invoke(); // Invoke resume event
-        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+        audioManagerInstance.ResumeSFX();
     }
 
     public void ShowResult()
     {
-
         gameResult.SetActive(true);
         gameObjectUI.SetActive(false);
         playerCamera.SetActive(false);
         gameOver.SetActive(false);
+
         Time.timeScale = 0f;
         GameIsPaused = true;
         isResultScreenShown = true; // Set isResultScreenShown to true when showing the result screen
@@ -216,11 +206,7 @@ public class UI_PauseGame : MonoBehaviour
 
         GamePaused.Invoke();
 
-
-        audioManagerInstance.PauseSoundEffectGroup("AttackPlayer");
-        audioManagerInstance.PauseSoundEffectGroup("Skillplayer");
-
-
+        audioManagerInstance.PauseSFX();
     }
 
     public void HideResult()
@@ -238,7 +224,7 @@ public class UI_PauseGame : MonoBehaviour
 
         GameResumed.Invoke(); // Invoke resume event
 
-        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+        audioManagerInstance.ResumeSFX();
     }
 
     public void CreditScene()
@@ -253,7 +239,7 @@ public class UI_PauseGame : MonoBehaviour
         //isCursorLocked = true; // Lock cursor when unpaused
         GameResumed.Invoke(); // Invoke resume event
 
-        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+        audioManagerInstance.ResumeSFX();
     }
 
     public void Resume()
@@ -268,8 +254,7 @@ public class UI_PauseGame : MonoBehaviour
         isCursorLocked = true; // Lock cursor when unpaused
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
-        audioManagerInstance.ResumeSoundEffectGroup("Skillplayer");
+        audioManagerInstance.ResumeSFX();
 
         GameResumed.Invoke(); // Invoke resume event
     }
@@ -286,7 +271,8 @@ public class UI_PauseGame : MonoBehaviour
         //GameIsPaused = false;
         isLoadMainMenu = true; // Set isLoadMainMenu to true after calling LoadMenu()
         audioManagerInstance.StopAllBackgroundMusic();
-        audioManagerInstance.ResumeSoundEffectGroup("AttackPlayer");
+        audioManagerInstance.ResumeSFX();
+
     }
 
 

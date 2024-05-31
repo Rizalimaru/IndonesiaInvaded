@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawningManager : MonoBehaviour
 {
@@ -37,18 +38,33 @@ public class SpawningManager : MonoBehaviour
         {
             DissolveWall.instance.DissolveWallFunction();
 
-            EnvironmentCutSceneJakarta.instance.CutSceneJakartaCount();
-
             AudioManager._instance.TransitionToBackgroundMusic();
 
             Destroy(objectSelf, 3f);
 
-            isCutSceneTriggered = true;
-
-            if (EnvironmentCutSceneJakarta.instance.cutSceneJakarta == 6)
+            //Jika scene yang aktif adalah scene gameple1
+            if(SceneManager.GetActiveScene().name == "Level1")
             {
-                EnvironmentCutSceneJakarta.instance.CutScenePortal();
+                EnvironmentCutSceneJakarta.instance.CutSceneJakartaCount();
+                // Jika jumlah count cutsceneJakarta sama dengan 1 maka akan memanggil cutscene
+                if (EnvironmentCutSceneJakarta.instance.cutSceneJakarta == 6)
+                {
+                    EnvironmentCutSceneJakarta.instance.CameraDelay();
+                }
             }
+
+            //Jika scene yang aktif adalah scene gameple2
+            if (SceneManager.GetActiveScene().name == "Level2")
+            {
+                EnvironmentCutSceneInvert.instance.CutSceneInvertCount();
+                // Jika jumlah count cutsceneInvert sama dengan 1 maka akan memanggil cutscene
+                if (EnvironmentCutSceneInvert.instance.cutSceneInvert == 5)
+                {
+                    EnvironmentCutSceneInvert.instance.CutScenePortal();
+                }
+            }
+
+            isCutSceneTriggered = true;
         }
         
         if (PlayerAttribut.instance.currentHealth <= 0)

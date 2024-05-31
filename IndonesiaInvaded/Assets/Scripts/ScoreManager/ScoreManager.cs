@@ -23,7 +23,6 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
 
     [Header("Animation")]
     private Animator scoreAnimator;
-
     private Coroutine hideScoreTextCoroutine;
     private float hideDelay = 10f;
     private bool isTimeUpdating = true;
@@ -91,9 +90,6 @@ public class ScoreManager : MonoBehaviour, IDataPersistence
     {
         isTimeUpdating = value;
     }
-
-    
-
 
     private void UpdateScoreText()
     {

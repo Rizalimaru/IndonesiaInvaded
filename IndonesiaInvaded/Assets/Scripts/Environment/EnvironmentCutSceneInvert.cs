@@ -23,8 +23,9 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
     [Header("CutsceneTrigger")]
 
     public int cutSceneInvert = 0;
+
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         instance = this;
     }
@@ -38,7 +39,6 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
             StopAllCoroutines();
             CameraBack();
         }
-        
     }
 
     public void CutSceneInvertCount()
@@ -48,11 +48,8 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
 
     public void CameraCutScene()
     {
-
         CameraTrig();
-
         Invoke("CameraBack", 15);
-
     }
 
     private void CameraTrig()

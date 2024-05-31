@@ -11,10 +11,6 @@ public class AudioManager : MonoBehaviour
     public static AudioManager _instance;
     public static AudioManager Instance { get { return _instance; } }
 
-    
-
-    
-
     private Dictionary<AudioSource, bool> soundEffectStatus = new Dictionary<AudioSource, bool>();
 
     // Membuat kelas untuk menyimpan grup sound effect
@@ -75,7 +71,7 @@ public class AudioManager : MonoBehaviour
         audioMixer.SetFloat("SoundEffect", Mathf.Log10(PlayerPrefs.GetFloat(SoundEffectKey, 1f)) * 20);
     }
 
-
+    #region  Volume Functions
     public void SetMasterVolume(float sliderValue)
     {
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(sliderValue) * 20);
@@ -96,6 +92,10 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat(SoundEffectKey, sliderValue);
         PlayerPrefs.Save();
     }
+
+    #endregion
+
+    #region Background Music Functions
 
     // Stop semua musik latar belakang
     public void StopAllBackgroundMusic()
@@ -173,10 +173,6 @@ public class AudioManager : MonoBehaviour
             group.originalVolume = group.backgroundMusics[0].volume;
             StartCoroutine(FadeOutAndPause(group, 1f));
         }
-        else
-        {
-            Debug.LogWarning("Background music group not found.");
-        }
     }
 
     //resume background music with transition
@@ -186,10 +182,6 @@ public class AudioManager : MonoBehaviour
         if (group != null)
         {
             StartCoroutine(FadeInAndResume(group, 1f));
-        }
-        else
-        {
-            Debug.LogWarning("Background music group not found.");
         }
     }
 
@@ -235,43 +227,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-
-    // Fungsi untuk transisi ke musik latar belakang berdasarkan scene
-    public void TransitionToBackgroundMusic()
-    {
-        Debug.Log("Transition to background music");
-        // Implementasi transisi ke musik latar belakang
-        StopBackgroundMusicWithTransition("Battle", 1f);
-        ResumeBackgroundMusic(GetCurrentSceneMusic());
-    }
-
-
-    //fungsi untuk transisi ke musik battle berdasarkan scene
-    public void TransitionToBattleMusic()
-    {
-        Debug.Log("Transition to battle music");
-        // Implementasi transisi ke musik battle
-        PauseBackgroundMusic(GetCurrentSceneMusic());
-        PlayBackgroundMusicWithTransition("Battle", 0, 1f);
-    }
-
-    private string GetCurrentSceneMusic()
-    {
-        // Mengembalikan nama musik yang sesuai dengan scene saat ini
-        switch (SceneManager.GetActiveScene().name)
-        {
-            case "Gameplay1":
-                return "GameJakarta";
-            case "Gameplay2":
-                return "GameInvert";
-            case "Gameplay3":
-                return "GameBandung";
-            default:
-                return "DefaultMusic"; // Tambahkan nilai default untuk menghindari error
-        }
-    }
-
-    public void StopBackgroundMusicWithTransition(string groupName, float fadeOutDuration)
+        public void StopBackgroundMusicWithTransition(string groupName, float fadeOutDuration)
     {
         BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);
         if (group != null)
@@ -280,10 +236,6 @@ public class AudioManager : MonoBehaviour
             {
                 StartCoroutine(FadeOutBackgroundMusic(audioSource, fadeOutDuration));
             }
-        }
-        else
-        {
-            Debug.LogWarning("Background music group not found.");
         }
     }
 
@@ -312,16 +264,50 @@ public class AudioManager : MonoBehaviour
         audioSource.Stop();
     }
 
+
+    // Fungsi untuk transisi ke musik latar belakang berdasarkan scene
+    public void TransitionToBackgroundMusic()
+    {
+        StopBackgroundMusicWithTransition("Battle", 1f);
+        ResumeBackgroundMusic(GetCurrentSceneMusic());
+    }
+
+
+    //fungsi untuk transisi ke musik battle berdasarkan scene
+    public void TransitionToBattleMusic()
+    {
+        PauseBackgroundMusic(GetCurrentSceneMusic());
+        PlayBackgroundMusicWithTransition("Battle", 0, 1f);
+    }
+
+    private string GetCurrentSceneMusic()
+    {
+        // Mengembalikan nama musik yang sesuai dengan scene saat ini
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Gameplay1":
+                return "GameJakarta";
+            case "Gameplay2":
+                return "GameInvert";
+            case "Gameplay3":
+                return "GameBandung";
+            default:
+                return "DefaultMusic"; // Tambahkan nilai default untuk menghindari error
+        }
+    }
+
+    #endregion
+
+
+
+    #region SFX Functions
+
     public void PlaySFX(string groupName, int index)
     {
         SoundEffectGroup group = System.Array.Find(audioSFXGroups, g => g.groupName == groupName);
         if (group != null && index >= 0 && index < group.soundEffects.Length)
         {
             group.soundEffects[index].Play();
-        }
-        else
-        {
-            Debug.LogWarning("Sound effect group or index not found.");
         }
     }
 
@@ -332,11 +318,10 @@ public class AudioManager : MonoBehaviour
         {
             group.soundEffects[index].Stop();
         }
-        else
-        {
-            Debug.LogWarning("Sound effect group or index not found.");
-        }
     }
+    #endregion
+
+    #region Mute Functions
 
     public void ToggleMasterMute()
     {
@@ -365,7 +350,10 @@ public class AudioManager : MonoBehaviour
         return currentVolume <= -80f;
     }
 
+    #endregion
 
+
+    #region Sound Effect Group Functions
 
     public void PauseSoundEffectGroup(string groupName)
     {
@@ -405,6 +393,20 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound effect group not found.");
         }
     }
+
+    public void PauseSFX(){
+        PauseSoundEffectGroup("AttackPlayer");
+        PauseSoundEffectGroup("Skillplayer");
+        PauseSoundEffectGroup("RangedAttack");
+    }
+
+    public void ResumeSFX(){
+        ResumeSoundEffectGroup("AttackPlayer");
+        ResumeSoundEffectGroup("Skillplayer");
+        ResumeSoundEffectGroup("RangedAttack");
+    }
+
+    #endregion
 
 }
 
