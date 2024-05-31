@@ -12,7 +12,7 @@ public class Boss : MonoBehaviour
     public Transform target;
     public GameObject attackPrefab;
     public Transform spawnPoint;
-    public Animator playerAnimator;
+    [HideInInspector] public Animator playerAnimator;
 
     // Attribute Declaration
     [HideInInspector] public float health;
