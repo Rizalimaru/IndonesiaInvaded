@@ -7,23 +7,15 @@ public class BrightnessV2 : MonoBehaviour
 {
     public VolumeProfile volumeProfile;
     public Slider brightnessSlider;
-
     private ColorAdjustments colorAdjustments;
     private const string brightnessLevelKey = "BrightnessLevel";
 
     void Start()
     {
-        if (volumeProfile == null)
-        {
-            Debug.LogError("Volume profile is not assigned.");
-            return;
-        }
-
         if (!volumeProfile.TryGet(out colorAdjustments))
         {
             colorAdjustments = volumeProfile.Add<ColorAdjustments>();
         }
-
         // Aktifkan efek Color Adjustments
         colorAdjustments.active = true;
 
@@ -33,9 +25,6 @@ public class BrightnessV2 : MonoBehaviour
         brightnessSlider.value = savedBrightness;
 
         ChangeBrightness(savedBrightness);
-
-        // Atur nilai kecerahan berdasarkan nilai yang disimpan sebelumnya
-        //SetBrightness(PlayerPrefs.GetFloat(brightnessLevelKey, 0f));
 
         // Tambahkan listener untuk slider
         brightnessSlider.onValueChanged.AddListener(ChangeBrightness);
@@ -59,7 +48,7 @@ public class BrightnessV2 : MonoBehaviour
         // Atur nilai kecerahan
         colorAdjustments.postExposure.value = adjustedValue;
     }
-
+    
     // Metode untuk mengubah rentang nilai
     float Remap(float value, float from1, float to1, float from2, float to2)
     {

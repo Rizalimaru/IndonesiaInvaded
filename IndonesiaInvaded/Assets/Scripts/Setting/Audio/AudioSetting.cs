@@ -73,10 +73,7 @@ public class AudioSetting : MonoBehaviour
         }
     }
 
-    public void Sceneloader(int SceneIndex)
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(SceneIndex);
-    }
+    #region  Play Sound Effect
     
     public void PlaySFXSound()
     {
@@ -113,13 +110,9 @@ public class AudioSetting : MonoBehaviour
         audioManagerInstance.PlaySFX("Skillplayer", 2);
     }
 
+    #endregion  
 
-    // Stop Background Music
-
-
-
-
-    // Set master volume berdasarkan slider value
+    #region Set Volume
 
     public void SetMasterVolume(float sliderValue)
     {
@@ -158,5 +151,7 @@ public class AudioSetting : MonoBehaviour
             }
         }
     }  
+
+    #endregion
     
 }

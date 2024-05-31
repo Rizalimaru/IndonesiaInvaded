@@ -168,7 +168,7 @@ MonoBehaviour:
   secondSkillCounter: 0
   firstSkillAnimDelay: 0
   secondSkillAnimDelay: 0
-  skill2Prefab: {fileID: 2758741312045260975, guid: afa9959c7c9f77a4e9f27159e2fcaf3f, type: 3}
+  areaSkillPrefab: {fileID: 2758741312045260975, guid: afa9959c7c9f77a4e9f27159e2fcaf3f, type: 3}
 --- !u!114 &3204808521129369661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +336,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -134082161053369747, guid: d542ccfeff1c77a49bd177dfd3cc1441, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2011291342598625863}
+      addedObject: {fileID: 555411507040681974}
   m_SourcePrefab: {fileID: 100100000, guid: d542ccfeff1c77a49bd177dfd3cc1441, type: 3}
 --- !u!4 &3776227805923044756 stripped
 Transform:
@@ -348,14 +348,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -134082161053369747, guid: d542ccfeff1c77a49bd177dfd3cc1441, type: 3}
   m_PrefabInstance: {fileID: 3741754977731971711}
   m_PrefabAsset: {fileID: 0}
---- !u!136 &2011291342598625863
-CapsuleCollider:
+--- !u!65 &555411507040681974
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5606637045338468370}
-  m_Material: {fileID: 13400000, guid: d711d320cf45aa74cb6e53f28b5de464, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -366,8 +366,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.020658897
-  m_Height: 0.05350759
-  m_Direction: 1
-  m_Center: {x: -0.0020379017, y: 0.012038435, z: 0.008534066}
+  serializedVersion: 3
+  m_Size: {x: 0.031607017, y: 0.07576974, z: 0.051155426}
+  m_Center: {x: 0.00033917875, y: 0.012832964, z: 0.0026540533}

@@ -32,11 +32,7 @@ public class AttackPrefabScript : MonoBehaviour
     {
         Collider other = collision.collider;
 
-        if (other.CompareTag("Player"))
-        {
-            GameObject.Destroy(gameObject);
-        }
-        
+        if(other.CompareTag("Player")) GameObject.Destroy(gameObject);
     }
 
     

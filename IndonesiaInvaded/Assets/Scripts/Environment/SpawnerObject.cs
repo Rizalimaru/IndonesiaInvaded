@@ -9,7 +9,7 @@ public class SpawnerObject : MonoBehaviour
 
     public void Start()
     {
-        StartCoroutine(EnvironmentCutSceneJakarta.instance.CameraDelay());
+        EnvironmentCutSceneJakarta.instance.CameraDelay();
     }
     
 

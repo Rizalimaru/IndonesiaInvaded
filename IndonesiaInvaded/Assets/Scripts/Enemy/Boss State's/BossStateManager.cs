@@ -18,11 +18,14 @@ public class BossStateManager : MonoBehaviour
     public BossComboState comboState = new BossComboState();
 
     // Ondel-Ondel Skills State
-    public OndelOndelFirstSkillState firstSkillState = new OndelOndelFirstSkillState();
-    public BossDashToTargetState dashingState = new BossDashToTargetState();
-    public OndelOndelSecondSkillState secondSkill2ndState = new OndelOndelSecondSkillState();
+    public OndelOndelFirstSkillState ondelFirstSkillState = new OndelOndelFirstSkillState();
+    public BossDashToTargetState ondelDashingState = new BossDashToTargetState();
+    public OndelOndelSecondSkillState ondelSecondSkillState = new OndelOndelSecondSkillState();
 
     // Dukun Skill State
+    public DukunFirstSkillState dukunFirstSkillState = new DukunFirstSkillState();
+    public DukunCastingState dukunCastingState = new DukunCastingState();
+    public DukunSecondSkillState dukunSecondSkillState = new DukunSecondSkillState();
 
     // Combo Counter
     [HideInInspector] public int comboCounter = 0;
@@ -48,6 +51,11 @@ public class BossStateManager : MonoBehaviour
     {
         currentState.UpdateState(this);
 
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Debug.Log("Ada 3");
+            bossObject.firstSkillCounter = 3;
+        }
     }
 
     public void StartAgent()

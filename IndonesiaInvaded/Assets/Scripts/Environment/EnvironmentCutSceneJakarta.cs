@@ -8,12 +8,13 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public static EnvironmentCutSceneJakarta instance;
 
+    [Header("Camera")]
     public GameObject mainCamera;
     public GameObject cutSceneCamera;
-
     public GameObject cutSceneCameraPortal;
-
     public GameObject cutSceneCameraMonas;
+
+    [Header("GameObject and Animator")]
 
     public GameObject[] gameObjectsOff;
 
@@ -31,10 +32,10 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public int cutSceneJakarta = 0;
     // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         instance = this;
-
     }
 
     // Update is called once per frame
@@ -46,25 +47,21 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
             StopAllCoroutines();
             CameraBack();
         }
-        
     }
 
-    public IEnumerator CameraDelay()
+    public void CameraDelay()
     {
-        yield return new WaitForSeconds(0);
-
         CameraTrig();
-
         Invoke("CameraBack", 20);
-
     }
 
     private void CameraTrig()
     {
-        animasi.SetTrigger("Cutscene");
+        
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
         cutSceneCamera.SetActive(true);
+        animasi.SetTrigger("Cutscene");
 
         foreach (GameObject go in gameObjectsOff)
         {

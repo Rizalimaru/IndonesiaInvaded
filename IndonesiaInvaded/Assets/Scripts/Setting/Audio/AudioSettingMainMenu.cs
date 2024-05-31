@@ -63,13 +63,6 @@ public class AudioSettingMainMenu : MonoBehaviour
     { 
         audioManagerInstance.PlayBackgroundMusicWithTransition("Mainmenu", 0, 1f);
     }
-
-    public void Sceneloader(int SceneIndex)
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(SceneIndex);
-    }
-
-    
     
     public void PlaySFXSound()
     {
@@ -95,7 +88,7 @@ public class AudioSettingMainMenu : MonoBehaviour
         audioManagerInstance.PlaySFX("Collision", 0);
     }
 
-    // Stop Background Music
+
 
     public void StopBackgroundMusic()
     {
@@ -104,8 +97,6 @@ public class AudioSettingMainMenu : MonoBehaviour
 
 
 
-
-    // Set master volume berdasarkan slider value
 
     public void SetMasterVolume(float sliderValue)
     {

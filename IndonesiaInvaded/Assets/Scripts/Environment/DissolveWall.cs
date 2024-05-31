@@ -4,21 +4,13 @@ using UnityEngine;
 public class DissolveWall : MonoBehaviour
 {
     public static DissolveWall instance;
-    public float dissolveDuration = 3f; 
+    public float dissolveDuration = 3f;
     public Material[] dissolveMaterials;
 
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
     }
 
     public void DissolveWallFunction()

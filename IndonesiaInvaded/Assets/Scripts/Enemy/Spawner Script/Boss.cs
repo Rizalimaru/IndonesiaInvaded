@@ -35,8 +35,10 @@ public class Boss : MonoBehaviour
     [HideInInspector] public int secondSkillCounter = 0;
     [HideInInspector] public float firstSkillAnimDelay;
     [HideInInspector] public float secondSkillAnimDelay;
-    // public GameObject skill1Prefab;
-    public GameObject skill2Prefab;
+    public GameObject areaSkillPrefab;
+
+    // Dukun Spesific Skill Declaration
+    public GameObject enemyToSpawn;
     
     // Private Stuff
     private bool isAttacking = false;
@@ -44,6 +46,8 @@ public class Boss : MonoBehaviour
 
     public void Awake()
     {
+        if (bossTitle == BossScriptableObject.title.OndelOndel) enemyToSpawn = null;
+
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
         
@@ -104,7 +108,7 @@ public class Boss : MonoBehaviour
             BossHealthBar.instance.UpdateHealthBar(health);
 
             knockbackForce = 30f;
-            knockbackDelay = 7f;
+            knockbackDelay = 60f;
 
             if (!isKnockedBack)
             {
@@ -126,7 +130,7 @@ public class Boss : MonoBehaviour
 
 
             knockbackForce = 65f;
-            knockbackDelay = 15f;
+            knockbackDelay = 75f;
 
             if (!isKnockedBack)
             {
@@ -135,7 +139,6 @@ public class Boss : MonoBehaviour
             }
         }
     }
-
 
     public void knockbackDelayCounter()
     {
@@ -155,33 +158,44 @@ public class Boss : MonoBehaviour
         }
     }
 
-    public void DisableMeleeAttack()
+// Ondel-Ondel Skill Logic
+    public void OndelDisableMeleeAttack()
     {
         Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
         meleeCollider.enabled = false;
     }
 
-    public void Skill1()
+    public void OndelSkill1()
     {
         Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
         meleeCollider.enabled = true;
     }
 
-    private void Skill2()
+    private void OndelSkill2()
     {
-        attackObject = GameObject.Instantiate(skill2Prefab, transform.position, transform.rotation) as GameObject;
+        attackObject = GameObject.Instantiate(areaSkillPrefab, transform.position, transform.rotation) as GameObject;
     }
 
-    public void StopSkill1()
+    public void OndelStopSkill1()
     {
         Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
         meleeCollider.enabled = false;
     }
 
-    public void CastSkill2()
+    public void OndelCastSkill2()
     {
-        Invoke("Skill2", 1.8f);
+        Invoke("OndelSkill2", 1.8f);
     }
+
+    // Dukun Skill Logic
+
+    public void DukunSpawning(Vector3 position)
+    {
+        Instantiate(enemyToSpawn, position, Quaternion.identity);
+    }
+
+
+    // Other stuff
 
     public bool checkIfSeeTarget()
     {
@@ -197,6 +211,7 @@ public class Boss : MonoBehaviour
             return false;
         }
     }
+
 
     private void OnDestroy()
     {
