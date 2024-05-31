@@ -5,9 +5,14 @@ public class DukunFirstSkillState : BossBaseState
 {
     GameObject[] spawnPoints;
     float delay;
+    bool checker;
 
     public override void EnterState(BossStateManager boss)
     {
+        if (boss.bossObject.bossTitle == BossScriptableObject.title.Dukun) checker = boss.bossObject.CheckIfEnemySpawned();
+
+        boss.bossObject.castingSkill = true;
+
         Debug.Log("Boss is Spawning Enemy!");
 
         spawnPoints = GameObject.FindGameObjectsWithTag("DukunSpawnPoint");
@@ -24,9 +29,12 @@ public class DukunFirstSkillState : BossBaseState
 
         delay = boss.bossObject.firstSkillAnimDelay;
 
-        for (int i = 0; i < spawnPoints.Length; i++)
+        if (checker == false)
         {
-            boss.bossObject.DukunSpawning(spawnPoints[i].transform.position);
+            for (int i = 0; i < spawnPoints.Length; i++)
+            {
+                boss.bossObject.DukunSpawning(spawnPoints[i].transform.position);
+            }
         }
     }
 
@@ -38,6 +46,7 @@ public class DukunFirstSkillState : BossBaseState
         }
         else
         {
+            boss.bossObject.castingSkill = false;
             boss.bossObject.firstSkillCounter = 0;
             boss.SwitchState(boss.restState);
         }
