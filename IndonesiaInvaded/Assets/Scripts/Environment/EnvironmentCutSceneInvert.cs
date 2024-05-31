@@ -54,10 +54,11 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
 
     private void CameraTrig()
     {
-        animasi.SetTrigger("Cutscene");
+        
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
         cutSceneCamera.SetActive(true);
+        animasi.SetTrigger("Cutscene");
 
         foreach (GameObject go in gameObjectsOff)
         {

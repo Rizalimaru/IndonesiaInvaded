@@ -35,10 +35,10 @@ public class PlayerAttribut : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            TakeDamage(20);
-        }
+        // if (Input.GetKeyDown(KeyCode.R))
+        // {
+        //     TakeDamage(20);
+        // }
     }
 
     private void OnCollisionEnter(Collision collision)
