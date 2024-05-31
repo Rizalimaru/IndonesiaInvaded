@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawningManager : MonoBehaviour
 {
@@ -17,51 +18,61 @@ public class SpawningManager : MonoBehaviour
     private bool isCutSceneTriggered = false;
 
 
+    private void Awake()
+    {
+        instance = this;
+        col = GetComponent<Collider>();
+
+    }
+    
     private void Start()
     {
         //mencari gameobject dengan tag Portal 
-        
+
     }
 
     private void Update()
     {
         int enemyNum = GetCurrentEnemy();
-        if(enemyNum == 0 && isFinished == true && !isCutSceneTriggered)
+        if (enemyNum == 0 && isFinished == true && !isCutSceneTriggered)
         {
             DissolveWall.instance.DissolveWallFunction();
 
             AudioManager._instance.TransitionToBackgroundMusic();
 
-            Destroy(objectSelf,3f);
+            Destroy(objectSelf, 3f);
 
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level1")
+            //Jika scene yang aktif adalah scene gameple1
+            if(SceneManager.GetActiveScene().name == "Level1")
             {
                 EnvironmentCutSceneJakarta.instance.CutSceneJakartaCount();
-
+                // Jika jumlah count cutsceneJakarta sama dengan 1 maka akan memanggil cutscene
                 if (EnvironmentCutSceneJakarta.instance.cutSceneJakarta == 6)
                 {
-                    EnvironmentCutSceneJakarta.instance.CutScenePortal();
+                    EnvironmentCutSceneJakarta.instance.CameraDelay();
                 }
             }
 
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level2")
+            //Jika scene yang aktif adalah scene gameple2
+            if (SceneManager.GetActiveScene().name == "Level2")
             {
-                EnvironmentCutSceneInvert.instance.CutScenePortal();
+                EnvironmentCutSceneInvert.instance.CutSceneInvertCount();
+                // Jika jumlah count cutsceneInvert sama dengan 1 maka akan memanggil cutscene
+                if (EnvironmentCutSceneInvert.instance.cutSceneInvert == 5)
+                {
+                    EnvironmentCutSceneInvert.instance.CutScenePortal();
+                }
             }
 
             isCutSceneTriggered = true;
-
-  
-            // jika nama scenenya Gameplay2 maka akan memanggil cutscene jakarta
-            
+        }
+        
+        if (PlayerAttribut.instance.currentHealth <= 0)
+        {
+            ResetSpawning();
         }
     }
 
-    private void Awake()
-    {
-        col = GetComponent<Collider>();
-
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -76,7 +87,7 @@ public class SpawningManager : MonoBehaviour
             {
                 SpawnEnemy(enemyType[i], spawnPoint[i].position);
             }
-            
+
 
             // Sekaligus mengaktifkan wall tanpa harus menyebutkan satu per satu
             for (int i = 0; i < wall.Length; i++)
@@ -117,5 +128,23 @@ public class SpawningManager : MonoBehaviour
     {
         int enemy = GameObject.FindGameObjectsWithTag("Enemy").Length;
         return enemy;
+    }
+
+    public void ResetSpawning()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+
+        for (int i = 0; i < wall.Length; i++)
+        {
+            wall[i].SetActive(false);
+        }
+
+        isFinished = false;
+        isCutSceneTriggered = false;
+        col.enabled = true;
     }
 }

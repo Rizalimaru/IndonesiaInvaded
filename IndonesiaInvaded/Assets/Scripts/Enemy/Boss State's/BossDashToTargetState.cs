@@ -42,7 +42,7 @@ public class BossDashToTargetState : BossBaseState
             boss.bossObject.agent.speed = tempSpeed;
             boss.bossObject.agent.acceleration = tempAccel;
 
-            boss.SwitchState(boss.secondSkill2ndState);
+            boss.SwitchState(boss.ondelSecondSkillState);
         }
     }
 }

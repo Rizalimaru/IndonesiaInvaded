@@ -303,6 +303,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &6226931956616254404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4875691719494055178}
+  m_Layer: 0
+  m_Name: S3 - SP5
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4875691719494055178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6226931956616254404}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -5.68, y: 0, z: 15.93}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1680583234458358895}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6241983939660555125
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,6 +473,7 @@ Transform:
   - {fileID: 4871405981667835861}
   - {fileID: 8347008988829313355}
   - {fileID: 8657169525159803950}
+  - {fileID: 4875691719494055178}
   - {fileID: 1602150080427648860}
   - {fileID: 418781558513834628}
   - {fileID: 1326227213336915733}
@@ -603,8 +635,8 @@ MonoBehaviour:
   - {fileID: 6241983939660555125}
   - {fileID: 7281086663022128492}
   - {fileID: 5431092310730757750}
-  targetPlayer: {fileID: 0}
   enemyType:
+  - {fileID: 3150260632144247062, guid: 13dc26992927a0849be728aa67a71fde, type: 3}
   - {fileID: 3150260632144247062, guid: 13dc26992927a0849be728aa67a71fde, type: 3}
   - {fileID: 3150260632144247062, guid: 13dc26992927a0849be728aa67a71fde, type: 3}
   - {fileID: 4822139126151152396, guid: fcfac96241683c44b84e756167c2d1f3, type: 3}
@@ -614,6 +646,7 @@ MonoBehaviour:
   - {fileID: 4871405981667835861}
   - {fileID: 8347008988829313355}
   - {fileID: 8657169525159803950}
+  - {fileID: 4875691719494055178}
   objectSelf: {fileID: 6445152501579734329}
 --- !u!65 &644989305070685798
 BoxCollider:

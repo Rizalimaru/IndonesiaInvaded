@@ -36,7 +36,7 @@ public class BossComboState : BossBaseState
         {
             if (boss.bossObject.bossTitle == BossScriptableObject.title.OndelOndel)
             {
-                boss.bossObject.DisableMeleeAttack();
+                boss.bossObject.OndelDisableMeleeAttack();
             }
             boss.SwitchState(boss.restState);
         }

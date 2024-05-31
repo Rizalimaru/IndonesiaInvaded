@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &888598769077580777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5112246735946142787}
+  m_Layer: 0
+  m_Name: S6 - SP6
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5112246735946142787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888598769077580777}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -32.64, y: 0, z: -0.74}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6118490876893935437}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &961914354220126933
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,11 +217,13 @@ MonoBehaviour:
   - {fileID: 2218427438265233989}
   - {fileID: 3030919089456838063}
   - {fileID: 7806029059900270320}
-  targetPlayer: {fileID: 0}
   enemyType:
   - {fileID: 3150260632144247062, guid: 13dc26992927a0849be728aa67a71fde, type: 3}
   - {fileID: 3150260632144247062, guid: 13dc26992927a0849be728aa67a71fde, type: 3}
   - {fileID: 3150260632144247062, guid: 13dc26992927a0849be728aa67a71fde, type: 3}
+  - {fileID: 3150260632144247062, guid: 13dc26992927a0849be728aa67a71fde, type: 3}
+  - {fileID: 4822139126151152396, guid: fcfac96241683c44b84e756167c2d1f3, type: 3}
+  - {fileID: 4822139126151152396, guid: fcfac96241683c44b84e756167c2d1f3, type: 3}
   - {fileID: 4822139126151152396, guid: fcfac96241683c44b84e756167c2d1f3, type: 3}
   - {fileID: 4822139126151152396, guid: fcfac96241683c44b84e756167c2d1f3, type: 3}
   spawnPoint:
@@ -199,6 +232,9 @@ MonoBehaviour:
   - {fileID: 5217223682174003608}
   - {fileID: 6087831373675548959}
   - {fileID: 2845004332010414468}
+  - {fileID: 5112246735946142787}
+  - {fileID: 1592047193736135344}
+  - {fileID: 560917043280333855}
   objectSelf: {fileID: 9203693353653442009}
 --- !u!65 &5688600359019376787
 BoxCollider:
@@ -221,6 +257,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 55.838364, y: 9.381275, z: 1}
   m_Center: {x: 0.4520712, y: 4.1906357, z: 0}
+--- !u!1 &2826404645171429305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1592047193736135344}
+  m_Layer: 0
+  m_Name: S6 - SP7
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1592047193736135344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2826404645171429305}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -12.34, y: 0, z: -4.86}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6118490876893935437}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3030919089456838063
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,6 +419,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -14.82, y: 0, z: 27.78}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6118490876893935437}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3808260490991603880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 560917043280333855}
+  m_Layer: 0
+  m_Name: S6 - SP8
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &560917043280333855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3808260490991603880}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -6.72, y: 0, z: 18.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -695,6 +793,9 @@ Transform:
   - {fileID: 5217223682174003608}
   - {fileID: 6087831373675548959}
   - {fileID: 2845004332010414468}
+  - {fileID: 5112246735946142787}
+  - {fileID: 1592047193736135344}
+  - {fileID: 560917043280333855}
   - {fileID: 5660638981149842011}
   - {fileID: 544895888315448229}
   - {fileID: 4001852388860306899}
