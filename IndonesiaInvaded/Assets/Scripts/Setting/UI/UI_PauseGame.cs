@@ -34,7 +34,7 @@ public class UI_PauseGame : MonoBehaviour
     public GameObject gameObjectOptions;
     public GameObject gameResult;
     public GameObject HPBarOndelOndel;
-    //public GameObject HPBarDukun;
+    public GameObject HPBarDukun;
 
     [Header("-----------------------GameOver-----------------------")]
     public GameObject gameOver;
