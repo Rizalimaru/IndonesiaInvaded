@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 5992439843591331092}
   - component: {fileID: 8753508940425001042}
   - component: {fileID: 5507776692308699420}
+  - component: {fileID: 7482482789869468552}
+  - component: {fileID: 7457485988934050177}
+  - component: {fileID: 8668372778198261110}
   m_Layer: 0
   m_Name: CutScenePortalCameraMonas
   m_TagString: Untagged
@@ -150,3 +153,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!45 &7482482789869468552
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477975319311502918}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 6abe918ee1229b34f8557fc2a5a39825, type: 2}
+--- !u!114 &7457485988934050177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477975319311502918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd508900692cb9b4ba7c5cd9caf2229a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skyboxMaterial: {fileID: 2100000, guid: 6abe918ee1229b34f8557fc2a5a39825, type: 2}
+  rotationSpeed: 1
+--- !u!81 &8668372778198261110
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477975319311502918}
+  m_Enabled: 1

@@ -29,7 +29,7 @@ public class OndelOndelFirstSkillState : BossBaseState
 
         delay = boss.bossObject.firstSkillAnimDelay;
 
-        boss.bossObject.Skill1();
+        boss.bossObject.OndelSkill1();
 
         boss.bossObject.agent.SetDestination(boss.bossObject.target.transform.position);
 
@@ -48,7 +48,7 @@ public class OndelOndelFirstSkillState : BossBaseState
             boss.bossObject.agent.speed = tempSpeed;
             boss.bossObject.agent.acceleration = tempAccel;
 
-            boss.bossObject.StopSkill1();
+            boss.bossObject.OndelStopSkill1();
             
             boss.SwitchState(boss.restState);
         }

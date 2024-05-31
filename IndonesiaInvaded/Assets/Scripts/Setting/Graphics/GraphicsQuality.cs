@@ -87,7 +87,6 @@ public class GraphicsQuality : MonoBehaviour
         QualitySettings.SetQualityLevel(index);
         PlayerPrefs.SetInt(qualityDropdownIndexKey, index);
         PlayerPrefs.Save();
-        Debug.Log("Quality Level: " + index);
     }
 
     public void SetResolution(int index)
@@ -98,23 +97,21 @@ public class GraphicsQuality : MonoBehaviour
         {
             case 0:
                 Screen.SetResolution(1920, 1080, isFullScreen);
-                Debug.Log("Resolution: 1920x1080");
+                //Debug.Log("Resolution: 1920x1080");
                 break;
             case 1:
                 isFullScreen = false;
                 Screen.SetResolution(1920,1080, isFullScreen);
-                Debug.Log("Resolution: 1920x1080 , windowed mode");
+                //Debug.Log("Resolution: 1920x1080 , windowed mode");
                 break;
             case 2:
                 Screen.SetResolution(1280, 720, isFullScreen);
-                Debug.Log("Resolution: 1280x720");
-
+                //Debug.Log("Resolution: 1280x720");
                 break;
             case 3:
                 isFullScreen = false;
                 Screen.SetResolution(1280, 720, isFullScreen);
-                Debug.Log("Resolution: 1280x720, windowed mode");
-
+                //Debug.Log("Resolution: 1280x720, windowed mode");
 
                 break;
         }
@@ -122,36 +119,4 @@ public class GraphicsQuality : MonoBehaviour
         PlayerPrefs.SetInt(resolutionDropdownIndexKey, index);
         PlayerPrefs.Save();
     }
-
-    // public void SetBrightness(float value)
-    // {
-
-    //     Light[] lights = FindObjectsOfType<Light>();
-    //     foreach (Light light in lights)
-    //     {
-    //         light.intensity = value;
-
-    //         // Jika ada light yang menggunakan mode Realtime, atur mode tersebut ke Baked
-    //         if (light.lightmapBakeType == LightmapBakeType.Realtime)
-    //         {
-    //             light.lightmapBakeType = LightmapBakeType.Baked;
-    //         }
-
-    //         // Jika ada light yang menggunakan mode Mixed, atur mode tersebut ke Baked
-    //         if (light.lightmapBakeType == LightmapBakeType.Mixed)
-    //         {
-    //             light.lightmapBakeType = LightmapBakeType.Baked;
-    //         }
-    //     }
-
-    //     // Tampilkan nilai kecerahan pada teks
-    //     brightnessValueText.text = value.ToString("0.0");
-
-    //     // Simpan nilai kecerahan ke PlayerPrefs
-    //     PlayerPrefs.SetFloat(brightnessLevelKey, value);
-    //     PlayerPrefs.Save();
-    // }
-
-
-
 }

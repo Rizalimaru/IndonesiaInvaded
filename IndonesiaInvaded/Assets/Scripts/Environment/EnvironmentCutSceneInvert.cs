@@ -23,8 +23,9 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
     [Header("CutsceneTrigger")]
 
     public int cutSceneInvert = 0;
+
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         instance = this;
     }
@@ -38,25 +39,26 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
             StopAllCoroutines();
             CameraBack();
         }
-        
     }
 
-    public IEnumerator CameraCutScene()
+    public void CutSceneInvertCount()
     {
-        yield return new WaitForSeconds(0);
+        cutSceneInvert++;
+    }
 
+    public void CameraCutScene()
+    {
         CameraTrig();
-
-        Invoke("CameraBack", 20);
-
+        Invoke("CameraBack", 15);
     }
 
     private void CameraTrig()
     {
-        animasi.SetTrigger("Cutscene");
+        
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
         cutSceneCamera.SetActive(true);
+        animasi.SetTrigger("Cutscene");
 
         foreach (GameObject go in gameObjectsOff)
         {
@@ -78,15 +80,17 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
     }
 
     public void CutScenePortal(){
-        animasiPortal.SetTrigger("Portal");
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
         cutSceneCameraPortal.SetActive(true);
+        StartCoroutine(ShowPortal());
 
         foreach (GameObject go in gameObjectsOff)
         {
             go.SetActive(false);
         }
+
+        Invoke("CameraBackPortal", 3);
     }
 
     private void CameraBackPortal()
@@ -100,5 +104,11 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
         {
             go.SetActive(true);
         }
+    }
+
+    IEnumerator ShowPortal()
+    {
+        yield return new WaitForSeconds(2);
+        portal.SetActive(true);
     }
 }
