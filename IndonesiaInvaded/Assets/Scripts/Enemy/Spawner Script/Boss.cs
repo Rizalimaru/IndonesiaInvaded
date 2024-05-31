@@ -92,7 +92,7 @@ public class Boss : MonoBehaviour
 
 
         }
-
+        
         if (isKnockedBack == true)
         {
             Invoke("knockbackDelayCounter", knockbackDelay);
@@ -112,15 +112,6 @@ public class Boss : MonoBehaviour
             Debug.Log("Health after damage: " + health);
 
             BossHealthBar.instance.UpdateHealthBar(health);
-
-            knockbackForce = 30f;
-            knockbackDelay = 60f;
-
-            if (!isKnockedBack)
-            {
-                isKnockedBack = true;
-                stateManager.SwitchState(stateManager.knockbackState);
-            }
         }
     }
 
@@ -134,14 +125,13 @@ public class Boss : MonoBehaviour
 
             BossHealthBar.instance.UpdateHealthBar(health);
 
-
             knockbackForce = 65f;
             knockbackDelay = 75f;
 
-            if (!isKnockedBack)
+            if (isKnockedBack == false)
             {
-                stateManager.SwitchState(stateManager.knockbackState);
                 isKnockedBack = true;
+                stateManager.SwitchState(stateManager.knockbackState);
             }
         }
     }
