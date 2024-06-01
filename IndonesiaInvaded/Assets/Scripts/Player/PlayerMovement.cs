@@ -175,41 +175,6 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(Dodge());
         }
     }
-
-    // IEnumerator Dodge()
-    // {
-    //     if (!isDodging)
-    //     {
-    //         // Start the dodge if a dodge is not already in progress
-    //         isDodging = true;
-    //         animator.SetTrigger("Dodge");
-
-    //         // Fixed dodge distance and speed
-    //         float dodgeDistance = 5f; // Adjust this value as needed
-    //         float dodgeDuration = 0.5f; // Adjust this value as needed
-    //         float dodgeSpeed = dodgeDistance / dodgeDuration;
-
-    //         // Calculate dodge direction
-    //         Vector3 dodgeDirection = orientationForAtk.forward;
-    //         Vector3 targetVelocity = dodgeDirection.normalized * dodgeSpeed;
-
-    //         // Apply dodge velocity
-    //         rb.velocity = targetVelocity;
-
-    //         // Disable collisions temporarily to prevent getting hit during dodge
-    //         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
-
-    //         // Wait for the dodge duration
-    //         yield return new WaitForSeconds(dodgeDuration);
-
-    //         // Enable collisions after dodge
-    //         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
-
-    //         // Stop the dodge
-    //         rb.velocity = Vector3.zero;
-    //         isDodging = false;
-    //     }
-    // }
         public bool IsDodging
         {
             get { return isDodging; }
@@ -254,6 +219,16 @@ public class PlayerMovement : MonoBehaviour
         {
             // Update arah dodge setiap frame
             Vector3 currentDodgeDirection = moveDirection.magnitude == 0 ? -orientationForAtk.forward : orientationForAtk.forward;
+
+            // Lakukan raycast untuk memeriksa apakah ada objek di depan karakter
+            RaycastHit hit;
+            if (Physics.Raycast(startPosition, currentDodgeDirection, out hit, dodgeDistance, LayerMask.GetMask("Property"))) // Ubah layerMask sesuai dengan layer properti yang ingin dihindari
+            {
+                // Jika ada objek di depan, hentikan dodge
+                isDodging = false;
+                yield break;
+            }
+
             Vector3 targetPosition = startPosition + currentDodgeDirection * dodgeDistance;
 
             rb.MovePosition(Vector3.Lerp(startPosition, targetPosition, (Time.time - startTime) / dodgeDuration));
@@ -264,6 +239,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dodgeCooldown);
         canDodge = true;
     }
+
 
     private void StateHandler()
     {
@@ -336,10 +312,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Handle stopping animation
-        if (verticalInput == 0 && horizontalInput == 0 && currentSpeed < 0.1f)
-        {
-            animator.SetTrigger("isStop");
-        }
+        // if (verticalInput == 0 && horizontalInput == 0 && currentSpeed < 0.1f)
+        // {
+        //     animator.SetTrigger("isStop");
+        // }
 
         // Apply gravity
         if (!grounded)
