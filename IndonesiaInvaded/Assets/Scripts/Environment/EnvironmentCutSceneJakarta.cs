@@ -1,132 +1,105 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class EnvironmentCutSceneJakarta : MonoBehaviour
 {
-
     public static EnvironmentCutSceneJakarta instance;
 
     [Header("Camera")]
     public GameObject mainCamera;
+    public GameObject playerCamera;
     public GameObject cutSceneCamera;
     public GameObject cutSceneCameraPortal;
     public GameObject cutSceneCameraMonas;
+    public GameObject cutSceneBoss;
 
     [Header("GameObject and Animator")]
-
     public GameObject[] gameObjectsOff;
-
     public Animator animasi;
-
     public Animator animasiPortal;
+    public Animator animator;
 
     [Header("Portal")]
-
     public GameObject portal;
-
     public GameObject portalMonas;
 
     [Header("CutsceneTrigger")]
-
     public int cutSceneJakarta = 0;
-    // Start is called before the first frame update
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        //Jika sedang play coroutine, jika player menekan tombol maka akan muncul tombol skip
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             StopAllCoroutines();
-            CameraBack();
+            RestoreMainCamera();
         }
     }
 
     public void CameraDelay()
     {
-        CameraTrig();
-        Invoke("CameraBack", 20);
+        TriggerCamera();
+        Invoke(nameof(RestoreMainCamera), 20);
     }
 
-    private void CameraTrig()
+    private void TriggerCamera()
     {
-        
         ScoreManager.instance.SetTimeUpdating(false);
-        mainCamera.SetActive(false);
-        cutSceneCamera.SetActive(true);
+        SetCameraState(mainCamera, false);
+        SetCameraState(cutSceneCamera, true);
         animasi.SetTrigger("Cutscene");
-
-        foreach (GameObject go in gameObjectsOff)
-        {
-            go.SetActive(false);
-        }
+        SetGameObjectsActive(false);
     }
 
-    //menambahkan 1 variable cutsceneJakarta
     public void CutSceneJakartaCount()
     {
         cutSceneJakarta++;
     }
 
-    private void CameraBack()
+    private void RestoreMainCamera()
     {
-        mainCamera.SetActive(true);
-        cutSceneCamera.SetActive(false);
-
-        foreach (GameObject go in gameObjectsOff)
-        {
-            go.SetActive(true);
-        }
+        SetCameraState(mainCamera, true);
+        SetCameraState(cutSceneCamera, false);
+        SetGameObjectsActive(true);
         ScoreManager.instance.SetTimeUpdating(true);
-
     }
 
-    private void CameraBackPortal()
+    private void RestorePortalCamera()
     {
-        mainCamera.SetActive(true);
-        cutSceneCameraPortal.SetActive(false);
-
-        foreach (GameObject go in gameObjectsOff)
-        {
-            go.SetActive(true);
-        }
+        SetCameraState(mainCamera, true);
+        SetCameraState(cutSceneCameraPortal, false);
+        SetGameObjectsActive(true);
     }
 
-    private void CameraBackMonas()
+    private void RestoreMonasCamera()
     {
-        mainCamera.SetActive(true);
-        cutSceneCameraMonas.SetActive(false);
-
-        foreach (GameObject go in gameObjectsOff)
-        {
-            go.SetActive(true);
-        }
+        SetCameraState(mainCamera, true);
+        SetCameraState(cutSceneCameraMonas, false);
+        SetGameObjectsActive(true);
     }
 
-    public void CutScenePortal()
+    public void PlayCutScenePortal()
     {
         ScoreManager.instance.SetTimeUpdating(false);
-        mainCamera.SetActive(false);
-        cutSceneCameraPortal.SetActive(true);
+        SetCameraState(mainCamera, false);
+        SetCameraState(cutSceneCameraPortal, true);
         StartCoroutine(PortalDelay());
-
-
-        foreach (GameObject go in gameObjectsOff)
-        {
-            go.SetActive(false);
-        }
-
-        Invoke("CameraBackPortal", 2);
+        SetGameObjectsActive(false);
+        Invoke(nameof(RestorePortalCamera), 2);
     }
 
-    IEnumerator PortalDelay()
+    private IEnumerator PortalDelay()
     {
         yield return new WaitForSeconds(1);
         portal.SetActive(true);
@@ -134,27 +107,53 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         ScoreManager.instance.SetTimeUpdating(true);
     }
 
-    public void CutSceneMonas()
+    public void PlayCutSceneMonas()
     {
         ScoreManager.instance.SetTimeUpdating(false);
-        mainCamera.SetActive(false);
-        cutSceneCameraMonas.SetActive(true);
+        SetCameraState(mainCamera, false);
+        SetCameraState(playerCamera, true);
+        SetCameraState(cutSceneCameraMonas, true);
         StartCoroutine(MonasDelay());
-
-        foreach (GameObject go in gameObjectsOff)
-        {
-            go.SetActive(false);
-        }
-
-        Invoke("CameraBackMonas", 4);
+        SetGameObjectsActive(false);
     }
 
-    IEnumerator MonasDelay()
+    private IEnumerator MonasDelay()
     {
         yield return new WaitForSeconds(2);
         portalMonas.SetActive(true);
         yield return new WaitForSeconds(2);
         ScoreManager.instance.SetTimeUpdating(true);
     }
-}
 
+    public void PlayCutSceneBeforePortal()
+    {
+        animator.SetTrigger("End");
+        ScoreManager.instance.SetTimeUpdating(false);
+        SetCameraState(mainCamera, false);
+        SetCameraState(playerCamera, false);
+        SetCameraState(cutSceneBoss, true);
+        SetGameObjectsActive(false);
+        animator.SetTrigger("Start");
+        Invoke(nameof(PlayCutSceneMonas), 26f);
+        ScoreManager.instance.SetTimeUpdating(true);
+    }
+
+    private void SetCameraState(GameObject camera, bool state)
+    {
+        if (camera != null)
+        {
+            camera.SetActive(state);
+        }
+    }
+
+    private void SetGameObjectsActive(bool state)
+    {
+        foreach (GameObject go in gameObjectsOff)
+        {
+            if (go != null)
+            {
+                go.SetActive(state);
+            }
+        }
+    }
+}
