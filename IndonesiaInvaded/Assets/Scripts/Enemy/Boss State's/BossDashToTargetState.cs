@@ -9,6 +9,8 @@ public class BossDashToTargetState : BossBaseState
 
     public override void EnterState(BossStateManager boss)
     {
+        boss.bossObject.castingSkill = true;
+
         tempAccel = boss.bossObject.agent.acceleration;
         tempSpeed = boss.bossObject.agent.speed;
 

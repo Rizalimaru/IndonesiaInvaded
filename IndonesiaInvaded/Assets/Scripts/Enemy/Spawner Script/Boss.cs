@@ -12,7 +12,7 @@ public class Boss : MonoBehaviour
     public Transform target;
     public GameObject attackPrefab;
     public Transform spawnPoint;
-    public Animator playerAnimator;
+    [HideInInspector] public Animator playerAnimator;
 
     // Attribute Declaration
     [HideInInspector] public float health;
@@ -35,19 +35,25 @@ public class Boss : MonoBehaviour
     [HideInInspector] public int secondSkillCounter = 0;
     [HideInInspector] public float firstSkillAnimDelay;
     [HideInInspector] public float secondSkillAnimDelay;
+    [HideInInspector] public bool castingSkill = false;
     public GameObject areaSkillPrefab;
 
     // Dukun Spesific Skill Declaration
     public GameObject enemyToSpawn;
+    public GameObject secondAttackPrefab;
     
     // Private Stuff
     private bool isAttacking = false;
     private GameObject attackObject;
-
+    
     public void Awake()
     {
-        if (bossTitle == BossScriptableObject.title.OndelOndel) enemyToSpawn = null;
-
+        if (bossTitle == BossScriptableObject.title.OndelOndel)
+        {
+            enemyToSpawn = null;
+            secondAttackPrefab = null;
+        }
+        
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
         
@@ -86,7 +92,7 @@ public class Boss : MonoBehaviour
 
 
         }
-
+        
         if (isKnockedBack == true)
         {
             Invoke("knockbackDelayCounter", knockbackDelay);
@@ -97,7 +103,7 @@ public class Boss : MonoBehaviour
     {
         Collider other = collision.collider;
 
-        if (other.CompareTag("Sword") && isAttacking && health > 0)
+        if (other.CompareTag("Sword") && isAttacking && health > 0 && castingSkill == false)
         {
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
 
@@ -106,21 +112,12 @@ public class Boss : MonoBehaviour
             Debug.Log("Health after damage: " + health);
 
             BossHealthBar.instance.UpdateHealthBar(health);
-
-            knockbackForce = 30f;
-            knockbackDelay = 60f;
-
-            if (!isKnockedBack)
-            {
-                isKnockedBack = true;
-                stateManager.SwitchState(stateManager.knockbackState);
-            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("SkillRoarCollider") && health > 0)
+        if (other.CompareTag("SkillRoarCollider") && health > 0 && castingSkill == false)
         {
             Debug.Log("Damaged by Roar. Current health: " + health);
             health -= 50;
@@ -128,14 +125,13 @@ public class Boss : MonoBehaviour
 
             BossHealthBar.instance.UpdateHealthBar(health);
 
-
             knockbackForce = 65f;
             knockbackDelay = 75f;
 
-            if (!isKnockedBack)
+            if (isKnockedBack == false)
             {
-                stateManager.SwitchState(stateManager.knockbackState);
                 isKnockedBack = true;
+                stateManager.SwitchState(stateManager.knockbackState);
             }
         }
     }
@@ -158,7 +154,7 @@ public class Boss : MonoBehaviour
         }
     }
 
-// Ondel-Ondel Skill Logic
+    // Ondel-Ondel Skill Logic
     public void OndelDisableMeleeAttack()
     {
         Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
@@ -171,7 +167,7 @@ public class Boss : MonoBehaviour
         meleeCollider.enabled = true;
     }
 
-    private void OndelSkill2()
+    public void OndelSkill2()
     {
         attackObject = GameObject.Instantiate(areaSkillPrefab, transform.position, transform.rotation) as GameObject;
     }
@@ -194,6 +190,31 @@ public class Boss : MonoBehaviour
         Instantiate(enemyToSpawn, position, Quaternion.identity);
     }
 
+    public bool CheckIfEnemySpawned()
+    {
+        int checkerInt = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        if (checkerInt >= 8)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void DukunCombo()
+    {
+        Instantiate(secondAttackPrefab, target.position, Quaternion.identity);
+    }
+
+    public void Dukun2ndSkill()
+    {
+        GameObject zapObj = Instantiate(secondAttackPrefab);
+        zapObj.transform.SetParent(transform);
+        zapObj.transform.localPosition = new Vector3(Random.Range(-15, 15), 0, Random.Range(-15, 15));
+    }
 
     // Other stuff
 
