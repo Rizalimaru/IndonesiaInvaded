@@ -60,6 +60,8 @@ public class PlayerAttribut : MonoBehaviour
         else if (other.CompareTag("BossMeleeCollider"))
         {
             Debug.Log("Colliding with boss's hand");
+            TakeDamage(20);
+            StopRegenerateHealth();
         }
     }
 

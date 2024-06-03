@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("KnockBack")]
     public float knockShield = 100f;
-    public float knockBackForce;
+    public float knockBackForce = 20f;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -428,6 +428,7 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion
 
+#region  OnCollosionAndTriggerRegion
     private void OnTriggerEnter(Collider other)
     {
         // if (other.CompareTag("EnemyMeleeCollider"))
@@ -443,7 +444,41 @@ public class PlayerMovement : MonoBehaviour
         // {
         //     playerKnockBack();
         // }
+        
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Collider other = collision.collider;
+
+        if (other.CompareTag("BossMeleeCollider"))
+        {
+            // Menentukan arah knockback berdasarkan posisi tabrakan
+            Vector3 direction = (transform.position - collision.transform.position).normalized;
+            // Menerapkan kekuatan knockback pada Rigidbody
+            rb.AddForce(direction * knockBackForce, ForceMode.Impulse);
+            animator.SetTrigger("getHit");
+            StartCoroutine(ImuneTime());
+        }
+    }
+#endregion
+    IEnumerator ImuneTime()
+    {
+        int EnemyLayer = LayerMask.NameToLayer("Enemy");
+        Debug.Log("ImuneTime started");
+
+        canMove = false;
+        Physics.IgnoreLayerCollision(EnemyLayer, gameObject.layer, true);
+        Debug.Log("Collision ignored");
+
+        yield return new WaitForSeconds(5);
+        
+        Physics.IgnoreLayerCollision(EnemyLayer, gameObject.layer, false);
+        canMove = true;
+
+        Debug.Log("ImuneTime ended");
+    }
+
 
     void playerKnockBack()
     {
