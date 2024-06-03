@@ -12,18 +12,14 @@ public class BossCutsceneCamera: MonoBehaviour
 
     public GameObject[] objectOff;
 
-    [Header("Animasi Trigger")]
-    public Animator animasi;
-
     private void Awake()
     {
         GameObject bos = GameObject.Find("Boss");
-        animasi = bos.GetComponent<Animator>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        CameraTrig();
+        Invoke("CameraTrig", 0.1f);
         gameObject.SetActive(false);
         Invoke("CameraBack", 3);
 
