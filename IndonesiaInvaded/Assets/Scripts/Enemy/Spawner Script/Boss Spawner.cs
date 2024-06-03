@@ -5,6 +5,8 @@ public class BossSpawner : MonoBehaviour
 {
     public static SpawningManager instance;
 
+    private BossCutsceneCamera cutsceneCamera;
+
     public GameObject[] wall;
     public Boss bossObject;
     public Transform spawnPoint;
@@ -26,12 +28,14 @@ public class BossSpawner : MonoBehaviour
     private void Awake()
     {
         col = GetComponent<Collider>();
+        cutsceneCamera = FindObjectOfType<BossCutsceneCamera>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            cutsceneCamera.TriggerSpawnBoss();
 
             DissolveWall.instance.UnDissolveWallFunction();
 
@@ -49,20 +53,17 @@ public class BossSpawner : MonoBehaviour
 
             Invoke("isFinishedEnabler", 2f);
 
-            col.gameObject.SetActive(false); // --> Make sure no double spawning
+            col.enabled = false;
         }
     }
 
-    // probably wont be needed anymore
-
-    /**
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             col.enabled = false;
         }
-    } **/
+    }
 
     private void SpawnEnemy(Boss bossToSpawn, Vector3 spawnPos)
     {

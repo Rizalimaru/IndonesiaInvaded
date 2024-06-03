@@ -57,9 +57,11 @@ public class PlayerAttribut : MonoBehaviour
             TakeDamage(5);
             StopRegenerateHealth();
         }
-        else if (other.CompareTag("BossMeleeCollider"))
+        else if (other.CompareTag("BossMeleeCollider") && PlayerMovement.instance.lagiKnock == false)
         {
             Debug.Log("Colliding with boss's hand");
+            TakeDamage(20);
+            StopRegenerateHealth();
         }
     }
 
