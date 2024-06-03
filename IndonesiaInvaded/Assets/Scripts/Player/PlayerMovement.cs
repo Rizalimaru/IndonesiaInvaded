@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private Combat combat;
     public static PlayerMovement instance;
+    private SkillManager skillManager;
 
     [Header("Movement")]
     private float moveSpeed;
@@ -16,12 +17,16 @@ public class PlayerMovement : MonoBehaviour
     public float sprintSpeed;
     public float groundDrag;
     private bool isStopping = false;
+    public bool canMove = true;
+    bool bisaPlungeAtk;
+    bool SedangRange;
 
     [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
     bool readyToJump;
+    public GameObject SkillRoarCollider;
 
     [Header("Dodge")]
     [SerializeField] AnimationCurve dodgeCurve;
@@ -83,8 +88,19 @@ public class PlayerMovement : MonoBehaviour
     [Header("Gravity")]
     public float gravity = 9.81f; // Default gravity value
 
-    private void Start()
+    private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject); // Un-comment this line if you want to enforce singleton pattern strictly
+        }
+    }
+    private void Start()
+    {   
         combat = Combat.instance;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -98,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
         dodgeTimer = dodge_lastFrame.time;
     }
 
+#region  updateRegion
     private void Update()
     {
         // ground check
@@ -121,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isGrounded", false);
         }
+        
     }
 
     private void FixedUpdate()
@@ -140,14 +158,16 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = Vector3.zero;
         }
     }
+#endregion
 
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+        bool SedangRange = Input.GetKey(rangedAtkKey);
 
         // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded && combat.isAttacking == false)
+        if (Input.GetKey(jumpKey) && readyToJump && grounded && combat.isAttacking == false && !SedangRange)
         {
             readyToJump = false;
 
@@ -175,6 +195,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(Dodge());
         }
     }
+#region getBoolRegion
         public bool IsDodging
         {
             get { return isDodging; }
@@ -187,6 +208,15 @@ public class PlayerMovement : MonoBehaviour
         {
             get { return moveDirection.magnitude; }
         }
+        public bool PlungeGaSih
+        {
+            get { return bisaPlungeAtk; }
+        }
+        public bool SedangRangeAtk
+        {
+            get { return SedangRange; }
+        }
+#endregion
     private IEnumerator Dodge()
     {
         isDodging = true;
@@ -240,9 +270,10 @@ public class PlayerMovement : MonoBehaviour
         canDodge = true;
     }
 
-
+#region  stateHandleRegion
     private void StateHandler()
     {
+        bool SedangRange = Input.GetKey(rangedAtkKey);
         // Mode - Crouching
         if (Input.GetKey(crouchKey))
         {
@@ -251,7 +282,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Mode - Sprinting
-        else if (grounded && Input.GetKey(sprintKey))
+        else if (grounded && Input.GetKey(sprintKey) && !SedangRange)
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
@@ -277,10 +308,12 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.air;
         }
     }
+#endregion
 
     #region basic player movement
     private void MovePlayer()
-    {
+    {   
+        if (!canMove) return;
         // Check if any hit animation is active
         bool hit1 = animator.GetBool("hit1");
         bool hit2 = animator.GetBool("hit2");
@@ -301,33 +334,52 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("movement", currentSpeed, 0.1f, Time.deltaTime); // Smooth transition
 
         if (grounded)
-        {
+        {   
+            bisaPlungeAtk = false;
             rb.drag = 5f; // Higher drag for better stopping and control on ground
             rb.AddForce(moveDirection * moveSpeed, ForceMode.Acceleration);
         }
         else
         {
             rb.drag = 0f; // No drag in the air
-            rb.AddForce(moveDirection * moveSpeed * airMultiplier, ForceMode.Acceleration);
+            rb.AddForce(moveDirection * airMultiplier, ForceMode.Acceleration);
         }
-
-        // Handle stopping animation
-        // if (verticalInput == 0 && horizontalInput == 0 && currentSpeed < 0.1f)
-        // {
-        //     animator.SetTrigger("isStop");
-        // }
 
         // Apply gravity
         if (!grounded)
         {
             rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
         }
+
+        if(!grounded && Input.GetMouseButton(0) && bisaPlungeAtk == false)
+        {   
+            StartCoroutine(plungeAtk());
+            bisaPlungeAtk = true;
+        }
+
+    }
+
+    IEnumerator plungeAtk()
+    {
+        rb.AddForce(Vector3.up * 7f, ForceMode.Impulse);
+        yield return new WaitForSeconds(.5f);
+        rb.AddForce(Vector3.down * (gravity * 70), ForceMode.Acceleration);
+        yield return new WaitForSeconds(.5f);
+        SpawnRoarCollider();
+        
+    }
+
+    void SpawnRoarCollider()
+    {
+        GameObject roarCollider = Instantiate(SkillRoarCollider, transform.position, transform.rotation) as GameObject;
+        Destroy(roarCollider, 3f);
     }
     #endregion
 
     #region skill player movement
     private void MoveForwardWhileAtk()
-    {
+    {   
+        if (!canMove) return;
         if (animator.GetBool("RoarSkill"))
         {
             return;
@@ -378,19 +430,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EnemyMeleeCollider"))
-        {
-            knockShield -= 5f;
-        }
-        else if (other.CompareTag("EnemyRangedCollider"))
-        {
-            knockShield -= 5f;
-        }
+        // if (other.CompareTag("EnemyMeleeCollider"))
+        // {
+        //     knockShield -= 5f;
+        // }
+        // else if (other.CompareTag("EnemyRangedCollider"))
+        // {
+        //     knockShield -= 5f;
+        // }
 
-        if (other.CompareTag("EnemyMeleeCollider") && knockShield <= 20f)
-        {
-            playerKnockBack();
-        }
+        // if (other.CompareTag("EnemyMeleeCollider") && knockShield <= 20f)
+        // {
+        //     playerKnockBack();
+        // }
     }
 
     void playerKnockBack()
