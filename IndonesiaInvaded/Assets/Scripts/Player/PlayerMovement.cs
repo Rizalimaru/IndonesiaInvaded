@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canMove = true;
     bool bisaPlungeAtk;
     bool SedangRange;
+    bool sedangKnock = false;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -52,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("KnockBack")]
     public float knockShield = 100f;
-    public float knockBackForce;
+    public float knockBackForce = 20f;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -215,6 +217,10 @@ public class PlayerMovement : MonoBehaviour
         public bool SedangRangeAtk
         {
             get { return SedangRange; }
+        }
+        public bool lagiKnock
+        {
+            get { return sedangKnock; }
         }
 #endregion
     private IEnumerator Dodge()
@@ -435,6 +441,7 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion
 
+#region  OnCollosionAndTriggerRegion
     private void OnTriggerEnter(Collider other)
     {
         // if (other.CompareTag("EnemyMeleeCollider"))
@@ -450,7 +457,40 @@ public class PlayerMovement : MonoBehaviour
         // {
         //     playerKnockBack();
         // }
+        
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Collider other = collision.collider;
+        if (other.CompareTag("BossMeleeCollider"))
+        {
+            knockShield -= 20f;
+        }
+        if (other.CompareTag("BossMeleeCollider") && sedangKnock == false && !isDodging && knockShield <= 20f)
+        {   
+            sedangKnock = true;
+            ThirdPersonCam.instance.GetBisaRotasi = false;
+            // Menentukan arah knockback berdasarkan posisi tabrakan
+            Vector3 direction = (transform.position - collision.transform.position).normalized;
+            // Menerapkan kekuatan knockback pada Rigidbody
+            rb.AddForce(direction * knockBackForce, ForceMode.Impulse);
+            animator.SetBool("knocked", true);
+            StartCoroutine(ImuneTime());
+        }
+    }
+#endregion
+    IEnumerator ImuneTime()
+    {
+        canMove = false;
+        yield return new WaitForSeconds(5);
+        canMove = true;
+        animator.SetBool("knocked", false);
+        ThirdPersonCam.instance.GetBisaRotasi = true;
+        knockShield = 100f;
+        sedangKnock = false;
+    }
+
 
     void playerKnockBack()
     {
