@@ -13,6 +13,8 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     public GameObject cutSceneCamera;
     public GameObject cutSceneCameraPortal;
     public GameObject cutSceneCameraMonas;
+    public GameObject cutSceneAfterPortal;
+    public GameObject cutSceneBeforePortal;
 
     [Header("GameObject and Animator")]
 
@@ -57,7 +59,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     private void CameraTrig()
     {
-        
+        SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
         cutSceneCamera.SetActive(true);
@@ -77,6 +79,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     private void CameraBack()
     {
+        SetCursorVisibility(true);
         mainCamera.SetActive(true);
         cutSceneCamera.SetActive(false);
 
@@ -90,6 +93,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     private void CameraBackPortal()
     {
+        SetCursorVisibility(true);
         mainCamera.SetActive(true);
         cutSceneCameraPortal.SetActive(false);
 
@@ -101,6 +105,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     private void CameraBackMonas()
     {
+        SetCursorVisibility(true);
         mainCamera.SetActive(true);
         cutSceneCameraMonas.SetActive(false);
 
@@ -112,6 +117,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public void CutScenePortal()
     {
+        SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
         cutSceneCameraPortal.SetActive(true);
@@ -138,6 +144,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public void CutSceneMonas()
     {
+        SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
         SkillManager.instance.ResetSkills();
         mainCamera.SetActive(false);
@@ -159,5 +166,77 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         yield return new WaitForSeconds(2);
         ScoreManager.instance.SetTimeUpdating(true);
     }
+
+    public void CutSceneAfterPortal()
+    {
+        SetCursorVisibility(false);
+        ScoreManager.instance.SetTimeUpdating(false);
+        mainCamera.SetActive(false);
+        cutSceneAfterPortal.SetActive(true);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(false);
+        }
+
+        Invoke("CameraBackAfterPortal", 9);
+    }
+    private void CameraBackAfterPortal()
+    {
+        SetCursorVisibility(true);
+        mainCamera.SetActive(true);
+        cutSceneAfterPortal.SetActive(false);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(true);
+        }
+    }
+
+    private void CameraBackBeforePortal()
+    {
+        SetCursorVisibility(true);
+        mainCamera.SetActive(true);
+        cutSceneBeforePortal.SetActive(false);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(true);
+        }
+    }
+
+    public void CutSceneBeforePortal()
+    {
+        SetCursorVisibility(false);
+        ScoreManager.instance.SetTimeUpdating(false);
+        mainCamera.SetActive(false);
+        cutSceneBeforePortal.SetActive(true);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(false);
+        }
+
+        Invoke("CameraBackBeforePortal", 26);
+    }
+
+    public void CutSceneBoss()
+    {
+        StartCoroutine(BossDelay());
+    }
+
+    IEnumerator BossDelay()
+    {
+        CutSceneBeforePortal();
+        yield return new WaitForSeconds(26);
+        CutSceneMonas();
+    }
+
+    private void SetCursorVisibility(bool visible)
+    {
+        Cursor.visible = visible;
+        Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
 }
 
