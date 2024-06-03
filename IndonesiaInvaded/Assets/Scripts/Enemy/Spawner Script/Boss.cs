@@ -42,11 +42,11 @@ public class Boss : MonoBehaviour
     // Dukun Spesific Skill Declaration
     public GameObject enemyToSpawn;
     public GameObject secondAttackPrefab;
-    
+
     // Private Stuff
     private bool isAttacking = false;
     private GameObject attackObject;
-    
+
     public void Awake()
     {
         if (bossTitle == BossScriptableObject.title.OndelOndel)
@@ -54,10 +54,10 @@ public class Boss : MonoBehaviour
             enemyToSpawn = null;
             secondAttackPrefab = null;
         }
-        
+
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
-        
+
     }
     private void Start()
     {
@@ -84,13 +84,14 @@ public class Boss : MonoBehaviour
         if (health <= 0)
         {
             stateManager.SwitchState(stateManager.deadState);
+            if (bossTitle == BossScriptableObject.title.OndelOndel)
+            {
+                AudioManager._instance.StopBackgroundMusicWithTransition("GameJakarta", 1f);
 
-            AudioManager._instance.StopBackgroundMusicWithTransition("GameJakarta", 1f);
 
-            AudioManager._instance.PlayBackgroundMusicWithTransition("Win", 0, 1f);
+                EnvironmentCutSceneJakarta.instance.CutSceneBoss();
 
-            EnvironmentCutSceneJakarta.instance.CutSceneMonas();
-
+            }
 
         }
         /**
@@ -108,6 +109,9 @@ public class Boss : MonoBehaviour
         {
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
 
+            AudioManager._instance.PlayBossHitSFX("BossHit", 0);
+            AudioManager._instance.PlaySFX("EnemyHit",0);
+
             Debug.Log("Damaged by Sword. Current health: " + health);
             spawnVfxhit();
             health -= 20;
@@ -119,6 +123,9 @@ public class Boss : MonoBehaviour
         if (other.CompareTag("RangedCollider") && isAttacking && health > 0 && castingSkill == false)
         {
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
+
+            AudioManager._instance.PlayBossHitSFX("BossHit", 0);
+            AudioManager._instance.PlaySFX("EnemyHit",0);
 
             Debug.Log("Damaged by Sword. Current health: " + health);
             spawnVfxhit();
@@ -133,6 +140,8 @@ public class Boss : MonoBehaviour
     {
         if (other.CompareTag("SkillRoarCollider") && health > 0 && castingSkill == false)
         {
+            AudioManager._instance.PlayBossHitSFX("BossHit", 0);
+            
             Debug.Log("Damaged by Roar. Current health: " + health);
             health -= 50;
             Debug.Log("Health after damage: " + health);
@@ -152,7 +161,7 @@ public class Boss : MonoBehaviour
     }
 
     void spawnVfxhit()
-    {   
+    {
         Vector3 newPosition = transform.position + new Vector3(0, 1, 0);
         GameObject vfx = Instantiate(hitVFX, newPosition, Quaternion.identity);
         Destroy(vfx, .5f);
