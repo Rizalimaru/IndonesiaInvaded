@@ -164,9 +164,10 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+        bool SedangRange = Input.GetKey(rangedAtkKey);
 
         // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded && combat.isAttacking == false)
+        if (Input.GetKey(jumpKey) && readyToJump && grounded && combat.isAttacking == false && !SedangRange)
         {
             readyToJump = false;
 
