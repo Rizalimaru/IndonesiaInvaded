@@ -166,7 +166,7 @@ public class Combat : MonoBehaviour
             case 3:
                 if (stateInfo.IsName("hit3") && stateInfo.normalizedTime >= 0.8f)
                 {
-                    AudioManager.Instance.PlaySFX("AttackPlayer", 2);
+                    AudioManager.Instance.PlaySFX("AttackPlayer", 3);
                     animator.SetBool("hit4", true);
                     hitSekarang = "hit4";
                     Debug.Log("Hit 4");
