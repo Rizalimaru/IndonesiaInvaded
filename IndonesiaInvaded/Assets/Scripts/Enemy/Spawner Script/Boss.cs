@@ -12,6 +12,7 @@ public class Boss : MonoBehaviour
     public Transform target;
     public GameObject attackPrefab;
     public Transform spawnPoint;
+    public GameObject hitVFX;
     [HideInInspector] public Animator playerAnimator;
 
     // Attribute Declaration
@@ -92,11 +93,11 @@ public class Boss : MonoBehaviour
 
 
         }
-        
+        /**
         if (isKnockedBack == true)
         {
             Invoke("knockbackDelayCounter", knockbackDelay);
-        }
+        }**/
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -108,7 +109,20 @@ public class Boss : MonoBehaviour
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
 
             Debug.Log("Damaged by Sword. Current health: " + health);
+            spawnVfxhit();
             health -= 20;
+            Debug.Log("Health after damage: " + health);
+
+            BossHealthBar.instance.UpdateHealthBar(health);
+        }
+
+        if (other.CompareTag("RangedCollider") && isAttacking && health > 0 && castingSkill == false)
+        {
+            CameraShaker.instance.CameraShake(0.5f, 0.1f);
+
+            Debug.Log("Damaged by Sword. Current health: " + health);
+            spawnVfxhit();
+            health -= 10;
             Debug.Log("Health after damage: " + health);
 
             BossHealthBar.instance.UpdateHealthBar(health);
@@ -131,9 +145,17 @@ public class Boss : MonoBehaviour
             if (isKnockedBack == false)
             {
                 isKnockedBack = true;
+                Invoke("knockbackDelayCounter", knockbackDelay);
                 stateManager.SwitchState(stateManager.knockbackState);
             }
         }
+    }
+
+    void spawnVfxhit()
+    {   
+        Vector3 newPosition = transform.position + new Vector3(0, 1, 0);
+        GameObject vfx = Instantiate(hitVFX, newPosition, Quaternion.identity);
+        Destroy(vfx, .5f);
     }
 
     public void knockbackDelayCounter()

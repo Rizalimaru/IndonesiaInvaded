@@ -52,7 +52,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void UpdateGroundedStatus()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround | whatIsGround2);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.5f, whatIsGround | whatIsGround2);
     }
 
     private void UpdateAnimator()
@@ -83,6 +83,18 @@ public class PlayerAnimator : MonoBehaviour
         anim.SetBool("isRun", currentMovementZ == maxMovement);
         anim.SetBool("isIdle", currentMovementZ == 0);
         anim.SetBool("isDodge", playerMovement.IsDodging);
+
+        if(playerMovement.PlungeGaSih == true)
+        {
+            StartCoroutine(PlungeAnimation());
+        }
+    }
+
+    IEnumerator PlungeAnimation()
+    {   
+        anim.SetTrigger("Spinning");
+        yield return new WaitForSeconds(.5f);
+        anim.SetTrigger("PlungeAtk");
     }
 
     private void HandleMovement(float horizontalInput, float verticalInput, bool verticalUp, bool verticalDown, bool horizontalLeft, bool horizontalRight)
@@ -141,4 +153,5 @@ public class PlayerAnimator : MonoBehaviour
     {
         return Input.GetKey(KeyCode.LeftShift) && currentMovementZ > 0;
     }
+
 }
