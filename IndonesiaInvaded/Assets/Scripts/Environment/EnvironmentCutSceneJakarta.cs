@@ -23,6 +23,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     public Animator animasi;
 
     public Animator animasiPortal;
+    public Animator animationFadeInOut;
 
     [Header("Portal")]
 
@@ -38,6 +39,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     private bool isBeforePortalCutsceneActive = false;
     private bool isAfterPortalCutsceneActive = false;
+    private bool canEscapeCutscene = false;
     // Start is called before the first frame update
 
     private void Awake()
@@ -49,7 +51,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     void Update()
     {
         //Jika sedang play coroutine, jika player menekan tombol maka akan muncul tombol skip
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (canEscapeCutscene && Input.GetKeyDown(KeyCode.Escape))
         {
             if (isCameraTrigActive)
             {
@@ -196,7 +198,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         cutSceneAfterPortal.SetActive(true);
 
         isAfterPortalCutsceneActive = true;
-
+        canEscapeCutscene = false;
         foreach (GameObject go in gameObjectsOff)
         {
             go.SetActive(false);
@@ -212,7 +214,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         cutSceneAfterPortal.SetActive(false);
 
         isAfterPortalCutsceneActive = false;
-
+        canEscapeCutscene = true;
         foreach (GameObject go in gameObjectsOff)
         {
             go.SetActive(true);
@@ -226,7 +228,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         cutSceneBeforePortal.SetActive(false);
 
         isBeforePortalCutsceneActive = false;
-
+        canEscapeCutscene = true;
         foreach (GameObject go in gameObjectsOff)
         {
             go.SetActive(true);
@@ -245,7 +247,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         cutSceneBeforePortal.SetActive(true);
 
         isBeforePortalCutsceneActive = true;
-
+        canEscapeCutscene = false;
         foreach (GameObject go in gameObjectsOff)
         {
             go.SetActive(false);
@@ -261,9 +263,13 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     IEnumerator BossDelay()
     {
+        canEscapeCutscene = false;
+        animationFadeInOut.SetTrigger("End");
+        yield return new WaitForSeconds(3);
         CutSceneBeforePortal();
         yield return new WaitForSeconds(26);
         AudioManager._instance.PlayBackgroundMusicWithTransition("Win", 0, 1f);
+        animationFadeInOut.SetTrigger("Start");
         CutSceneMonas();
     }
 
