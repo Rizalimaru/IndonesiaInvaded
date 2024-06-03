@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossCutsceneCamera: MonoBehaviour
 {
+    
     [Header("Transform Camera")]
     public GameObject cameraEnt;
     public GameObject cameraPly;
@@ -19,10 +20,15 @@ public class BossCutsceneCamera: MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+       
+
+    }
+
+    public void TriggerSpawnBoss()
+    {
         Invoke("CameraTrig", 0.1f);
         gameObject.SetActive(false);
         Invoke("CameraBack", 3);
-
     }
 
     private void CameraTrig()

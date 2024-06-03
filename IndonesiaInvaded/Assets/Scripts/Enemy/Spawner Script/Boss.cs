@@ -107,7 +107,7 @@ public class Boss : MonoBehaviour
 
         if (other.CompareTag("Sword") && isAttacking && health > 0 && castingSkill == false)
         {
-            CameraShaker.instance.CameraShake(0.5f, 0.1f);
+            CameraShaker.instance.CameraShake(5f, 0.1f);
 
             AudioManager._instance.PlayBossHitSFX("BossHit", 0);
             AudioManager._instance.PlaySFX("EnemyHit",0);
@@ -122,7 +122,7 @@ public class Boss : MonoBehaviour
 
         if (other.CompareTag("RangedCollider") && isAttacking && health > 0 && castingSkill == false)
         {
-            CameraShaker.instance.CameraShake(0.5f, 0.1f);
+            CameraShaker.instance.CameraShake(5f, 0.1f);
 
             AudioManager._instance.PlayBossHitSFX("BossHit", 0);
             AudioManager._instance.PlaySFX("EnemyHit",0);

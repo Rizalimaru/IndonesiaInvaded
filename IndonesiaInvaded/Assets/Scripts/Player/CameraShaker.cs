@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cinemachine;
 using System.Collections;
+using System;
 
 public class CameraShaker : MonoBehaviour
 {   
@@ -37,5 +38,10 @@ public class CameraShaker : MonoBehaviour
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
             }
         }
+    }
+
+    public static implicit operator CameraShaker(ThirdPersonCam v)
+    {
+        throw new NotImplementedException();
     }
 }
