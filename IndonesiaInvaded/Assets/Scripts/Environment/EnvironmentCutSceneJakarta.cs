@@ -53,12 +53,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         //Jika sedang play coroutine, jika player menekan tombol maka akan muncul tombol skip
         if (canEscapeCutscene && Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isCameraTrigActive)
-            {
-                CameraBack();
-                isCameraTrigActive = false;
-            }
-            else if (isBeforePortalCutsceneActive)
+            if (isBeforePortalCutsceneActive)
             {
                 CameraBackBeforePortal();
                 isBeforePortalCutsceneActive = false;
@@ -68,6 +63,12 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
                 CameraBackAfterPortal();
                 isAfterPortalCutsceneActive = false;
             }
+        }
+
+        if (isCameraTrigActive == true && Input.GetKeyDown(KeyCode.Escape))
+        {
+            CameraBack();
+            isCameraTrigActive = false;
         }
 
     }
