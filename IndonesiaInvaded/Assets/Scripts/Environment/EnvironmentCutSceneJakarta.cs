@@ -220,7 +220,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
             go.SetActive(false);
         }
 
-        Invoke("CameraBackBeforePortal", 26);
+        //Invoke("CameraBackBeforePortal", 26);
     }
 
     public void CutSceneBoss()
