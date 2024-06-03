@@ -9,7 +9,7 @@ public class SpawnerObject : MonoBehaviour
 
     public void Start()
     {
-        EnvironmentCutSceneJakarta.instance.CutScenePortal();
+        EnvironmentCutSceneJakarta.instance.CameraDelay();
     }
     
 

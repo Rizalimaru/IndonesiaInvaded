@@ -164,17 +164,6 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         ScoreManager.instance.SetTimeUpdating(true);
     }
 
-    private void CameraBackAfterPortal()
-    {
-        SetCursorVisibility(true);
-        mainCamera.SetActive(true);
-        cutSceneAfterPortal.SetActive(false);
-
-        foreach (GameObject go in gameObjectsOff)
-        {
-            go.SetActive(true);
-        }
-    }
     public void CutSceneAfterPortal()
     {
         SetCursorVisibility(false);
@@ -189,7 +178,18 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
         Invoke("CameraBackAfterPortal", 9);
     }
-    
+    private void CameraBackAfterPortal()
+    {
+        SetCursorVisibility(true);
+        mainCamera.SetActive(true);
+        cutSceneAfterPortal.SetActive(false);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(true);
+        }
+    }
+
     private void CameraBackBeforePortal()
     {
         SetCursorVisibility(true);
@@ -215,6 +215,18 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         }
 
         Invoke("CameraBackBeforePortal", 26);
+    }
+
+    public void CutSceneBoss()
+    {
+        StartCoroutine(BossDelay());
+    }
+
+    IEnumerator BossDelay()
+    {
+        CutSceneBeforePortal();
+        yield return new WaitForSeconds(1);
+        CutSceneMonas();
     }
 
     private void SetCursorVisibility(bool visible)
