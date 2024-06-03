@@ -225,7 +225,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     IEnumerator BossDelay()
     {
         CutSceneBeforePortal();
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(26);
         CutSceneMonas();
     }
 
