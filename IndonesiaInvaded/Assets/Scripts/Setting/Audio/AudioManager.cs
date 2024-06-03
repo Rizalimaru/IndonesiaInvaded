@@ -319,6 +319,22 @@ public class AudioManager : MonoBehaviour
             group.soundEffects[index].Stop();
         }
     }
+
+    // Fungsi untuk memainkan suara efek dengan rate 10% untuk boss yang kena hit 
+    public void PlaySFXWithChance(string groupName, int index, float chance)
+    {
+        if (Random.value <= chance)
+        {
+            PlaySFX(groupName, index);
+        }
+    }
+
+    // Example usage for boss hit with a 10% chance
+    public void PlayBossHitSFX(string groupName, int index)
+    {
+        PlaySFXWithChance(groupName, index, 0.1f);
+    }
+    
     #endregion
 
     #region Mute Functions

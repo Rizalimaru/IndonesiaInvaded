@@ -123,6 +123,8 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         cutSceneCameraPortal.SetActive(true);
         StartCoroutine(PortalDelay());
 
+        SkillManager.instance.ResetSkills();
+
 
         foreach (GameObject go in gameObjectsOff)
         {
@@ -144,6 +146,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     {
         SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
+        SkillManager.instance.ResetSkills();
         mainCamera.SetActive(false);
         cutSceneCameraMonas.SetActive(true);
         StartCoroutine(MonasDelay());
@@ -164,17 +167,6 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         ScoreManager.instance.SetTimeUpdating(true);
     }
 
-    private void CameraBackAfterPortal()
-    {
-        SetCursorVisibility(true);
-        mainCamera.SetActive(true);
-        cutSceneAfterPortal.SetActive(false);
-
-        foreach (GameObject go in gameObjectsOff)
-        {
-            go.SetActive(true);
-        }
-    }
     public void CutSceneAfterPortal()
     {
         SetCursorVisibility(false);
@@ -189,7 +181,18 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
         Invoke("CameraBackAfterPortal", 9);
     }
-    
+    private void CameraBackAfterPortal()
+    {
+        SetCursorVisibility(true);
+        mainCamera.SetActive(true);
+        cutSceneAfterPortal.SetActive(false);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(true);
+        }
+    }
+
     private void CameraBackBeforePortal()
     {
         SetCursorVisibility(true);
@@ -215,6 +218,18 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         }
 
         Invoke("CameraBackBeforePortal", 26);
+    }
+
+    public void CutSceneBoss()
+    {
+        StartCoroutine(BossDelay());
+    }
+
+    IEnumerator BossDelay()
+    {
+        CutSceneBeforePortal();
+        yield return new WaitForSeconds(26);
+        CutSceneMonas();
     }
 
     private void SetCursorVisibility(bool visible)

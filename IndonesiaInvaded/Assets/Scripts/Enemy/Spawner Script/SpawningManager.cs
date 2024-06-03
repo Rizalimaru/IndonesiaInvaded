@@ -43,24 +43,26 @@ public class SpawningManager : MonoBehaviour
             Destroy(objectSelf, 3f);
 
             //Jika scene yang aktif adalah scene gameple1
-            if(SceneManager.GetActiveScene().name == "Gameplay1")
+            if(SceneManager.GetActiveScene().name == "Gameplay1" || SceneManager.GetActiveScene().name == "Level1")
             {
                 EnvironmentCutSceneJakarta.instance.CutSceneJakartaCount();
                 // Jika jumlah count cutsceneJakarta sama dengan 1 maka akan memanggil cutscene
                 if (EnvironmentCutSceneJakarta.instance.cutSceneJakarta == 6)
                 {
-                    EnvironmentCutSceneJakarta.instance.CameraDelay();
+                    EnvironmentCutSceneJakarta.instance.CutScenePortal();
+                    SkillManager.instance.ResetSkills();
                 }
             }
 
-            //Jika scene yang aktif adalah scene gameple2
-            if (SceneManager.GetActiveScene().name == "Gameplay2")
+            //Jika scene yang aktif adalah scene gameple2 atau scene gameplay3
+            if (SceneManager.GetActiveScene().name == "Gameplay2" || SceneManager.GetActiveScene().name == "Level2")
             {
                 EnvironmentCutSceneInvert.instance.CutSceneInvertCount();
                 // Jika jumlah count cutsceneInvert sama dengan 1 maka akan memanggil cutscene
                 if (EnvironmentCutSceneInvert.instance.cutSceneInvert == 5)
                 {
                     EnvironmentCutSceneInvert.instance.CutScenePortal();
+                    SkillManager.instance.ResetSkills();
                 }
             }
 
