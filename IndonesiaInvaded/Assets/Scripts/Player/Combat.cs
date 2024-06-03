@@ -152,6 +152,7 @@ public class Combat : MonoBehaviour
                 // Check if the current animation is "hit3" and its normalized time is >= 0.5
                 if (stateInfo.IsName("hit3") && stateInfo.normalizedTime >= 0.8f)
                 {
+                    AudioManager.Instance.PlaySFX("AttackPlayer", 2);
                     animator.SetBool("hit4", true);
                     hitSekarang = "hit4";
                     Debug.Log("Hit 4");
