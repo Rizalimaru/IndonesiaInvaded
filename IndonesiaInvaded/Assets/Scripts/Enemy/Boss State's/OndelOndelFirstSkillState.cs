@@ -9,6 +9,8 @@ public class OndelOndelFirstSkillState : BossBaseState
 
     public override void EnterState(BossStateManager boss)
     {
+        boss.bossObject.castingSkill = true;
+
         tempAccel = boss.bossObject.agent.acceleration;
         tempSpeed = boss.bossObject.agent.speed;
 
@@ -49,7 +51,9 @@ public class OndelOndelFirstSkillState : BossBaseState
             boss.bossObject.agent.acceleration = tempAccel;
 
             boss.bossObject.OndelStopSkill1();
-            
+
+            boss.bossObject.castingSkill = false;
+
             boss.SwitchState(boss.restState);
         }
     }

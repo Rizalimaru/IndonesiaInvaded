@@ -5,19 +5,20 @@ using UnityEngine.UI;
 
 public class BrightnessV2 : MonoBehaviour
 {
-    public VolumeProfile volumeProfile;
+    //variabel directional light
+    public Light directionalLight;
     public Slider brightnessSlider;
-    private ColorAdjustments colorAdjustments;
+    //private ColorAdjustments colorAdjustments;
     private const string brightnessLevelKey = "BrightnessLevel";
 
     void Start()
     {
-        if (!volumeProfile.TryGet(out colorAdjustments))
+
+        if (directionalLight == null)
         {
-            colorAdjustments = volumeProfile.Add<ColorAdjustments>();
+            // Jika directional light tidak diatur, tidak akan ada print error
+            Debug.LogError("Directional light is not set.");
         }
-        // Aktifkan efek Color Adjustments
-        colorAdjustments.active = true;
 
         float savedBrightness = PlayerPrefs.GetFloat(brightnessLevelKey, 0f);
 
@@ -42,11 +43,8 @@ public class BrightnessV2 : MonoBehaviour
 
     void SetBrightness(float value)
     {
-        // Konversi nilai slider ke dalam rentang [-1, 1]
-        float adjustedValue = Remap(value, brightnessSlider.minValue, brightnessSlider.maxValue, -1.5f, 0.5f);
-
         // Atur nilai kecerahan
-        colorAdjustments.postExposure.value = adjustedValue;
+        directionalLight.intensity = Remap(value, 0.2f, 1.5f, 0.2f, 1.5f);
     }
     
     // Metode untuk mengubah rentang nilai

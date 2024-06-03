@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SkillManager : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class SkillManager : MonoBehaviour
 
     [Header("Skill 1")]
     public Image skillImage1;
-    public float cooldown1 = 5;
+    public TMP_Text skill1CooldownText;
+    public float cooldown1 = 5.0f;
     private bool isCooldown1 = false;
     public KeyCode skill1Key;
     public float shakeDuration = 0.5f;
@@ -32,7 +34,8 @@ public class SkillManager : MonoBehaviour
 
     [Header("Skill 2")]
     public Image skillImage2;
-    public float cooldown2 = 8;
+    public TMP_Text skill2CooldownText;  
+    public float cooldown2 = 8.0f;
     private bool isCooldown2 = false;
     public KeyCode skill2Key;
     public GameObject ruler;
@@ -62,6 +65,8 @@ public class SkillManager : MonoBehaviour
         animator = GetComponent<Animator>();
         skillImage1.fillAmount = 0;
         skillImage2.fillAmount = 0;
+        skill1CooldownText.text = "";
+        skill2CooldownText.text = "";
     }
 
     private void Update()
@@ -146,11 +151,13 @@ public class SkillManager : MonoBehaviour
         while (cooldownTimer > 0)
         {
             skillImage1.fillAmount = cooldownTimer / cooldown1;
+            skill1CooldownText.text = Mathf.Ceil(cooldownTimer).ToString();
             cooldownTimer -= Time.deltaTime;
             yield return null;
         }
         isCooldown1 = false;
         skillImage1.fillAmount = 0;
+        skill1CooldownText.text = "";
     }
 
     private IEnumerator CooldownSkill2()
@@ -160,11 +167,13 @@ public class SkillManager : MonoBehaviour
         while (cooldownTimer > 0)
         {
             skillImage2.fillAmount = cooldownTimer / cooldown2;
+            skill2CooldownText.text = Mathf.Ceil(cooldownTimer).ToString();
             cooldownTimer -= Time.deltaTime;
             yield return null;
         }
         isCooldown2 = false;
         skillImage2.fillAmount = 0;
+        skill2CooldownText.text = "";
     }
 
     private void Skill1()
@@ -333,6 +342,8 @@ public class SkillManager : MonoBehaviour
         isCooldown2 = false;
         skillImage1.fillAmount = 0;
         skillImage2.fillAmount = 0;
+        skill1CooldownText.text = "";
+        skill2CooldownText.text = "";
         Debug.Log("Skills have been reset!");
     }
 }

@@ -43,7 +43,7 @@ public class BossRestState : BossBaseState
                 if (boss.bossObject.bossTitle == BossScriptableObject.title.OndelOndel) boss.SwitchState(boss.ondelFirstSkillState);
                 else boss.SwitchState(boss.dukunFirstSkillState);
             }
-            else if(boss.bossObject.secondSkillCounter >= 4)
+            else if(boss.bossObject.secondSkillCounter >= 5)
             {
                 if (boss.bossObject.bossTitle == BossScriptableObject.title.OndelOndel) boss.SwitchState(boss.ondelDashingState);
                 else boss.SwitchState(boss.dukunCastingState);

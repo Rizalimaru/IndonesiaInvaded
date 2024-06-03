@@ -8,6 +8,10 @@ public class BossCutsceneCamera: MonoBehaviour
     public GameObject cameraEnt;
     public GameObject cameraPly;
 
+    [Header("Object Off")]
+
+    public GameObject[] objectOff;
+
     [Header("Animasi Trigger")]
     public Animator animasi;
 
@@ -27,12 +31,20 @@ public class BossCutsceneCamera: MonoBehaviour
 
     private void CameraTrig()
     {
+        foreach (GameObject obj in objectOff)
+        {
+            obj.SetActive(false);
+        }
         cameraEnt.SetActive(true);
         cameraPly.SetActive(false);
     }
 
     private void CameraBack()
     {
+        foreach (GameObject obj in objectOff)
+        {
+            obj.SetActive(true);
+        }
         cameraEnt.SetActive(false);
         cameraPly.SetActive(true);
     }
