@@ -48,6 +48,7 @@ public class BossSpawner : MonoBehaviour
             UI_PauseGame.instance.HPBarOndelOndel.SetActive(true);
 
             Invoke("isFinishedEnabler", 2f);
+            col.gameObject.SetActive(false);
         }
     }
 

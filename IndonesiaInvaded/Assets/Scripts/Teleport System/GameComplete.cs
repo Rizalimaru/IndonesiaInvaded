@@ -43,6 +43,7 @@ public class GameComplete : MonoBehaviour
         {
 
             EnvironmentCutSceneJakarta.instance.CutSceneAfterPortal();
+            yield return new WaitForSeconds(9);
             UI_ResultGame.instance.ShowResult();
             UI_PauseGame.instance.ShowResult();
 
