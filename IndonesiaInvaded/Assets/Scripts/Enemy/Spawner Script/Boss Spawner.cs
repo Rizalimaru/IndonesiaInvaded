@@ -48,16 +48,21 @@ public class BossSpawner : MonoBehaviour
             UI_PauseGame.instance.HPBarOndelOndel.SetActive(true);
 
             Invoke("isFinishedEnabler", 2f);
+
+            col.gameObject.SetActive(false); // --> Make sure no double spawning
         }
     }
 
+    // probably wont be needed anymore
+
+    /**
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             col.enabled = false;
         }
-    }
+    } **/
 
     private void SpawnEnemy(Boss bossToSpawn, Vector3 spawnPos)
     {

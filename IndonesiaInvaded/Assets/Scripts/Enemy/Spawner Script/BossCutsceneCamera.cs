@@ -19,7 +19,8 @@ public class BossCutsceneCamera: MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Invoke("CameraTrig", 0.1f);
+        CameraTrig();
+        //Invoke("CameraTrig", 0.1f);
         gameObject.SetActive(false);
         Invoke("CameraBack", 3);
 
