@@ -63,6 +63,12 @@ public class SkillManager : MonoBehaviour
 
     }
 
+    public bool IsRoarSkill
+    {
+        get { return isRoarSkill; }
+        private set { isRoarSkill = value; }
+    }
+
     private void Start()
     {
         colid = GetComponent<Collider>();
@@ -249,6 +255,7 @@ public class SkillManager : MonoBehaviour
 
     private IEnumerator MoveToEnemyAfterCharge()
     {
+        PlayerMovement.instance.canMove = false; // Disable normal movement
         yield return new WaitForSeconds(.5f);
         LookAtEnemy();
         Vector3 startPosition = player.position;
@@ -267,14 +274,17 @@ public class SkillManager : MonoBehaviour
         }
         player.position = targetPosition;
         if (player.position == targetPosition)
-        {   
+        {
             isRoarSkill = true;
             SpawnSmashExplosion();
             SpawnRoarCollider();
         }
         yield return new WaitForSeconds(2f);
         isRoarSkill = false;
+
+        PlayerMovement.instance.canMove = true; // Re-enable normal movement
     }
+
 
     private IEnumerator DelayToCharge(float delay)
     {
@@ -305,13 +315,13 @@ public class SkillManager : MonoBehaviour
         }
     }
 
-    void SpawnRoarCollider()
+    public void SpawnRoarCollider()
     {
         GameObject roarCollider = Instantiate(SkillRoarCollider, player.position, player.rotation) as GameObject;
         Destroy(roarCollider, destroyTimeColliderRoar);
     }
 
-    void SpawnSmashExplosion()
+    public void SpawnSmashExplosion()
     {
         AudioManager._instance.PlaySFX("Skillplayer", 2);
 
