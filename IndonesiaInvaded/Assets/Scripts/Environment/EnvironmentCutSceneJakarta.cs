@@ -172,6 +172,9 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         cutSceneCameraMonas.SetActive(true);
         StartCoroutine(MonasDelay());
 
+        //Aktifkan can move player
+        PlayerMovement.instance.canMove = true;
+
         foreach (GameObject go in gameObjectsOff)
         {
             go.SetActive(false);
