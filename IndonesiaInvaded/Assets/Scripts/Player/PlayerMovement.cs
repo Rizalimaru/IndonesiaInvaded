@@ -361,18 +361,25 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator plungeAtk()
     {
+        AudioManager._instance.PlaySFX("PlungeAttack", 0);
         rb.AddForce(Vector3.up * 7f, ForceMode.Impulse);
         yield return new WaitForSeconds(.5f);
         rb.AddForce(Vector3.down * (gravity * 70), ForceMode.Acceleration);
         yield return new WaitForSeconds(.5f);
+        AudioManager._instance.PlaySFX("PlungeAttack", 1);
+        
+
         SpawnRoarCollider();
+        
         
     }
 
     void SpawnRoarCollider()
     {
+        
         GameObject roarCollider = Instantiate(SkillRoarCollider, transform.position, transform.rotation) as GameObject;
         Destroy(roarCollider, 3f);
+        
     }
     #endregion
 

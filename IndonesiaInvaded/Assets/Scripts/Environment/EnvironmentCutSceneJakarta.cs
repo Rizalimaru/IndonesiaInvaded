@@ -117,6 +117,8 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         cutSceneCameraPortal.SetActive(true);
         StartCoroutine(PortalDelay());
 
+        SkillManager.instance.ResetSkills();
+
 
         foreach (GameObject go in gameObjectsOff)
         {
@@ -137,6 +139,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     public void CutSceneMonas()
     {
         ScoreManager.instance.SetTimeUpdating(false);
+        SkillManager.instance.ResetSkills();
         mainCamera.SetActive(false);
         cutSceneCameraMonas.SetActive(true);
         StartCoroutine(MonasDelay());

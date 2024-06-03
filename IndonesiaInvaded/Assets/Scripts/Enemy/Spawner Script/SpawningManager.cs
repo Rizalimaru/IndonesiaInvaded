@@ -50,6 +50,7 @@ public class SpawningManager : MonoBehaviour
                 if (EnvironmentCutSceneJakarta.instance.cutSceneJakarta == 6)
                 {
                     EnvironmentCutSceneJakarta.instance.CutScenePortal();
+                    SkillManager.instance.ResetSkills();
                 }
             }
 
@@ -61,6 +62,7 @@ public class SpawningManager : MonoBehaviour
                 if (EnvironmentCutSceneInvert.instance.cutSceneInvert == 5)
                 {
                     EnvironmentCutSceneInvert.instance.CutScenePortal();
+                    SkillManager.instance.ResetSkills();
                 }
             }
 

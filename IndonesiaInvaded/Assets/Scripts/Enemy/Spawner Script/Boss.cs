@@ -89,6 +89,8 @@ public class Boss : MonoBehaviour
 
             AudioManager._instance.PlayBackgroundMusicWithTransition("Win", 0, 1f);
 
+            AudioManager._instance.PlayBossHitSFX("BossHit",1);
+
             EnvironmentCutSceneJakarta.instance.CutSceneMonas();
 
 
@@ -108,6 +110,9 @@ public class Boss : MonoBehaviour
         {
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
 
+            AudioManager._instance.PlayBossHitSFX("BossHit",0);
+            AudioManager._instance.PlaySFX("EnemyHit",0);
+
             Debug.Log("Damaged by Sword. Current health: " + health);
             spawnVfxhit();
             health -= 20;
@@ -118,6 +123,9 @@ public class Boss : MonoBehaviour
 
         if (other.CompareTag("RangedCollider") && isAttacking && health > 0 && castingSkill == false)
         {
+
+            AudioManager._instance.PlayBossHitSFX("BossHit",0);
+            AudioManager._instance.PlaySFX("EnemyHit",1);
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
 
             Debug.Log("Damaged by Sword. Current health: " + health);
@@ -133,6 +141,9 @@ public class Boss : MonoBehaviour
     {
         if (other.CompareTag("SkillRoarCollider") && health > 0 && castingSkill == false)
         {
+            AudioManager._instance.PlayBossHitSFX("BossHit",0);
+            AudioManager._instance.PlaySFX("EnemyHit",0);
+
             Debug.Log("Damaged by Roar. Current health: " + health);
             health -= 50;
             Debug.Log("Health after damage: " + health);
@@ -187,11 +198,14 @@ public class Boss : MonoBehaviour
     {
         Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
         meleeCollider.enabled = true;
+
+        Debug.Log("Ondel Skill 1 Activated");
     }
 
     public void OndelSkill2()
     {
         attackObject = GameObject.Instantiate(areaSkillPrefab, transform.position, transform.rotation) as GameObject;
+        Debug.Log("Ondel Skill 2 Activated");
     }
 
     public void OndelStopSkill1()
