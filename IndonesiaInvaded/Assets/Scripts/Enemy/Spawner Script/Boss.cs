@@ -88,9 +88,7 @@ public class Boss : MonoBehaviour
 
             AudioManager._instance.PlayBackgroundMusicWithTransition("Win", 0, 1f);
 
-            EnvironmentCutSceneJakarta.instance.CutSceneMonas();
-
-
+            EnvironmentCutSceneJakarta.instance.CutSceneBeforePortal();
         }
         
         if (isKnockedBack == true)

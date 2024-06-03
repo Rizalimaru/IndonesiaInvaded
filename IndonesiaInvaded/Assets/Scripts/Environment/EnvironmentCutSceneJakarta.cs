@@ -1,105 +1,138 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnvironmentCutSceneJakarta : MonoBehaviour
 {
+
     public static EnvironmentCutSceneJakarta instance;
 
     [Header("Camera")]
     public GameObject mainCamera;
-    public GameObject playerCamera;
     public GameObject cutSceneCamera;
     public GameObject cutSceneCameraPortal;
     public GameObject cutSceneCameraMonas;
-    public GameObject cutSceneBoss;
+    public GameObject cutSceneAfterPortal;
+    public GameObject cutSceneBeforePortal;
 
     [Header("GameObject and Animator")]
+
     public GameObject[] gameObjectsOff;
+
     public Animator animasi;
+
     public Animator animasiPortal;
-    public Animator animator;
 
     [Header("Portal")]
+
     public GameObject portal;
+
     public GameObject portalMonas;
 
     [Header("CutsceneTrigger")]
+
     public int cutSceneJakarta = 0;
+    // Start is called before the first frame update
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
+        //Jika sedang play coroutine, jika player menekan tombol maka akan muncul tombol skip
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             StopAllCoroutines();
-            RestoreMainCamera();
+            CameraBack();
         }
     }
 
     public void CameraDelay()
     {
-        TriggerCamera();
-        Invoke(nameof(RestoreMainCamera), 20);
+        CameraTrig();
+        Invoke("CameraBack", 20);
     }
 
-    private void TriggerCamera()
+    private void CameraTrig()
     {
+        SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
-        SetCameraState(mainCamera, false);
-        SetCameraState(cutSceneCamera, true);
+        mainCamera.SetActive(false);
+        cutSceneCamera.SetActive(true);
         animasi.SetTrigger("Cutscene");
-        SetGameObjectsActive(false);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(false);
+        }
     }
 
+    //menambahkan 1 variable cutsceneJakarta
     public void CutSceneJakartaCount()
     {
         cutSceneJakarta++;
     }
 
-    private void RestoreMainCamera()
+    private void CameraBack()
     {
-        SetCameraState(mainCamera, true);
-        SetCameraState(cutSceneCamera, false);
-        SetGameObjectsActive(true);
+        SetCursorVisibility(true);
+        mainCamera.SetActive(true);
+        cutSceneCamera.SetActive(false);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(true);
+        }
         ScoreManager.instance.SetTimeUpdating(true);
+
     }
 
-    private void RestorePortalCamera()
+    private void CameraBackPortal()
     {
-        SetCameraState(mainCamera, true);
-        SetCameraState(cutSceneCameraPortal, false);
-        SetGameObjectsActive(true);
+        SetCursorVisibility(true);
+        mainCamera.SetActive(true);
+        cutSceneCameraPortal.SetActive(false);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(true);
+        }
     }
 
-    private void RestoreMonasCamera()
+    private void CameraBackMonas()
     {
-        SetCameraState(mainCamera, true);
-        SetCameraState(cutSceneCameraMonas, false);
-        SetGameObjectsActive(true);
+        SetCursorVisibility(true);
+        mainCamera.SetActive(true);
+        cutSceneCameraMonas.SetActive(false);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(true);
+        }
     }
 
-    public void PlayCutScenePortal()
+    public void CutScenePortal()
     {
+        SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
-        SetCameraState(mainCamera, false);
-        SetCameraState(cutSceneCameraPortal, true);
+        mainCamera.SetActive(false);
+        cutSceneCameraPortal.SetActive(true);
         StartCoroutine(PortalDelay());
-        SetGameObjectsActive(false);
-        Invoke(nameof(RestorePortalCamera), 2);
+
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(false);
+        }
+
+        Invoke("CameraBackPortal", 2);
     }
 
-    private IEnumerator PortalDelay()
+    IEnumerator PortalDelay()
     {
         yield return new WaitForSeconds(1);
         portal.SetActive(true);
@@ -107,17 +140,23 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         ScoreManager.instance.SetTimeUpdating(true);
     }
 
-    public void PlayCutSceneMonas()
+    public void CutSceneMonas()
     {
+        SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
-        SetCameraState(mainCamera, false);
-        SetCameraState(playerCamera, true);
-        SetCameraState(cutSceneCameraMonas, true);
+        mainCamera.SetActive(false);
+        cutSceneCameraMonas.SetActive(true);
         StartCoroutine(MonasDelay());
-        SetGameObjectsActive(false);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(false);
+        }
+
+        Invoke("CameraBackMonas", 4);
     }
 
-    private IEnumerator MonasDelay()
+    IEnumerator MonasDelay()
     {
         yield return new WaitForSeconds(2);
         portalMonas.SetActive(true);
@@ -125,35 +164,64 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         ScoreManager.instance.SetTimeUpdating(true);
     }
 
-    public void PlayCutSceneBeforePortal()
+    private void CameraBackAfterPortal()
     {
-        animator.SetTrigger("End");
-        ScoreManager.instance.SetTimeUpdating(false);
-        SetCameraState(mainCamera, false);
-        SetCameraState(playerCamera, false);
-        SetCameraState(cutSceneBoss, true);
-        SetGameObjectsActive(false);
-        animator.SetTrigger("Start");
-        Invoke(nameof(PlayCutSceneMonas), 26f);
-        ScoreManager.instance.SetTimeUpdating(true);
-    }
+        SetCursorVisibility(true);
+        mainCamera.SetActive(true);
+        cutSceneAfterPortal.SetActive(false);
 
-    private void SetCameraState(GameObject camera, bool state)
-    {
-        if (camera != null)
-        {
-            camera.SetActive(state);
-        }
-    }
-
-    private void SetGameObjectsActive(bool state)
-    {
         foreach (GameObject go in gameObjectsOff)
         {
-            if (go != null)
-            {
-                go.SetActive(state);
-            }
+            go.SetActive(true);
         }
     }
+    public void CutSceneAfterPortal()
+    {
+        SetCursorVisibility(false);
+        ScoreManager.instance.SetTimeUpdating(false);
+        mainCamera.SetActive(false);
+        cutSceneAfterPortal.SetActive(true);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(false);
+        }
+
+        Invoke("CameraBackAfterPortal", 9);
+    }
+    
+    private void CameraBackBeforePortal()
+    {
+        SetCursorVisibility(true);
+        mainCamera.SetActive(true);
+        cutSceneBeforePortal.SetActive(false);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(true);
+        }
+    }
+
+    public void CutSceneBeforePortal()
+    {
+        SetCursorVisibility(false);
+        ScoreManager.instance.SetTimeUpdating(false);
+        mainCamera.SetActive(false);
+        cutSceneBeforePortal.SetActive(true);
+
+        foreach (GameObject go in gameObjectsOff)
+        {
+            go.SetActive(false);
+        }
+
+        Invoke("CameraBackBeforePortal", 26);
+    }
+
+    private void SetCursorVisibility(bool visible)
+    {
+        Cursor.visible = visible;
+        Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
 }
+

@@ -39,6 +39,8 @@ public class GameComplete : MonoBehaviour
         playerCamera.SetActive(false);
         yield return new WaitForSeconds(1);
 
+        EnvironmentCutSceneJakarta.instance.CutSceneAfterPortal();
+
         UI_ResultGame.instance.ShowResult();
         UI_PauseGame.instance.ShowResult();
 
