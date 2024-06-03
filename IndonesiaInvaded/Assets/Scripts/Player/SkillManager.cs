@@ -121,13 +121,20 @@ public class SkillManager : MonoBehaviour
             }
         }
     }
+
+    public bool ApakahSedangSkillRoar
+    {
+        get { return isRoarSkill; }
+    }
     
 
     #region UsableSkill Function
     public void UseSkill1()
-    {
+    {   
+        bool SedangPakeRangeAtk = Input.GetKey(KeyCode.Mouse1);
+
         PlayerAttribut player = PlayerAttribut.instance;
-        if (player != null && !isCooldown1 && player.currentSP >= 30 && animator.GetBool("isGrounded"))
+        if (player != null && !isCooldown1 && player.currentSP >= 30 && animator.GetBool("isGrounded") && !SedangPakeRangeAtk)
         {
             animator.SetBool("RoarSkill", true);
             CameraShaker.instance.CameraShake(5f, 1f);
@@ -146,9 +153,11 @@ public class SkillManager : MonoBehaviour
     }
 
     public void UseSkill2()
-    {
+    {   
+        bool SedangPakeRangeAtk = Input.GetKey(KeyCode.Mouse1);
+
         PlayerAttribut player = PlayerAttribut.instance;
-        if (player != null && !isCooldown2 && player.currentSP >= 50)
+        if (player != null && !isCooldown2 && player.currentSP >= 50 && !SedangPakeRangeAtk)
         {
             AudioManager._instance.PlaySFX("Skillplayer", 3);
             skill2Active = true;

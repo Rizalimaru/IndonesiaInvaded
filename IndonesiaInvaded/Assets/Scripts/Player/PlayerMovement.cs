@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isStopping = false;
     public bool canMove = true;
     bool bisaPlungeAtk;
-    bool rangeAtkAktif;
+    bool SedangRange;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -101,7 +101,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Start()
     {   
-        skillManager = GetComponent<SkillManager>();
         combat = Combat.instance;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -115,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
         dodgeTimer = dodge_lastFrame.time;
     }
 
-
+#region  updateRegion
     private void Update()
     {
         // ground check
@@ -159,6 +158,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = Vector3.zero;
         }
     }
+#endregion
 
     private void MyInput()
     {
@@ -194,6 +194,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(Dodge());
         }
     }
+#region getBoolRegion
         public bool IsDodging
         {
             get { return isDodging; }
@@ -210,6 +211,11 @@ public class PlayerMovement : MonoBehaviour
         {
             get { return bisaPlungeAtk; }
         }
+        public bool SedangRangeAtk
+        {
+            get { return SedangRange; }
+        }
+#endregion
     private IEnumerator Dodge()
     {
         isDodging = true;
@@ -263,9 +269,10 @@ public class PlayerMovement : MonoBehaviour
         canDodge = true;
     }
 
-
+#region  stateHandleRegion
     private void StateHandler()
     {
+        bool SedangRange = Input.GetKey(rangedAtkKey);
         // Mode - Crouching
         if (Input.GetKey(crouchKey))
         {
@@ -274,7 +281,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Mode - Sprinting
-        else if (grounded && Input.GetKey(sprintKey) && !rangeAtkAktif)
+        else if (grounded && Input.GetKey(sprintKey) && !SedangRange)
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
@@ -300,6 +307,7 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.air;
         }
     }
+#endregion
 
     #region basic player movement
     private void MovePlayer()
