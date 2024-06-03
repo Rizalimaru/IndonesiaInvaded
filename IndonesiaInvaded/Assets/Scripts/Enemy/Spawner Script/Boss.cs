@@ -90,11 +90,11 @@ public class Boss : MonoBehaviour
 
             EnvironmentCutSceneJakarta.instance.CutSceneBeforePortal();
         }
-        
+        /**
         if (isKnockedBack == true)
         {
             Invoke("knockbackDelayCounter", knockbackDelay);
-        }
+        }**/
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -129,6 +129,7 @@ public class Boss : MonoBehaviour
             if (isKnockedBack == false)
             {
                 isKnockedBack = true;
+                Invoke("knockbackDelayCounter", knockbackDelay);
                 stateManager.SwitchState(stateManager.knockbackState);
             }
         }
