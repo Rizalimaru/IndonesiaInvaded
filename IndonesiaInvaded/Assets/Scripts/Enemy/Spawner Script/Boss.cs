@@ -88,7 +88,6 @@ public class Boss : MonoBehaviour
             {
                 AudioManager._instance.StopBackgroundMusicWithTransition("GameJakarta", 1f);
 
-                AudioManager._instance.PlayBackgroundMusicWithTransition("Win", 0, 1f);
 
                 EnvironmentCutSceneJakarta.instance.CutSceneBoss();
 
@@ -110,6 +109,9 @@ public class Boss : MonoBehaviour
         {
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
 
+            AudioManager._instance.PlayBossHitSFX("BossHit", 0);
+            AudioManager._instance.PlaySFX("EnemyHit",0);
+
             Debug.Log("Damaged by Sword. Current health: " + health);
             spawnVfxhit();
             health -= 20;
@@ -121,6 +123,9 @@ public class Boss : MonoBehaviour
         if (other.CompareTag("RangedCollider") && isAttacking && health > 0 && castingSkill == false)
         {
             CameraShaker.instance.CameraShake(0.5f, 0.1f);
+
+            AudioManager._instance.PlayBossHitSFX("BossHit", 0);
+            AudioManager._instance.PlaySFX("EnemyHit",0);
 
             Debug.Log("Damaged by Sword. Current health: " + health);
             spawnVfxhit();
@@ -135,6 +140,8 @@ public class Boss : MonoBehaviour
     {
         if (other.CompareTag("SkillRoarCollider") && health > 0 && castingSkill == false)
         {
+            AudioManager._instance.PlayBossHitSFX("BossHit", 0);
+            
             Debug.Log("Damaged by Roar. Current health: " + health);
             health -= 50;
             Debug.Log("Health after damage: " + health);

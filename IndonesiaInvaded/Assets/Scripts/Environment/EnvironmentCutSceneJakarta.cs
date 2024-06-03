@@ -33,6 +33,8 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     [Header("CutsceneTrigger")]
 
     public int cutSceneJakarta = 0;
+
+    private bool isCameraTrigActive = true;  
     // Start is called before the first frame update
 
     private void Awake()
@@ -44,11 +46,12 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     void Update()
     {
         //Jika sedang play coroutine, jika player menekan tombol maka akan muncul tombol skip
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape ) &&  isCameraTrigActive == true)
         {
-            StopAllCoroutines();
             CameraBack();
+            isCameraTrigActive = false;
         }
+
     }
 
     public void CameraDelay()
@@ -229,6 +232,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     {
         CutSceneBeforePortal();
         yield return new WaitForSeconds(26);
+        AudioManager._instance.PlayBackgroundMusicWithTransition("Win", 0, 1f);
         CutSceneMonas();
     }
 
