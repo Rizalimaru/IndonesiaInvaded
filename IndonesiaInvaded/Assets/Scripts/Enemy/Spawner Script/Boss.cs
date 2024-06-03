@@ -42,11 +42,11 @@ public class Boss : MonoBehaviour
     // Dukun Spesific Skill Declaration
     public GameObject enemyToSpawn;
     public GameObject secondAttackPrefab;
-    
+
     // Private Stuff
     private bool isAttacking = false;
     private GameObject attackObject;
-    
+
     public void Awake()
     {
         if (bossTitle == BossScriptableObject.title.OndelOndel)
@@ -54,10 +54,10 @@ public class Boss : MonoBehaviour
             enemyToSpawn = null;
             secondAttackPrefab = null;
         }
-        
+
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
-        
+
     }
     private void Start()
     {
@@ -84,12 +84,16 @@ public class Boss : MonoBehaviour
         if (health <= 0)
         {
             stateManager.SwitchState(stateManager.deadState);
+            if (bossTitle == BossScriptableObject.title.OndelOndel)
+            {
+                AudioManager._instance.StopBackgroundMusicWithTransition("GameJakarta", 1f);
 
-            AudioManager._instance.StopBackgroundMusicWithTransition("GameJakarta", 1f);
+                AudioManager._instance.PlayBackgroundMusicWithTransition("Win", 0, 1f);
 
-            AudioManager._instance.PlayBackgroundMusicWithTransition("Win", 0, 1f);
+                EnvironmentCutSceneJakarta.instance.CutSceneBeforePortal();
 
-            EnvironmentCutSceneJakarta.instance.CutSceneBeforePortal();
+            }
+
         }
         /**
         if (isKnockedBack == true)
@@ -150,7 +154,7 @@ public class Boss : MonoBehaviour
     }
 
     void spawnVfxhit()
-    {   
+    {
         Vector3 newPosition = transform.position + new Vector3(0, 1, 0);
         GameObject vfx = Instantiate(hitVFX, newPosition, Quaternion.identity);
         Destroy(vfx, .5f);

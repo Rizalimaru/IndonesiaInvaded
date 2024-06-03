@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameComplete : MonoBehaviour
 {
@@ -38,17 +39,31 @@ public class GameComplete : MonoBehaviour
         player.gameObject.SetActive(false);
         playerCamera.SetActive(false);
         yield return new WaitForSeconds(1);
+        if (SceneManager.GetActiveScene().name == "Gameplay1")
+        {
 
-        EnvironmentCutSceneJakarta.instance.CutSceneAfterPortal();
+            EnvironmentCutSceneJakarta.instance.CutSceneAfterPortal();
+            UI_ResultGame.instance.ShowResult();
+            UI_PauseGame.instance.ShowResult();
 
-        UI_ResultGame.instance.ShowResult();
-        UI_PauseGame.instance.ShowResult();
+            player.gameObject.SetActive(true);
+            playerCamera.SetActive(true);
 
-        player.gameObject.SetActive(true);
-        playerCamera.SetActive(true);
+            animator.SetTrigger("Start");
+            GameManager.instance.SaveGame();
+        }
+        else
+        {
+            UI_ResultGame.instance.ShowResult();
+            UI_PauseGame.instance.ShowResult();
 
-        animator.SetTrigger("Start");
-        GameManager.instance.SaveGame();
+            player.gameObject.SetActive(true);
+            playerCamera.SetActive(true);
+
+            animator.SetTrigger("Start");
+            GameManager.instance.SaveGame();
+        }
+
     }
 
 
