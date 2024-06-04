@@ -28,6 +28,7 @@ public class GameComplete : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            AudioManager._instance.StopAllBackgroundMusic();
             LevelManager.instance.OnCompleteLevel(levelNumber);
             StartCoroutine(NextLevel());
         }

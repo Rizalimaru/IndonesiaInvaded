@@ -83,6 +83,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     {
         SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
+        SkillManager.instance.ResetSkills();
         mainCamera.SetActive(false);
         cutSceneCamera.SetActive(true);
         animasi.SetTrigger("Cutscene");
@@ -139,6 +140,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public void CutScenePortal()
     {
+        SkillManager.instance.ResetSkills();
         SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
@@ -166,6 +168,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public void CutSceneMonas()
     {
+        SkillManager.instance.ResetSkills();
         SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
         SkillManager.instance.ResetSkills();
@@ -194,6 +197,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public void CutSceneAfterPortal()
     {
+        SkillManager.instance.ResetSkills();
         Debug.Log("Entering CutSceneAfterPortal method");
         SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
@@ -227,6 +231,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     private void CameraBackBeforePortal()
     {
+        SkillManager.instance.ResetSkills();
         SetCursorVisibility(true);
         mainCamera.SetActive(true);
         cutSceneBeforePortal.SetActive(false);

@@ -54,6 +54,7 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
 
     private void CameraTrig()
     {
+        SkillManager.instance.ResetSkills();
         
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
@@ -80,6 +81,7 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
     }
 
     public void CutScenePortal(){
+        SkillManager.instance.ResetSkills();
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
         cutSceneCameraPortal.SetActive(true);
