@@ -134,10 +134,10 @@ public class SkillManager : MonoBehaviour
         bool SedangPakeRangeAtk = Input.GetKey(KeyCode.Mouse1);
 
         PlayerAttribut player = PlayerAttribut.instance;
-        if (player != null && !isCooldown1 && player.currentSP >= 30 && animator.GetBool("isGrounded") && !SedangPakeRangeAtk)
+        if (player != null && !isCooldown1 && player.currentSP >= 30 && animator.GetBool("isGrounded") && !SedangPakeRangeAtk && PlayerMovement.instance.lagiKnock == false)
         {
             animator.SetBool("RoarSkill", true);
-            CameraShaker.instance.CameraShake(5f, .1f);
+            CameraShaker.instance.CameraShake(5f, 1f);
             SpawnRoarCollider();
             AudioManager._instance.PlaySFX("Skillplayer", 0);
             StartCoroutine(DelayToCharge(1.5f));
@@ -157,7 +157,7 @@ public class SkillManager : MonoBehaviour
         bool SedangPakeRangeAtk = Input.GetKey(KeyCode.Mouse1);
 
         PlayerAttribut player = PlayerAttribut.instance;
-        if (player != null && !isCooldown2 && player.currentSP >= 50 && !SedangPakeRangeAtk)
+        if (player != null && !isCooldown2 && player.currentSP >= 50 && !SedangPakeRangeAtk && PlayerMovement.instance.lagiKnock == false)
         {
             AudioManager._instance.PlaySFX("Skillplayer", 3);
             skill2Active = true;
