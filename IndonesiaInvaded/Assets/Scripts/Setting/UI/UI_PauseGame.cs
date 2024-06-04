@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+
 public class UI_PauseGame : MonoBehaviour
 {
 
@@ -33,8 +34,8 @@ public class UI_PauseGame : MonoBehaviour
     public GameObject gameObjectUI;
     public GameObject gameObjectOptions;
     public GameObject gameResult;
-    public GameObject HPBarOndelOndel;
-    public GameObject HPBarDukun;
+    public GameObject[] HPBarOndelOndel;
+    public GameObject[] HPBarDukun;
 
     [Header("-----------------------GameOver-----------------------")]
     public GameObject gameOver;
@@ -132,6 +133,22 @@ public class UI_PauseGame : MonoBehaviour
     public void ShowAudio()
     {
         ShowPanel(3);
+    }
+
+    public void ActiveBossHPBarOndel()
+    {
+        for (int i = 0; i < HPBarOndelOndel.Length; i++)
+        {
+            HPBarOndelOndel[i].SetActive(true);
+        }
+    }
+
+    public void DisableBossHPBarOndel()
+    {
+        for (int i = 0; i < HPBarOndelOndel.Length; i++)
+        {
+            HPBarOndelOndel[i].SetActive(false);
+        }
     }
 
 
