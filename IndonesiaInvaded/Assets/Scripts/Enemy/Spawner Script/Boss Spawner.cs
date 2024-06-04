@@ -35,7 +35,7 @@ public class BossSpawner : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            cutsceneCamera.TriggerSpawnBoss();
+            BossCutsceneCamera.instance.TriggerSpawnBoss();
 
             DissolveWall.instance.UnDissolveWallFunction();
 

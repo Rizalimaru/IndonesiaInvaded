@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class EnvironmentCutSceneJakarta : MonoBehaviour
 {
 
-    public static EnvironmentCutSceneJakarta instance;
+    public static EnvironmentCutSceneJakarta instance { get; private set; }
 
     [Header("Camera")]
     public GameObject mainCamera;
