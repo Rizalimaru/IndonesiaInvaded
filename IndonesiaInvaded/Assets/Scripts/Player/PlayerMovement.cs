@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
+    public GameObject GroundPoundVFX;
     bool readyToJump;
     public GameObject SkillRoarCollider;
 
@@ -158,6 +159,11 @@ public class PlayerMovement : MonoBehaviour
         if (isDodging)
         {
             rb.velocity = Vector3.zero;
+        }
+
+        if (sedangKnock)
+        {
+            knockShield = 100f;
         }
     }
 #endregion
@@ -372,12 +378,16 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         rb.AddForce(Vector3.down * (gravity * 70), ForceMode.Acceleration);
         yield return new WaitForSeconds(.5f);
+        SpawnGoundPundVFX();
         AudioManager._instance.PlaySFX("PlungeAttack", 1);
-        
-
         SpawnRoarCollider();
-        
-        
+    }
+
+    public void SpawnGoundPundVFX()
+    {
+
+        GameObject groundPound = Instantiate(GroundPoundVFX, transform.position, transform.rotation) as GameObject;
+        Destroy(groundPound, 2f);
     }
 
     void SpawnRoarCollider()
@@ -465,11 +475,12 @@ public class PlayerMovement : MonoBehaviour
         Collider other = collision.collider;
         if (other.CompareTag("BossMeleeCollider"))
         {
-            knockShield -= 20f;
+            knockShield -= 10f;
         }
         if (other.CompareTag("BossMeleeCollider") && sedangKnock == false && !isDodging && knockShield <= 20f)
         {   
             sedangKnock = true;
+            CameraShaker.instance.CameraShake(5f, 0.6f);
             ThirdPersonCam.instance.GetBisaRotasi = false;
             // Menentukan arah knockback berdasarkan posisi tabrakan
             Vector3 direction = (transform.position - collision.transform.position).normalized;
@@ -487,7 +498,6 @@ public class PlayerMovement : MonoBehaviour
         canMove = true;
         animator.SetBool("knocked", false);
         ThirdPersonCam.instance.GetBisaRotasi = true;
-        knockShield = 100f;
         sedangKnock = false;
     }
 

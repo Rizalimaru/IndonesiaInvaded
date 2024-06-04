@@ -49,7 +49,7 @@ public class BossSpawner : MonoBehaviour
                 wall[i].SetActive(true);
             }
 
-            UI_PauseGame.instance.HPBarOndelOndel.SetActive(true);
+            UI_PauseGame.instance.ActiveBossHPBarOndel();
 
             Invoke("isFinishedEnabler", 2f);
 
@@ -85,7 +85,7 @@ public class BossSpawner : MonoBehaviour
         int numCheck = GameObject.FindGameObjectsWithTag("Boss").Length;
         if(numCheck == 0)
         {
-            UI_PauseGame.instance.HPBarOndelOndel.SetActive(false);
+            UI_PauseGame.instance.DisableBossHPBarOndel();
             return true;
         }
         else
