@@ -32,7 +32,7 @@ public class ThirdPersonCam : MonoBehaviour
     public GameObject thirdPersonCam;
     public GameObject combatCam;
     public GameObject topDownCam;
-    bool bisaRotasi = true;
+    public bool bisaRotasi = true;
 
     public CameraStyle currentStyle;
     public enum CameraStyle

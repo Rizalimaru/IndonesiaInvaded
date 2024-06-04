@@ -138,6 +138,11 @@ public class Combat : MonoBehaviour
             return;
         }
 
+        if(PlayerMovement.instance.lagiKnock == true)
+        {
+            return;
+        }
+
         switch (currentHit)
         {
             case 0:
