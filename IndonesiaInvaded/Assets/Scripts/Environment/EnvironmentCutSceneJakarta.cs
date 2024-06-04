@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class EnvironmentCutSceneJakarta : MonoBehaviour
 {
 
-    public static EnvironmentCutSceneJakarta instance;
+    public static EnvironmentCutSceneJakarta instance { get; private set; }
 
     [Header("Camera")]
     public GameObject mainCamera;
@@ -23,6 +23,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     public Animator animasi;
 
     public Animator animasiPortal;
+    public Animator animationFadeInOut;
 
     [Header("Portal")]
 
@@ -34,7 +35,11 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public int cutSceneJakarta = 0;
 
-    private bool isCameraTrigActive = true;  
+    private bool isCameraTrigActive = true;
+
+    private bool isBeforePortalCutsceneActive = false;
+    private bool isAfterPortalCutsceneActive = false;
+    private bool canEscapeCutscene = false;
     // Start is called before the first frame update
 
     private void Awake()
@@ -46,7 +51,21 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     void Update()
     {
         //Jika sedang play coroutine, jika player menekan tombol maka akan muncul tombol skip
-        if (Input.GetKeyDown(KeyCode.Escape ) &&  isCameraTrigActive == true)
+        if (canEscapeCutscene && Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isBeforePortalCutsceneActive)
+            {
+                CameraBackBeforePortal();
+                isBeforePortalCutsceneActive = false;
+            }
+            else if (isAfterPortalCutsceneActive)
+            {
+                CameraBackAfterPortal();
+                isAfterPortalCutsceneActive = false;
+            }
+        }
+
+        if (isCameraTrigActive == true && Input.GetKeyDown(KeyCode.Escape))
         {
             CameraBack();
             isCameraTrigActive = false;
@@ -82,7 +101,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     private void CameraBack()
     {
-        SetCursorVisibility(true);
+        SetCursorVisibility(false);
         mainCamera.SetActive(true);
         cutSceneCamera.SetActive(false);
 
@@ -96,7 +115,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     private void CameraBackPortal()
     {
-        SetCursorVisibility(true);
+        SetCursorVisibility(false);
         mainCamera.SetActive(true);
         cutSceneCameraPortal.SetActive(false);
 
@@ -108,7 +127,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     private void CameraBackMonas()
     {
-        SetCursorVisibility(true);
+        SetCursorVisibility(false);
         mainCamera.SetActive(true);
         cutSceneCameraMonas.SetActive(false);
 
@@ -154,6 +173,9 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         cutSceneCameraMonas.SetActive(true);
         StartCoroutine(MonasDelay());
 
+        //Aktifkan can move player
+        PlayerMovement.instance.canMove = true;
+
         foreach (GameObject go in gameObjectsOff)
         {
             go.SetActive(false);
@@ -172,24 +194,31 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public void CutSceneAfterPortal()
     {
+        Debug.Log("Entering CutSceneAfterPortal method");
         SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
+        Debug.Log("Setting cutSceneAfterPortal active");
         cutSceneAfterPortal.SetActive(true);
 
+        isAfterPortalCutsceneActive = true;
+        canEscapeCutscene = false;
         foreach (GameObject go in gameObjectsOff)
         {
             go.SetActive(false);
         }
-
+        Debug.Log("Invoking CameraBackAfterPortal in 9 seconds");
         Invoke("CameraBackAfterPortal", 9);
     }
     private void CameraBackAfterPortal()
     {
+        Debug.Log("Returning from CutSceneAfterPortal");
         SetCursorVisibility(true);
         mainCamera.SetActive(true);
         cutSceneAfterPortal.SetActive(false);
 
+        isAfterPortalCutsceneActive = false;
+        canEscapeCutscene = true;
         foreach (GameObject go in gameObjectsOff)
         {
             go.SetActive(true);
@@ -202,6 +231,8 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
         mainCamera.SetActive(true);
         cutSceneBeforePortal.SetActive(false);
 
+        isBeforePortalCutsceneActive = false;
+        canEscapeCutscene = true;
         foreach (GameObject go in gameObjectsOff)
         {
             go.SetActive(true);
@@ -210,11 +241,17 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public void CutSceneBeforePortal()
     {
+        if (!PlayerMovement.instance.canMove)
+        {
+            PlayerMovement.instance.canMove = true;
+        }
         SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
         cutSceneBeforePortal.SetActive(true);
 
+        isBeforePortalCutsceneActive = true;
+        canEscapeCutscene = false;
         foreach (GameObject go in gameObjectsOff)
         {
             go.SetActive(false);
@@ -230,9 +267,13 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     IEnumerator BossDelay()
     {
+        canEscapeCutscene = false;
+        animationFadeInOut.SetTrigger("End");
+        yield return new WaitForSeconds(3);
         CutSceneBeforePortal();
         yield return new WaitForSeconds(26);
         AudioManager._instance.PlayBackgroundMusicWithTransition("Win", 0, 1f);
+        animationFadeInOut.SetTrigger("Start");
         CutSceneMonas();
     }
 

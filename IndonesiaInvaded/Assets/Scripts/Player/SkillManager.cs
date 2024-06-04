@@ -137,7 +137,7 @@ public class SkillManager : MonoBehaviour
         if (player != null && !isCooldown1 && player.currentSP >= 30 && animator.GetBool("isGrounded") && !SedangPakeRangeAtk)
         {
             animator.SetBool("RoarSkill", true);
-            CameraShaker.instance.CameraShake(5f, 1f);
+            CameraShaker.instance.CameraShake(5f, .1f);
             SpawnRoarCollider();
             AudioManager._instance.PlaySFX("Skillplayer", 0);
             StartCoroutine(DelayToCharge(1.5f));
