@@ -31,7 +31,7 @@ public class UI_PauseGame : MonoBehaviour
     [Header("-----------------------GameObjects-----------------------")]
 
     public GameObject gameObjectPause;
-    public GameObject gameObjectUI;
+    public GameObject[] gameObjectUI;
     public GameObject gameObjectOptions;
     public GameObject gameResult;
     public GameObject[] HPBarOndelOndel;
@@ -157,7 +157,10 @@ public class UI_PauseGame : MonoBehaviour
         AudioSetting.instance.PlayPauseSoundEffect();
         pauseAnimator.SetTrigger("pausein");
         gameObjectPause.SetActive(true);
-        gameObjectUI.SetActive(false);
+        for (int i = 0; i < gameObjectUI.Length; i++)
+        {
+            gameObjectUI[i].SetActive(false);
+        }
         playerCamera.SetActive(false);
         gameResult.SetActive(false);
 
@@ -210,7 +213,10 @@ public class UI_PauseGame : MonoBehaviour
     public void ShowResult()
     {
         gameResult.SetActive(true);
-        gameObjectUI.SetActive(false);
+        for (int i = 0; i < gameObjectUI.Length; i++)
+        {
+            gameObjectUI[i].SetActive(false);
+        }
         playerCamera.SetActive(false);
         gameOver.SetActive(false);
 
@@ -229,7 +235,10 @@ public class UI_PauseGame : MonoBehaviour
     public void HideResult()
     {
         gameResult.SetActive(false);
-        gameObjectUI.SetActive(true);
+        for (int i = 0; i < gameObjectUI.Length; i++)
+        {
+            gameObjectUI[i].SetActive(true);
+        }
         playerCamera.SetActive(true);
         gameOver.SetActive(false);
         Time.timeScale = 1f;
@@ -247,7 +256,10 @@ public class UI_PauseGame : MonoBehaviour
     public void CreditScene()
     {
         gameResult.SetActive(false);
-        gameObjectUI.SetActive(true);
+        for (int i = 0; i < gameObjectUI.Length; i++)
+        {
+            gameObjectUI[i].SetActive(true);
+        }
         playerCamera.SetActive(true);
         gameOver.SetActive(false);
         Time.timeScale = 1f;
@@ -263,7 +275,10 @@ public class UI_PauseGame : MonoBehaviour
     {
         pauseAnimator.SetTrigger("pauseout");
         gameObjectPause.SetActive(false);
-        gameObjectUI.SetActive(true);
+        for (int i = 0; i < gameObjectUI.Length; i++)
+        {
+            gameObjectUI[i].SetActive(true);
+        }
         playerCamera.SetActive(true);
         gameResult.SetActive(false);
         Time.timeScale = 1f;
@@ -281,7 +296,10 @@ public class UI_PauseGame : MonoBehaviour
         Scene_Loading.instance.LoadMainMenu();
         Time.timeScale = 1f;
         gameObjectPause.SetActive(false);
-        gameObjectUI.SetActive(false);
+        for (int i = 0; i < gameObjectUI.Length; i++)
+        {
+            gameObjectUI[i].SetActive(true);
+        }
         playerCamera.SetActive(true);
         gameResult.SetActive(false);
         gameOver.SetActive(false);

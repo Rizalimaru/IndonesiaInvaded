@@ -54,14 +54,14 @@ public class UI_HUDManagement : MonoBehaviour
 
     IEnumerator IdleTimer()
     {
-        // Tunggu selama idleTimeThreshold sebelum menyembunyikan UI
+        // Tunggu idleTimeThreshold sebelum menyembunyikan UI
         yield return new WaitForSeconds(idleTimeThreshold);
-
         // Sembunyikan semua UI
         foreach (var uiGroup in UIGroup)
         {
-            yield return StartCoroutine(FadeOut(uiGroup));
+            //yield return StartCoroutine(FadeOut(uiGroup));
             uiGroup.gameObject.SetActive(false);
+            uiGroup.alpha = 0;
         }
     }
 
