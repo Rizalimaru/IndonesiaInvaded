@@ -4,15 +4,10 @@ using UnityEngine;
 public class UI_HUDManagement : MonoBehaviour
 {
     [SerializeField] float idleTimeThreshold = 2f; // Waktu idle sebelum UI di sembunyikan
-    [SerializeField] GameObject uiHUD; // Referensi ke UI HUD yang akan di sembunyikan
-    [SerializeField] CanvasGroup UIGroup; // Komponen CanvasGroup untuk mengatur alpha
+    [SerializeField] GameObject[] uiHUD; // Referensi ke UI HUD yang akan di sembunyikan
+    [SerializeField] CanvasGroup[] UIGroup; // Komponen CanvasGroup untuk mengatur alpha
 
     private Coroutine idleCoroutine; // Coroutine untuk mengatur waktu idle
-
-    void Start()
-    {
-        // Langsung mengakses instance PlayerAnimator
-    }
 
     private void Update()
     {
@@ -26,7 +21,7 @@ public class UI_HUDManagement : MonoBehaviour
         if (isIdle && !isAttacking && !isAttacking2 && !isAttacking3 && !isJumping)
         {
             // Memulai atau melanjutkan coroutine hanya jika player sedang idle
-            if (UIGroup.alpha > 0 && UIGroup.alpha <= 1 && idleCoroutine == null)
+            if (idleCoroutine == null)
             {
                 idleCoroutine = StartCoroutine(IdleTimer());
             }
@@ -40,37 +35,35 @@ public class UI_HUDManagement : MonoBehaviour
                 idleCoroutine = null;
             }
 
-            // Tampilkan UI jika sedang idle
-            if (UIGroup.alpha == 0)
+            // Tampilkan UI jika player tidak sedang idle
+            foreach (var uiGroup in UIGroup)
             {
-                uiHUD.SetActive(true);
-                StartCoroutine(ShowUI());
+                if (uiGroup.alpha == 0)
+                {
+                    StartCoroutine(ShowUI(uiGroup));
+                }
             }
-
         }
     }
-    
-    IEnumerator ShowUI()
+
+    IEnumerator ShowUI(CanvasGroup canvasGroup)
     {
         // Mulai fadeIn
-        yield return StartCoroutine(FadeIn(UIGroup));
-
-        
+        yield return StartCoroutine(FadeIn(canvasGroup));
     }
 
     IEnumerator IdleTimer()
     {
-        // Tunggu selama idleTimeThreshold sebelum menyembunyikan UI
+        // Tunggu idleTimeThreshold sebelum menyembunyikan UI
         yield return new WaitForSeconds(idleTimeThreshold);
-        UIGroup.alpha = 0;
-
-        // Mulai fadeOut
-        //yield return StartCoroutine(FadeOut(UIGroup));
-        // Setelah fadeOut selesai, sembunyikan UI
-        uiHUD.SetActive(false);
+        // Sembunyikan semua UI
+        foreach (var uiGroup in UIGroup)
+        {
+            //yield return StartCoroutine(FadeOut(uiGroup));
+            uiGroup.gameObject.SetActive(false);
+            uiGroup.alpha = 0;
+        }
     }
-
-    
 
     IEnumerator FadeOut(CanvasGroup canvasGroup)
     {
@@ -85,9 +78,10 @@ public class UI_HUDManagement : MonoBehaviour
     IEnumerator FadeIn(CanvasGroup canvasGroup)
     {
         // Transisi fadeIn
+        canvasGroup.gameObject.SetActive(true);
         while (canvasGroup.alpha < 1)
         {
-            canvasGroup.alpha += Time.deltaTime*2;
+            canvasGroup.alpha += Time.deltaTime * 2;
             yield return null;
         }
     }
