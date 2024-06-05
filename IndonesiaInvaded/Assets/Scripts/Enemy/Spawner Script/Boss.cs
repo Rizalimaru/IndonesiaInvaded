@@ -45,6 +45,8 @@ public class Boss : MonoBehaviour
 
     // Private Stuff
     private bool isAttacking = false;
+
+    private bool AddScore = false;
     private GameObject attackObject;
 
     public void Awake()
@@ -88,7 +90,12 @@ public class Boss : MonoBehaviour
             {
                 AudioManager._instance.StopBackgroundMusicWithTransition("GameJakarta", 1f);
 
-
+                if (AddScore == false)
+                {
+                    AddScore = true;
+                    ScoreManager.instance.AddBossDefeats(1);
+                }
+                
                 EnvironmentCutSceneJakarta.instance.CutSceneBoss();
 
             }
