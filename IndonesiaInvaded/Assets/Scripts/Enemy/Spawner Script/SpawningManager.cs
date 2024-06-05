@@ -8,6 +8,8 @@ public class SpawningManager : MonoBehaviour
     public static SpawningManager instance;
 
     public GameObject[] wall;
+
+    public GameObject vfxSpawnEnemy;
     public List<Enemy> enemyType = new List<Enemy>();
     public Transform[] spawnPoint;
     public GameObject objectSelf;
@@ -85,9 +87,18 @@ public class SpawningManager : MonoBehaviour
 
             AudioManager._instance.TransitionToBattleMusic();
 
+            AudioManager._instance.PlaySFX("Teleport", 0);
+
             for (int i = 0; i < enemyType.Count; i++)
             {
                 SpawnEnemy(enemyType[i], spawnPoint[i].position);
+                
+                // tambah vfx hehe
+                Vector3 spawnPosition = new Vector3(spawnPoint[i].position.x, spawnPoint[i].position.y + 0.15f, spawnPoint[i].position.z);
+                vfxSpawnEnemy = Instantiate(vfxSpawnEnemy, spawnPosition, Quaternion.identity);
+
+                Destroy(vfxSpawnEnemy, 2f);
+
             }
 
 
@@ -120,6 +131,10 @@ public class SpawningManager : MonoBehaviour
         enemy.Agent.enabled = true;
 
     }
+
+    //spawn vfx spawn enemy
+
+
 
     private void isFinishedEnabler()
     {
