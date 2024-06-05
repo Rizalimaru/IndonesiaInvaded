@@ -156,6 +156,20 @@ public class Boss : MonoBehaviour
 
             BossHealthBar.instance.UpdateHealthBar(health);
         }
+
+        if (other.CompareTag("RangedCollider") && health > 0)
+        {   
+            CameraShaker.instance.CameraShake(3f, 0.1f);
+            AudioManager._instance.PlayBossHitSFX("BossHit", 0);
+            AudioManager._instance.PlaySFX("EnemyHit",0);
+
+            Debug.Log("Damaged by Ranged. Current health: " + health);
+            spawnVfxhit();
+            health -= 10;
+            Debug.Log("Health after damage: " + health);
+
+            BossHealthBar.instance.UpdateHealthBar(health);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

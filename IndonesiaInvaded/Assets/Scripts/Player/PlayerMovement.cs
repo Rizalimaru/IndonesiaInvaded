@@ -198,7 +198,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // start dodge
-        if (Input.GetKeyDown(dodgeKey))
+        if (Input.GetKeyDown(dodgeKey) && !isDodging)
         {   
             StartCoroutine(Dodge());
         }
