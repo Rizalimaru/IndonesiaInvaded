@@ -44,6 +44,10 @@ public class CheckPointManager : MonoBehaviour
     {
         animator.SetTrigger("End");
         yield return new WaitForSeconds(1);
+        if (!PlayerMovement.instance.canMove)
+        {
+            PlayerMovement.instance.canMove = true;
+        }
         PlayerAttribut.instance.ResetTotal();
         ScoreManager.instance.ResetScore();
         UI_PauseGame.instance.player.SetActive(true);
