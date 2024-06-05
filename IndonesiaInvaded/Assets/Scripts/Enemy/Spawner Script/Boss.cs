@@ -130,7 +130,7 @@ public class Boss : MonoBehaviour
             Debug.Log("Damaged by Sword. Current health: " + health);
             spawnVfxhit();
             health -= 10;
-            Debug.Log("Health after damage: " + health);
+            Debug.Log("Boss Kena Ranged: " + health);
 
             BossHealthBar.instance.UpdateHealthBar(health);
         }

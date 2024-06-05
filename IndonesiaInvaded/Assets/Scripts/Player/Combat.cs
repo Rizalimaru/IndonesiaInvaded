@@ -177,6 +177,7 @@ public class Combat : MonoBehaviour
                     hitSekarang = "hit4";
                     Debug.Log("Hit 4");
                     currentHit++;
+                    SuccessfulCombo();
                 }
                 else
                 {
