@@ -116,11 +116,6 @@ public class Boss : MonoBehaviour
             }
 
         }
-        /**
-        if (isKnockedBack == true)
-        {
-            Invoke("knockbackDelayCounter", knockbackDelay);
-        }**/
     }
 
     private void OnCollisionEnter(Collision collision)
