@@ -12,6 +12,7 @@ public class Boss : MonoBehaviour
     public Transform target;
     public GameObject attackPrefab;
     public Transform spawnPoint;
+    public GameObject hitVFX;
     [HideInInspector] public Animator playerAnimator;
 
     // Attribute Declaration
@@ -41,11 +42,13 @@ public class Boss : MonoBehaviour
     // Dukun Spesific Skill Declaration
     public GameObject enemyToSpawn;
     public GameObject secondAttackPrefab;
-    
+
     // Private Stuff
     private bool isAttacking = false;
+
+    private bool AddScore = false;
     private GameObject attackObject;
-    
+
     public void Awake()
     {
         if (bossTitle == BossScriptableObject.title.OndelOndel)
@@ -53,10 +56,10 @@ public class Boss : MonoBehaviour
             enemyToSpawn = null;
             secondAttackPrefab = null;
         }
-        
+
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
-        
+
     }
     private void Start()
     {
@@ -83,20 +86,26 @@ public class Boss : MonoBehaviour
         if (health <= 0)
         {
             stateManager.SwitchState(stateManager.deadState);
+            if (bossTitle == BossScriptableObject.title.OndelOndel)
+            {
+                AudioManager._instance.StopBackgroundMusicWithTransition("GameJakarta", 1f);
 
-            AudioManager._instance.StopBackgroundMusicWithTransition("GameJakarta", 1f);
+                if (AddScore == false)
+                {
+                    AddScore = true;
+                    ScoreManager.instance.AddBossDefeats(1);
+                }
+                
+                EnvironmentCutSceneJakarta.instance.CutSceneBoss();
 
-            AudioManager._instance.PlayBackgroundMusicWithTransition("Win", 0, 1f);
-
-            EnvironmentCutSceneJakarta.instance.CutSceneMonas();
-
+            }
 
         }
-        
+        /**
         if (isKnockedBack == true)
         {
             Invoke("knockbackDelayCounter", knockbackDelay);
-        }
+        }**/
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -105,10 +114,29 @@ public class Boss : MonoBehaviour
 
         if (other.CompareTag("Sword") && isAttacking && health > 0 && castingSkill == false)
         {
-            CameraShaker.instance.CameraShake(0.5f, 0.1f);
+            CameraShaker.instance.CameraShake(5f, 0.1f);
+
+            AudioManager._instance.PlayBossHitSFX("BossHit", 0);
+            AudioManager._instance.PlaySFX("EnemyHit",0);
 
             Debug.Log("Damaged by Sword. Current health: " + health);
+            spawnVfxhit();
             health -= 20;
+            Debug.Log("Health after damage: " + health);
+
+            BossHealthBar.instance.UpdateHealthBar(health);
+        }
+
+        if (other.CompareTag("RangedCollider") && isAttacking && health > 0 && castingSkill == false)
+        {
+            CameraShaker.instance.CameraShake(5f, 0.1f);
+
+            AudioManager._instance.PlayBossHitSFX("BossHit", 0);
+            AudioManager._instance.PlaySFX("EnemyHit",0);
+
+            Debug.Log("Damaged by Sword. Current health: " + health);
+            spawnVfxhit();
+            health -= 10;
             Debug.Log("Health after damage: " + health);
 
             BossHealthBar.instance.UpdateHealthBar(health);
@@ -119,6 +147,8 @@ public class Boss : MonoBehaviour
     {
         if (other.CompareTag("SkillRoarCollider") && health > 0 && castingSkill == false)
         {
+            AudioManager._instance.PlayBossHitSFX("BossHit", 0);
+            
             Debug.Log("Damaged by Roar. Current health: " + health);
             health -= 50;
             Debug.Log("Health after damage: " + health);
@@ -131,9 +161,17 @@ public class Boss : MonoBehaviour
             if (isKnockedBack == false)
             {
                 isKnockedBack = true;
+                Invoke("knockbackDelayCounter", knockbackDelay);
                 stateManager.SwitchState(stateManager.knockbackState);
             }
         }
+    }
+
+    void spawnVfxhit()
+    {
+        Vector3 newPosition = transform.position + new Vector3(0, 1, 0);
+        GameObject vfx = Instantiate(hitVFX, newPosition, Quaternion.identity);
+        Destroy(vfx, .5f);
     }
 
     public void knockbackDelayCounter()

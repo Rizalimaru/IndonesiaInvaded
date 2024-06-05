@@ -9,6 +9,7 @@ public class OndelOndelFirstSkillState : BossBaseState
 
     public override void EnterState(BossStateManager boss)
     {
+        AudioManager._instance.PlaySFX("SkillBoss",0);
         boss.bossObject.castingSkill = true;
 
         tempAccel = boss.bossObject.agent.acceleration;

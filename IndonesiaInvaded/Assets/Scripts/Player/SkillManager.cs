@@ -25,6 +25,9 @@ public class SkillManager : MonoBehaviour
     public Object SkillRoarCollider;
     public float destroyTimeColliderRoar = 1.5f;
     public GameObject smashExplosion;
+    bool isRoarSkill = false;
+    string playerLayer = "Player";
+    string enemyLayer = "Enemy";
 
     [Header("Slow Motion Effect")]
     private bool isSlowMotionActive = false;
@@ -57,6 +60,13 @@ public class SkillManager : MonoBehaviour
         {
             instance = this;
         }
+
+    }
+
+    public bool IsRoarSkill
+    {
+        get { return isRoarSkill; }
+        private set { isRoarSkill = value; }
     }
 
     private void Start()
@@ -74,6 +84,17 @@ public class SkillManager : MonoBehaviour
         DetectNearestEnemyForSkill();
         Skill1();
         Skill2();
+
+        int LayerPlayer = LayerMask.NameToLayer(playerLayer);
+        int LayerEnemy = LayerMask.NameToLayer(enemyLayer);
+
+        if(isRoarSkill)
+        {
+            Physics.IgnoreLayerCollision(LayerPlayer, LayerEnemy, true);
+        }else
+        {
+            Physics.IgnoreLayerCollision(LayerPlayer, LayerEnemy, false);
+        }
 
         if (nearestEnemy != null)
         {
@@ -100,13 +121,20 @@ public class SkillManager : MonoBehaviour
             }
         }
     }
+
+    public bool ApakahSedangSkillRoar
+    {
+        get { return isRoarSkill; }
+    }
     
 
     #region UsableSkill Function
     public void UseSkill1()
-    {
+    {   
+        bool SedangPakeRangeAtk = Input.GetKey(KeyCode.Mouse1);
+
         PlayerAttribut player = PlayerAttribut.instance;
-        if (player != null && !isCooldown1 && player.currentSP >= 30 && animator.GetBool("isGrounded"))
+        if (player != null && !isCooldown1 && player.currentSP >= 30 && animator.GetBool("isGrounded") && !SedangPakeRangeAtk && PlayerMovement.instance.lagiKnock == false)
         {
             animator.SetBool("RoarSkill", true);
             CameraShaker.instance.CameraShake(5f, 1f);
@@ -125,9 +153,11 @@ public class SkillManager : MonoBehaviour
     }
 
     public void UseSkill2()
-    {
+    {   
+        bool SedangPakeRangeAtk = Input.GetKey(KeyCode.Mouse1);
+
         PlayerAttribut player = PlayerAttribut.instance;
-        if (player != null && !isCooldown2 && player.currentSP >= 50)
+        if (player != null && !isCooldown2 && player.currentSP >= 50 && !SedangPakeRangeAtk && PlayerMovement.instance.lagiKnock == false)
         {
             AudioManager._instance.PlaySFX("Skillplayer", 3);
             skill2Active = true;
@@ -234,6 +264,7 @@ public class SkillManager : MonoBehaviour
 
     private IEnumerator MoveToEnemyAfterCharge()
     {
+        PlayerMovement.instance.canMove = false; // Disable normal movement
         yield return new WaitForSeconds(.5f);
         LookAtEnemy();
         Vector3 startPosition = player.position;
@@ -253,10 +284,16 @@ public class SkillManager : MonoBehaviour
         player.position = targetPosition;
         if (player.position == targetPosition)
         {
+            isRoarSkill = true;
             SpawnSmashExplosion();
             SpawnRoarCollider();
         }
+        yield return new WaitForSeconds(2f);
+        isRoarSkill = false;
+
+        PlayerMovement.instance.canMove = true; // Re-enable normal movement
     }
+
 
     private IEnumerator DelayToCharge(float delay)
     {
@@ -287,13 +324,13 @@ public class SkillManager : MonoBehaviour
         }
     }
 
-    void SpawnRoarCollider()
+    public void SpawnRoarCollider()
     {
         GameObject roarCollider = Instantiate(SkillRoarCollider, player.position, player.rotation) as GameObject;
         Destroy(roarCollider, destroyTimeColliderRoar);
     }
 
-    void SpawnSmashExplosion()
+    public void SpawnSmashExplosion()
     {
         AudioManager._instance.PlaySFX("Skillplayer", 2);
 

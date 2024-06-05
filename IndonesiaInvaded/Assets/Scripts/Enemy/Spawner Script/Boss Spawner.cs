@@ -5,6 +5,8 @@ public class BossSpawner : MonoBehaviour
 {
     public static SpawningManager instance;
 
+    private BossCutsceneCamera cutsceneCamera;
+
     public GameObject[] wall;
     public Boss bossObject;
     public Transform spawnPoint;
@@ -26,12 +28,14 @@ public class BossSpawner : MonoBehaviour
     private void Awake()
     {
         col = GetComponent<Collider>();
+        cutsceneCamera = FindObjectOfType<BossCutsceneCamera>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            BossCutsceneCamera.instance.TriggerSpawnBoss();
 
             DissolveWall.instance.UnDissolveWallFunction();
 
@@ -45,9 +49,11 @@ public class BossSpawner : MonoBehaviour
                 wall[i].SetActive(true);
             }
 
-            UI_PauseGame.instance.HPBarOndelOndel.SetActive(true);
+            UI_PauseGame.instance.ActiveBossHPBarOndel();
 
             Invoke("isFinishedEnabler", 2f);
+
+            col.enabled = false;
         }
     }
 
@@ -79,7 +85,7 @@ public class BossSpawner : MonoBehaviour
         int numCheck = GameObject.FindGameObjectsWithTag("Boss").Length;
         if(numCheck == 0)
         {
-            UI_PauseGame.instance.HPBarOndelOndel.SetActive(false);
+            UI_PauseGame.instance.DisableBossHPBarOndel();
             return true;
         }
         else

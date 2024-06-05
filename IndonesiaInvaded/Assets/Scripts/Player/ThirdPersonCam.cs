@@ -4,7 +4,8 @@ using UnityEngine;
 using Cinemachine;
 
 public class ThirdPersonCam : MonoBehaviour
-{
+{   
+    public static ThirdPersonCam instance { get; private set; }
     [Header("Keybinds")]
     public KeyCode LockCamera = KeyCode.LeftAlt;
     private KeyCode RangedAttackKey = KeyCode.Mouse1;
@@ -31,6 +32,7 @@ public class ThirdPersonCam : MonoBehaviour
     public GameObject thirdPersonCam;
     public GameObject combatCam;
     public GameObject topDownCam;
+    public bool bisaRotasi = true;
 
     public CameraStyle currentStyle;
     public enum CameraStyle
@@ -41,7 +43,8 @@ public class ThirdPersonCam : MonoBehaviour
     }
 
     private void Start()
-    {
+    {   
+        instance = this;
         vcam = GetComponent<CinemachineVirtualCamera>();
         animator = player.GetComponent<Animator>();
         skillManager = SkillManager.instance; // Initialize SkillManager instance
@@ -50,7 +53,7 @@ public class ThirdPersonCam : MonoBehaviour
     }
 
     private void Update()
-    {
+    {   
         bool RangeAtkAktif = Input.GetKey(RangedAttackKey); // Use GetKey to check if the key is being held down
         // Toggle cursor lock mode
         if (Input.GetKeyDown(LockCamera))
@@ -65,7 +68,8 @@ public class ThirdPersonCam : MonoBehaviour
 
         // Rotate orientation
         if (RangeAtkAktif)
-        {
+        {   
+            if (!bisaRotasi) return;
             DetectNearestEnemyForSkill(); // Update the nearest enemy
             if (nearestEnemy != null)
             {
@@ -75,14 +79,16 @@ public class ThirdPersonCam : MonoBehaviour
             }
         }
         else
-        {
+        {   
+            if (!bisaRotasi) return;
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
             orientation.forward = viewDir.normalized;
         }
 
         // Rotate player object
         if (currentStyle == CameraStyle.Basic || currentStyle == CameraStyle.Topdown)
-        {
+        {   
+            if (!bisaRotasi) return;
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
 
@@ -96,7 +102,8 @@ public class ThirdPersonCam : MonoBehaviour
             Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
             if (RangeAtkAktif && verticalInput < 0)
-            {
+            {   
+                if (!bisaRotasi) return;
                 // Ignore negative vertical input while RangeAtkAktif
                 inputDir = orientation.right * horizontalInput;
             }
@@ -105,7 +112,8 @@ public class ThirdPersonCam : MonoBehaviour
                 playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
         }
         else if (currentStyle == CameraStyle.Combat)
-        {
+        {   
+            if (!bisaRotasi) return;
             Vector3 dirToCombatLookAt = combatLookAt.position - new Vector3(transform.position.x, combatLookAt.position.y, transform.position.z);
             orientation.forward = dirToCombatLookAt.normalized;
 
@@ -206,5 +214,14 @@ public class ThirdPersonCam : MonoBehaviour
 
         nearestEnemy = nearest; // Set the nearest enemy as reference
     }
+    #endregion
+
+    #region Ambilbool
+    public bool GetBisaRotasi
+    {
+        get { return bisaRotasi; }
+        set { bisaRotasi = value; }
+    }
+
     #endregion
 }
