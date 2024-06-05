@@ -130,12 +130,18 @@ public class PlayerAttribut : MonoBehaviour
 
     public void ResetTotal()
     {
-        currentHealth = (maxHealth);
+        currentHealth = maxHealth;
+        currentSP = maxSP;
+
+        // Update the health and skill bars
         healthBar.SetMaxHealth(maxHealth);
         healthBar.SetHealth(currentHealth);
-
         skillBar.SetMaxSkill(maxSP);
         skillBar.SetSkill(currentSP);
+
+        // Restart health regeneration if needed
+        StartRegenerateHealth();
+
     }
 
 }
