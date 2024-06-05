@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     public GameObject attackPrefab;
     public Transform spawnPoint;
     public Animator playerAnimator;
+    
+
 
     // Attribute Declaration
     [HideInInspector] public float health;
@@ -32,10 +34,13 @@ public class Enemy : MonoBehaviour
 
     // Private Stuff
     private bool isAttacking = false;
+
+    private bool isDead = false;
     private GameObject attackObject;
 
     // VFX Stuff
     public GameObject hitVFX;
+    public GameObject deathVFX;
 
     public void Awake()
     {
@@ -62,6 +67,14 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             stateManager.SwitchState(stateManager.deadState);
+
+            //spawn vfx enemy dead
+            if (isDead == false)
+            {
+                isDead = true;
+                spawnVFXDead();
+                AudioManager._instance.PlaySFX("StateEnemy", 0);
+            }
             
         }
 
@@ -152,6 +165,14 @@ public class Enemy : MonoBehaviour
         Vector3 newPosition = transform.position + new Vector3(0, 1, 0);
         GameObject vfx = Instantiate(hitVFX, newPosition, Quaternion.identity);
         Destroy(vfx, .5f);
+    }
+
+    void spawnVFXDead()
+    {
+        Vector3 newPosition = transform.position + new Vector3(0, 0.6f, 0);
+        GameObject vfx = Instantiate(deathVFX, newPosition, Quaternion.Euler(-90, 0, 0));
+    
+        Destroy(vfx, 3f);
     }
 
 
