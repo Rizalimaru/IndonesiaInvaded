@@ -320,6 +320,20 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    //stop sfx group
+
+    public void StopSFXGroup(string groupName)
+    {
+        SoundEffectGroup group = System.Array.Find(audioSFXGroups, g => g.groupName == groupName);
+        if (group != null)
+        {
+            foreach (AudioSource sfx in group.soundEffects)
+            {
+                sfx.Stop();
+            }
+        }
+    }
+
     // Fungsi untuk memainkan suara efek dengan rate 10% untuk boss yang kena hit 
     public void PlaySFXWithChance(string groupName, int index, float chance)
     {
@@ -327,6 +341,13 @@ public class AudioManager : MonoBehaviour
         {
             PlaySFX(groupName, index);
         }
+    }
+
+    // Stop semua suara efek
+    public void StopSpesificSFX(){
+        StopSFXGroup("AttackPlayer");
+        StopSFXGroup("Skillplayer");
+        StopSFXGroup("RangedAttack");
     }
 
     // Example usage for boss hit with a 10% chance

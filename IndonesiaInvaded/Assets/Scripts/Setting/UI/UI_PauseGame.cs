@@ -307,6 +307,7 @@ public class UI_PauseGame : MonoBehaviour
         isLoadMainMenu = true; // Set isLoadMainMenu to true after calling LoadMenu()
         audioManagerInstance.StopAllBackgroundMusic();
         audioManagerInstance.ResumeSFX();
+        audioManagerInstance.StopSpesificSFX();
 
     }
 

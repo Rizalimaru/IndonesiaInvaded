@@ -21,6 +21,7 @@ public class PortalInstant : MonoBehaviour
 
     IEnumerator LoadLevel()
     {
+        AudioManager._instance.StopAllBackgroundMusic();
         animator.SetTrigger("End");
         player.gameObject.SetActive(false);
         playerCamera.SetActive(false);
