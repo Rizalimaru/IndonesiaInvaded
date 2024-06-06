@@ -25,6 +25,7 @@ public class SkillManager : MonoBehaviour
     public Object SkillRoarCollider;
     public float destroyTimeColliderRoar = 1.5f;
     public GameObject smashExplosion;
+    public GameObject groundPound;
     bool isRoarSkill = false;
     string playerLayer = "Player";
     string enemyLayer = "Enemy";
@@ -286,6 +287,7 @@ public class SkillManager : MonoBehaviour
         {
             isRoarSkill = true;
             SpawnSmashExplosion();
+            SpawnGroundPound();
             SpawnRoarCollider();
         }
         yield return new WaitForSeconds(2f);
@@ -328,6 +330,12 @@ public class SkillManager : MonoBehaviour
     {
         GameObject roarCollider = Instantiate(SkillRoarCollider, player.position, player.rotation) as GameObject;
         Destroy(roarCollider, destroyTimeColliderRoar);
+    }
+
+    public void SpawnGroundPound()
+    {
+        GameObject ground = Instantiate(groundPound, player.position, player.rotation) as GameObject;
+        Destroy(ground, 2f);
     }
 
     public void SpawnSmashExplosion()
