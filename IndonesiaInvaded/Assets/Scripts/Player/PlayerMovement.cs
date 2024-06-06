@@ -494,7 +494,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator ImuneTime()
     {
         canMove = false;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(4);
         canMove = true;
         animator.SetBool("knocked", false);
         ThirdPersonCam.instance.GetBisaRotasi = true;
