@@ -32,15 +32,8 @@ public class Combat : MonoBehaviour
 
     private void Awake()
     {   
+        instance = this;
         playerMovement = FindObjectOfType<PlayerMovement>();
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject); // Ensure only one instance of Combat exists
-        }
     }
 
     private void Start()
