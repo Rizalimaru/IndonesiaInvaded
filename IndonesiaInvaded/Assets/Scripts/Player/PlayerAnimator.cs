@@ -52,7 +52,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void UpdateGroundedStatus()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.8f, whatIsGround | whatIsGround2);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround | whatIsGround2);
     }
 
     private void UpdateAnimator()
