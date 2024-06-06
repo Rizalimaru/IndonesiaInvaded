@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
@@ -100,6 +101,20 @@ public class Boss : MonoBehaviour
 
             }
 
+            // Jikascene yang aktif adalah scene gameplay3 atau level 3
+            if (SceneManager.GetActiveScene().name == "Gameplay3" || SceneManager.GetActiveScene().name == "Level3")
+            {
+                AudioManager._instance.StopBackgroundMusicWithTransition("GameBandung", 1f);
+
+                AudioManager._instance.PlayBackgroundMusicWithTransition("Win",0,1f);
+
+                if (AddScore == false)
+                {
+                    AddScore = true;
+                    ScoreManager.instance.AddBossDefeats(7);
+                }
+            }
+
         }
         /**
         if (isKnockedBack == true)
@@ -137,7 +152,7 @@ public class Boss : MonoBehaviour
             Debug.Log("Damaged by Sword. Current health: " + health);
             spawnVfxhit();
             health -= 10;
-            Debug.Log("Health after damage: " + health);
+            Debug.Log("Boss Kena Ranged: " + health);
 
             BossHealthBar.instance.UpdateHealthBar(health);
         }
