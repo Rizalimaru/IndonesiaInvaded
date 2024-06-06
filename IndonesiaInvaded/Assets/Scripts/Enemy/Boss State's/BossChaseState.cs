@@ -23,7 +23,7 @@ public class BossChaseState : BossBaseState
             boss.bossObject.agent.SetDestination(boss.bossObject.target.transform.position);
             if (Vector3.Distance(boss.bossObject.spawnPoint.transform.position, boss.bossObject.target.transform.position) <= boss.bossObject.attackDistance)
             {
-                if(boss.comboCounter == 2)
+                if(boss.comboCounter == boss.comboThreshold)
                 {
                     boss.SwitchState(boss.comboState);
                 }

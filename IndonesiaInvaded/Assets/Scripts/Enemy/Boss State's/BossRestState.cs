@@ -38,7 +38,7 @@ public class BossRestState : BossBaseState
         }
         else
         {
-            if(boss.bossObject.firstSkillCounter >= 3)
+            if(boss.bossObject.firstSkillCounter >= 4)
             {
                 if (boss.bossObject.bossTitle == BossScriptableObject.title.OndelOndel) boss.SwitchState(boss.ondelFirstSkillState);
                 else boss.SwitchState(boss.dukunFirstSkillState);
@@ -56,7 +56,7 @@ public class BossRestState : BossBaseState
                 }
                 else
                 {
-                    if (boss.comboCounter == 2)
+                    if (boss.comboCounter == boss.comboThreshold)
                     {
                         boss.SwitchState(boss.comboState);
                     }

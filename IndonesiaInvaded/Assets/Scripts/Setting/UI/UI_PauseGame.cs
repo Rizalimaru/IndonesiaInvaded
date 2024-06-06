@@ -336,7 +336,6 @@ public class UI_PauseGame : MonoBehaviour
         {
             GameOver();
             isGameOver = true;
-            SpawningManager.instance.ResetSpawning();
         }
     }
 }

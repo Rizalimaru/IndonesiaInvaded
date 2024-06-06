@@ -23,8 +23,7 @@ public class BossCutsceneCamera: MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       
-
+        TriggerSpawnBoss();
     }
 
     public void TriggerSpawnBoss()

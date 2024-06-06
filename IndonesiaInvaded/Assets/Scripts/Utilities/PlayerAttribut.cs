@@ -48,18 +48,35 @@ public class PlayerAttribut : MonoBehaviour
         if (other.CompareTag("EnemyMeleeCollider"))
         {
             Debug.Log("Damaged by melee");
-            TakeDamage(10);
+            TakeDamage(25);
             StopRegenerateHealth();
         }
         else if (other.CompareTag("EnemyRangedCollider"))
         {
             Debug.Log("Damaged by ranged");
-            TakeDamage(5);
+            TakeDamage(10);
             StopRegenerateHealth();
         }
         else if (other.CompareTag("BossMeleeCollider") && PlayerMovement.instance.lagiKnock == false)
         {
             Debug.Log("Colliding with boss's hand");
+            TakeDamage(25);
+            StopRegenerateHealth();
+        }
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("DukunUltimate"))
+        {
+            Debug.Log("Explosion!");
+            TakeDamage(20);
+            StopRegenerateHealth();
+        }
+        else if (other.CompareTag("OndelUltimate"))
+        {
+            Debug.Log("Smashed!");
             TakeDamage(20);
             StopRegenerateHealth();
         }
