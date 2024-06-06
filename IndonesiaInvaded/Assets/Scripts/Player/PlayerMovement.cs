@@ -543,6 +543,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        AudioManager._instance.PlaySFX("StatePlayer", 2);
         exitingSlope = true;
 
         // reset y velocity
