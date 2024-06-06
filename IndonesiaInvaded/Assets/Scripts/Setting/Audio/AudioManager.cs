@@ -348,6 +348,9 @@ public class AudioManager : MonoBehaviour
         StopSFXGroup("AttackPlayer");
         StopSFXGroup("Skillplayer");
         StopSFXGroup("RangedAttack");
+        StopSFXGroup("SkillBoss");
+        StopSFXGroup("BossDukun");
+
     }
 
     // Example usage for boss hit with a 10% chance
@@ -435,12 +438,16 @@ public class AudioManager : MonoBehaviour
         PauseSoundEffectGroup("AttackPlayer");
         PauseSoundEffectGroup("Skillplayer");
         PauseSoundEffectGroup("RangedAttack");
+        PauseSoundEffectGroup("SkillBoss");
+        PauseSoundEffectGroup("BossDukun");
     }
 
     public void ResumeSFX(){
         ResumeSoundEffectGroup("AttackPlayer");
         ResumeSoundEffectGroup("Skillplayer");
         ResumeSoundEffectGroup("RangedAttack");
+        PauseSoundEffectGroup("SkillBoss");
+        PauseSoundEffectGroup("BossDukun");
     }
 
     #endregion
