@@ -21,6 +21,9 @@ public class OndelOndelSecondSkillState : BossBaseState
 
         delay = boss.bossObject.secondSkillAnimDelay;
         boss.bossObject.OndelCastSkill2();
+
+        AudioManager._instance.PlaySFX("SkillBoss",2);
+
     }
 
     public override void UpdateState(BossStateManager boss)

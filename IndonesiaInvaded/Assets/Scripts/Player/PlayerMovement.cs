@@ -231,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
 #endregion
     private IEnumerator Dodge()
     {
+        AudioManager._instance.PlaySFX("StatePlayer", 1);
         isDodging = true;
         canDodge = false;
 
@@ -542,6 +543,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        AudioManager._instance.PlaySFX("StatePlayer", 2);
         exitingSlope = true;
 
         // reset y velocity

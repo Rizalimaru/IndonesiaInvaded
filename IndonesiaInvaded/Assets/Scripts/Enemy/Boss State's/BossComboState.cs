@@ -25,6 +25,8 @@ public class BossComboState : BossBaseState
         if(boss.bossObject.bossTitle == BossScriptableObject.title.OndelOndel)
         {
             boss.bossObject.Attack();
+
+            AudioManager._instance.PlaySFX("SkillBoss", 1);
         }
         else
         {

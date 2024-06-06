@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Boss : MonoBehaviour
 {
@@ -114,7 +115,7 @@ public class Boss : MonoBehaviour
                 if (AddScore == false)
                 {
                     AddScore = true;
-                    ScoreManager.instance.AddBossDefeats(7);
+                    ScoreManager.instance.AddBossDefeats(1);
                 }
             }
 
@@ -212,9 +213,11 @@ public class Boss : MonoBehaviour
         {
             Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
             meleeCollider.enabled = true;
+            AudioManager._instance.PlaySFX("SkillBoss",3);
         }
         else
         {
+            AudioManager._instance.PlaySFX("BossDukun",0);
             attackObject = GameObject.Instantiate(attackPrefab, spawnPoint.transform.position, spawnPoint.rotation) as GameObject;
         }
     }
@@ -235,6 +238,7 @@ public class Boss : MonoBehaviour
     public void OndelSkill2()
     {
         attackObject = GameObject.Instantiate(areaSkillPrefab, transform.position, transform.rotation) as GameObject;
+
     }
 
     public void OndelCastSkill2()
@@ -247,6 +251,7 @@ public class Boss : MonoBehaviour
     public void DukunSpawning(Vector3 position)
     {
         Instantiate(enemyToSpawn, position, Quaternion.identity);
+        AudioManager._instance.PlaySFX("Teleport",0);
     }
 
     public bool CheckIfEnemySpawned()
@@ -266,6 +271,15 @@ public class Boss : MonoBehaviour
     public void DukunCombo()
     {
         Instantiate(comboAttackPrefab, target.position, Quaternion.identity);
+
+        StartCoroutine(SFXDukunCombo());
+
+    }
+
+    IEnumerator SFXDukunCombo()
+    {
+        yield return new WaitForSeconds(0.5f);
+        AudioManager._instance.PlaySFX("BossDukun",1);
     }
 
     public void Dukun2ndSkill()
