@@ -231,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
 #endregion
     private IEnumerator Dodge()
     {
+        AudioManager._instance.PlaySFX("StatePlayer", 1);
         isDodging = true;
         canDodge = false;
 
