@@ -19,40 +19,32 @@ public class UI_HUDManagement : MonoBehaviour
         bool isJumping = PlayerAnimator.instance.anim.GetBool("isJump");
 
         //Jika ada tag enemy atau boss yang terdeteksi dengan jarak 30, maka UI tidak akan hilang
-        if (GameObject.FindGameObjectWithTag("Enemy") || GameObject.FindGameObjectWithTag("Boss"))
+        if (!(GameObject.FindGameObjectWithTag("Enemy") || GameObject.FindGameObjectWithTag("Boss")))
         {
-            foreach (var uiGroup in UIGroup)
+            if (isIdle && !isAttacking && !isAttacking2 && !isAttacking3 && !isJumping)
             {
-                if (uiGroup.alpha == 0)
+                // Memulai atau melanjutkan coroutine hanya jika player sedang idle
+                if (idleCoroutine == null)
                 {
-                    StartCoroutine(ShowUI(uiGroup));
+                    idleCoroutine = StartCoroutine(IdleTimer());
                 }
             }
-        }
-
-        if (isIdle && !isAttacking && !isAttacking2 && !isAttacking3 && !isJumping)
-        {
-            // Memulai atau melanjutkan coroutine hanya jika player sedang idle
-            if (idleCoroutine == null)
+            else
             {
-                idleCoroutine = StartCoroutine(IdleTimer());
-            }
-        }
-        else
-        {
-            // Hentikan coroutine jika player sedang bergerak
-            if (idleCoroutine != null)
-            {
-                StopCoroutine(idleCoroutine);
-                idleCoroutine = null;
-            }
-
-            // Tampilkan UI jika player tidak sedang idle
-            foreach (var uiGroup in UIGroup)
-            {
-                if (uiGroup.alpha == 0)
+                // Hentikan coroutine jika player sedang bergerak
+                if (idleCoroutine != null)
                 {
-                    StartCoroutine(ShowUI(uiGroup));
+                    StopCoroutine(idleCoroutine);
+                    idleCoroutine = null;
+                }
+
+                // Tampilkan UI jika player tidak sedang idle
+                foreach (var uiGroup in UIGroup)
+                {
+                    if (uiGroup.alpha == 0)
+                    {
+                        StartCoroutine(ShowUI(uiGroup));
+                    }
                 }
             }
         }
