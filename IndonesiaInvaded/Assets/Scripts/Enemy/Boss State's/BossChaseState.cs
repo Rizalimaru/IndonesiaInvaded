@@ -18,10 +18,10 @@ public class BossChaseState : BossBaseState
 
     public override void UpdateState(BossStateManager boss)
     {
-        if (Vector3.Distance(boss.bossObject.spawnPoint.transform.position, boss.bossObject.target.transform.position) <= boss.bossObject.triggerDistance)
+        if (Vector3.Distance(boss.bossObject.spawnPoint.transform.position, boss.bossObject.target.transform.position) < boss.bossObject.triggerDistance)
         {
             boss.bossObject.agent.SetDestination(boss.bossObject.target.transform.position);
-            if (Vector3.Distance(boss.bossObject.spawnPoint.transform.position, boss.bossObject.target.transform.position) <= boss.bossObject.attackDistance)
+            if (Vector3.Distance(boss.bossObject.spawnPoint.transform.position, boss.bossObject.target.transform.position) < boss.bossObject.attackDistance)
             {
                 if(boss.comboCounter == boss.comboThreshold)
                 {

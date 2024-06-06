@@ -22,7 +22,9 @@ public class BossRepositionState : BossBaseState
 
         bool canSeePlayer = boss.bossObject.checkIfSeeTarget();
         float step = 8.0f * Time.deltaTime;
-        float enemyPlayerDistance = Vector3.Distance(boss.bossObject.agent.transform.position, boss.bossObject.target.transform.position);
+        float enemyPlayerDistance = Vector3.Distance(boss.bossObject.spawnPoint.transform.position, boss.bossObject.target.transform.position);
+
+        Debug.Log(enemyPlayerDistance);
 
         Vector3 facingDirection = Vector3.RotateTowards(boss.bossObject.agent.transform.forward, direction, step, 0.0f);
         boss.bossObject.agent.transform.rotation = Quaternion.LookRotation(facingDirection);
@@ -46,5 +48,6 @@ public class BossRepositionState : BossBaseState
         {
             boss.SwitchState(boss.idleState);
         }
+
     }
 }
