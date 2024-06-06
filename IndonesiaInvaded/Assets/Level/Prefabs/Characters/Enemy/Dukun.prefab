@@ -208,7 +208,8 @@ MonoBehaviour:
   castingSkill: 0
   areaSkillPrefab: {fileID: 2758741312045260975, guid: 2929034cd6f5f654a93963dbb4d5812e, type: 3}
   enemyToSpawn: {fileID: 4768682672980297416, guid: 13dc26992927a0849be728aa67a71fde, type: 3}
-  secondAttackPrefab: {fileID: 4425022424831837907, guid: 36bb1aa0bcb84674aaf04f2180b54ebd, type: 3}
+  comboAttackPrefab: {fileID: 4425022424831837907, guid: 36bb1aa0bcb84674aaf04f2180b54ebd, type: 3}
+  ultimateAttackPrefab: {fileID: 3728009630498622708, guid: a97d3dc01627f534f908bbb33c7c64f8, type: 3}
 --- !u!195 &5911005832494782111
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -244,6 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   comboCounter: 0
+  comboThreshold: 8
   bossObject: {fileID: 6130786873557239124}
   animator: {fileID: 443492389804674975}
 --- !u!95 &443492389804674975

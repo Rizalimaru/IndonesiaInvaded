@@ -27,6 +27,7 @@ public class BossStateManager : MonoBehaviour
 
     // Combo Counter
     [HideInInspector] public int comboCounter = 0;
+    public int comboThreshold;
 
     // Boss Declaration
     public Boss bossObject;
