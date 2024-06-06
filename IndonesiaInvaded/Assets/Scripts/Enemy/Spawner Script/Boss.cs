@@ -196,7 +196,7 @@ public class Boss : MonoBehaviour
 
     void spawnVfxhit()
     {
-        Vector3 newPosition = transform.position + new Vector3(0, 1, 0);
+        Vector3 newPosition = transform.position + new Vector3(-1, 1, 0);
         GameObject vfx = Instantiate(hitVFX, newPosition, Quaternion.identity);
         Destroy(vfx, .5f);
     }
