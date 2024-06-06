@@ -71,7 +71,13 @@ public class PlayerAttribut : MonoBehaviour
         if (other.CompareTag("DukunUltimate"))
         {
             Debug.Log("Explosion!");
-            TakeDamage(30);
+            TakeDamage(20);
+            StopRegenerateHealth();
+        }
+        else if (other.CompareTag("OndelUltimate"))
+        {
+            Debug.Log("Smashed!");
+            TakeDamage(20);
             StopRegenerateHealth();
         }
     }

@@ -29,7 +29,7 @@ public class BossRepositionState : BossBaseState
 
         if (canSeePlayer && enemyPlayerDistance <= boss.bossObject.attackDistance)
         {
-            if (boss.comboCounter == 2)
+            if (boss.comboCounter == boss.comboThreshold)
             {
                 boss.SwitchState(boss.comboState);
             }

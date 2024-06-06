@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -1424729721836203300}
   - component: {fileID: 6673337870323302869}
   m_Layer: 8
-  m_Name: Boss
+  m_Name: Ondel-Ondel
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,8 +87,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.8594475, y: 6.559647, z: 2.0679328}
-  m_Center: {x: -0.054391794, y: 3.263573, z: 0.009692056}
+  m_Size: {x: 2.8594477, y: 7.3903837, z: 2.0679328}
+  m_Center: {x: -0.054391794, y: 3.6789412, z: 0.009692056}
 --- !u!195 &1073414049936348716
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -173,7 +173,8 @@ MonoBehaviour:
   castingSkill: 0
   areaSkillPrefab: {fileID: 2758741312045260975, guid: afa9959c7c9f77a4e9f27159e2fcaf3f, type: 3}
   enemyToSpawn: {fileID: 0}
-  secondAttackPrefab: {fileID: 0}
+  comboAttackPrefab: {fileID: 0}
+  ultimateAttackPrefab: {fileID: 0}
 --- !u!114 &3204808521129369661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   comboCounter: 0
+  comboThreshold: 3
   bossObject: {fileID: 7550197529966654154}
   animator: {fileID: 6094401513039441542}
 --- !u!114 &-1424729721836203300

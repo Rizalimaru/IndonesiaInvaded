@@ -56,7 +56,7 @@ public class BossRestState : BossBaseState
                 }
                 else
                 {
-                    if (boss.comboCounter == 2)
+                    if (boss.comboCounter == boss.comboThreshold)
                     {
                         boss.SwitchState(boss.comboState);
                     }

@@ -42,7 +42,8 @@ public class Boss : MonoBehaviour
 
     // Dukun Spesific Skill Declaration
     public GameObject enemyToSpawn;
-    public GameObject secondAttackPrefab;
+    public GameObject comboAttackPrefab;
+    public GameObject ultimateAttackPrefab;
 
     // Private Stuff
     private bool isAttacking = false;
@@ -54,8 +55,10 @@ public class Boss : MonoBehaviour
     {
         if (bossTitle == BossScriptableObject.title.OndelOndel)
         {
+            attackPrefab = null;
             enemyToSpawn = null;
-            secondAttackPrefab = null;
+            comboAttackPrefab = null;
+            ultimateAttackPrefab = null;
         }
 
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
@@ -234,12 +237,6 @@ public class Boss : MonoBehaviour
         attackObject = GameObject.Instantiate(areaSkillPrefab, transform.position, transform.rotation) as GameObject;
     }
 
-    public void OndelStopSkill1()
-    {
-        Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
-        meleeCollider.enabled = false;
-    }
-
     public void OndelCastSkill2()
     {
         Invoke("OndelSkill2", 1.8f);
@@ -268,12 +265,12 @@ public class Boss : MonoBehaviour
 
     public void DukunCombo()
     {
-        Instantiate(secondAttackPrefab, target.position, Quaternion.identity);
+        Instantiate(comboAttackPrefab, target.position, Quaternion.identity);
     }
 
     public void Dukun2ndSkill()
     {
-        GameObject zapObj = Instantiate(secondAttackPrefab);
+        GameObject zapObj = Instantiate(ultimateAttackPrefab);
         zapObj.transform.SetParent(transform);
         zapObj.transform.localPosition = new Vector3(Random.Range(-15, 15), 0, Random.Range(-15, 15));
     }
