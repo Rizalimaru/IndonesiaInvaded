@@ -35,6 +35,7 @@ public class WeaponBattleEquip : MonoBehaviour
         {
             // If hit1 animation is playing, show weapon    
                 ShowWeapon();
+                animator.SetBool("BattleState", true);
                 HideWeaponHolder();
                 timeSinceLastHit = 0f;
                 playerAttribute.StopRegenerateHealth();
@@ -48,6 +49,7 @@ public class WeaponBattleEquip : MonoBehaviour
                 if (timeSinceLastHit >= hideDelay)
                 {
                     HideWeapon();
+                    animator.SetBool("BattleState", false);
                     ShowWeaponHolder();
                     playerAttribute.StartRegenerateHealth();    
                 }
