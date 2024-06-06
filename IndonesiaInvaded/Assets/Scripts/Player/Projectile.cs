@@ -9,9 +9,15 @@ public class Projectile : MonoBehaviour
     private Vector3 targetDirection;
     private Transform spawnerTransform;
     private bool followSpawner = false;
+    private Collider projectileCollider;
 
     public float spinSpeed = 360f; // Degrees per second
 
+    void Start()
+    {
+        projectileCollider = GetComponent<Collider>();
+        projectileCollider.enabled = false;
+    }
     void Update()
     {
         if (isShooting)
@@ -33,7 +39,8 @@ public class Projectile : MonoBehaviour
     }
 
     public void Shoot()
-    {
+    {   
+        projectileCollider.enabled = true;
         GameObject enemy = FindClosestEnemy();
         if (enemy != null)
         {
