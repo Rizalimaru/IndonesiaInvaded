@@ -26,7 +26,7 @@ public class SpawningManager : MonoBehaviour
         col = GetComponent<Collider>();
 
     }
-    
+
     private void Start()
     {
         //mencari gameobject dengan tag Portal 
@@ -45,7 +45,7 @@ public class SpawningManager : MonoBehaviour
             Destroy(objectSelf, 3f);
 
             //Jika scene yang aktif adalah scene gameple1
-            if(SceneManager.GetActiveScene().name == "Gameplay1" || SceneManager.GetActiveScene().name == "Level1")
+            if (SceneManager.GetActiveScene().name == "Gameplay1" || SceneManager.GetActiveScene().name == "Level1")
             {
                 EnvironmentCutSceneJakarta.instance.CutSceneJakartaCount();
                 // Jika jumlah count cutsceneJakarta sama dengan 1 maka akan memanggil cutscene
@@ -70,11 +70,6 @@ public class SpawningManager : MonoBehaviour
 
             isCutSceneTriggered = true;
         }
-        
-        if (PlayerAttribut.instance.currentHealth <= 0)
-        {
-            ResetSpawning();
-        }
     }
 
 
@@ -92,7 +87,7 @@ public class SpawningManager : MonoBehaviour
             for (int i = 0; i < enemyType.Count; i++)
             {
                 SpawnEnemy(enemyType[i], spawnPoint[i].position);
-                
+
                 // tambah vfx hehe
                 Vector3 spawnPosition = new Vector3(spawnPoint[i].position.x, spawnPoint[i].position.y + 0.15f, spawnPoint[i].position.z);
                 vfxSpawnEnemy = Instantiate(vfxSpawnEnemy, spawnPosition, Quaternion.identity);
@@ -149,19 +144,39 @@ public class SpawningManager : MonoBehaviour
 
     public void ResetSpawning()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies)
+
+        // Reset enemy count
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             Destroy(enemy);
         }
 
-        for (int i = 0; i < wall.Length; i++)
+        // Reset walls
+        foreach (GameObject wallObject in wall)
         {
-            wall[i].SetActive(false);
+            wallObject.SetActive(false);
         }
 
-        isFinished = false;
-        isCutSceneTriggered = false;
+        // Reset spawn points
+        foreach (Transform spawnPointObject in spawnPoint)
+        {
+            spawnPointObject.gameObject.SetActive(false);
+        }
+
+        // Reset VFX
+        foreach (GameObject vfxObject in GameObject.FindGameObjectsWithTag("VFXSpawnEnemy"))
+        {
+            Destroy(vfxObject);
+        }
         col.enabled = true;
+        // Reset isFinished flag
+        isFinished = false;
+
+
+        // Reset isCutSceneTriggered flag
+        isCutSceneTriggered = false;
+
     }
+
+
 }
