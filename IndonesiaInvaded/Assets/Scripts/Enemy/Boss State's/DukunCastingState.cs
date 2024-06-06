@@ -18,7 +18,7 @@ public class DukunCastingState : BossBaseState
         boss.animator.SetBool("isStunned", false);
         boss.animator.SetBool("repositioning", false);
 
-        delay = 2f;
+        delay = 4f;
 
         boss.bossObject.OndelSkill2();
     }
