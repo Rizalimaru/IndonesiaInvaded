@@ -77,7 +77,7 @@ public class PlayerAttribut : MonoBehaviour
         else if (other.CompareTag("OndelUltimate"))
         {
             Debug.Log("Smashed!");
-            TakeDamage(20);
+            TakeDamage(50);
             StopRegenerateHealth();
         }
     }

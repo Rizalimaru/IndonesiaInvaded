@@ -258,7 +258,7 @@ public class Boss : MonoBehaviour
     {
         int checkerInt = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
-        if (checkerInt >= 8)
+        if (checkerInt >= 4)
         {
             return true;
         }
