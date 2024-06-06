@@ -29,7 +29,7 @@ public class RangeAtkManager : MonoBehaviour
         detectionRadius = projectile.GetComponent<Projectile>().detectionRadius;
         rangeAtkAktif = Input.GetKey(rangedAtkKey);
 
-        if (rangeAtkAktif)
+        if (rangeAtkAktif && PlayerMovement.instance.lagiKnock ==  false)
         {
             StartCoroutine(spawnerManager());
         }
