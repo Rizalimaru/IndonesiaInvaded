@@ -107,7 +107,17 @@ public class Combat : MonoBehaviour
     }
 
     void OnClick()
-    {
+    {   
+        if (animator.GetBool("RoarSkill") || playerMovement.IsDodging)
+        {   
+            return;
+        }
+
+        if(PlayerMovement.instance.lagiKnock == true)
+        {   
+            return;
+        }
+
         float currentTime = Time.time;
 
         if (currentTime - lastClickedTime > maxComboDelay)
@@ -127,7 +137,8 @@ public class Combat : MonoBehaviour
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (animator.GetBool("RoarSkill") || playerMovement.IsDodging)
-        {
+        {   
+            currentHit = 0;
             return;
         }
 
