@@ -21,6 +21,13 @@ public class AudioSettingMainMenu : MonoBehaviour
     private void Awake()
     {
         audioManagerInstance = AudioManager.Instance;
+        
+        audioManagerInstance.PlayBackgroundMusicWithTransition("Mainmenu", 0, 1f);
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
 
         if (audioManagerInstance != null)
         {
@@ -48,19 +55,16 @@ public class AudioSettingMainMenu : MonoBehaviour
             Debug.LogWarning("AudioManager instance not found.");
         }   
 
-    // Singleton pattern untuk instance
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void Start()
     { 
+        audioManagerInstance = AudioManager.Instance;
+        
+        if (Instance == null)
+        {
+            Instance = this;
+        }
         audioManagerInstance.PlayBackgroundMusicWithTransition("Mainmenu", 0, 1f);
     }
     
