@@ -16,6 +16,7 @@ public class PickUpOrb : MonoBehaviour
             PlayerAttribut player = other.GetComponent<PlayerAttribut>(); // Dapatkan komponen PlayerAttribut dari pemain yang menangkap orb
             if (player != null)
             {
+                AudioManager._instance.PlaySFX("DestructibleObject", 1); // Memainkan suara efek saat orb diambil
                 player.RegenHPOrb(hpAmount); // Panggil method RegenHPOrb pada pemain dengan jumlah HP yang sesuai
                 player.RegenSPOrb(spAmount); // Panggil method RegenSPOrb pada pemain dengan jumlah SP yang sesuai
                 Debug.Log("Player caught HP orb and gained SP!");
