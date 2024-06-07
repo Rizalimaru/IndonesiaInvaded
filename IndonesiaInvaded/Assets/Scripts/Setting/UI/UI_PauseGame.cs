@@ -334,8 +334,15 @@ public class UI_PauseGame : MonoBehaviour
     {
         if (PlayerAttribut.instance.currentHealth <= 0)
         {
-            GameOver();
-            isGameOver = true;
+            StartCoroutine(DelayEndGame());
+ 
         }
+    }
+
+    IEnumerator DelayEndGame()
+    {
+        yield return new WaitForSeconds(5f);
+        GameOver();
+        isGameOver = true;
     }
 }
