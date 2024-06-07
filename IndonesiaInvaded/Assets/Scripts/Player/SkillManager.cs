@@ -162,6 +162,7 @@ public class SkillManager : MonoBehaviour
         if (player != null && !isCooldown2 && player.currentSP >= 50 && !SedangPakeRangeAtk && PlayerMovement.instance.lagiKnock == false)
         {
             AudioManager._instance.PlaySFX("Skillplayer", 3);
+            AudioManager._instance.PlaySFX("PlayerDialog", 6);
             skill2Active = true;
             skill2Timer = 0f; // Reset the skill timer
             player.currentSP -= 50;

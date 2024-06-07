@@ -107,7 +107,17 @@ public class Combat : MonoBehaviour
     }
 
     void OnClick()
-    {
+    {   
+        if (animator.GetBool("RoarSkill") || playerMovement.IsDodging)
+        {   
+            return;
+        }
+
+        if(PlayerMovement.instance.lagiKnock == true)
+        {   
+            return;
+        }
+
         float currentTime = Time.time;
 
         if (currentTime - lastClickedTime > maxComboDelay)
@@ -127,7 +137,8 @@ public class Combat : MonoBehaviour
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (animator.GetBool("RoarSkill") || playerMovement.IsDodging)
-        {
+        {   
+            currentHit = 0;
             return;
         }
 
@@ -141,6 +152,7 @@ public class Combat : MonoBehaviour
         {
             case 0:
                 AudioManager.Instance.PlaySFX("AttackPlayer", 0);
+                AudioManager.Instance.PlaySFX("PlayerDialog", 0);
                 StartCoroutine(SpawnSlashVfx(-86,rotasiYplayer + 20,0, 0.3f));
                 animator.SetBool("hit1", true);
                 hitSekarang = "hit1";
@@ -149,6 +161,7 @@ public class Combat : MonoBehaviour
                 break;
             case 1:
                 AudioManager.Instance.PlaySFX("AttackPlayer", 1);
+                AudioManager.Instance.PlaySFX("PlayerDialog", 1);
                 StartCoroutine(SpawnSlashVfx(86,rotasiYplayer + 30, 239, 0.3f));
                 animator.SetBool("hit2", true);
                 hitSekarang = "hit2";
@@ -157,6 +170,7 @@ public class Combat : MonoBehaviour
                 break;
             case 2:
                 AudioManager.Instance.PlaySFX("AttackPlayer", 3);
+                AudioManager.Instance.PlaySFX("PlayerDialog", 2);
                 animator.SetBool("hit3", true);
                 hitSekarang = "hit3";
                 Debug.Log("Hit 3");
@@ -166,6 +180,7 @@ public class Combat : MonoBehaviour
                 if (stateInfo.IsName("hit3") && stateInfo.normalizedTime >= 0.8f)
                 {
                     AudioManager.Instance.PlaySFX("AttackPlayer", 3);
+                    AudioManager.Instance.PlaySFX("PlayerDialog", 3);
                     animator.SetBool("hit4", true);
                     hitSekarang = "hit4";
                     Debug.Log("Hit 4");
