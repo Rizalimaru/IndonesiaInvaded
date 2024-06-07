@@ -12,6 +12,7 @@ public class ZapUltimateScript : MonoBehaviour
         col = GetComponent<Collider>();
 
         Invoke("EnableCollider", 0.3f);
+        Invoke("DisableCollider", 0.5f);
 
         GameObject.Destroy(objectSelf, 2.5f);
     }
@@ -19,5 +20,10 @@ public class ZapUltimateScript : MonoBehaviour
     private void EnableCollider()
     {
         col.enabled = true;
+    }
+
+    private void DisableCollider()
+    {
+        col.enabled = false;
     }
 }
