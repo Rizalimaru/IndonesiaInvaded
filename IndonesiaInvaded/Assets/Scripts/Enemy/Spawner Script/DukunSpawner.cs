@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class DukunSpawner : MonoBehaviour
 {
-
-    public Transform sp;
-    public Boss obj;
+    public GameObject obj;
     private Collider col;
 
     private BossCutsceneCamera cam;
@@ -21,23 +19,22 @@ public class DukunSpawner : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            SpawnEnemy(obj);
+
             BossCutsceneCamera.instance.TriggerSpawnBoss();
 
             Debug.Log("Spawning Dukun");
-
-            SpawnEnemy(obj, sp.position);
 
             col.enabled = false;
         }
     }
 
-    private void SpawnEnemy(Boss bossToSpawn, Vector3 spawnPos)
+    private void SpawnEnemy(GameObject bossToSpawn)
     {
         Boss boss = bossToSpawn.GetComponent<Boss>();
 
-        Instantiate(boss, spawnPos, boss.transform.rotation);
+        bossToSpawn.gameObject.SetActive(true);
 
         boss.agent.enabled = true;
-
     }
 }
