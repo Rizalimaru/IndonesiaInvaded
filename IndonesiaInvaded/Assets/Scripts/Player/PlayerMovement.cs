@@ -232,6 +232,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator Dodge()
     {
         AudioManager._instance.PlaySFX("StatePlayer", 1);
+
         isDodging = true;
         canDodge = false;
 
@@ -375,6 +376,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator plungeAtk()
     {
         AudioManager._instance.PlaySFX("PlungeAttack", 0);
+        AudioManager._instance.PlaySFX("PlayerDialog", 7);
         rb.AddForce(Vector3.up * 7f, ForceMode.Impulse);
         yield return new WaitForSeconds(.5f);
         rb.AddForce(Vector3.down * (gravity * 70), ForceMode.Acceleration);
@@ -505,6 +507,7 @@ public class PlayerMovement : MonoBehaviour
 
     void playerKnockBack()
     {
+        AudioManager._instance.PlaySFX("PlayerDialog", 5);
         animator.SetTrigger("getHit");
 
         moveDirection = orientationForAtk.forward * -1f;
@@ -543,6 +546,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        AudioManager._instance.PlaySFX("PlayerDialog", 4);
         AudioManager._instance.PlaySFX("StatePlayer", 2);
         exitingSlope = true;
 
