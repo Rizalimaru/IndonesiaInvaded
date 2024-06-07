@@ -20,12 +20,12 @@ public class BossCutsceneCamera: MonoBehaviour
         GameObject bos = GameObject.Find("Boss");
         instance = this;
     }
-
+    /**
     private void OnTriggerEnter(Collider other)
     {
         TriggerSpawnBoss();
     }
-
+    **/
     public void TriggerSpawnBoss()
     {
         Invoke("CameraTrig", 0.1f);
