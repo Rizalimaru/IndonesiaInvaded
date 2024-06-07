@@ -63,8 +63,21 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    
+
+    
+
     private void Start()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
         // Set nilai AudioMixer berdasarkan PlayerPrefs
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(PlayerPrefs.GetFloat(MasterVolumeKey, 1f)) * 20);
         audioMixer.SetFloat("BackgroundMusic", Mathf.Log10(PlayerPrefs.GetFloat(BackgroundMusicKey, 1f)) * 20);
