@@ -59,10 +59,7 @@ public class UI_ControlMainMenu: MonoBehaviour
         {
             Instance = this;
         }
-        else
-        {
-            // Destroy(gameObject);
-        }
+
 
         mainMenu.EnableMenuAndAnimationButton();
 
@@ -72,7 +69,10 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     private void Start()
     {
-        
+        if(Instance == null)
+        {
+            Instance = this;
+        }
     }
 
     private void Update()
