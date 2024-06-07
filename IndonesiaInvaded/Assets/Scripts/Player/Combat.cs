@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 
 public class Combat : MonoBehaviour
-{
+{   
     public static event Action SuccessfulComboEvent; // Event to signal a successful combo
 
     private PlayerMovement playerMovement;

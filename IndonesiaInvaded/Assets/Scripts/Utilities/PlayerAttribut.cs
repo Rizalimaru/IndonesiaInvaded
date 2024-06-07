@@ -8,7 +8,7 @@ public class PlayerAttribut : MonoBehaviour
     // Singleton instance
     public static PlayerAttribut instance;
 
-    public Animator playerAnimator;
+    private Animator playerAnimator;
     public int maxHealth = 500;
     public int currentHealth;
     public int maxSP = 100;
@@ -45,7 +45,10 @@ public class PlayerAttribut : MonoBehaviour
         // }
 
         if (currentHealth <= 0)
-        {
+        {   
+            PlayerMovement.instance.enabled = false;
+            ThirdPersonCam.instance.GetBisaRotasi = false;
+            Combat.instance.enabled = false;
             playerAnimator.SetBool("Death", true);
         }
     }
