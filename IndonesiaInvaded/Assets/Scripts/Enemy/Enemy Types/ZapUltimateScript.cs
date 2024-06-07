@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class ZapUltimateScript : MonoBehaviour
 {
-
+    public GameObject objectSelf;
     public Collider col;
 
     private void Awake()
     {
         col = GetComponent<Collider>();
 
-        Invoke("EnableCollider", 1.5f);
+        Invoke("EnableCollider", 0.3f);
 
-        GameObject.Destroy(gameObject, 1.7f);
-
+        GameObject.Destroy(objectSelf, 2.5f);
     }
 
     private void EnableCollider()

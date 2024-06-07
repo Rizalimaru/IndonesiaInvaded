@@ -288,7 +288,7 @@ public class Boss : MonoBehaviour
     {
         GameObject zapObj = Instantiate(ultimateAttackPrefab);
         zapObj.transform.SetParent(transform);
-        zapObj.transform.localPosition = new Vector3(Random.Range(-15, 15), 0, Random.Range(-15, 15));
+        zapObj.transform.localPosition = new Vector3(Random.Range(-25, 25), 0, Random.Range(-25, 25));
     }
 
     // Other stuff
