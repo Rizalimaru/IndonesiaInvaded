@@ -48,6 +48,7 @@ public class PlayerAttribut : MonoBehaviour
         {   
             PlayerMovement.instance.enabled = false;
             ThirdPersonCam.instance.GetBisaRotasi = false;
+            Combat.instance.enabled = false;
             playerAnimator.SetBool("Death", true);
         }
     }
