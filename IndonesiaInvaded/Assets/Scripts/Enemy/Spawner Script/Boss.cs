@@ -54,6 +54,8 @@ public class Boss : MonoBehaviour
 
     public void Awake()
     {
+        SetupAgent();
+
         if (bossTitle == BossScriptableObject.title.OndelOndel)
         {
             attackPrefab = null;
@@ -68,7 +70,7 @@ public class Boss : MonoBehaviour
     }
     private void Start()
     {
-        SetupAgent();
+        // SetupAgent();
         BossHealthBar.instance.Initialize(health);
     }
 
@@ -116,6 +118,7 @@ public class Boss : MonoBehaviour
                 {
                     AddScore = true;
                     ScoreManager.instance.AddBossDefeats(1);
+                    ScoreManager.instance.AddScore(27000);
                 }
 
                 EnvironmentCutSceneBandung.instance.CutScenePortal();
