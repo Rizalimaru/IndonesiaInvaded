@@ -116,6 +116,7 @@ public class Boss : MonoBehaviour
                 {
                     AddScore = true;
                     ScoreManager.instance.AddBossDefeats(1);
+                    ScoreManager.instance.AddScore(27000);
                 }
 
                 EnvironmentCutSceneBandung.instance.CutScenePortal();

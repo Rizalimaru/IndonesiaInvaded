@@ -77,7 +77,7 @@ public class UI_ResultGame : MonoBehaviour
     private int CalculateTotalScore(int score, int enemyDefeats, int bossDefeats, int bonus)
     {
         // Contoh: total skor dihitung berdasarkan skor, jumlah musuh yang dikalahkan, jumlah boss yang dikalahkan, dan bonus
-        int totalScore = score + (enemyDefeats * 1000) + (bossDefeats * 5000) + bonus;
+        int totalScore = score + (enemyDefeats * 1000) + (bossDefeats * 10000) + bonus;
         return totalScore;
     }
 
