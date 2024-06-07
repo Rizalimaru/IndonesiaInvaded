@@ -19,6 +19,8 @@ public class UI_PauseGame : MonoBehaviour
 
     private bool isLoadMainMenu = false;
 
+    private float delayGameOver;
+
 
     private bool isResultScreenShown = false; // Check if the result screen is shown
     // Lock cursor when the game is not paused
@@ -196,6 +198,7 @@ public class UI_PauseGame : MonoBehaviour
 
     public void ResetGameOver()
     {
+        delayGameOver = 0f;
         isGameOver = false;
         GameIsPaused = false;
         Time.timeScale = 1f;
@@ -334,15 +337,14 @@ public class UI_PauseGame : MonoBehaviour
     {
         if (PlayerAttribut.instance.currentHealth <= 0)
         {
-            StartCoroutine(DelayEndGame());
- 
+            delayGameOver += Time.deltaTime;
+
+            if (delayGameOver >= 5f)
+            {
+                isGameOver = true;
+                GameOver();
+            }
         }
     }
 
-    IEnumerator DelayEndGame()
-    {
-        yield return new WaitForSeconds(5f);
-        GameOver();
-        isGameOver = true;
-    }
 }
