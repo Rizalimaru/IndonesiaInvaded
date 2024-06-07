@@ -7,6 +7,8 @@ public class PlayerAttribut : MonoBehaviour
 {
     // Singleton instance
     public static PlayerAttribut instance;
+
+    private Animator playerAnimator;
     public int maxHealth = 500;
     public int currentHealth;
     public int maxSP = 100;
@@ -31,6 +33,8 @@ public class PlayerAttribut : MonoBehaviour
         skillBar.SetSkill(currentSP);
 
         Combat.SuccessfulComboEvent += RegenerateSP;
+
+        playerAnimator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -39,6 +43,14 @@ public class PlayerAttribut : MonoBehaviour
         // {
         //     TakeDamage(20);
         // }
+
+        if (currentHealth <= 0)
+        {   
+            PlayerMovement.instance.enabled = false;
+            ThirdPersonCam.instance.GetBisaRotasi = false;
+            Combat.instance.enabled = false;
+            playerAnimator.SetBool("Death", true);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

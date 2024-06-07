@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -480,6 +481,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (other.CompareTag("BossMeleeCollider") && sedangKnock == false && !isDodging && knockShield <= 20f)
         {   
+            AudioManager._instance.PlaySFX("PlayerDialog", 5);
             sedangKnock = true;
             CameraShaker.instance.CameraShake(5f, 0.6f);
             ThirdPersonCam.instance.GetBisaRotasi = false;
@@ -505,7 +507,7 @@ public class PlayerMovement : MonoBehaviour
 
     void playerKnockBack()
     {
-        AudioManager._instance.PlaySFX("PlayerDialog", 5);
+        
         animator.SetTrigger("getHit");
 
         moveDirection = orientationForAtk.forward * -1f;

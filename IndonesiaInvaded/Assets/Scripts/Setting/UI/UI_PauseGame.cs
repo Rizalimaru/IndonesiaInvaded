@@ -19,6 +19,10 @@ public class UI_PauseGame : MonoBehaviour
 
     private bool isLoadMainMenu = false;
 
+    private float delayGameOver;
+
+    private Animator animator;
+
 
     private bool isResultScreenShown = false; // Check if the result screen is shown
     // Lock cursor when the game is not paused
@@ -39,7 +43,6 @@ public class UI_PauseGame : MonoBehaviour
 
     [Header("-----------------------GameOver-----------------------")]
     public GameObject gameOver;
-
     public GameObject player;
 
     [Header("-----------------------Player-----------------------")]
@@ -68,7 +71,8 @@ public class UI_PauseGame : MonoBehaviour
     }
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        animator = player.GetComponent<Animator>();
         // Lock cursor initially
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -195,7 +199,12 @@ public class UI_PauseGame : MonoBehaviour
     }
 
     public void ResetGameOver()
-    {
+    {   
+        animator.SetBool("Death", false);
+        PlayerMovement.instance.enabled = true;
+        ThirdPersonCam.instance.GetBisaRotasi = true;
+        Combat.instance.enabled = true;
+        delayGameOver = 0f;
         isGameOver = false;
         GameIsPaused = false;
         Time.timeScale = 1f;
@@ -334,8 +343,14 @@ public class UI_PauseGame : MonoBehaviour
     {
         if (PlayerAttribut.instance.currentHealth <= 0)
         {
-            GameOver();
-            isGameOver = true;
+            delayGameOver += Time.deltaTime;
+
+            if (delayGameOver >= 5f)
+            {
+                isGameOver = true;
+                GameOver();
+            }
         }
     }
+
 }
