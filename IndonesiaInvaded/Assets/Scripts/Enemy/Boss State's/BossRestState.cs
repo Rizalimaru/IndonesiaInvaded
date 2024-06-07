@@ -38,12 +38,12 @@ public class BossRestState : BossBaseState
         }
         else
         {
-            if(boss.bossObject.firstSkillCounter >= 3)
+            if(boss.bossObject.firstSkillCounter >= 5)
             {
                 if (boss.bossObject.bossTitle == BossScriptableObject.title.OndelOndel) boss.SwitchState(boss.ondelFirstSkillState);
                 else boss.SwitchState(boss.dukunFirstSkillState);
             }
-            else if(boss.bossObject.secondSkillCounter >= 5)
+            else if(boss.bossObject.secondSkillCounter >= 6)
             {
                 if (boss.bossObject.bossTitle == BossScriptableObject.title.OndelOndel) boss.SwitchState(boss.ondelDashingState);
                 else boss.SwitchState(boss.dukunCastingState);
@@ -56,7 +56,7 @@ public class BossRestState : BossBaseState
                 }
                 else
                 {
-                    if (boss.comboCounter == 2)
+                    if (boss.comboCounter == boss.comboThreshold)
                     {
                         boss.SwitchState(boss.comboState);
                     }

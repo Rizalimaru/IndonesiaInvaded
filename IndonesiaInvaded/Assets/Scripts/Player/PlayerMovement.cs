@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.8f, whatIsGround2 | whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround2 | whatIsGround);
 
         MyInput();
         SpeedControl();
@@ -198,7 +198,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // start dodge
-        if (Input.GetKeyDown(dodgeKey))
+        if (Input.GetKeyDown(dodgeKey) && !isDodging && grounded)
         {   
             StartCoroutine(Dodge());
         }
@@ -231,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
 #endregion
     private IEnumerator Dodge()
     {
+        AudioManager._instance.PlaySFX("StatePlayer", 1);
         isDodging = true;
         canDodge = false;
 
@@ -494,7 +495,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator ImuneTime()
     {
         canMove = false;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(4);
         canMove = true;
         animator.SetBool("knocked", false);
         ThirdPersonCam.instance.GetBisaRotasi = true;
@@ -542,6 +543,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        AudioManager._instance.PlaySFX("StatePlayer", 2);
         exitingSlope = true;
 
         // reset y velocity

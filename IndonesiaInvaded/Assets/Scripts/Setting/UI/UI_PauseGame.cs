@@ -178,7 +178,7 @@ public class UI_PauseGame : MonoBehaviour
 
     public void GameOver()
     {
-        player.SetActive(false);
+        // player.SetActive(false);
 
         GameIsPaused = true;
         Time.timeScale = 0f;
@@ -336,7 +336,6 @@ public class UI_PauseGame : MonoBehaviour
         {
             GameOver();
             isGameOver = true;
-            SpawningManager.instance.ResetSpawning();
         }
     }
 }

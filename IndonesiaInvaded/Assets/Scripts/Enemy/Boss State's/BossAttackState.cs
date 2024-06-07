@@ -7,7 +7,8 @@ public class BossAttackState : BossBaseState
     public override void EnterState(BossStateManager boss)
     {
         Debug.Log("Boss is Attacking");
-        boss.comboCounter++;
+        boss.comboCounter = boss.comboCounter + 1;
+        Debug.Log("Combo Counter:" + boss.comboCounter);
 
         boss.GetComponent<NavMeshAgent>().isStopped = true;
         boss.animator.SetBool("isWalking", false);

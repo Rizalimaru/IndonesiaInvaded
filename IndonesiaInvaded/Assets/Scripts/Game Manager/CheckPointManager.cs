@@ -44,9 +44,14 @@ public class CheckPointManager : MonoBehaviour
     {
         animator.SetTrigger("End");
         yield return new WaitForSeconds(1);
+        if (PlayerMovement.instance.canMove == false)
+        {
+            PlayerMovement.instance.canMove = true;
+        }
+        PlayerMovement.instance.canMove = true;
         PlayerAttribut.instance.ResetTotal();
         ScoreManager.instance.ResetScore();
-        UI_PauseGame.instance.player.SetActive(true);
+        // UI_PauseGame.instance.player.SetActive(true);
         PlayerDataSaving.instance.Teleport(GetCheckPoint(), Quaternion.identity);
         animator.SetTrigger("Start");
     }

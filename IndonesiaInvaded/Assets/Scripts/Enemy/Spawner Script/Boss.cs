@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Boss : MonoBehaviour
 {
@@ -42,7 +43,8 @@ public class Boss : MonoBehaviour
 
     // Dukun Spesific Skill Declaration
     public GameObject enemyToSpawn;
-    public GameObject secondAttackPrefab;
+    public GameObject comboAttackPrefab;
+    public GameObject ultimateAttackPrefab;
 
     // Private Stuff
     private bool isAttacking = false;
@@ -54,8 +56,10 @@ public class Boss : MonoBehaviour
     {
         if (bossTitle == BossScriptableObject.title.OndelOndel)
         {
+            attackPrefab = null;
             enemyToSpawn = null;
-            secondAttackPrefab = null;
+            comboAttackPrefab = null;
+            ultimateAttackPrefab = null;
         }
 
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
@@ -111,16 +115,13 @@ public class Boss : MonoBehaviour
                 if (AddScore == false)
                 {
                     AddScore = true;
-                    ScoreManager.instance.AddBossDefeats(7);
+                    ScoreManager.instance.AddBossDefeats(1);
                 }
+
+                EnvironmentCutSceneBandung.instance.CutScenePortal();
             }
 
         }
-        /**
-        if (isKnockedBack == true)
-        {
-            Invoke("knockbackDelayCounter", knockbackDelay);
-        }**/
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -156,6 +157,20 @@ public class Boss : MonoBehaviour
 
             BossHealthBar.instance.UpdateHealthBar(health);
         }
+
+        if (other.CompareTag("RangedCollider") && health > 0)
+        {   
+            CameraShaker.instance.CameraShake(3f, 0.1f);
+            AudioManager._instance.PlayBossHitSFX("BossHit", 0);
+            AudioManager._instance.PlaySFX("EnemyHit",0);
+
+            Debug.Log("Damaged by Ranged. Current health: " + health);
+            spawnVfxhit();
+            health -= 10;
+            Debug.Log("Health after damage: " + health);
+
+            BossHealthBar.instance.UpdateHealthBar(health);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -184,7 +199,7 @@ public class Boss : MonoBehaviour
 
     void spawnVfxhit()
     {
-        Vector3 newPosition = transform.position + new Vector3(0, 1, 0);
+        Vector3 newPosition = transform.position + new Vector3(-1, 1, 0);
         GameObject vfx = Instantiate(hitVFX, newPosition, Quaternion.identity);
         Destroy(vfx, .5f);
     }
@@ -200,9 +215,11 @@ public class Boss : MonoBehaviour
         {
             Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
             meleeCollider.enabled = true;
+            AudioManager._instance.PlaySFX("SkillBoss",3);
         }
         else
         {
+            AudioManager._instance.PlaySFX("BossDukun",0);
             attackObject = GameObject.Instantiate(attackPrefab, spawnPoint.transform.position, spawnPoint.rotation) as GameObject;
         }
     }
@@ -223,12 +240,7 @@ public class Boss : MonoBehaviour
     public void OndelSkill2()
     {
         attackObject = GameObject.Instantiate(areaSkillPrefab, transform.position, transform.rotation) as GameObject;
-    }
 
-    public void OndelStopSkill1()
-    {
-        Collider meleeCollider = GameObject.FindGameObjectWithTag("BossMeleeCollider").GetComponent<Collider>();
-        meleeCollider.enabled = false;
     }
 
     public void OndelCastSkill2()
@@ -241,13 +253,14 @@ public class Boss : MonoBehaviour
     public void DukunSpawning(Vector3 position)
     {
         Instantiate(enemyToSpawn, position, Quaternion.identity);
+        AudioManager._instance.PlaySFX("Teleport",0);
     }
 
     public bool CheckIfEnemySpawned()
     {
         int checkerInt = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
-        if (checkerInt >= 8)
+        if (checkerInt >= 4)
         {
             return true;
         }
@@ -259,14 +272,23 @@ public class Boss : MonoBehaviour
 
     public void DukunCombo()
     {
-        Instantiate(secondAttackPrefab, target.position, Quaternion.identity);
+        Instantiate(comboAttackPrefab, target.position, Quaternion.identity);
+
+        StartCoroutine(SFXDukunCombo());
+
+    }
+
+    IEnumerator SFXDukunCombo()
+    {
+        yield return new WaitForSeconds(0.5f);
+        AudioManager._instance.PlaySFX("BossDukun",1);
     }
 
     public void Dukun2ndSkill()
     {
-        GameObject zapObj = Instantiate(secondAttackPrefab);
+        GameObject zapObj = Instantiate(ultimateAttackPrefab);
         zapObj.transform.SetParent(transform);
-        zapObj.transform.localPosition = new Vector3(Random.Range(-15, 15), 0, Random.Range(-15, 15));
+        zapObj.transform.localPosition = new Vector3(Random.Range(-25, 25), 0, Random.Range(-25, 25));
     }
 
     // Other stuff

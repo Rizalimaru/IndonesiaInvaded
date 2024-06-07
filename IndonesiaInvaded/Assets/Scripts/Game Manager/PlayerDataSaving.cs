@@ -15,7 +15,12 @@ public class PlayerDataSaving : MonoBehaviour
         instance = this;
 
     }
-    private void Update(){
+    private void Update()
+    {
+        if (PlayerMovement.instance.canMove == false)
+        {
+            PlayerMovement.instance.canMove = true;
+        }
         PlayerCrash();
     }
 

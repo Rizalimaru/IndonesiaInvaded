@@ -246,7 +246,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public void CutSceneBeforePortal()
     {
-        if (!PlayerMovement.instance.canMove)
+        if (PlayerMovement.instance.canMove == false)
         {
             PlayerMovement.instance.canMove = true;
         }

@@ -1,5 +1,3 @@
-using System.Globalization;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -29,6 +27,7 @@ public class BossStateManager : MonoBehaviour
 
     // Combo Counter
     [HideInInspector] public int comboCounter = 0;
+    public int comboThreshold;
 
     // Boss Declaration
     public Boss bossObject;
@@ -53,8 +52,8 @@ public class BossStateManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.V))
         {
-            Debug.Log("Ada 5");
-            bossObject.secondSkillCounter = 5;
+            Debug.Log("Ada 6");
+            bossObject.secondSkillCounter = 6;
         }
     }
 

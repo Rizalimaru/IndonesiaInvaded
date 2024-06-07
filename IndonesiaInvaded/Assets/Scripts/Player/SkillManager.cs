@@ -25,6 +25,7 @@ public class SkillManager : MonoBehaviour
     public Object SkillRoarCollider;
     public float destroyTimeColliderRoar = 1.5f;
     public GameObject smashExplosion;
+    public GameObject groundPound;
     bool isRoarSkill = false;
     string playerLayer = "Player";
     string enemyLayer = "Enemy";
@@ -37,7 +38,7 @@ public class SkillManager : MonoBehaviour
 
     [Header("Skill 2")]
     public Image skillImage2;
-    public TMP_Text skill2CooldownText;  
+    public TMP_Text skill2CooldownText;
     public float cooldown2 = 8.0f;
     private bool isCooldown2 = false;
     public KeyCode skill2Key;
@@ -88,10 +89,11 @@ public class SkillManager : MonoBehaviour
         int LayerPlayer = LayerMask.NameToLayer(playerLayer);
         int LayerEnemy = LayerMask.NameToLayer(enemyLayer);
 
-        if(isRoarSkill)
+        if (isRoarSkill)
         {
             Physics.IgnoreLayerCollision(LayerPlayer, LayerEnemy, true);
-        }else
+        }
+        else
         {
             Physics.IgnoreLayerCollision(LayerPlayer, LayerEnemy, false);
         }
@@ -126,11 +128,11 @@ public class SkillManager : MonoBehaviour
     {
         get { return isRoarSkill; }
     }
-    
+
 
     #region UsableSkill Function
     public void UseSkill1()
-    {   
+    {
         bool SedangPakeRangeAtk = Input.GetKey(KeyCode.Mouse1);
 
         PlayerAttribut player = PlayerAttribut.instance;
@@ -153,7 +155,7 @@ public class SkillManager : MonoBehaviour
     }
 
     public void UseSkill2()
-    {   
+    {
         bool SedangPakeRangeAtk = Input.GetKey(KeyCode.Mouse1);
 
         PlayerAttribut player = PlayerAttribut.instance;
@@ -286,6 +288,7 @@ public class SkillManager : MonoBehaviour
         {
             isRoarSkill = true;
             SpawnSmashExplosion();
+            SpawnGroundPound();
             SpawnRoarCollider();
         }
         yield return new WaitForSeconds(2f);
@@ -330,6 +333,12 @@ public class SkillManager : MonoBehaviour
         Destroy(roarCollider, destroyTimeColliderRoar);
     }
 
+    public void SpawnGroundPound()
+    {
+        GameObject ground = Instantiate(groundPound, player.position, player.rotation) as GameObject;
+        Destroy(ground, 2f);
+    }
+
     public void SpawnSmashExplosion()
     {
         AudioManager._instance.PlaySFX("Skillplayer", 2);
@@ -344,15 +353,15 @@ public class SkillManager : MonoBehaviour
     {
         if (spawnedRulerCount < maxRulerCount && Time.time - lastSpawnTime > timeBetweenSpawns)
         {
-            AudioManager._instance.PlaySFX("RangedAttack",1 );
-            
+            AudioManager._instance.PlaySFX("RangedAttack", 1);
+
             quaternion defaultRotation = ruler.transform.rotation;
             GameObject rulerObj = Instantiate(ruler, player.position, defaultRotation) as GameObject;
             spawnedRulerCount++;
             lastSpawnTime = Time.time;
-            
+
             Destroy(rulerObj, 3f);
-            
+
         }
 
     }
@@ -371,7 +380,7 @@ public class SkillManager : MonoBehaviour
             ResetSkills();
         }
     }
-    
+
     public void ResetSkills()
     {
         StopAllCoroutines();
