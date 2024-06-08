@@ -49,12 +49,6 @@ public class BossStateManager : MonoBehaviour
     void Update()
     {
         currentState.UpdateState(this);
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Debug.Log("Ada 6");
-            bossObject.secondSkillCounter = 6;
-        }
     }
 
     public void StartAgent()
