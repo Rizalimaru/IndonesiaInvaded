@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnvironmentCutSceneInvert : MonoBehaviour
 {
+
+    public UnityEvent cutSceneStartEvent;
+
+    public UnityEvent cutSceneEndEvent;
+
 
     public static EnvironmentCutSceneInvert instance;
     public GameObject mainCamera;
@@ -81,6 +87,7 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
     }
 
     public void CutScenePortal(){
+        cutSceneStartEvent.Invoke();
         SkillManager.instance.ResetSkills();
         ScoreManager.instance.SetTimeUpdating(false);
         mainCamera.SetActive(false);
@@ -97,6 +104,7 @@ public class EnvironmentCutSceneInvert : MonoBehaviour
 
     private void CameraBackPortal()
     {
+        cutSceneEndEvent.Invoke();
         animasi.SetTrigger("CutsceneBack");
         ScoreManager.instance.SetTimeUpdating(true);
         mainCamera.SetActive(true);
