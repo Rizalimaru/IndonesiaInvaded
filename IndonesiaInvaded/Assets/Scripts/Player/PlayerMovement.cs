@@ -481,6 +481,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (other.CompareTag("BossMeleeCollider") && sedangKnock == false && !isDodging && knockShield <= 20f)
         {   
+            isDodging = true;
+            canDodge = false;
             AudioManager._instance.PlaySFX("PlayerDialog", 5);
             sedangKnock = true;
             CameraShaker.instance.CameraShake(5f, 0.6f);
@@ -502,6 +504,8 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("knocked", false);
         ThirdPersonCam.instance.GetBisaRotasi = true;
         sedangKnock = false;
+        isDodging = false;
+        canDodge = true;
     }
 
 
