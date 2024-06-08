@@ -253,9 +253,6 @@ public class UI_PauseGame : MonoBehaviour
         Time.timeScale = 1f;
         GameIsPaused = false;
         isResultScreenShown = false; // Set isResultScreenShown to true when showing the result screen
-        isCursorLocked = true; // Lock cursor when unpaused
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
 
         GameResumed.Invoke(); // Invoke resume event
 
@@ -312,11 +309,14 @@ public class UI_PauseGame : MonoBehaviour
         playerCamera.SetActive(true);
         gameResult.SetActive(false);
         gameOver.SetActive(false);
+ 
         //GameIsPaused = false;
         isLoadMainMenu = true; // Set isLoadMainMenu to true after calling LoadMenu()
         audioManagerInstance.StopAllBackgroundMusic();
         audioManagerInstance.ResumeSFX();
         audioManagerInstance.StopSpesificSFX();
+
+
 
     }
 

@@ -55,24 +55,21 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
+        Instance = this;
 
-
-        mainMenu.EnableMenuAndAnimationButton();
-
-        
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
 
     private void Start()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
+
+        Instance = this;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        
     }
 
     private void Update()
@@ -133,9 +130,10 @@ public class UI_ControlMainMenu: MonoBehaviour
                 if (titleGameAnimationPlayed == true)
                 {
                     AudioManager._instance.PlaySFX("Button",3);
-                    ShowPressAnyKey();
+                    
                     titleGameAnimator.SetTrigger("showbackground");
                     titleGameAnimationPlayed = false;
+                    StartCoroutine(DelayPressAnyKey());
                 }
             }
         }
@@ -185,11 +183,7 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     public void ShowPressAnyKey()
     {
-        if (!anyKeyDownHandled)
-        {
-            anyKeyDownHandled = true;
-            StartCoroutine(DelayPressAnyKey());
-        }
+        StartCoroutine(DelayPressAnyKey());
     }
     
     IEnumerator DelayPressAnyKey()
@@ -254,7 +248,7 @@ public class UI_ControlMainMenu: MonoBehaviour
 
         optionsAnimator.SetTrigger("FadeOutOptions");
 
-        mainMenu.EnableMenuAndAnimationButton();
+        MainMenuV2.instance.EnableMenuAndAnimationButton();
         
         yield return new WaitForSeconds(0.5f);
         
@@ -306,7 +300,7 @@ public class UI_ControlMainMenu: MonoBehaviour
 
     IEnumerator DelayExitGame()
     {
-        mainMenu.DisableMenuAndAnimationButton();
+        MainMenuV2.instance.DisableMenuAndAnimationButton();
         yield return new WaitForSeconds(0.8f);
         Application.Quit();
     }

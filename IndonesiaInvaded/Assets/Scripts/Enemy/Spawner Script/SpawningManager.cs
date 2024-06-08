@@ -89,7 +89,7 @@ public class SpawningManager : MonoBehaviour
                 SpawnEnemy(enemyType[i], spawnPoint[i].position);
 
                 // tambah vfx hehe
-                Vector3 spawnPosition = new Vector3(spawnPoint[i].position.x, spawnPoint[i].position.y + 0.15f, spawnPoint[i].position.z);
+                Vector3 spawnPosition = new Vector3(spawnPoint[i].position.x, spawnPoint[i].position.y, spawnPoint[i].position.z);
                 vfxSpawnEnemy = Instantiate(vfxSpawnEnemy, spawnPosition, Quaternion.identity);
 
                 Destroy(vfxSpawnEnemy, 2f);
