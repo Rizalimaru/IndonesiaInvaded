@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class EnvironmentCutSceneJakarta : MonoBehaviour
 {
+
+    public UnityEvent cutSceneStartEvent;
+
+    public UnityEvent cutSceneEndEvent;
 
     public static EnvironmentCutSceneJakarta instance { get; private set; }
 
@@ -19,6 +24,8 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     [Header("GameObject and Animator")]
 
     public GameObject[] gameObjectsOff;
+
+    public GameObject player;
 
     public Animator animasi;
 
@@ -81,6 +88,8 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     private void CameraTrig()
     {
+
+        player.SetActive(false);
         SetCursorVisibility(false);
         ScoreManager.instance.SetTimeUpdating(false);
         SkillManager.instance.ResetSkills();
@@ -102,6 +111,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     private void CameraBack()
     {
+        player.SetActive(true);
         SetCursorVisibility(false);
         mainCamera.SetActive(true);
         cutSceneCamera.SetActive(false);
@@ -128,6 +138,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     private void CameraBackMonas()
     {
+        cutSceneEndEvent.Invoke();
         SetCursorVisibility(false);
         mainCamera.SetActive(true);
         cutSceneCameraMonas.SetActive(false);
@@ -197,6 +208,8 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
 
     public void CutSceneAfterPortal()
     {
+        // menggunakan eventsystem cutscenestartevent
+        cutSceneStartEvent.Invoke();
         SkillManager.instance.ResetSkills();
         Debug.Log("Entering CutSceneAfterPortal method");
         SetCursorVisibility(false);
@@ -216,6 +229,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     }
     private void CameraBackAfterPortal()
     {
+        cutSceneEndEvent.Invoke();
         Debug.Log("Returning from CutSceneAfterPortal");
         SetCursorVisibility(true);
         mainCamera.SetActive(true);
@@ -268,6 +282,7 @@ public class EnvironmentCutSceneJakarta : MonoBehaviour
     public void CutSceneBoss()
     {
         StartCoroutine(BossDelay());
+        cutSceneStartEvent.Invoke();
     }
 
     IEnumerator BossDelay()

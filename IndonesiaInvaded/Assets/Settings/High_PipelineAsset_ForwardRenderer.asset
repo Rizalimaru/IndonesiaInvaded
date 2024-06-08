@@ -1,25 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2576083082641588824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
-  m_Name: FullScreenPassRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
-  injectionPoint: 600
-  fetchColorBuffer: 1
-  requirements: 0
-  passMaterial: {fileID: 2100000, guid: 78a08787ca30045abb69f6f7dd878e09, type: 2}
-  passIndex: 0
-  bindDepthStencilAttachment: 0
-  m_Version: 1
 --- !u!114 &-1029129770773110515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,11 +51,11 @@ MonoBehaviour:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
   m_RendererFeatures:
-  - {fileID: -2576083082641588824}
   - {fileID: -1029129770773110515}
   - {fileID: 4102329114538930078}
   - {fileID: 2531928294217613511}
-  m_RendererFeatureMap: a83d41c315ea3fdc0d214a11edcbb7f19eefd5379866ee38c7009a6d5e372323
+  - {fileID: 5710927877557538360}
+  m_RendererFeatureMap: 0d214a11edcbb7f19eefd5379866ee38c7009a6d5e372323384eb197a54a414f
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -109,8 +89,8 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 0
-  m_DepthPrimingMode: 0
+  m_RenderingMode: 2
+  m_DepthPrimingMode: 2
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
@@ -169,3 +149,24 @@ MonoBehaviour:
   m_Name: StarRailRendererFeature
   m_EditorClassIdentifier: 
   m_Active: 1
+--- !u!114 &5710927877557538360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf716a1be50b448e7b1d1968ab734946, type: 3}
+  m_Name: ShinySSRR
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  renderPassEvent: 500
+  useDeferred: 0
+  enableScreenSpaceNormalsPass: 0
+  customSmoothnessMetallicPass: 0
+  ignorePostProcessingOption: 1
+  cameraLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295

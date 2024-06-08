@@ -38,6 +38,9 @@ public class MainMenuV2 : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
+        data = new GameData();
+        levelChecks = this.GetComponentsInChildren<LevelCheck>();
         CheckLevel1Completion();
         CutSceneManager.Instance.OnCutSceneFinished += OnCutSceneFinished;
     }
