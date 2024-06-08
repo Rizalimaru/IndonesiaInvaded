@@ -25,7 +25,9 @@ public class BrightnessV2 : MonoBehaviour
         // Atur nilai slider berdasarkan nilai yang disimpan sebelumnya
         brightnessSlider.value = savedBrightness;
 
-        ChangeBrightness(savedBrightness);
+        ChangeBrightness(brightnessSlider.maxValue);
+
+
 
         // Tambahkan listener untuk slider
         brightnessSlider.onValueChanged.AddListener(ChangeBrightness);
@@ -43,13 +45,9 @@ public class BrightnessV2 : MonoBehaviour
 
     void SetBrightness(float value)
     {
-        // Atur nilai kecerahan
-        directionalLight.intensity = Remap(value, 0.2f, 1.5f, 0.2f, 1.5f);
+        // Atur nilai kecerahan directional light
+        directionalLight.intensity = value;
     }
     
-    // Metode untuk mengubah rentang nilai
-    float Remap(float value, float from1, float to1, float from2, float to2)
-    {
-        return from2 + (value - from1) / (to1 - from1) * (to2 - from2);
-    }
+
 }
