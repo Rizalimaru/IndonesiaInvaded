@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour
 
     // VFX Stuff
     public GameObject hitVFX;
+    public GameObject foothitVFX;
     public GameObject deathVFX;
 
     public void Awake()
@@ -89,13 +90,37 @@ public class Enemy : MonoBehaviour
 
         Collider other = collision.collider;
 
-        if (other.CompareTag("Sword") | other.CompareTag("RangedCollider") | other.CompareTag("FootCollider") && isAttacking == true && health > 0)
+        if (other.CompareTag("Sword") | other.CompareTag("RangedCollider") && isAttacking == true && health > 0)
         {
 
             AudioManager._instance.PlaySFX("EnemyHit", 0);
 
             CameraShaker.instance.CameraShake(5f, 0.1f);
             spawnVfxhit();
+            Debug.Log("Damaged");
+            health -= 20;
+            knockbackForce = 30f;
+            knockbackDelay = 0.2f;
+
+            if (isKnockedBack == false)
+            {
+                isKnockedBack = true;
+                stateManager.SwitchState(stateManager.knockbackState);
+            }
+
+            if (health <= 0)
+            {
+                objectiveManager.UpdateObjective();
+            }
+        }
+
+        if (other.CompareTag("FootCollider") && isAttacking == true && health > 0)
+        {
+
+            AudioManager._instance.PlaySFX("EnemyHit", 0);
+
+            CameraShaker.instance.CameraShake(5f, 0.1f);
+            spawnVfxFootHit();
             Debug.Log("Damaged");
             health -= 20;
             knockbackForce = 30f;
@@ -158,12 +183,43 @@ public class Enemy : MonoBehaviour
                 objectiveManager.UpdateObjective();
             }
         }
+
+        if (other.CompareTag("UltimateCollider") && health > 0)
+        {
+
+            AudioManager._instance.PlaySFX("EnemyHit", 0);
+
+            CameraShaker.instance.CameraShake(5f, 0.1f);
+            spawnVfxhit();
+            Debug.Log("Damaged");
+            health -= 20;
+            knockbackForce = 30f;
+            knockbackDelay = 0.2f;
+
+            if (isKnockedBack == false)
+            {
+                isKnockedBack = true;
+                stateManager.SwitchState(stateManager.knockbackState);
+            }
+
+            if (health <= 0)
+            {
+                objectiveManager.UpdateObjective();
+            }
+        }
     }
 
     void spawnVfxhit()
     {   
         Vector3 newPosition = transform.position + new Vector3(0, 1, 0);
         GameObject vfx = Instantiate(hitVFX, newPosition, Quaternion.identity);
+        Destroy(vfx, .5f);
+    }
+
+    void spawnVfxFootHit()
+    {
+        Vector3 newPosition = transform.position + new Vector3(0, 1, 0);
+        GameObject vfx = Instantiate(foothitVFX, newPosition, Quaternion.identity);
         Destroy(vfx, .5f);
     }
 

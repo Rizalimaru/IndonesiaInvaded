@@ -3,6 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Data.Common;
 
 public class SkillManager : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class SkillManager : MonoBehaviour
     public float destroyTimeColliderRoar = 1.5f;
     public GameObject smashExplosion;
     public GameObject groundPound;
+
+    public GameObject vfxReadySkill1;
     bool isRoarSkill = false;
     string playerLayer = "Player";
     string enemyLayer = "Enemy";
@@ -43,6 +46,8 @@ public class SkillManager : MonoBehaviour
     private bool isCooldown2 = false;
     public KeyCode skill2Key;
     public GameObject ruler;
+
+    public GameObject vfxReadySkill2;
     private int spawnedRulerCount = 0;
     private float lastSpawnTime = 0f;
     private const float timeBetweenSpawns = 0.5f;
@@ -52,6 +57,7 @@ public class SkillManager : MonoBehaviour
     private float skill2Timer = 0f;
 
     [Header("Ultimate")]
+    public GameObject ultimateCollider;
     public KeyCode ultimateKey;
 
 
@@ -89,6 +95,7 @@ public class SkillManager : MonoBehaviour
         DetectNearestEnemyForSkill();
         Skill1();
         Skill2();
+        //Ultimate();
 
         int LayerPlayer = LayerMask.NameToLayer(playerLayer);
         int LayerEnemy = LayerMask.NameToLayer(enemyLayer);
@@ -189,6 +196,7 @@ public class SkillManager : MonoBehaviour
 
     private IEnumerator CooldownSkill1()
     {
+        vfxReadySkill1.SetActive(false);
         isCooldown1 = true;
         float cooldownTimer = cooldown1;
         while (cooldownTimer > 0)
@@ -198,6 +206,7 @@ public class SkillManager : MonoBehaviour
             cooldownTimer -= Time.deltaTime;
             yield return null;
         }
+        vfxReadySkill1.SetActive(true);
         isCooldown1 = false;
         skillImage1.fillAmount = 0;
         skill1CooldownText.text = "";
@@ -205,6 +214,7 @@ public class SkillManager : MonoBehaviour
 
     private IEnumerator CooldownSkill2()
     {
+        vfxReadySkill2.SetActive(false);
         isCooldown2 = true;
         float cooldownTimer = cooldown2;
         while (cooldownTimer > 0)
@@ -214,6 +224,7 @@ public class SkillManager : MonoBehaviour
             cooldownTimer -= Time.deltaTime;
             yield return null;
         }
+        vfxReadySkill2.SetActive(true);
         isCooldown2 = false;
         skillImage2.fillAmount = 0;
         skill2CooldownText.text = "";
@@ -232,6 +243,14 @@ public class SkillManager : MonoBehaviour
         if (Input.GetKeyDown(skill2Key) && !isCooldown2)
         {
             UseSkill2();
+        }
+    }
+
+    private void Ultimate()
+    {
+        if(Input.GetKeyDown(ultimateKey))
+        {
+            StartCoroutine(spawnUltimateCollider());
         }
     }
 
@@ -403,4 +422,17 @@ public class SkillManager : MonoBehaviour
         skill2CooldownText.text = "";
         Debug.Log("Skills have been reset!");
     }
+
+#region UltimateUsableFunction
+    IEnumerator spawnUltimateCollider()
+    {   
+        for (int i = 0; i < 5; i++)
+        {   
+            GameObject ultimate = Instantiate(ultimateCollider, player.position + new Vector3(0,1,0), player.rotation) as GameObject;
+            Destroy(ultimate, 1f);
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+#endregion
 }
