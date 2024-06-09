@@ -39,7 +39,7 @@ public class Projectile : MonoBehaviour
     }
 
     public void Shoot()
-    {   
+    {
         projectileCollider.enabled = true;
         GameObject enemy = FindClosestEnemy();
         if (enemy != null)

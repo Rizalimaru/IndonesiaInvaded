@@ -69,13 +69,13 @@ PrefabInstance:
       addedObject: {fileID: -2599771735616861725}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3b866152e1ab3e9439af379afa55d2a3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7302850016827260177}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3b866152e1ab3e9439af379afa55d2a3, type: 3}
-      insertIndex: -1
       addedObject: {fileID: -1070857464636535625}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3b866152e1ab3e9439af379afa55d2a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 328232805615756217}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3b866152e1ab3e9439af379afa55d2a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9073577616612570284}
   m_SourcePrefab: {fileID: 100100000, guid: 3b866152e1ab3e9439af379afa55d2a3, type: 3}
 --- !u!1 &861134656784364143 stripped
 GameObject:
@@ -109,22 +109,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7302850016827260177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861134656784364143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc2eef27a65820b45b2e5b20e3eeccf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  detectionRadius: 50
-  isShooting: 0
-  spinSpeed: 360
 --- !u!65 &-1070857464636535625
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -167,3 +151,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9073577616612570284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861134656784364143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc2eef27a65820b45b2e5b20e3eeccf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  detectionRadius: 50
+  isShooting: 0
+  spinSpeed: 360
