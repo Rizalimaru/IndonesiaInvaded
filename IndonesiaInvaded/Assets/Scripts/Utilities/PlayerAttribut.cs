@@ -60,25 +60,25 @@ public class PlayerAttribut : MonoBehaviour
         if (other.CompareTag("EnemyMeleeCollider"))
         {
             Debug.Log("Damaged by melee");
-            TakeDamage(10);
+            TakeDamage(15);
             StopRegenerateHealth();
         }
         else if (other.CompareTag("EnemyRangedCollider"))
         {
             Debug.Log("Damaged by ranged");
-            TakeDamage(5);
+            TakeDamage(10);
             StopRegenerateHealth();
         }
         else if (other.CompareTag("BossMeleeCollider") && PlayerMovement.instance.lagiKnock == false)
         {
             Debug.Log("Colliding with boss's hand");
-            TakeDamage(15);
+            TakeDamage(25);
             StopRegenerateHealth();
         }
         else if (other.CompareTag("BossRangedCollider") && PlayerMovement.instance.lagiKnock == false)
         {
             Debug.Log("Colliding with boss ranged");
-            TakeDamage(10);
+            TakeDamage(15);
             StopRegenerateHealth();
         }
         
@@ -89,13 +89,13 @@ public class PlayerAttribut : MonoBehaviour
         if (other.CompareTag("DukunUltimate"))
         {
             Debug.Log("Explosion!");
-            TakeDamage(10);
+            TakeDamage(45);
             StopRegenerateHealth();
         }
         else if (other.CompareTag("OndelUltimate"))
         {
             Debug.Log("Smashed!");
-            TakeDamage(30);
+            TakeDamage(60);
             StopRegenerateHealth();
         }
     }
@@ -107,7 +107,7 @@ public class PlayerAttribut : MonoBehaviour
     }
     IEnumerator RegenerateHealth()
     {
-        float regenRate = 0.01f; // Laju regenerasi HP per detik
+        float regenRate = 0.05f; // Laju regenerasi HP per detik
         while (true)
         {
             if (currentHealth < maxHealth)
