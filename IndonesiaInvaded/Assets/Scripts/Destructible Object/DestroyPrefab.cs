@@ -9,7 +9,7 @@ public class DestroyPrefab : MonoBehaviour
     }
 
     IEnumerator waiter(){
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }
 }
