@@ -51,6 +51,10 @@ public class SkillManager : MonoBehaviour
     private float skill2Duration = 5f;
     private float skill2Timer = 0f;
 
+    [Header("Ultimate")]
+    public KeyCode ultimateKey;
+
+
     [Header("Skill Detection")]
     public Transform player;
     [HideInInspector] public Transform nearestEnemy;
@@ -174,6 +178,12 @@ public class SkillManager : MonoBehaviour
         {
             Debug.Log("Not enough SP for Skill 2!");
         }
+    }
+
+    public void UseUltimate()
+    {
+
+        
     }
     #endregion
 
