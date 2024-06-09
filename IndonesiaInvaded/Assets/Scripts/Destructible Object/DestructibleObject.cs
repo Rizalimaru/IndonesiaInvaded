@@ -4,35 +4,52 @@ public class DestructibleObject : MonoBehaviour
 {
     public GameObject destroyed;
     private Combat combat;
-    public GameObject hpOrbPrefab;
-    public GameObject spOrbPrefab;
     [SerializeField] private float explosionForce = 500f;
     [SerializeField] private float explosionRadius = 3f;
 
-
-    // Persentase drop orb
-    [SerializeField] private int emptyChance = 50;
-    [SerializeField] private int hpOrbChance = 25;
-    [SerializeField] private int spOrbChance = 25;
-
+    [SerializeField] private int hpAmount = 200; // Jumlah HP yang akan ditambahkan
+    [SerializeField] private int spAmount = 50; // Jumlah SP yang akan ditambahkan
+    [SerializeField] private GameObject healVFXPrefab; // Prefab untuk VFX heal
 
     private void Start()
     {
-       combat= Combat.instance;
+        combat = Combat.instance;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-
         Collider other = collision.collider;
 
-        if (other.gameObject.CompareTag("Sword")&&combat.isAttacking)
+        if (other.gameObject.CompareTag("Sword") && combat.isAttacking)
         {
             // Add score when player destroys the object
             ScoreManager.instance.AddScore(500);
             AudioManager._instance.PlaySFX("DestructibleObject", 0);
 
+            HealPlayerAndPlayVFX(other);
+
             DestroyObject();
+        }
+    }
+
+    private void HealPlayerAndPlayVFX(Collider swordCollider)
+    {
+        // Assuming the player's parent object is the one wielding the sword
+        GameObject player = swordCollider.transform.root.gameObject;
+        PlayerAttribut playerAttributes = player.GetComponent<PlayerAttribut>();
+
+        if (playerAttributes != null)
+        {
+            AudioManager._instance.PlaySFX("DestructibleObject", 1);
+            playerAttributes.RegenHPOrb(hpAmount);
+            playerAttributes.RegenSPOrb(spAmount);
+            Debug.Log("Player received HP and SP directly from destructible object.");
+
+            // Instantiate VFX at player's position
+            if (healVFXPrefab != null)
+            {
+                Instantiate(healVFXPrefab, transform.position, Quaternion.identity);
+            }
         }
     }
 
@@ -40,23 +57,6 @@ public class DestructibleObject : MonoBehaviour
     {
         // Instantiate destroyed object
         Instantiate(destroyed, transform.position, Quaternion.identity);
-
-        // Random number to determine drop type
-        int dropType = Random.Range(1, 101);
-
-        // Determine drop based on chances
-        if (dropType <= emptyChance)
-        {
-            // Do nothing, the box remains empty
-        }
-        else if (dropType <= emptyChance + hpOrbChance)
-        {
-            GameObject hpOrb = Instantiate(hpOrbPrefab, transform.position, Quaternion.identity);
-        }
-        else
-        {
-            GameObject spOrb = Instantiate(spOrbPrefab, transform.position, Quaternion.identity);
-        }
 
         // Apply explosion force
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
