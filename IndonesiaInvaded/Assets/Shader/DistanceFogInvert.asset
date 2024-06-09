@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 612e70f49e5124da0a95111a57250300, type: 3}
-  m_Name: DistanceSandStorm
+  m_Name: DistanceFogInvert
   m_EditorClassIdentifier: 
-  raymarchQuality: 16
+  raymarchQuality: 15
   raymarchMinStep: 0.1
   jittering: 0.5
   dithering: 1
@@ -22,7 +22,7 @@ MonoBehaviour:
   constantDensity: 0
   noiseTexture: {fileID: 2800000, guid: 9c79340e1a1054275ba04070a27de306, type: 3}
   noiseTextureOptimizedSize: 256
-  noiseStrength: 1.86
+  noiseStrength: 1.05
   noiseScale: 30
   noiseFinalMultiplier: 1
   useDetailNoise: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   terrainFogHeight: 25
   terrainFogMinAltitude: 0
   terrainFogMaxAltitude: 150
-  albedo: {r: 1, g: 1, b: 1, a: 0.839}
+  albedo: {r: 1, g: 1, b: 1, a: 0.204}
   enableDepthGradient: 0
   depthGradient:
     serializedVersion: 2
@@ -84,7 +84,7 @@ MonoBehaviour:
   enableHeightGradient: 1
   heightGradient:
     serializedVersion: 2
-    key0: {r: 1, g: 0.5254902, b: 0.2509804, a: 1}
+    key0: {r: 4, g: 4, b: 4, a: 1}
     key1: {r: 1, g: 1, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
@@ -112,11 +112,11 @@ MonoBehaviour:
     m_ColorSpace: 1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  brightness: 0.5
-  deepObscurance: 1
+  brightness: 0.79
+  deepObscurance: 2
   specularColor: {r: 1, g: 1, b: 1, a: 1}
-  specularThreshold: 0.637
-  specularIntensity: 0.428
+  specularThreshold: 1
+  specularIntensity: 1
   turbulence: 3
   windDirection: {x: 0.05, y: 0, z: 0.05}
   useCustomDetailNoiseWindDirection: 0
