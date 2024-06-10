@@ -12,6 +12,7 @@ public class Combat : MonoBehaviour
 
     [Header("VFX Prefabs")]
     public GameObject slashVFX;
+    public GameObject slashVFXEnhance;
     public Transform Player;
     private float rotasiYplayer;
 
@@ -94,7 +95,8 @@ public class Combat : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         Quaternion rotation = Quaternion.Euler(rotasiX, rotasiY, rotasiZ);
-        GameObject vfx = Instantiate(slashVFX, Player.position + new Vector3(0, 1, 0), rotation);
+        GameObject vfx = Instantiate(slashVFXEnhance, Player.position + new Vector3(0, 1, 0), rotation);
+        //GameObject vfx = Instantiate(slashVFXEnhance, Player.position + new Vector3(-225.989f, 78.986f, 79.258f), rotation);
         Destroy(vfx, 0.5f);
     }
 
@@ -153,7 +155,8 @@ public class Combat : MonoBehaviour
             case 0:
                 AudioManager.Instance.PlaySFX("AttackPlayer", 0);
                 AudioManager.Instance.PlaySFX("PlayerDialog", 0);
-                StartCoroutine(SpawnSlashVfx(-86,rotasiYplayer + 20,0, 0.3f));
+                //StartCoroutine(SpawnSlashVfx(-86,rotasiYplayer + 20,0, 0.3f));
+                StartCoroutine(SpawnSlashVfx(-172.47f,rotasiYplayer - 150, -2.679993f, 0.3f));
                 animator.SetBool("hit1", true);
                 hitSekarang = "hit1";
                 Debug.Log("Hit 1");
@@ -162,7 +165,8 @@ public class Combat : MonoBehaviour
             case 1:
                 AudioManager.Instance.PlaySFX("AttackPlayer", 1);
                 AudioManager.Instance.PlaySFX("PlayerDialog", 1);
-                StartCoroutine(SpawnSlashVfx(86,rotasiYplayer + 30, 239, 0.3f));
+                //StartCoroutine(SpawnSlashVfx(86,78.986f, 239, 0.3f));
+                StartCoroutine(SpawnSlashVfx(-9.5f,rotasiYplayer - 50, 0, 0.3f));
                 animator.SetBool("hit2", true);
                 hitSekarang = "hit2";
                 Debug.Log("Hit 2");

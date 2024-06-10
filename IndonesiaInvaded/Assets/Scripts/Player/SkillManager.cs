@@ -26,9 +26,13 @@ public class SkillManager : MonoBehaviour
     public float destroyTimeColliderRoar = 1.5f;
     public GameObject smashExplosion;
     public GameObject groundPound;
+
+    public GameObject vfxReadySkill1;
     bool isRoarSkill = false;
     string playerLayer = "Player";
     string enemyLayer = "Enemy";
+
+
 
     [Header("Slow Motion Effect")]
     private bool isSlowMotionActive = false;
@@ -43,6 +47,8 @@ public class SkillManager : MonoBehaviour
     private bool isCooldown2 = false;
     public KeyCode skill2Key;
     public GameObject ruler;
+
+    public GameObject vfxReadySkill2;
     private int spawnedRulerCount = 0;
     private float lastSpawnTime = 0f;
     private const float timeBetweenSpawns = 0.5f;
@@ -50,6 +56,8 @@ public class SkillManager : MonoBehaviour
     private bool skill2Active = false;
     private float skill2Duration = 5f;
     private float skill2Timer = 0f;
+
+ 
 
     [Header("Skill Detection")]
     public Transform player;
@@ -179,6 +187,7 @@ public class SkillManager : MonoBehaviour
 
     private IEnumerator CooldownSkill1()
     {
+        vfxReadySkill1.SetActive(false);
         isCooldown1 = true;
         float cooldownTimer = cooldown1;
         while (cooldownTimer > 0)
@@ -188,6 +197,7 @@ public class SkillManager : MonoBehaviour
             cooldownTimer -= Time.deltaTime;
             yield return null;
         }
+        vfxReadySkill1.SetActive(true);
         isCooldown1 = false;
         skillImage1.fillAmount = 0;
         skill1CooldownText.text = "";
@@ -195,6 +205,7 @@ public class SkillManager : MonoBehaviour
 
     private IEnumerator CooldownSkill2()
     {
+        vfxReadySkill2.SetActive(false);
         isCooldown2 = true;
         float cooldownTimer = cooldown2;
         while (cooldownTimer > 0)
@@ -204,6 +215,7 @@ public class SkillManager : MonoBehaviour
             cooldownTimer -= Time.deltaTime;
             yield return null;
         }
+        vfxReadySkill2.SetActive(true);
         isCooldown2 = false;
         skillImage2.fillAmount = 0;
         skill2CooldownText.text = "";
