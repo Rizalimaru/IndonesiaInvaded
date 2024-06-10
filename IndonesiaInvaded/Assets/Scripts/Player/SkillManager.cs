@@ -3,6 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Data.Common;
 
 public class SkillManager : MonoBehaviour
 {
@@ -32,8 +33,6 @@ public class SkillManager : MonoBehaviour
     string playerLayer = "Player";
     string enemyLayer = "Enemy";
 
-
-
     [Header("Slow Motion Effect")]
     private bool isSlowMotionActive = false;
     public float slowMotionDuration = 1f;
@@ -57,7 +56,10 @@ public class SkillManager : MonoBehaviour
     private float skill2Duration = 5f;
     private float skill2Timer = 0f;
 
- 
+    [Header("Ultimate")]
+    public GameObject ultimateCollider;
+    public KeyCode ultimateKey;
+
 
     [Header("Skill Detection")]
     public Transform player;
@@ -93,6 +95,7 @@ public class SkillManager : MonoBehaviour
         DetectNearestEnemyForSkill();
         Skill1();
         Skill2();
+        //Ultimate();
 
         int LayerPlayer = LayerMask.NameToLayer(playerLayer);
         int LayerEnemy = LayerMask.NameToLayer(enemyLayer);
@@ -183,6 +186,12 @@ public class SkillManager : MonoBehaviour
             Debug.Log("Not enough SP for Skill 2!");
         }
     }
+
+    public void UseUltimate()
+    {
+
+        
+    }
     #endregion
 
     private IEnumerator CooldownSkill1()
@@ -234,6 +243,14 @@ public class SkillManager : MonoBehaviour
         if (Input.GetKeyDown(skill2Key) && !isCooldown2)
         {
             UseSkill2();
+        }
+    }
+
+    private void Ultimate()
+    {
+        if(Input.GetKeyDown(ultimateKey))
+        {
+            StartCoroutine(spawnUltimateCollider());
         }
     }
 
@@ -405,4 +422,17 @@ public class SkillManager : MonoBehaviour
         skill2CooldownText.text = "";
         Debug.Log("Skills have been reset!");
     }
+
+#region UltimateUsableFunction
+    IEnumerator spawnUltimateCollider()
+    {   
+        for (int i = 0; i < 5; i++)
+        {   
+            GameObject ultimate = Instantiate(ultimateCollider, player.position + new Vector3(0,1,0), player.rotation) as GameObject;
+            Destroy(ultimate, 1f);
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+#endregion
 }

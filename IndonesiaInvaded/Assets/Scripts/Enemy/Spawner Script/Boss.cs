@@ -15,6 +15,7 @@ public class Boss : MonoBehaviour
     public GameObject attackPrefab;
     public Transform spawnPoint;
     public GameObject hitVFX;
+    public GameObject footHitVFX;
     [HideInInspector] public Animator playerAnimator;
 
     // Attribute Declaration
@@ -146,6 +147,21 @@ public class Boss : MonoBehaviour
             BossHealthBar.instance.UpdateHealthBar(health);
         }
 
+        if (other.CompareTag("FootCollider") && isAttacking && health > 0 && castingSkill == false)
+        {
+            CameraShaker.instance.CameraShake(5f, 0.1f);
+
+            AudioManager._instance.PlayBossHitSFX("BossHit", 0);
+            AudioManager._instance.PlaySFX("EnemyHit",0);
+
+            Debug.Log("Damaged by Sword. Current health: " + health);
+            spawnFootHitVfx();
+            health -= 20;
+            Debug.Log("Health after damage: " + health);
+
+            BossHealthBar.instance.UpdateHealthBar(health);
+        }
+
         if (other.CompareTag("RangedCollider") && isAttacking && health > 0 && castingSkill == false)
         {
             CameraShaker.instance.CameraShake(5f, 0.1f);
@@ -204,6 +220,13 @@ public class Boss : MonoBehaviour
     {
         Vector3 newPosition = transform.position + new Vector3(-1, 1, 0);
         GameObject vfx = Instantiate(hitVFX, newPosition, Quaternion.identity);
+        Destroy(vfx, .5f);
+    }
+
+    void spawnFootHitVfx()
+    {
+        Vector3 newPosition = transform.position + new Vector3(0, 0.5f, 0);
+        GameObject vfx = Instantiate(footHitVFX, newPosition, Quaternion.identity);
         Destroy(vfx, .5f);
     }
 
